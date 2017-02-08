@@ -15,6 +15,7 @@ public class Main extends BasicGame {
 
     GameContainer container;
     TiledMap map;
+    Controller controls = new Controller();
 
     public Main() {
         super("Premier exemple");
@@ -27,12 +28,13 @@ public class Main extends BasicGame {
     @Override
     public void init(GameContainer gc) throws SlickException {
         container = gc;
+        container.getInput().addKeyListener(controls);
         map = new TiledMap("src\\ressources\\map\\grotte test.tmx");
     }
 
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
-
+        
     }
 
     @Override
