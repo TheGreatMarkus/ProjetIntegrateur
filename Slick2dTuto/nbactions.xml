@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Djava.library.path=target/natives -classpath %classpath ${packageClassName}</exec.args>
+                <exec.args>-Djava.library.path=target/natives -classpath %classpath ca.qc.bdeb.slick2dtuto.Main</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
