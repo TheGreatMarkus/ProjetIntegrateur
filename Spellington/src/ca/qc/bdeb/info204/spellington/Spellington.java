@@ -6,6 +6,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
 /**
  *
@@ -14,6 +15,9 @@ import org.newdawn.slick.SlickException;
 public class Spellington extends BasicGame {
 
     private static AppGameContainer appGameContainer;
+    private static Controller controller;
+    GameContainer container;
+    TiledMap map;
 
     /**
      * @param args the command line arguments
@@ -25,10 +29,12 @@ public class Spellington extends BasicGame {
         System.setProperty("org.lwjgl.librarypath", new File("lib/natives").getAbsolutePath());
         System.setProperty("net.java.games.input.librarypath", new File("lib/natives").getAbsolutePath());
 
-        appGameContainer = new AppGameContainer(new Spellington(), 500, 500, false);
+        controller = new Controller();
+
+        appGameContainer = new AppGameContainer(new Spellington(), 750, 750, false);
         appGameContainer.setTargetFrameRate(60);
         appGameContainer.start();
-        
+
     }
 
     public Spellington() {
@@ -37,17 +43,19 @@ public class Spellington extends BasicGame {
 
     @Override
     public void init(GameContainer gc) throws SlickException {
-
+        container = gc;
+        container.getInput().addKeyListener(controller);
+         map = new TiledMap("src/ressources/map/grotte test.tmx");
     }
 
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
-
     }
 
     @Override
-    public void render(GameContainer gc, Graphics grphcs) throws SlickException {
-        grphcs.drawString("fuck yes!!!!!!!!!!!", 10, 50);
+    public void render(GameContainer gc, Graphics g) throws SlickException {
+        map.render(0, 0);
+        g.drawString("fuck yes bitch! GET THE DICK SLICK!", 10, 50);
 
     }
 
