@@ -7,6 +7,7 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -34,12 +35,15 @@ public class PlayState extends BasicGameState{
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
+        //Init of the playState
          map = new TiledMap("src/resources/map/grotte test.tmx");
          spellington = new Spellington();
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+        g.drawString("Press Escape to leave the game and go to the menu", 20, 40);
+        g.setColor(Color.white);
         map.render(0, 0);
         spellington.render(g);
     }

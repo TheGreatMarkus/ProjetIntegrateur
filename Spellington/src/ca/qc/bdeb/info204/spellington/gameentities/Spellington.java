@@ -7,10 +7,11 @@ import org.newdawn.slick.SlickException;
 
 /**
  * Main protegonist of the game.
+ *
  * @author Fallen Angel
  */
 public class Spellington extends GameEntity {
-    
+
     private static Image IMG_SPELLINGTON;
     private static final float SPELLINGTON_SPEED = 0.5f;
 
@@ -21,20 +22,26 @@ public class Spellington extends GameEntity {
 
     }
 
+    /**
+     *
+     * @param input
+     * @param delta Delta of frame. To keep speed consistent regardless of frame
+     * length.
+     */
     public void update(Input input, int delta) {
         if (input.isKeyDown(Input.KEY_RIGHT) && input.isKeyDown(Input.KEY_LEFT)) {
-            //Si les deux boutons sont pesés, le joueur ne bougera pas.
+            //If both buttons are pressed, the player does not move on the x axis.
         } else if (input.isKeyDown(Input.KEY_RIGHT)) {
-            this.setX(this.getX() + SPELLINGTON_SPEED*delta);
+            this.setX(this.getX() + SPELLINGTON_SPEED * delta);
         } else if (input.isKeyDown(Input.KEY_LEFT)) {
-            this.setX(this.getX() - SPELLINGTON_SPEED*delta);
+            this.setX(this.getX() - SPELLINGTON_SPEED * delta);
         }
         if (input.isKeyDown(Input.KEY_UP) && input.isKeyDown(Input.KEY_DOWN)) {
-            //Si les deux boutons sont pesés, le joueur ne bougera pas.
+            //If both buttons are pressed, the player does not move on the y axis.
         } else if (input.isKeyDown(Input.KEY_UP)) {
-            this.setY(this.getY() - SPELLINGTON_SPEED*delta);
+            this.setY(this.getY() - SPELLINGTON_SPEED * delta);
         } else if (input.isKeyDown(Input.KEY_DOWN)) {
-            this.setY(this.getY() + SPELLINGTON_SPEED*delta);
+            this.setY(this.getY() + SPELLINGTON_SPEED * delta);
         }
 
     }
