@@ -4,6 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 /**
  * Main protegonist of the game.
@@ -14,19 +15,23 @@ public class Spellington extends LivingEntity {
 
     private static Image IMG_SPELLINGTON;
 
+    private static final int SPELLINGTON_INITIAL_MAX_LIFE = 100;
+    private static final float SPELLINGTON_NORMAL_SPEED = 0.5f;
+
     public Spellington() throws SlickException {
-        LifePointMax = 100;
-        LifePoint = LifePointMax;
-        
-        ResElectric = 0;
-        ResIce = 0;
-        ResFire = 0;
-        
-        MovementSpeed = 0.5f;
-        
+        lifePoint = SPELLINGTON_INITIAL_MAX_LIFE;
+
+        resElectric = 0;
+        resIce = 0;
+        resFire = 0;
+
+        movementSpeed = SPELLINGTON_NORMAL_SPEED;
+
         IMG_SPELLINGTON = new Image("resources/images/spellington.png");
-        this.setX(500);
-        this.setY(500);
+        x = 500;
+        y = 500;
+        width = 50;
+        height = 100;
 
     }
 
@@ -38,24 +43,29 @@ public class Spellington extends LivingEntity {
      */
     public void update(Input input, int delta) {
         if (input.isKeyDown(Input.KEY_RIGHT) && input.isKeyDown(Input.KEY_LEFT)) {// à changer devrais suivre la souris
-            
-        } else if (input.isKeyDown(Input.KEY_D)) {
-            this.setX(this.getX() + MovementSpeed * delta);
-        } else if (input.isKeyDown(Input.KEY_A)) {
-            this.setX(this.getX() - MovementSpeed * delta);
+
+        } else if (input.isKeyDown(Input.KEY_RIGHT)) {
+            this.setX(this.getX() + movementSpeed * delta);
+        } else if (input.isKeyDown(Input.KEY_LEFT)) {
+            this.setX(this.getX() - movementSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_UP) && input.isKeyDown(Input.KEY_DOWN)) { // à changer pour pas voler
-            
-        } else if (input.isKeyDown(Input.KEY_W)) {
-            this.setY(this.getY() - MovementSpeed * delta);
-        } else if (input.isKeyDown(Input.KEY_S)) {
-            this.setY(this.getY() + MovementSpeed * delta);
+
+        } else if (input.isKeyDown(Input.KEY_UP)) {
+            this.setY(this.getY() - movementSpeed * delta);
+        } else if (input.isKeyDown(Input.KEY_DOWN)) {
+            this.setY(this.getY() + movementSpeed * delta);
         }
 
     }
 
     public void render(Graphics g) {
-        g.drawImage(IMG_SPELLINGTON, this.getX(), this.getY());
+        //g.drawImage(IMG_SPELLINGTON, this.getX(), this.getY());
+        g.drawRect(x, y, 50, 100);
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
     }
 
 }

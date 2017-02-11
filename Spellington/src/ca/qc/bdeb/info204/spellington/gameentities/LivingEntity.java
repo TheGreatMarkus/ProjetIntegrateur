@@ -1,75 +1,57 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.info204.spellington.gameentities;
 
-import org.newdawn.slick.*;
 /**
  *
  * @author Celtis
  */
-public abstract class LivingEntity extends GameEntity{
-    
-    protected Animation animation;
-    
-    protected int LifePointMax;
-    protected int LifePoint;
-    
-    protected int ResElectric;
-    protected int ResIce;
-    protected int ResFire;
-    
-    protected float MovementSpeed;
+public abstract class LivingEntity extends GameEntity {
 
-    public void setLifePoint(int LifePoint) {
-        this.LifePoint = LifePoint;
+    protected int lifePoint;
+
+    protected int resElectric;
+    protected int resIce;
+    protected int resFire;
+
+    protected float movementSpeed;
+
+    public void setLifePoint(int lifePoint) {
+        this.lifePoint = lifePoint;
     }
 
-    public void setResElectric(int ResElectric) {
-        this.ResElectric = ResElectric;
+    public void setResElectric(int resElectric) {
+        this.resElectric = resElectric;
     }
 
-    public void setResIce(int ResIce) {
-        this.ResIce = ResIce;
+    public void setResIce(int resIce) {
+        this.resIce = resIce;
     }
 
-    public void setResFire(int ResFire) {
-        this.ResFire = ResFire;
+    public void setResFire(int resFire) {
+        this.resFire = resFire;
     }
 
-    public void setMovementSpeed(float MovementSpeed) {
-        this.MovementSpeed = MovementSpeed;
+    public void setMovementSpeed(float movementSpeed) {
+        this.movementSpeed = movementSpeed;
     }
 
     public int getLifePoint() {
-        return LifePoint;
+        return lifePoint;
     }
 
     public int getResElectric() {
-        return ResElectric;
+        return resElectric;
     }
 
     public int getResIce() {
-        return ResIce;
+        return resIce;
     }
 
     public int getResFire() {
-        return ResFire;
+        return resFire;
     }
 
     public float getMovementSpeed() {
-        return MovementSpeed;
+        return movementSpeed;
     }
 
-    public int getLifePointMax() {
-        return LifePointMax;
-    }
-
-    public void setLifePointMax(int LifePointMax) {
-        this.LifePointMax = LifePointMax;
-    }
-    
-    
 }

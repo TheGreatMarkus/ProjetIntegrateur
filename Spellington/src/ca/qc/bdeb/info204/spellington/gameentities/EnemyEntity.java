@@ -11,8 +11,8 @@ import java.util.ArrayList;
  *
  * @author Celtis
  */
-public abstract class EnemyEntity extends LivingEntity{
-    
+public abstract class EnemyEntity extends LivingEntity {
+
     protected ArrayList<String> ListSpellDropable = new ArrayList<>();
 
     public ArrayList<String> getListSpellDropable() {
@@ -22,5 +22,5 @@ public abstract class EnemyEntity extends LivingEntity{
     public void setListSpellDropable(ArrayList<String> ListSpellDropable) {
         this.ListSpellDropable = ListSpellDropable;
     }
-    
+
 }

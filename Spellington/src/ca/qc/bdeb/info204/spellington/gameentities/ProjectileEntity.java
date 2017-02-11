@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 /**
@@ -10,10 +5,16 @@ package ca.qc.bdeb.info204.spellington.gameentities;
  * @author Celtis
  */
 public abstract class ProjectileEntity {
-    
+
+    public static enum DamageType {
+        FIRE,
+        ICE,
+        ELECTRICITY
+    }
+
     protected float FlyingSpeed;
-    
+
     protected int Damage;
-    
-    protected GameEntity.Elements DamageType;
+
+    protected DamageType DamageType;
 }

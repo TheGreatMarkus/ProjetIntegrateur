@@ -35,7 +35,8 @@ public class GameCore extends StateBasedGame {
         
         appGameContainer = new AppGameContainer(new GameCore());
         //appGameContainer setup.
-        appGameContainer.setDisplayMode(SCREEN_SIZE.width, SCREEN_SIZE.height, true);
+        //appGameContainer.setDisplayMode(SCREEN_SIZE.width, SCREEN_SIZE.height, true);
+        appGameContainer.setDisplayMode(750, 750, false);
         appGameContainer.setIcon("src/resources/icon.png");
         appGameContainer.setTitle(GAME_TITLE);
         //Start game.
