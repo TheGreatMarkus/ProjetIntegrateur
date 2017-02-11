@@ -11,9 +11,13 @@ import java.util.ArrayList;
  *
  * @author Celtis
  */
-public abstract class EnemyEntity extends LivingEntity {
+public abstract class Enemy extends LivingEntity {
 
     protected ArrayList<String> ListSpellDropable = new ArrayList<>();
+
+    public Enemy(float x, float y, float width, float height) {
+        super(x, y, width, height);
+    }
 
     public ArrayList<String> getListSpellDropable() {
         return ListSpellDropable;

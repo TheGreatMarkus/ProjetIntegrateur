@@ -4,7 +4,7 @@ package ca.qc.bdeb.info204.spellington.gameentities;
  *
  * @author Celtis
  */
-public abstract class ProjectileEntity {
+public abstract class Projectile {
 
     public static enum DamageType {
         FIRE,

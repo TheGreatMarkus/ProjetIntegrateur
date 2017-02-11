@@ -47,7 +47,7 @@ public class PlayState extends BasicGameState {
             System.out.println("");
         }
         System.out.println("");
-        spellington = new Spellington();
+        spellington = new Spellington(500, 500);
     }
 
     @Override
@@ -79,25 +79,45 @@ public class PlayState extends BasicGameState {
     }
 
     private void checkCollision() {
+        spellington.resetCollisionState();
         for (int i = 0; i < mapCollision.length; i++) {
             for (int j = 0; j < mapCollision[i].length; j++) {
-                if (spellington.getBounds().intersects(mapCollision[i][j])) {
-                    float x;
-                    float y;
+                boolean collision = false;
+                if (spellington.getBounds().intersects(mapCollision[i][j]) && !collision) {
+                    //If a collision is found this frame,
+                    float widthIntersection;
+                    float heightIntersection;
+                    //To get the width and height of the intersaction
                     if (mapCollision[i][j].getCenterX() < spellington.getBounds().getCenterX()) {
-                        x = mapCollision[i][j].getX() + mapCollision[i][j].getWidth() - spellington.getX();
-                        spellington.setX(spellington.getX() + x);
+                        widthIntersection = mapCollision[i][j].getX() + mapCollision[i][j].getWidth() - spellington.getX();
                     } else {
-                        x = spellington.getX() + spellington.getWidth() - mapCollision[i][j].getX();
-                        spellington.setX(spellington.getX() - x);
+                        widthIntersection = spellington.getX() + spellington.getWidth() - mapCollision[i][j].getX();
                     }
                     if (mapCollision[i][j].getCenterY() < spellington.getBounds().getCenterY()) {
-                        y = mapCollision[i][j].getY() + mapCollision[i][j].getHeight() - spellington.getY();
-                        spellington.setY(spellington.getY() + y);
+                        heightIntersection = mapCollision[i][j].getY() + mapCollision[i][j].getHeight() - spellington.getY();
+
                     } else {
-                        y = spellington.getY() + spellington.getHeight() - mapCollision[i][j].getY();
-                        spellington.setY(spellington.getY() - y);
+                        heightIntersection = spellington.getY() + spellington.getHeight() - mapCollision[i][j].getY();
                     }
+                    //The side of the collision is determined by calculating the shallowest side of the intersection
+                    if (widthIntersection < heightIntersection) {
+                        if (mapCollision[i][j].getCenterX() < spellington.getBounds().getCenterX()) {
+                            spellington.setX(spellington.getX() + (widthIntersection));
+                            spellington.setCollisionLeft(true);
+                        } else {
+                            spellington.setX(spellington.getX() - (widthIntersection));
+                            spellington.setCollisionRight(true);
+                        }
+                    } else if (heightIntersection < widthIntersection) {
+                        if (mapCollision[i][j].getCenterY() < spellington.getBounds().getCenterY()) {
+                            spellington.setY(spellington.getY() + (heightIntersection));
+                            spellington.setCollisionTop(true);
+                        } else {
+                            spellington.setY(spellington.getY() - (heightIntersection));
+                            spellington.setCollisionBottom(true);
+                        }
+                    }
+                }else {
                 }
             }
         }

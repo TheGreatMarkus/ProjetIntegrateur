@@ -1,25 +1,41 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 /**
  *
- * @author Celtis
+ * @author Fallen Angel
  */
-public abstract class LivingEntity extends GameEntity {
+public abstract class LivingEntity extends DynamicEntity {
+
+    protected boolean collisionTop;
+    protected boolean collisionBottom;
+    protected boolean collisionRight;
+    protected boolean collisionLeft;
 
     protected int lifePoint;
 
-    protected int resElectric;
+    protected int resElectricity;
     protected int resIce;
     protected int resFire;
 
-    protected float movementSpeed;
+    public LivingEntity(float x, float y, float width, float height) {
+        super(x, y, width, height);
+        collisionTop = false;
+        collisionBottom = false;
+        collisionRight = false;
+        collisionLeft = false;
+    }
 
     public void setLifePoint(int lifePoint) {
         this.lifePoint = lifePoint;
     }
 
-    public void setResElectric(int resElectric) {
-        this.resElectric = resElectric;
+    public void setResElectricity(int resElectricity) {
+        this.resElectricity = resElectricity;
     }
 
     public void setResIce(int resIce) {
@@ -30,16 +46,12 @@ public abstract class LivingEntity extends GameEntity {
         this.resFire = resFire;
     }
 
-    public void setMovementSpeed(float movementSpeed) {
-        this.movementSpeed = movementSpeed;
-    }
-
     public int getLifePoint() {
         return lifePoint;
     }
 
-    public int getResElectric() {
-        return resElectric;
+    public int getResElectricity() {
+        return resElectricity;
     }
 
     public int getResIce() {
@@ -50,8 +62,43 @@ public abstract class LivingEntity extends GameEntity {
         return resFire;
     }
 
-    public float getMovementSpeed() {
-        return movementSpeed;
+    public boolean getCollisionTop() {
+        return collisionTop;
+    }
+
+    public void setCollisionTop(boolean collisionTop) {
+        this.collisionTop = collisionTop;
+    }
+
+    public boolean getCollisionBottom() {
+        return collisionBottom;
+    }
+
+    public void setCollisionBottom(boolean collisionBottom) {
+        this.collisionBottom = collisionBottom;
+    }
+
+    public boolean getCollisionRight() {
+        return collisionRight;
+    }
+
+    public void setCollisionRight(boolean collisionRight) {
+        this.collisionRight = collisionRight;
+    }
+
+    public boolean getCollisionLeft() {
+        return collisionLeft;
+    }
+
+    public void setCollisionLeft(boolean collisionLeft) {
+        this.collisionLeft = collisionLeft;
+    }
+
+    public void resetCollisionState() {
+        this.collisionTop = false;
+        this.collisionBottom = false;
+        this.collisionRight = false;
+        this.collisionLeft = false;
     }
 
 }
