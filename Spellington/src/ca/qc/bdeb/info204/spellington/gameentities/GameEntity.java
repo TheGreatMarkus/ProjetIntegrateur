@@ -6,8 +6,11 @@ package ca.qc.bdeb.info204.spellington.gameentities;
  */
 public class GameEntity {
     
-    private float x;
-    private float y;
+     public enum Elements {Fire, Ice, Electricity }
+     
+    
+    protected float x;
+    protected float y;
 
     public float getX() {
         return x;
