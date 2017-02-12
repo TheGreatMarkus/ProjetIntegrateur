@@ -7,18 +7,16 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 
 /**
  *
- * @author Celtis
+ * @author Fallen Angel
  */
-public abstract class ObjectEntity extends GameEntity{
+public class PickUp extends StaticEntity {
     
-   protected Boolean isPickUp = true;
-
-    public Boolean getIsPickUp() {
-        return isPickUp;
+    public static enum PickUpType{
+    
     }
 
-    public void setIsPickUp(Boolean isPickUp) {
-        this.isPickUp = isPickUp;
+    public PickUp(float x, float y, float width, float height) {
+        super(x, y, width, height);
     }
-    
+
 }

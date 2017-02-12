@@ -1,16 +1,29 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
+import org.newdawn.slick.geom.Rectangle;
+
 /**
- * A entity hat will be in and interact with the world.
+ * A entity that will be in the game and interact with the world.
+ *
  * @author Fallen Angel
  */
 public class GameEntity {
-    
-     public enum Elements {Fire, Ice, Electricity }
-     
-    
+
     protected float x;
     protected float y;
+    protected float width;
+    protected float height;
+
+    public GameEntity(float x, float y, float width, float height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    
+    public Rectangle getBounds(){
+        return new Rectangle(x, y, width, height);
+    }
 
     public float getX() {
         return x;
@@ -28,8 +41,22 @@ public class GameEntity {
         this.y = y;
     }
 
-   
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
     
     
-    
+
 }

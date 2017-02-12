@@ -3,9 +3,9 @@
  <tileset firstgid="1" name="grotte lave" tilewidth="50" tileheight="50" tilecount="64" columns="8">
   <image source="tuiles/tuiles cachot lave.png" width="400" height="400"/>
  </tileset>
- <layer name="Calque de Tile 1" width="15" height="15">
+ <layer name="solid" width="15" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjgHjABMSMaGJsQMyKRR25AN18YgAr1B3MZNoJ0s+CRRzZv0w41LBB1TBB7WeB8pmhNAuaPMytsHADAEHw+NGEAwAA
+   H4sIAAAAAAAAC2NgGAXDGTBSoG8g9ZJjBjF68YlTSy+pGADzHgeBhAMAAA==
   </data>
  </layer>
 </map>

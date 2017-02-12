@@ -21,7 +21,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 public class MainMenuState extends BasicGameState {
 
     //Default menu font. Can be changed.l
-    private static final TrueTypeFont MENU_FONT = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 20), false);
+    private static final TrueTypeFont MENU_FONT = new TrueTypeFont(new Font("Times New Roman", Font.PLAIN, 20), false);
 
     //Text for the menu.
     private static final String MENU_TITLE = "Le réveil de Spellington, testage";
@@ -39,8 +39,10 @@ public class MainMenuState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+
         //Rendering title text using the text dimensions to center.
         g.setColor(Color.white);
+        g.setFont(MENU_FONT);
         int tempHeight = MENU_FONT.getHeight(MENU_TITLE);
         int tempWidth = MENU_FONT.getWidth(MENU_TITLE);
         g.drawString(MENU_TITLE, gc.getWidth() / 2 - tempWidth / 2, gc.getHeight() / 2 - tempHeight / 2);
@@ -65,6 +67,18 @@ public class MainMenuState extends BasicGameState {
         if (gc.getInput().isKeyDown(Input.KEY_ESCAPE)) {
             gc.exit();
         }
+
+    }
+
+    /**
+     * Writes text in the menu.
+     *
+     * @param centerH If the text is centered horizontally.
+     * @param centerV If the text is centered vertically.
+     * @param x X position of the text.
+     * @param y Y position of the text.
+     */
+    private void drawText(boolean centerH, boolean centerV, int x, int y) {
 
     }
 
