@@ -25,9 +25,9 @@ import org.newdawn.slick.tiled.TiledMap;
  */
 public class PlayState extends BasicGameState {
 
-    TiledMap map;
-    Spellington spellington;
-    Rectangle[][] mapCollision;
+    private TiledMap map;
+    private Spellington spellington;
+    private Rectangle[][] mapCollision;
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {

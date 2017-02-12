@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
+ * Core of the game.
  *
  * @author Fallen Angel
  */
@@ -22,8 +23,7 @@ public class GameCore extends StateBasedGame {
     public static final int MAIN_MENU_STATE_ID = 0;
     public static final int PLAY_STATE_ID = 1;
     private static AppGameContainer appGameContainer;
-    
-    
+
     /**
      * @param args the command line arguments
      * @throws org.newdawn.slick.SlickException
@@ -32,7 +32,7 @@ public class GameCore extends StateBasedGame {
         //Pour set les natives nécessaires aux libraires, don't touch.
         System.setProperty("org.lwjgl.librarypath", new File("lib/natives").getAbsolutePath());
         System.setProperty("net.java.games.input.librarypath", new File("lib/natives").getAbsolutePath());
-        
+
         appGameContainer = new AppGameContainer(new GameCore());
         //appGameContainer setup.
         //appGameContainer.setDisplayMode(SCREEN_SIZE.width, SCREEN_SIZE.height, true);
@@ -46,7 +46,7 @@ public class GameCore extends StateBasedGame {
 
     public GameCore() {
         super(GAME_TITLE);
-        
+
     }
 
     @Override
@@ -54,11 +54,11 @@ public class GameCore extends StateBasedGame {
         //It is important to keep the state addition order. 
         this.addState(new MainMenuState());
         this.addState(new PlayState());
-        
+
         //Initialise game states.
         this.getState(MAIN_MENU_STATE_ID).init(gc, this);
         this.getState(PLAY_STATE_ID).init(gc, this);
-        
+
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
     }

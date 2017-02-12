@@ -17,7 +17,7 @@ public class Spellington extends LivingEntity {
     private static Image IMG_SPELLINGTON;
 
     private static final int SPELLINGTON_INITIAL_MAX_LIFE = 100;
-    private static final float SPELLINGTON_NORMAL_ACC = 0.05f;
+    private static final float SPELLINGTON_NORMAL_ACC = 0.5f; //Possibilité de changer ceci
     private static final float SPELLINGTON_MAX_SPEED = 0.5f;
 
     public static final Dimension SPELLINGTON_SIZE = new Dimension(50, 100);
@@ -98,8 +98,6 @@ public class Spellington extends LivingEntity {
         g.drawRect(x, y, 50, 100);
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
-    }
+    
 
 }

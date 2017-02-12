@@ -1,5 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
+import org.newdawn.slick.geom.Rectangle;
+
 /**
  * A entity that will be in the game and interact with the world.
  *
@@ -19,7 +21,9 @@ public class GameEntity {
         this.height = height;
     }
     
-    
+    public Rectangle getBounds(){
+        return new Rectangle(x, y, width, height);
+    }
 
     public float getX() {
         return x;
