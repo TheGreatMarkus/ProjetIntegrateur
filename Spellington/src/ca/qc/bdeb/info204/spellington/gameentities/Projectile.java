@@ -7,6 +7,7 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 public abstract class Projectile {
 
     public static enum DamageType {
+        UTILITY,
         FIRE,
         ICE,
         ELECTRICITY

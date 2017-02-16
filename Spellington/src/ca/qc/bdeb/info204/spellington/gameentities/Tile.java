@@ -1,11 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.info204.spellington.gameentities;
-
-import org.newdawn.slick.geom.Rectangle;
 
 /**
  *
@@ -17,14 +10,21 @@ public class Tile extends StaticEntity {
         PASSABLE,
         IMPASSABLE,
     }
+    private TileState tileState;
 
-    public Tile(float x, float y, float width, float height) {
+    public Tile(float x, float y, float width, float height, TileState tileState) {
         super(x, y, width, height);
+        this.tileState = tileState;
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
-
+    public TileState getTileState() {
+        return tileState;
     }
+
+    public void setTileState(TileState tileState) {
+        this.tileState = tileState;
+    }
+    
+    
 
 }

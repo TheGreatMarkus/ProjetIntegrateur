@@ -20,7 +20,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  */
 public class MainMenuState extends BasicGameState {
 
-    //Default menu font. Can be changed.l
+    //Default menu font. Can be changed.
     private static final TrueTypeFont MENU_FONT = new TrueTypeFont(new Font("Times New Roman", Font.PLAIN, 20), false);
 
     //Text for the menu.
@@ -35,14 +35,15 @@ public class MainMenuState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
+        
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-
         //Rendering title text using the text dimensions to center.
         g.setColor(Color.white);
         g.setFont(MENU_FONT);
+        
         int tempHeight = MENU_FONT.getHeight(MENU_TITLE);
         int tempWidth = MENU_FONT.getWidth(MENU_TITLE);
         g.drawString(MENU_TITLE, gc.getWidth() / 2 - tempWidth / 2, gc.getHeight() / 2 - tempHeight / 2);
