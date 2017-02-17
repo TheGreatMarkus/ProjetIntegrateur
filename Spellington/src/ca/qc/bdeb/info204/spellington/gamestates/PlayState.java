@@ -37,7 +37,7 @@ public class PlayState extends BasicGameState {
         //Very bad implementation of 
         map = new TiledMap("src/resources/map/test_important.tmx");
         extractMapInfo();
-        spellington = new Spellington(200, 500);
+        spellington = new Spellington(1500, 400);
     }
 
     @Override

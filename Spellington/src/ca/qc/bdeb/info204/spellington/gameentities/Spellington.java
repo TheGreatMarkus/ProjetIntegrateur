@@ -96,11 +96,11 @@ public class Spellington extends LivingEntity {
             this.setySpeed(SPELLINGTON_JUMP_SPEED);
         } else if (triedToJump && collisionLeft && !collisionBottom) {
 
-            this.setxSpeed((float) Math.cos(Math.toRadians(45)) * -SPELLINGTON_JUMP_SPEED);
-            this.setySpeed((float) Math.sin(Math.toRadians(45)) * SPELLINGTON_JUMP_SPEED);
+            this.setxSpeed((float) Math.cos(Math.toRadians(60)) * -SPELLINGTON_JUMP_SPEED);
+            this.setySpeed((float) Math.sin(Math.toRadians(60)) * SPELLINGTON_JUMP_SPEED);
         } else if (triedToJump && collisionRight && !collisionBottom) {
-            this.setxSpeed((float) Math.cos(Math.toRadians(45)) * SPELLINGTON_JUMP_SPEED);
-            this.setySpeed((float) Math.sin(Math.toRadians(45)) * SPELLINGTON_JUMP_SPEED);
+            this.setxSpeed((float) Math.cos(Math.toRadians(60)) * SPELLINGTON_JUMP_SPEED);
+            this.setySpeed((float) Math.sin(Math.toRadians(60)) * SPELLINGTON_JUMP_SPEED);
         }
 
         this.setX(this.getX() + this.getxSpeed() * delta);
