@@ -1,8 +1,10 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 /**
+ * A DynamicEntity that can be affected by damage among other things.
  *
  * @author Cristian Aldea
+ * @see DynamicEntity
  */
 public abstract class LivingEntity extends DynamicEntity {
 
@@ -95,5 +97,5 @@ public abstract class LivingEntity extends DynamicEntity {
         this.collisionRight = false;
         this.collisionLeft = false;
     }
-    
+
 }

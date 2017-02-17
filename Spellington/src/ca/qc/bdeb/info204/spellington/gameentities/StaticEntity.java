@@ -1,8 +1,10 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 /**
+ * A GameEntity that will not be able to move.
  *
  * @author Celtis
+ * @see GameEntity
  */
 public abstract class StaticEntity extends GameEntity {
 
@@ -10,8 +12,14 @@ public abstract class StaticEntity extends GameEntity {
         super(x, y, width, height);
     }
 
-    
+    @Override
+    public void setX(float x) {
+        //Do nothing
+    }
 
-   
+    @Override
+    public void setY(float y) {
+        //Do nothing
+    }
 
 }

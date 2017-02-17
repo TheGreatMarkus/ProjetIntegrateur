@@ -1,8 +1,10 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 /**
+ * A GameEntity that is able to move within the game.
  *
  * @author Celtis
+ * @see GameEntity
  */
 public abstract class DynamicEntity extends GameEntity {
 
@@ -36,6 +38,4 @@ public abstract class DynamicEntity extends GameEntity {
         this.ySpeed = ySpeed;
     }
 
-    
-    
 }

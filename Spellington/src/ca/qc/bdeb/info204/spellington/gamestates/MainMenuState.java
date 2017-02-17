@@ -14,9 +14,10 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 /**
- * GameState corresponding with the game menu
+ * A BasicGameState corresponding with the main menu of the game.
  *
  * @author Cristian Aldea
+ * @see GameCore
  */
 public class MainMenuState extends BasicGameState {
 
@@ -35,7 +36,7 @@ public class MainMenuState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        
+
     }
 
     @Override
@@ -43,7 +44,7 @@ public class MainMenuState extends BasicGameState {
         //Rendering title text using the text dimensions to center.
         g.setColor(Color.white);
         g.setFont(MENU_FONT);
-        
+
         int tempHeight = MENU_FONT.getHeight(MENU_TITLE);
         int tempWidth = MENU_FONT.getWidth(MENU_TITLE);
         g.drawString(MENU_TITLE, gc.getWidth() / 2 - tempWidth / 2, gc.getHeight() / 2 - tempHeight / 2);

@@ -9,9 +9,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 /**
- * Main protegonist of the game.
+ * A LivingEntity that will be controlled by the player.
  *
  * @author Cristian Aldea
+ * @see LivingEntity
  */
 public class Spellington extends LivingEntity {
 

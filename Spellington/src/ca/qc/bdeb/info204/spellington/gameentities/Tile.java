@@ -1,8 +1,10 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 /**
+ * A StaticEntity that will compose the map of the game.
  *
  * @author Cristian Aldea
+ * @see StaticEntity
  */
 public class Tile extends StaticEntity {
 
@@ -24,7 +26,5 @@ public class Tile extends StaticEntity {
     public void setTileState(TileState tileState) {
         this.tileState = tileState;
     }
-    
-    
 
 }

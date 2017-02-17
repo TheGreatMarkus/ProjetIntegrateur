@@ -31,7 +31,7 @@ public class GameCore extends StateBasedGame {
 
     /**
      * Main method of the program
-     * 
+     *
      * @param args the command line arguments
      * @throws org.newdawn.slick.SlickException
      */
@@ -41,7 +41,7 @@ public class GameCore extends StateBasedGame {
         /*Calculation of the scale of the in-game render. Uses the width and 
         height of Screen Size and the Target render size to determine smallest 
         scale.*/
-        
+
         if (((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width) < ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height)) {
             SCALE = ((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width);
         } else {
@@ -80,9 +80,7 @@ public class GameCore extends StateBasedGame {
     @Override
     public void mouseReleased(int button, int x, int y) {
         super.mouseReleased(button, x, y);
-        
+
     }
-    
-    
 
 }

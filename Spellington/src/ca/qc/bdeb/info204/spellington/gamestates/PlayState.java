@@ -16,6 +16,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
+ * A BasicGameState corresponding to the playing part of the game.
  *
  * @author Cristian Aldea
  */
@@ -41,7 +42,7 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        g.scale(GameCore.SCALE, GameCore.SCALE);
+        g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la permière ligne de render
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
@@ -53,6 +54,7 @@ public class PlayState extends BasicGameState {
         g.drawString("ESC : Menu / F3 : DEBUG ", GameCore.RENDER_SIZE.width - 230, 20);
 
         debugInfo(g, gc);
+
     }
 
     @Override
@@ -92,7 +94,7 @@ public class PlayState extends BasicGameState {
 
     /**
      * Displays information about spellington for debug purposes
-     * 
+     *
      * @param g
      */
     private void debugInfo(Graphics g, GameContainer gc) {
@@ -124,7 +126,7 @@ public class PlayState extends BasicGameState {
             textY += textYIncrement;
             g.drawString("Collision :", textX, textY);
             textY += textYIncrement;
-            
+
             int startingX = 10;
             int startingY = textY + 10;
             int tempSize = 25;
@@ -144,6 +146,7 @@ public class PlayState extends BasicGameState {
             if (spellington.getCollisionLeft()) {
                 g.fillRect(startingX, startingY + tempSize, tempSize, tempSize);
             }
+            g.fillOval(gc.getInput().getMouseX() / GameCore.SCALE - 5, gc.getInput().getMouseY() / GameCore.SCALE - 5, 10, 10);
         }
     }
 

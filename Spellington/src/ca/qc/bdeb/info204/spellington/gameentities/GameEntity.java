@@ -3,11 +3,11 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 import org.newdawn.slick.geom.Rectangle;
 
 /**
- * A entity that will be in the game and interact with the world.
+ * An entity that will be in the game.
  *
  * @author Cristian Aldea
  */
-public class GameEntity extends Rectangle{
+public abstract class GameEntity extends Rectangle {
 
     public GameEntity(float x, float y, float width, float height) {
         super(x, y, width, height);

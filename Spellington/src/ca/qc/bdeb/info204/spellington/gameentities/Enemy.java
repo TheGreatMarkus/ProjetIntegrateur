@@ -3,8 +3,10 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 import java.util.ArrayList;
 
 /**
+ * A LivingEntity opposing the player.
  *
  * @author Celtis
+ * @see LivingEntity
  */
 public abstract class Enemy extends LivingEntity {
 

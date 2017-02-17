@@ -4,6 +4,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 
 /**
+ * Class dedicated to performing long or complex calculations for the game.
  *
  * @author Cristian Aldea
  */
@@ -27,8 +28,10 @@ public class Calculations {
 
             float widthIntersection = Math.abs(right - left);
             float heightIntersection = Math.abs(bottom - top);
-            
-            //The side of the correction is determined by calculating the shallowest side of the intersection
+
+            /*The side of the correction is determined by calculating the 
+            shallowest side of the intersection and the relative x and y positions
+            of the entity to be moved*/
             if (heightIntersection < widthIntersection) {
                 if (tile.getCenterY() < creature.getCenterY()) {
                     creature.setY(creature.getY() + heightIntersection);
