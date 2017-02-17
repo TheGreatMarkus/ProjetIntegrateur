@@ -2,7 +2,7 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 
 /**
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class Tile extends StaticEntity {
 

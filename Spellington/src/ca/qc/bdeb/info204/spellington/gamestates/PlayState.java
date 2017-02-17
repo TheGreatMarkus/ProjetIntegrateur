@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import org.newdawn.slick.Color;
@@ -16,7 +17,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 /**
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class PlayState extends BasicGameState {
 
@@ -26,11 +27,57 @@ public class PlayState extends BasicGameState {
 
     public static final float GRAVITY = 0.05f;
 
+    //Temporary debug variable
+    private static boolean debugMode = true;
+
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
         //Very bad implementation of 
         map = new TiledMap("src/resources/map/test_important.tmx");
+        extractMapInfo();
+        spellington = new Spellington(200, 500);
+    }
+
+    @Override
+    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+        g.scale(GameCore.SCALE, GameCore.SCALE);
+
+        g.setColor(Color.white);
+        map.render(0, 0, 0);
+
+        g.setColor(Color.blue);
+        spellington.render(g);
+
+        g.setColor(Color.white);
+        g.drawString("ESC : Menu / F3 : DEBUG ", GameCore.RENDER_SIZE.width - 230, 20);
+
+        debugInfo(g, gc);
+    }
+
+    @Override
+    public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+        if (gc.getInput().isKeyDown(Input.KEY_ESCAPE)) {
+            game.enterState(GameCore.MAIN_MENU_STATE_ID, new FadeOutTransition(), new FadeInTransition());
+        }
+        if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
+            debugMode = !debugMode;
+        }
+
+        spellington.update(gc.getInput(), delta);
+        for (int i = 0; i < mapCollision.length; i++) {
+            for (int j = 0; j < mapCollision[i].length; j++) {
+                Calculations.checkMapCollision(mapCollision[i][j], spellington);
+            }
+        }
+
+    }
+
+    /**
+     *
+     * @author Cristian Aldea
+     */
+    private void extractMapInfo() {
         mapCollision = new Tile[18][32];
         for (int i = 0; i < map.getHeight(); i++) {
             for (int j = 0; j < map.getWidth(); j++) {
@@ -41,108 +88,67 @@ public class PlayState extends BasicGameState {
                 }
             }
         }
-
-        spellington = new Spellington(500, 500);
     }
 
-    @Override
-    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        g.scale(GameCore.SCALE, GameCore.SCALE);
+    /**
+     * Displays information about spellington for debug purposes
+     * 
+     * @param g
+     */
+    private void debugInfo(Graphics g, GameContainer gc) {
+        if (debugMode) {
+            g.setColor(Color.lightGray);
+            for (int i = 0; i < mapCollision.length; i++) {
+                for (int j = 0; j < mapCollision[i].length; j++) {
+                    if (mapCollision[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
+                        g.drawRect(mapCollision[i][j].getX(), mapCollision[i][j].getY(), 50, 50);
+                    }
+                }
+            }
+            g.setColor(Color.white);
 
-        g.setColor(Color.white);
-        map.render(0, 0, 0);
-        for (int i = 0; i < mapCollision.length; i++) {
-            for (int j = 0; j < mapCollision[i].length; j++) {
-                g.drawRect(mapCollision[i][j].getX(), mapCollision[i][j].getY(), 50, 50);
+            int textY = 10;
+            int textX = 10;
+            int textYIncrement = 15;
+            g.drawString("DEBUG", textX, textY);
+            textY += textYIncrement;
+            g.drawString("FPS : " + gc.getFPS(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Spellington X : " + spellington.getX(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Spellington Y : " + spellington.getY(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Spellington X Speed : " + spellington.getxSpeed(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Spellington Y Speed : " + spellington.getySpeed(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Collision :", textX, textY);
+            textY += textYIncrement;
+            
+            int startingX = 10;
+            int startingY = textY + 10;
+            int tempSize = 25;
+            g.drawRect(startingX + tempSize, startingY, tempSize, tempSize); //Top
+            g.drawRect(startingX + tempSize, startingY + tempSize * 2, tempSize, tempSize); //Bottom
+            g.drawRect(startingX + tempSize * 2, startingY + tempSize, tempSize, tempSize); //Right
+            g.drawRect(startingX, startingY + tempSize, tempSize, tempSize); //Left
+            if (spellington.getCollisionTop()) {
+                g.fillRect(startingX + tempSize, startingY, tempSize, tempSize);
+            }
+            if (spellington.getCollisionBottom()) {
+                g.fillRect(startingX + tempSize, startingY + tempSize * 2, tempSize, tempSize);
+            }
+            if (spellington.getCollisionRight()) {
+                g.fillRect(startingX + tempSize * 2, startingY + tempSize, tempSize, tempSize);
+            }
+            if (spellington.getCollisionLeft()) {
+                g.fillRect(startingX, startingY + tempSize, tempSize, tempSize);
             }
         }
-
-        g.setColor(Color.blue);
-        spellington.render(g);
-
-        g.setColor(Color.red);
-        g.drawString("Press Escape to leave the game and go to the menu", 20, 20);
-
-        //Debug collision spellington
-        g.setColor(Color.red);
-        g.drawRect(100, 100, 25, 25);
-        g.drawRect(100, 150, 25, 25);
-        g.drawRect(125, 125, 25, 25);
-        g.drawRect(75, 125, 25, 25);
-        if (spellington.getCollisionTop()) {
-            g.fillRect(100, 100, 25, 25);
-        }
-        if (spellington.getCollisionBottom()) {
-            g.fillRect(100, 150, 25, 25);
-        }
-        if (spellington.getCollisionRight()) {
-            g.fillRect(125, 125, 25, 25);
-        }
-        if (spellington.getCollisionLeft()) {
-            g.fillRect(75, 125, 25, 25);
-        }
-    }
-
-    @Override
-    public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-        if (gc.getInput().isKeyDown(Input.KEY_ESCAPE)) {
-            game.enterState(GameCore.MAIN_MENU_STATE_ID, new FadeOutTransition(), new FadeInTransition());
-        }
-
-        spellington.update(gc.getInput(), delta);
-        checkCollision();
     }
 
     @Override
     public int getID() {
         return GameCore.PLAY_STATE_ID;
     }
-
-    private void checkCollision() {
-        spellington.resetCollisionState();
-        for (int i = 0; i < mapCollision.length; i++) {
-            for (int j = 0; j < mapCollision[i].length; j++) {
-                if (spellington.getBounds().intersects(mapCollision[i][j].getBounds()) && mapCollision[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
-                    //If a collision is found this frame,
-                    float widthIntersection;
-                    float heightIntersection;
-                    //To get the width and height of the intersaction
-                    if (mapCollision[i][j].getBounds().getCenterX() < spellington.getBounds().getCenterX()) {
-                        widthIntersection = mapCollision[i][j].getX() + mapCollision[i][j].getWidth() - spellington.getX();
-                    } else {
-                        widthIntersection = spellington.getX() + spellington.getWidth() - mapCollision[i][j].getX();
-                    }
-                    if (mapCollision[i][j].getBounds().getCenterY() < spellington.getBounds().getCenterY()) {
-                        heightIntersection = mapCollision[i][j].getY() + mapCollision[i][j].getHeight() - spellington.getY();
-                    } else {
-                        heightIntersection = spellington.getY() + spellington.getHeight() - mapCollision[i][j].getY();
-                    }
-
-                    //The side of the correction is determined by calculating the shallowest side of the intersection
-                    if (heightIntersection < widthIntersection) {
-                        if (mapCollision[i][j].getBounds().getCenterY() < spellington.getBounds().getCenterY()) {
-                            spellington.setY(spellington.getY() + heightIntersection);
-                            spellington.setCollisionTop(true);
-                        } else if (mapCollision[i][j].getBounds().getCenterY() > spellington.getBounds().getCenterY()) {
-                            spellington.setY(spellington.getY() - (heightIntersection));
-                            spellington.setCollisionBottom(true);
-                        }
-                    } else if (widthIntersection < heightIntersection) {
-                        if (mapCollision[i][j].getBounds().getCenterX() < spellington.getBounds().getCenterX()) {
-                            spellington.setX(spellington.getX() + widthIntersection);
-                            spellington.setCollisionLeft(true);
-                        } else if (mapCollision[i][j].getBounds().getCenterX() > spellington.getBounds().getCenterX()) {
-                            spellington.setX(spellington.getX() - widthIntersection);
-                            spellington.setCollisionRight(true);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void extractMapInfo() {
-
-    }
-
 }

@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
+import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Dimension;
 import org.newdawn.slick.Graphics;
@@ -10,7 +11,7 @@ import org.newdawn.slick.SlickException;
 /**
  * Main protegonist of the game.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class Spellington extends LivingEntity {
 
@@ -50,27 +51,34 @@ public class Spellington extends LivingEntity {
      * length.
      */
     public void update(Input input, int delta) {
+        //On divize par SCALE pour match la position de la souris avec le scale du render
+        float mouseX = (float) input.getMouseX() / GameCore.SCALE;
+        float mouseY = (float) input.getMouseY() / GameCore.SCALE;
+
         this.setySpeed(this.getySpeed() + PlayState.GRAVITY);
 
         if (this.getCollisionBottom()) {
             this.setySpeed(0);
+
         }
         if (this.getCollisionRight() || this.getCollisionLeft()) {
             this.setxSpeed(0);
         }
-        if (this.getCollisionRight() && input.isKeyDown(Input.KEY_RIGHT)
-                || this.getCollisionLeft() && input.isKeyDown(Input.KEY_LEFT)) {
-            this.setySpeed(0);
+        if (getySpeed() > 0) {
+            if (this.getCollisionRight() && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX > this.getCenterX()
+                    || this.getCollisionLeft() && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX < this.getCenterX()) {
+                this.setySpeed(0);
+            }
         }
 
-        if (input.isKeyDown(Input.KEY_RIGHT) && input.isKeyDown(Input.KEY_LEFT)) {// à changer devrais suivre la souris
-        } else if (input.isKeyDown(Input.KEY_RIGHT)) {
-
+        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)
+                && mouseX > this.getCenterX()) {
             this.setxSpeed(this.getxSpeed() + SPELLINGTON_NORMAL_ACC);
             if (this.getxSpeed() > SPELLINGTON_MAX_SPEED) {
                 this.setxSpeed(SPELLINGTON_MAX_SPEED);
             }
-        } else if (input.isKeyDown(Input.KEY_LEFT)) {
+        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)
+                && mouseX < this.getCenterX()) {
             this.setxSpeed(this.getxSpeed() - SPELLINGTON_NORMAL_ACC);
             if (this.getxSpeed() < -SPELLINGTON_MAX_SPEED) {
                 this.setxSpeed(-SPELLINGTON_MAX_SPEED);
@@ -78,21 +86,25 @@ public class Spellington extends LivingEntity {
         } else {
             this.setxSpeed(0);
         }
-
-        if (input.isKeyDown(Input.KEY_UP) && collisionBottom) {
-            this.setySpeed(SPELLINGTON_JUMP_SPEED);
+        boolean triedToJump = false;
+        if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+            triedToJump = true;
         }
-        if (input.isKeyDown(Input.KEY_UP) && collisionLeft && !collisionBottom) {
+
+        if (triedToJump && collisionBottom) {
+            this.setySpeed(SPELLINGTON_JUMP_SPEED);
+        } else if (triedToJump && collisionLeft && !collisionBottom) {
+
             this.setxSpeed((float) Math.cos(Math.toRadians(45)) * -SPELLINGTON_JUMP_SPEED);
             this.setySpeed((float) Math.sin(Math.toRadians(45)) * SPELLINGTON_JUMP_SPEED);
-        }
-        if (input.isKeyDown(Input.KEY_UP) && collisionRight && !collisionBottom) {
+        } else if (triedToJump && collisionRight && !collisionBottom) {
             this.setxSpeed((float) Math.cos(Math.toRadians(45)) * SPELLINGTON_JUMP_SPEED);
             this.setySpeed((float) Math.sin(Math.toRadians(45)) * SPELLINGTON_JUMP_SPEED);
         }
 
         this.setX(this.getX() + this.getxSpeed() * delta);
         this.setY(this.getY() + this.getySpeed() * delta);
+        this.resetCollisionState();
     }
 
     public void render(Graphics g) {

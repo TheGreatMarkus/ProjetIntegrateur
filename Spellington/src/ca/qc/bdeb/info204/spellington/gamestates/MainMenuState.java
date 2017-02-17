@@ -16,7 +16,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 /**
  * GameState corresponding with the game menu
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class MainMenuState extends BasicGameState {
 

@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Core of the game.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class GameCore extends StateBasedGame {
 
@@ -25,21 +25,23 @@ public class GameCore extends StateBasedGame {
 
     private static final String GAME_TITLE = "Réveil de Spellington";
 
-    private static final int TARGER_FPS = 61;
+    private static final int TARGER_FPS = 60;
 
     private static AppGameContainer appGameContainer;
 
     /**
+     * Main method of the program
+     * 
      * @param args the command line arguments
      * @throws org.newdawn.slick.SlickException
      */
     public static void main(String[] args) throws SlickException {
-        //Pour set les natives nécessaires aux libraires, don't touch.
         System.setProperty("org.lwjgl.librarypath", new File("lib/natives").getAbsolutePath());
         System.setProperty("net.java.games.input.librarypath", new File("lib/natives").getAbsolutePath());
         /*Calculation of the scale of the in-game render. Uses the width and 
         height of Screen Size and the Target render size to determine smallest 
         scale.*/
+        
         if (((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width) < ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height)) {
             SCALE = ((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width);
         } else {
@@ -51,6 +53,7 @@ public class GameCore extends StateBasedGame {
         appGameContainer.setVSync(false);
         appGameContainer.setIcon("src/resources/icon.png");
         appGameContainer.setTitle(GAME_TITLE);
+        appGameContainer.setShowFPS(false);
         //Start of the game.
         appGameContainer.start();
 
@@ -73,5 +76,13 @@ public class GameCore extends StateBasedGame {
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
     }
+
+    @Override
+    public void mouseReleased(int button, int x, int y) {
+        super.mouseReleased(button, x, y);
+        
+    }
+    
+    
 
 }
