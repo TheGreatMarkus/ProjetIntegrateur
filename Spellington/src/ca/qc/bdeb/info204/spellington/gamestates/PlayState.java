@@ -2,6 +2,7 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
+import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import org.newdawn.slick.Color;
@@ -26,7 +27,7 @@ public class PlayState extends BasicGameState {
     private Spellington spellington;
     private Tile[][] mapCollision;
 
-    public static final float GRAVITY = 0.05f;
+    public static final Vector2D GRAV_FORCE = new Vector2D(0, 0.001f);
 
     //Temporary debug variable
     private static boolean debugMode = true;
@@ -69,7 +70,7 @@ public class PlayState extends BasicGameState {
         spellington.update(gc.getInput(), delta);
         for (int i = 0; i < mapCollision.length; i++) {
             for (int j = 0; j < mapCollision[i].length; j++) {
-                Calculations.checkMapCollision(mapCollision[i][j], spellington);
+                Calculations.checkCollision(mapCollision[i][j], spellington);
             }
         }
 
@@ -120,9 +121,9 @@ public class PlayState extends BasicGameState {
             textY += textYIncrement;
             g.drawString("Spellington Y : " + spellington.getY(), textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington X Speed : " + spellington.getxSpeed(), textX, textY);
+            g.drawString("Spellington X Speed : " + spellington.getSpeedVector().getX(), textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington Y Speed : " + spellington.getySpeed(), textX, textY);
+            g.drawString("Spellington Y Speed : " + spellington.getSpeedVector().getY(), textX, textY);
             textY += textYIncrement;
             g.drawString("Collision :", textX, textY);
             textY += textYIncrement;
