@@ -49,7 +49,7 @@ public class PlayState extends BasicGameState {
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
-
+        
         g.setColor(Color.blue);
         spellington.render(g);
 
