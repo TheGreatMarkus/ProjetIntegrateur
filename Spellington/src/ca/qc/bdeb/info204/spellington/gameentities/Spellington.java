@@ -20,9 +20,9 @@ public class Spellington extends LivingEntity {
     private static Image IMG_SPELLINGTON;
 
     private static final int INIT_MAX_LIFE = 100;
-    private static final int MASS = 1;
+    private static final int MASS = 2;
     private static final Vector2D X_ACC = new Vector2D(0.003f, 0);
-    private static final float MAX_X_SPEED = 1.f;
+    private static final float MAX_X_SPEED = 0.7f;
     private static final float INIT_JUMP_SPEED = -1.0f;
     //WJ : WallJump
     private static final float WJ_ANGLE = (float) Math.toRadians(45);
@@ -30,10 +30,9 @@ public class Spellington extends LivingEntity {
     private static final Vector2D LEFT_WJ_INIT_SPEED = new Vector2D(INIT_JUMP_SPEED * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED * (float) Math.sin(WJ_ANGLE));
     private static final Vector2D RIGHT_WJ_INIT_SPEED = new Vector2D(INIT_JUMP_SPEED * (float) Math.cos(WJ_ANGLE), -INIT_JUMP_SPEED * (float) Math.sin(WJ_ANGLE));
 
-    private static final Dimension SPELLINGTON_SIZE = new Dimension(48, 98);
+    private static final Dimension SPELLINGTON_SIZE = new Dimension(45, 90);
 
     //Using equation d = (vf^2 - vi^2)/2a
-
     /**
      *
      * @param x
@@ -143,7 +142,7 @@ public class Spellington extends LivingEntity {
 
     public void render(Graphics g) {
         //g.drawImage(IMG_SPELLINGTON, this.getX(), this.getY());
-        g.fillRect(x, y, 50, 100);
+        g.fillRect(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height);
     }
 
 }
