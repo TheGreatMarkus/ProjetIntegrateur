@@ -5,6 +5,7 @@ import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
+import java.awt.Dimension;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -28,6 +29,7 @@ public class PlayState extends BasicGameState {
     private Tile[][] mapCollision;
 
     public static final Vector2D GRAV_FORCE = new Vector2D(0, 0.001f);
+    public static final Dimension DIM_MAP = new Dimension(32, 18);
 
     //Temporary debug variable
     private static boolean debugMode = true;
@@ -68,12 +70,7 @@ public class PlayState extends BasicGameState {
         }
 
         spellington.update(gc.getInput(), delta);
-        for (int i = 0; i < mapCollision.length; i++) {
-            for (int j = 0; j < mapCollision[i].length; j++) {
-                Calculations.checkCollision(mapCollision[i][j], spellington);
-            }
-        }
-
+        Calculations.checkMapCollision(mapCollision, spellington);
     }
 
     /**
@@ -81,7 +78,7 @@ public class PlayState extends BasicGameState {
      * @author Cristian Aldea
      */
     private void extractMapInfo() {
-        mapCollision = new Tile[18][32];
+        mapCollision = new Tile[DIM_MAP.height][DIM_MAP.width];
         for (int i = 0; i < map.getHeight(); i++) {
             for (int j = 0; j < map.getWidth(); j++) {
                 if (map.getTileId(j, i, 0) != 0) {
