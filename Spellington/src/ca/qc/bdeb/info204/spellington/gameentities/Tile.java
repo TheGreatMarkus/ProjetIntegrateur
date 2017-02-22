@@ -16,11 +16,21 @@ public class Tile extends StaticEntity {
         PASSABLE,
         IMPASSABLE,
     }
+    public static enum TileEvent {
+        NONE,
+        DAMAGE,
+        SPAWN,
+        EXIT,
+        LEVER,
+    }
     private TileState tileState;
-
-    public Tile(float x, float y, float width, float height, TileState tileState) {
+    
+    private TileEvent tileEvent;
+    
+    public Tile(float x, float y, float width, float height, TileState tileState, TileEvent tileEvent) {
         super(x, y, width, height);
         this.tileState = tileState;
+        this.tileEvent = tileEvent;
     }
 
     public TileState getTileState() {
