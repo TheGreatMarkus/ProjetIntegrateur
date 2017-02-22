@@ -43,8 +43,8 @@ public class Vector2D {
         x += v.x;
         y += v.y;
     }
-    
-     public void sub(Vector2D v) {
+
+    public void sub(Vector2D v) {
         x -= v.x;
         y -= v.y;
     }

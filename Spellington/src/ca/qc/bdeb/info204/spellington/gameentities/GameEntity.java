@@ -9,6 +9,12 @@ import org.newdawn.slick.geom.Rectangle;
  */
 public abstract class GameEntity extends Rectangle {
 
+    public static enum Element {
+        FIRE,
+        ICE,
+        ELECTRICITY
+    }
+
     public GameEntity(float x, float y, float width, float height) {
         super(x, y, width, height);
         this.x = x;
