@@ -1,5 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
+import java.awt.Dimension;
+
 /**
  * A StaticEntity that will compose the map of the game.
  *
@@ -7,6 +9,8 @@ package ca.qc.bdeb.info204.spellington.gameentities;
  * @see StaticEntity
  */
 public class Tile extends StaticEntity {
+
+    public static final Dimension DIM_TILE = new Dimension(50, 50);
 
     public static enum TileState {
         PASSABLE,
