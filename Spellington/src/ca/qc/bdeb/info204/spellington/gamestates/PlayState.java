@@ -1,18 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.calculations.Calculations;
+import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -20,47 +17,45 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
+ * A BasicGameState corresponding to the playing part of the game.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class PlayState extends BasicGameState {
 
     private TiledMap map;
     private Spellington spellington;
-    private Rectangle[][] mapCollision;
+    private Tile[][] mapCollision;
+
+    public static final Vector2D GRAV_FORCE = new Vector2D(0, 0.001f);
+
+    //Temporary debug variable
+    private static boolean debugMode = true;
 
     @Override
-    public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        //Init of the playState
-        map = new TiledMap("src/resources/map/grotte test.tmx");
-        mapCollision = new Rectangle[15][15];
-        for (int i = 0; i < map.getHeight(); i++) {
-            for (int j = 0; j < map.getWidth(); j++) {
-                System.out.print(map.getTileId(j, i, 0));
-                if (map.getTileId(j, i, 0) != 0) {
-                    mapCollision[i][j] = new Rectangle(50 * j, 50 * i, 50, 50);
-                } else {
-                    mapCollision[i][j] = new Rectangle(9999, 9999, 50, 50);
-                }
+    public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-        spellington = new Spellington(500, 500);
+        //Very bad implementation of 
+        map = new TiledMap("src/resources/map/test_important.tmx");
+        extractMapInfo();
+        spellington = new Spellington(1500, 400);
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        g.drawString("Press Escape to leave the game and go to the menu", 20, 40);
+        g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la permière ligne de render
+
         g.setColor(Color.white);
         map.render(0, 0, 0);
-        for (int i = 0; i < mapCollision.length; i++) {
-            for (int j = 0; j < mapCollision[i].length; j++) {
-                g.drawRect(mapCollision[i][j].getX(), mapCollision[i][j].getY(), 50, 50);
-            }
-        }
+
+        g.setColor(Color.blue);
         spellington.render(g);
+
+        g.setColor(Color.white);
+        g.drawString("ESC : Menu / F3 : DEBUG ", GameCore.RENDER_SIZE.width - 230, 20);
+
+        debugInfo(g, gc);
+
     }
 
     @Override
@@ -68,59 +63,96 @@ public class PlayState extends BasicGameState {
         if (gc.getInput().isKeyDown(Input.KEY_ESCAPE)) {
             game.enterState(GameCore.MAIN_MENU_STATE_ID, new FadeOutTransition(), new FadeInTransition());
         }
-        spellington.update(gc.getInput(), delta);
+        if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
+            debugMode = !debugMode;
+        }
 
-        checkCollision();
+        spellington.update(gc.getInput(), delta);
+        for (int i = 0; i < mapCollision.length; i++) {
+            for (int j = 0; j < mapCollision[i].length; j++) {
+                Calculations.checkCollision(mapCollision[i][j], spellington);
+            }
+        }
+
+    }
+
+    /**
+     *
+     * @author Cristian Aldea
+     */
+    private void extractMapInfo() {
+        mapCollision = new Tile[18][32];
+        for (int i = 0; i < map.getHeight(); i++) {
+            for (int j = 0; j < map.getWidth(); j++) {
+                if (map.getTileId(j, i, 0) != 0) {
+                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.IMPASSABLE);
+                } else {
+                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE);
+                }
+            }
+        }
+    }
+
+    /**
+     * Displays information about spellington for debug purposes
+     *
+     * @param g
+     */
+    private void debugInfo(Graphics g, GameContainer gc) {
+        if (debugMode) {
+            g.setColor(Color.lightGray);
+            for (int i = 0; i < mapCollision.length; i++) {
+                for (int j = 0; j < mapCollision[i].length; j++) {
+                    if (mapCollision[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
+                        g.drawRect(mapCollision[i][j].getX(), mapCollision[i][j].getY(), 50, 50);
+                    }
+                }
+            }
+            g.setColor(Color.white);
+
+            int textY = 10;
+            int textX = 10;
+            int textYIncrement = 15;
+            g.drawString("DEBUG", textX, textY);
+            textY += textYIncrement;
+            g.drawString("FPS : " + gc.getFPS(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Spellington X : " + spellington.getX(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Spellington Y : " + spellington.getY(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Spellington X Speed : " + spellington.getSpeedVector().getX(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Spellington Y Speed : " + spellington.getSpeedVector().getY(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Collision :", textX, textY);
+            textY += textYIncrement;
+
+            int startingX = 10;
+            int startingY = textY + 10;
+            int tempSize = 25;
+            g.drawRect(startingX + tempSize, startingY, tempSize, tempSize); //Top
+            g.drawRect(startingX + tempSize, startingY + tempSize * 2, tempSize, tempSize); //Bottom
+            g.drawRect(startingX + tempSize * 2, startingY + tempSize, tempSize, tempSize); //Right
+            g.drawRect(startingX, startingY + tempSize, tempSize, tempSize); //Left
+            if (spellington.getCollisionTop()) {
+                g.fillRect(startingX + tempSize, startingY, tempSize, tempSize);
+            }
+            if (spellington.getCollisionBottom()) {
+                g.fillRect(startingX + tempSize, startingY + tempSize * 2, tempSize, tempSize);
+            }
+            if (spellington.getCollisionRight()) {
+                g.fillRect(startingX + tempSize * 2, startingY + tempSize, tempSize, tempSize);
+            }
+            if (spellington.getCollisionLeft()) {
+                g.fillRect(startingX, startingY + tempSize, tempSize, tempSize);
+            }
+            g.fillOval(gc.getInput().getMouseX() / GameCore.SCALE - 5, gc.getInput().getMouseY() / GameCore.SCALE - 5, 10, 10);
+        }
     }
 
     @Override
     public int getID() {
         return GameCore.PLAY_STATE_ID;
     }
-
-    private void checkCollision() {
-        spellington.resetCollisionState();
-        for (int i = 0; i < mapCollision.length; i++) {
-            for (int j = 0; j < mapCollision[i].length; j++) {
-                boolean collision = false;
-                if (spellington.getBounds().intersects(mapCollision[i][j]) && !collision) {
-                    //If a collision is found this frame,
-                    float widthIntersection;
-                    float heightIntersection;
-                    //To get the width and height of the intersaction
-                    if (mapCollision[i][j].getCenterX() < spellington.getBounds().getCenterX()) {
-                        widthIntersection = mapCollision[i][j].getX() + mapCollision[i][j].getWidth() - spellington.getX();
-                    } else {
-                        widthIntersection = spellington.getX() + spellington.getWidth() - mapCollision[i][j].getX();
-                    }
-                    if (mapCollision[i][j].getCenterY() < spellington.getBounds().getCenterY()) {
-                        heightIntersection = mapCollision[i][j].getY() + mapCollision[i][j].getHeight() - spellington.getY();
-
-                    } else {
-                        heightIntersection = spellington.getY() + spellington.getHeight() - mapCollision[i][j].getY();
-                    }
-                    //The side of the collision is determined by calculating the shallowest side of the intersection
-                    if (widthIntersection < heightIntersection) {
-                        if (mapCollision[i][j].getCenterX() < spellington.getBounds().getCenterX()) {
-                            spellington.setX(spellington.getX() + (widthIntersection));
-                            spellington.setCollisionLeft(true);
-                        } else {
-                            spellington.setX(spellington.getX() - (widthIntersection));
-                            spellington.setCollisionRight(true);
-                        }
-                    } else if (heightIntersection < widthIntersection) {
-                        if (mapCollision[i][j].getCenterY() < spellington.getBounds().getCenterY()) {
-                            spellington.setY(spellington.getY() + (heightIntersection));
-                            spellington.setCollisionTop(true);
-                        } else {
-                            spellington.setY(spellington.getY() - (heightIntersection));
-                            spellington.setCollisionBottom(true);
-                        }
-                    }
-                }else {
-                }
-            }
-        }
-    }
-
 }

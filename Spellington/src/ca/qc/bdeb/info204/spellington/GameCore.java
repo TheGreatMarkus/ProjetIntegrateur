@@ -13,45 +13,61 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Core of the game.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class GameCore extends StateBasedGame {
 
-    private static final String GAME_TITLE = "Réveil de Spellington";
-    private static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-
+    public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    //For testing and seeing the console text
+    //public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
+    public static final Dimension RENDER_SIZE = new Dimension(1600, 900);
+    public static float SCALE;
     public static final int MAIN_MENU_STATE_ID = 0;
     public static final int PLAY_STATE_ID = 1;
+
+    private static final String GAME_TITLE = "Réveil de Spellington";
+
+    private static final int TARGER_FPS = 60;
+
     private static AppGameContainer appGameContainer;
 
     /**
+     * Main method of the program
+     *
      * @param args the command line arguments
      * @throws org.newdawn.slick.SlickException
      */
     public static void main(String[] args) throws SlickException {
-        //Pour set les natives nécessaires aux libraires, don't touch.
         System.setProperty("org.lwjgl.librarypath", new File("lib/natives").getAbsolutePath());
         System.setProperty("net.java.games.input.librarypath", new File("lib/natives").getAbsolutePath());
+        /*Calculation of the scale of the in-game render. Uses the width and 
+        height of Screen Size and the Target render size to determine smallest 
+        scale.*/
 
-        appGameContainer = new AppGameContainer(new GameCore());
-        //appGameContainer setup.
-        //appGameContainer.setDisplayMode(SCREEN_SIZE.width, SCREEN_SIZE.height, true);
-        appGameContainer.setDisplayMode(750, 750, false);
+        if (((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width) < ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height)) {
+            SCALE = ((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width);
+        } else {
+            SCALE = ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height);
+        }
+
+        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
+        appGameContainer.setTargetFrameRate(TARGER_FPS);
+        appGameContainer.setVSync(false);
         appGameContainer.setIcon("src/resources/icon.png");
         appGameContainer.setTitle(GAME_TITLE);
-        //Start game.
+        appGameContainer.setShowFPS(false);
+        //Start of the game.
         appGameContainer.start();
 
     }
 
-    public GameCore() {
+    public GameCore() throws SlickException {
         super(GAME_TITLE);
-
     }
 
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
-        //It is important to keep the state addition order. 
+        //It is important to keep the state addition order.
         this.addState(new MainMenuState());
         this.addState(new PlayState());
 
@@ -61,6 +77,12 @@ public class GameCore extends StateBasedGame {
 
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
+    }
+
+    @Override
+    public void mouseReleased(int button, int x, int y) {
+        super.mouseReleased(button, x, y);
+
     }
 
 }

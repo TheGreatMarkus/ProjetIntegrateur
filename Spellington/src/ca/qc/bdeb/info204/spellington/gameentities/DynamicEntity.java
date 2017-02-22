@@ -1,13 +1,16 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
+import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+
 /**
+ * A GameEntity that is able to move within the game.
  *
  * @author Celtis
+ * @see GameEntity
  */
 public abstract class DynamicEntity extends GameEntity {
 
-    protected float xSpeed;
-    protected float ySpeed;
+    protected Vector2D speedVector;
 
     /**
      *
@@ -18,24 +21,10 @@ public abstract class DynamicEntity extends GameEntity {
      */
     public DynamicEntity(float x, float y, float width, float height) {
         super(x, y, width, height);
+        speedVector = new Vector2D(0, 0);
     }
 
-    public float getxSpeed() {
-        return xSpeed;
+    public Vector2D getSpeedVector() {
+        return speedVector;
     }
-
-    public void setxSpeed(float xSpeed) {
-        this.xSpeed = xSpeed;
-    }
-
-    public float getySpeed() {
-        return ySpeed;
-    }
-
-    public void setySpeed(float ySpeed) {
-        this.ySpeed = ySpeed;
-    }
-
-    
-    
 }

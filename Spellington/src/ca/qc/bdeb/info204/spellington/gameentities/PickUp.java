@@ -1,18 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 /**
+ * A StaticEntity that the player will be able to pick up.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
+ * @see StaticEntity
  */
 public class PickUp extends StaticEntity {
-    
-    public static enum PickUpType{
-    
+
+    public static enum PickUpType {
+
     }
 
     public PickUp(float x, float y, float width, float height) {

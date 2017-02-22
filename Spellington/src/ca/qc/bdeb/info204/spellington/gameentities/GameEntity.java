@@ -3,60 +3,23 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 import org.newdawn.slick.geom.Rectangle;
 
 /**
- * A entity that will be in the game and interact with the world.
+ * An entity that will be in the game.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
-public class GameEntity {
+public abstract class GameEntity extends Rectangle {
 
-    protected float x;
-    protected float y;
-    protected float width;
-    protected float height;
+    public static enum Element {
+        FIRE,
+        ICE,
+        ELECTRICITY
+    }
 
     public GameEntity(float x, float y, float width, float height) {
+        super(x, y, width, height);
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
-    
-    public Rectangle getBounds(){
-        return new Rectangle(x, y, width, height);
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-    
-    
-
 }

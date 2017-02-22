@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="1">
+ <tileset firstgid="1" name="tuiles cachot lave" tilewidth="50" tileheight="50" tilecount="64" columns="8">
+  <image source="tuiles/tuiles cachot lave.png" width="400" height="400"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NkYGBgHGBMDqCGvlH7B6/95KYbUtxFC/+P2j9qP6n2k+MGapSv1CiHKQHUqgtItROf/bR2AzH209INxNpPKzeQYj89MABwEdV/AAkAAA==
+  </data>
+ </layer>
+</map>
