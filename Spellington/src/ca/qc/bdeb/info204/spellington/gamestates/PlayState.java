@@ -26,6 +26,7 @@ public class PlayState extends BasicGameState {
     private TiledMap map;
     private Spellington spellington;
     private Tile[][] mapCollision;
+    private Tile[][] mapEvent;
 
     public static final Vector2D GRAV_FORCE = new Vector2D(0, 0.001f);
 
@@ -36,7 +37,7 @@ public class PlayState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
         //Very bad implementation of 
-        map = new TiledMap("src/resources/map/test_important.tmx");
+        map = new TiledMap("src/resources/map/mapTestGrotte.tmx");
         extractMapInfo();
         spellington = new Spellington(1500, 400);
     }
@@ -47,6 +48,8 @@ public class PlayState extends BasicGameState {
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
+        map.render(0, 0, 2);
+        
 
         g.setColor(Color.blue);
         spellington.render(g);
@@ -84,10 +87,32 @@ public class PlayState extends BasicGameState {
         mapCollision = new Tile[18][32];
         for (int i = 0; i < map.getHeight(); i++) {
             for (int j = 0; j < map.getWidth(); j++) {
-                if (map.getTileId(j, i, 0) != 0) {
-                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.IMPASSABLE);
+                if (map.getTileId(j, i, 1) == 0) {
+                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
+                }if (map.getTileId(j, i, 1) == 1) {
+                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.IMPASSABLE, Tile.TileEvent.DAMAGE);
                 } else {
-                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE);
+                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.IMPASSABLE, Tile.TileEvent.NONE);
+                }
+            }
+        }
+        mapEvent = new Tile[18][32];
+        for (int i = 0; i < map.getHeight(); i++) {
+            for (int j = 0; j < map.getWidth(); j++) {
+                if (map.getTileId(j, i, 2) == 0) {
+                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
+                }if (map.getTileId(j, i, 2) == 1) {
+                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.EXIT);
+                }if (map.getTileId(j, i, 2) == 2) {
+                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.SPAWN);
+                }if (map.getTileId(j, i, 2) == 3) {
+                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.SPAWN);
+                }if (map.getTileId(j, i, 2) == 4) {
+                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.SPAWN);
+                }if (map.getTileId(j, i, 2) == 5) {
+                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.LEVER);
+                } else {
+                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
                 }
             }
         }
