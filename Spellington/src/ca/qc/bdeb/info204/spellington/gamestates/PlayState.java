@@ -48,7 +48,6 @@ public class PlayState extends BasicGameState {
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
-        map.render(0, 0, 2);
         
 
         g.setColor(Color.blue);
@@ -87,10 +86,8 @@ public class PlayState extends BasicGameState {
         mapCollision = new Tile[18][32];
         for (int i = 0; i < map.getHeight(); i++) {
             for (int j = 0; j < map.getWidth(); j++) {
-                if (map.getTileId(j, i, 1) == 0) {
+                if (map.getTileId(j, i, 1) == map.getTileSet(1).firstGID+11) {
                     mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
-                }if (map.getTileId(j, i, 1) == 1) {
-                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.IMPASSABLE, Tile.TileEvent.DAMAGE);
                 } else {
                     mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.IMPASSABLE, Tile.TileEvent.NONE);
                 }
