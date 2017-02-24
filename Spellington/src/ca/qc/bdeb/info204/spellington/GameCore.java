@@ -41,8 +41,8 @@ public class GameCore extends StateBasedGame {
         System.setProperty("org.lwjgl.librarypath", new File("lib/natives").getAbsolutePath());
         System.setProperty("net.java.games.input.librarypath", new File("lib/natives").getAbsolutePath());
         /*Calculation of the scale of the in-game render. Uses the width and 
-        height of Screen Size and the Target render size to determine smallest 
-        scale.*/
+         height of Screen Size and the Target render size to determine smallest 
+         scale.*/
 
         if (((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width) < ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height)) {
             SCALE = ((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width);

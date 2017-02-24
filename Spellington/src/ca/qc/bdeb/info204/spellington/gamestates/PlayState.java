@@ -123,11 +123,17 @@ public class PlayState extends BasicGameState {
      */
     private void debugInfo(Graphics g, GameContainer gc) {
         if (debugMode) {
-            g.setColor(Color.lightGray);
-
             map.render(0, 0, 1);
-            g.setColor(Color.white);
+            g.setColor(Color.red);
 
+            for (int i = 0; i < DIM_MAP.height; i++) {
+                g.drawRect(Calculations.TargetJ * 50, i * 50, 50, 50);
+            }
+            for (int j = 0; j < DIM_MAP.width; j++) {
+                g.drawRect(j * 50, Calculations.TargetI * 50, 50, 50);
+            }
+
+            g.setColor(Color.lightGray);
             int textY = 10;
             int textX = 10;
             int textYIncrement = 15;
