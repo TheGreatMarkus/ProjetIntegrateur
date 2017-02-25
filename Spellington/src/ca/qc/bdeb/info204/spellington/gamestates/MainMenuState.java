@@ -1,11 +1,11 @@
 package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -31,73 +31,72 @@ public class MainMenuState extends BasicGameState {
     private static UnicodeFont uniFont;
 
     //Text for the menu.
-    private static final String MENU_TITLE = "Le réveil de Spellington, testage";
-    private static final String MENU_PESEZ_POUR_JOUER = "Pesez Enter pour Jouer.";
-    private static final String MENU_PESEZ_POUR_QUITTER = "Pesez Escape pour Quitter.";
+    private static final String MM_TITLE = "Le réveil de Spellington";
+    private static final String MM_PLAY = "Jouer";
+    private static final String MM_OPTIONS = "Options";
+    private static final String MM_EXIT = "Quitter";
 
-    @Override
-    public int getID() {
-        return GameCore.MAIN_MENU_STATE_ID;
-    }
+    private ArrayList<MenuItem> MM_TEXTS;
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
+        //Initialisation du font pour le menu.
+        MM_TEXTS = new ArrayList<>();
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/resources/fonts/Prince Valiant.ttf"));
-            font = font.deriveFont(Font.BOLD, 30.0f);
+            font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/resources/fonts/Paladin.ttf"));
+            font = font.deriveFont(Font.BOLD, 60.0f);
             uniFont = new UnicodeFont(font);
             uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
             uniFont.addAsciiGlyphs();
             uniFont.loadGlyphs();
         } catch (FontFormatException ex) {
-            Logger.getLogger(MainMenuState.class.getName()).log(Level.SEVERE, null, ex);
+
         } catch (IOException ex) {
-            Logger.getLogger(MainMenuState.class.getName()).log(Level.SEVERE, null, ex);
+
         }
+        MM_TEXTS.add(new MenuItem(gc, MM_TITLE, true, false, 0, 10, uniFont.getWidth(MM_TITLE), uniFont.getHeight(MM_TITLE)));
+
+        MM_TEXTS.add(new MenuItem(gc, MM_PLAY, true, false, 0, 400, uniFont.getWidth(MM_PLAY), uniFont.getHeight(MM_PLAY)));
+        MM_TEXTS.add(new MenuItem(gc, MM_OPTIONS, true, false, 0, 500, uniFont.getWidth(MM_OPTIONS), uniFont.getHeight(MM_OPTIONS)));
+        MM_TEXTS.add(new MenuItem(gc, MM_EXIT, true, false, 0, 600, uniFont.getWidth(MM_EXIT), uniFont.getHeight(MM_EXIT)));
+
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+        //g.scale(GameCore.SCALE, GameCore.SCALE);
         //Rendering title text using the text dimensions to center.
         g.setColor(Color.white);
         g.setFont(uniFont);
-        g.drawString(MENU_TITLE, gc.getWidth() / 2 - tempWidth / 2, gc.getHeight() / 2 - tempHeight / 2);
 
-        drawText(gc, g, MENU_TITLE, true, true, x, y);
-        drawText(gc, g, MENU_PESEZ_POUR_JOUER, true, true, x, y);
-        drawText(gc, g, MENU_PESEZ_POUR_QUITTER, true, true, x, y);
+        for (int i = 0; i < MM_TEXTS.size(); i++) {
+            MM_TEXTS.get(i).render(g, gc);
+        }
     }
 
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-        if (gc.getInput().isKeyDown(Input.KEY_ENTER)) {
+        for (int i = 0; i < MM_TEXTS.size(); i++) {
+            MM_TEXTS.get(i).setHoveredOver(
+                    MM_TEXTS.get(i).detHoveredOver(gc.getInput().getMouseX(), gc.getInput().getMouseY()));
+        }
+        boolean triedToClick = gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
+
+        if (MM_TEXTS.get(1).getHoveredOver() && triedToClick) {
             game.enterState(GameCore.PLAY_STATE_ID, new FadeOutTransition(), new FadeInTransition());
         }
-        if (gc.getInput().isKeyDown(Input.KEY_ESCAPE)) {
+        if (MM_TEXTS.get(2).getHoveredOver() && triedToClick) {
+            game.enterState(GameCore.OPTIONS_MENU_STATE_ID, new FadeOutTransition(), new FadeInTransition());
+        }
+        if (MM_TEXTS.get(3).getHoveredOver() && triedToClick) {
             gc.exit();
         }
 
     }
 
-    /**
-     * Writes text in the menu.
-     *
-     * @param centerH If the text is centered horizontally.
-     * @param centerV If the text is centered vertically.
-     * @param x X position of the text.
-     * @param y Y position of the text.
-     */
-    private void drawText(GameContainer gc, Graphics g, String text, boolean centerH, boolean centerV, int x, int y) {
-        if (centerH) {
-            int tempWidth = uniFont.getWidth(MENU_TITLE);
-            x = gc.getWidth() / 2 - tempWidth / 2;
-
-        }
-        if (centerV) {
-            int tempHeight = uniFont.getHeight(MENU_TITLE);
-            y = gc.getHeight() / 2 - tempHeight / 2;
-        }
-        g.drawString(text, x, y);
+    @Override
+    public int getID() {
+        return GameCore.MAIN_MENU_STATE_ID;
     }
-
+    
 }
