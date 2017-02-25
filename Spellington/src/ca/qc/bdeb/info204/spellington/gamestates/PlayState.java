@@ -63,7 +63,7 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-        if (gc.getInput().isKeyDown(Input.KEY_ESCAPE)) {
+        if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
             game.enterState(GameCore.PAUSE_MENU_STATE_ID);
         }
         if (gc.getInput().isKeyPressed(Input.KEY_F3)) {

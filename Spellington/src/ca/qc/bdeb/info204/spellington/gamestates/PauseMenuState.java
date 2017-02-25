@@ -33,10 +33,10 @@ public class PauseMenuState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-        if (gc.getInput().isKeyDown(Input.KEY_ESCAPE)) {
+        if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
             game.enterState(GameCore.MAIN_MENU_STATE_ID, new FadeOutTransition(), new FadeInTransition());
         }
-        if (gc.getInput().isKeyDown(Input.KEY_ENTER)) {
+        if (gc.getInput().isKeyPressed(Input.KEY_ENTER)) {
             game.enterState(GameCore.PLAY_STATE_ID, new FadeOutTransition(), new FadeInTransition());
         }
     }
