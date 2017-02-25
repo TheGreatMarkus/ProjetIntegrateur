@@ -2,6 +2,8 @@ package ca.qc.bdeb.info204.spellington;
 
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import ca.qc.bdeb.info204.spellington.gamestates.MainMenuState;
+import ca.qc.bdeb.info204.spellington.gamestates.OptionsMenuState;
+import ca.qc.bdeb.info204.spellington.gamestates.PauseMenuState;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
@@ -24,6 +26,8 @@ public class GameCore extends StateBasedGame {
     public static float SCALE;
     public static final int MAIN_MENU_STATE_ID = 0;
     public static final int PLAY_STATE_ID = 1;
+    public static final int OPTIONS_MENU_STATE_ID = 2;
+    public static final int PAUSE_MENU_STATE_ID = 3;
 
     private static final String GAME_TITLE = "Réveil de Spellington";
 
@@ -70,10 +74,14 @@ public class GameCore extends StateBasedGame {
         //It is important to keep the state addition order.
         this.addState(new MainMenuState());
         this.addState(new PlayState());
+        this.addState(new OptionsMenuState());
+        this.addState(new PauseMenuState());
 
         //Initialise game states.
         this.getState(MAIN_MENU_STATE_ID).init(gc, this);
         this.getState(PLAY_STATE_ID).init(gc, this);
+        this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
+        this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
 
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
