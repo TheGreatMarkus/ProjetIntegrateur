@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -34,6 +35,17 @@ public class PlayState extends BasicGameState {
 
     //Temporary debug variable
     private static boolean debugMode = false;
+    
+    private Image healthBarHUD, textRectangleHUD, utilitySquare1HUD, utilitySquare2HUD;
+    private static final int HEALTHBARPOSX = 5, TEXTRECTANGLEPOSX = 230, UTILITYSQUARE1POSX = 10, UTILITYSQUARE2POSX = 120;
+    private static final int HEALTHBARPOSY = 5, TEXTRECTANGLEPOSY = 855, UTILITYSQUARE1POSY = 795, UTILITYSQUARE2POSY = 795;
+    //Not final elements since they will be modified at all times
+    private int barX = 76 + HEALTHBARPOSX; //common X position of the color bars
+    private int healthBarY = 17 + HEALTHBARPOSY; //Y position of the health bar
+    private int xpBarY = 60 + HEALTHBARPOSY; //Y position of the xp bar
+    private int barWidth = 386, barHeight = 26; 
+    private static int alpha = 127; //50% color transparency
+    private static final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
@@ -45,7 +57,7 @@ public class PlayState extends BasicGameState {
     }
 
     @Override
-    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException{
         g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la permière ligne de render
 
         g.setColor(Color.white);
@@ -58,7 +70,8 @@ public class PlayState extends BasicGameState {
         g.drawString("ESC : Menu / F3 : DEBUG ", GameCore.RENDER_SIZE.width - 230, 20);
 
         debugInfo(g, gc);
-
+        
+        displayHUD(g);
     }
 
     @Override
@@ -172,5 +185,28 @@ public class PlayState extends BasicGameState {
     @Override
     public int getID() {
         return GameCore.PLAY_STATE_ID;
+    }
+
+    private void displayHUD(Graphics g) throws SlickException {
+        int textX = 230;
+        int textY = 820;
+        g.drawString("Active:", UTILITYSQUARE1POSX, UTILITYSQUARE1POSY-17);
+        g.drawString("Used:", UTILITYSQUARE2POSX, UTILITYSQUARE2POSY-17);
+        g.drawString("Potions:", textX, textY);
+              
+        this.healthBarHUD = new Image("src/resources/map/healthBar.png");
+        this.textRectangleHUD = new Image("src/resources/map/textRectangle.png");
+        this.utilitySquare1HUD = new Image("src/resources/map/utilitySquare.png");
+        this.utilitySquare2HUD = new Image("src/resources/map/utilitySquare.png");
+        
+        g.drawImage(this.healthBarHUD, HEALTHBARPOSX, HEALTHBARPOSY);
+        g.drawImage(this.textRectangleHUD, TEXTRECTANGLEPOSX, TEXTRECTANGLEPOSY);
+        g.drawImage(this.utilitySquare1HUD, UTILITYSQUARE1POSX, UTILITYSQUARE1POSY);
+        g.drawImage(this.utilitySquare2HUD, UTILITYSQUARE2POSX, UTILITYSQUARE2POSY);
+
+        g.setColor(HEALTHCOLOR);
+        g.fillRect(barX, healthBarY, 1f * barWidth, barHeight); //health constantly updated from 1f to 0f
+        g.setColor(XPCOLOR);
+        g.fillRect(barX, xpBarY, .5f * barWidth, barHeight);
     }
 }

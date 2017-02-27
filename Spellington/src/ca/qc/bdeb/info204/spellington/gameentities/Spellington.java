@@ -109,7 +109,7 @@ public class Spellington extends LivingEntity {
             }
         }
 
-        //Temporairy boolean because of a problem with isMousePressed.
+        //Temporary boolean because of a problem with isMousePressed.
         boolean triedToJump = false;
         if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
             triedToJump = true;
