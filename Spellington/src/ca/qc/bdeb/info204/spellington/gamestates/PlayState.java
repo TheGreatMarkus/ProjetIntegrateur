@@ -6,6 +6,7 @@ import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -37,13 +38,13 @@ public class PlayState extends BasicGameState {
     private static boolean debugMode = false;
     
     private Image healthBarHUD, textRectangleHUD, utilitySquare1HUD, utilitySquare2HUD;
-    private static final int HEALTHBARPOSX = 5, TEXTRECTANGLEPOSX = 230, UTILITYSQUARE1POSX = 10, UTILITYSQUARE2POSX = 120;
-    private static final int HEALTHBARPOSY = 5, TEXTRECTANGLEPOSY = 855, UTILITYSQUARE1POSY = 795, UTILITYSQUARE2POSY = 795;
+    private static int HEALTHBARPOSX = 5, TEXTRECTANGLEPOSX = (GameCore.RENDER_SIZE.width/2) - 400, UTILITYSQUARE1POSX = GameCore.RENDER_SIZE.width - (5+100), UTILITYSQUARE2POSX = UTILITYSQUARE1POSX - (100+10);
+    private static final int BARS_Y = 5;
     //Not final elements since they will be modified at all times
-    private int barX = 76 + HEALTHBARPOSX; //common X position of the color bars
-    private int healthBarY = 17 + HEALTHBARPOSY; //Y position of the health bar
-    private int xpBarY = 60 + HEALTHBARPOSY; //Y position of the xp bar
-    private int barWidth = 386, barHeight = 26; 
+    private int barX = 69 + HEALTHBARPOSX; //common X position of the color bars
+    private int healthBarY = 11 + BARS_Y; //Y position of the health bar
+    private int xpBarY = 54 + BARS_Y; //Y position of the xp bar
+    private int barWidth = 258, barHeight = 26; 
     private static int alpha = 127; //50% color transparency
     private static final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
 
@@ -54,6 +55,11 @@ public class PlayState extends BasicGameState {
         map = new TiledMap("src/resources/map/mapTestGrotte.tmx");
         extractMapInfo();
         spellington = new Spellington(1500, 400);
+        
+        this.healthBarHUD = new Image("src/resources/map/healthBar.png");
+        this.textRectangleHUD = new Image("src/resources/map/textRectangle.png");
+        this.utilitySquare1HUD = new Image("src/resources/map/utilitySquare.png");
+        this.utilitySquare2HUD = new Image("src/resources/map/utilitySquare.png");
     }
 
     @Override
@@ -67,7 +73,7 @@ public class PlayState extends BasicGameState {
         spellington.render(g);
 
         g.setColor(Color.white);
-        g.drawString("ESC : Menu / F3 : DEBUG ", GameCore.RENDER_SIZE.width - 230, 20);
+        g.drawString("ESC : Menu / F3 : DEBUG ", 10 , GameCore.RENDER_SIZE.height - 40);
 
         debugInfo(g, gc);
         
@@ -188,21 +194,14 @@ public class PlayState extends BasicGameState {
     }
 
     private void displayHUD(Graphics g) throws SlickException {
-        int textX = 230;
-        int textY = 820;
-        g.drawString("Active:", UTILITYSQUARE1POSX, UTILITYSQUARE1POSY-17);
-        g.drawString("Used:", UTILITYSQUARE2POSX, UTILITYSQUARE2POSY-17);
-        g.drawString("Potions:", textX, textY);
-              
-        this.healthBarHUD = new Image("src/resources/map/healthBar.png");
-        this.textRectangleHUD = new Image("src/resources/map/textRectangle.png");
-        this.utilitySquare1HUD = new Image("src/resources/map/utilitySquare.png");
-        this.utilitySquare2HUD = new Image("src/resources/map/utilitySquare.png");
+        g.drawString("Active", UTILITYSQUARE1POSX, BARS_Y + 100);//using rendersize to place the items
+        g.drawString("Used", UTILITYSQUARE2POSX, BARS_Y + 100);
+        g.drawString("Potions:", UTILITYSQUARE2POSX - 180, BARS_Y);
         
-        g.drawImage(this.healthBarHUD, HEALTHBARPOSX, HEALTHBARPOSY);
-        g.drawImage(this.textRectangleHUD, TEXTRECTANGLEPOSX, TEXTRECTANGLEPOSY);
-        g.drawImage(this.utilitySquare1HUD, UTILITYSQUARE1POSX, UTILITYSQUARE1POSY);
-        g.drawImage(this.utilitySquare2HUD, UTILITYSQUARE2POSX, UTILITYSQUARE2POSY);
+        g.drawImage(this.healthBarHUD, HEALTHBARPOSX, BARS_Y);
+        g.drawImage(this.textRectangleHUD, TEXTRECTANGLEPOSX, BARS_Y);
+        g.drawImage(this.utilitySquare1HUD, UTILITYSQUARE1POSX, BARS_Y);
+        g.drawImage(this.utilitySquare2HUD, UTILITYSQUARE2POSX, BARS_Y);
 
         g.setColor(HEALTHCOLOR);
         g.fillRect(barX, healthBarY, 1f * barWidth, barHeight); //health constantly updated from 1f to 0f
