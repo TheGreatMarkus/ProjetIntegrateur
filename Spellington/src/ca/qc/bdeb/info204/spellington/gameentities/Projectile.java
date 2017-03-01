@@ -7,6 +7,7 @@ package ca.qc.bdeb.info204.spellington.gameentities;
  * @see DynamicEntity
  */
 public abstract class Projectile extends DynamicEntity {
+    public enum Trajectory {curved, strait};
 
     protected float FlyingSpeed;
 
