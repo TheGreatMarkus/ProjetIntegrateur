@@ -13,8 +13,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
@@ -23,7 +21,7 @@ import org.newdawn.slick.tiled.TiledMap;
  * @author Cristian Aldea
  */
 public class PlayState extends BasicGameState {
-
+    
     private TiledMap map;
     private Spellington spellington;
     private Tile[][] mapCollision;
@@ -69,7 +67,6 @@ public class PlayState extends BasicGameState {
         if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
             debugMode = !debugMode;
         }
-
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(mapCollision, spellington);
     }

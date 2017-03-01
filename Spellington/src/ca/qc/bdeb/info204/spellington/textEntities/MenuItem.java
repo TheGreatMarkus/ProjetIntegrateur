@@ -10,6 +10,13 @@ import org.newdawn.slick.Graphics;
  */
 public class MenuItem {
 
+    public static enum MenuItemType {
+        BUTTON,
+        TEXT,
+        TITLE
+    }
+
+    private MenuItemType menuItemType;
     private String text;
     private float x;
     private float y;
@@ -17,7 +24,8 @@ public class MenuItem {
     private float height;
     private boolean hoveredOver;
 
-    public MenuItem(GameContainer gc, String text, boolean centerX, boolean centerY, float x, float y, float width, float height) {
+    public MenuItem(GameContainer gc, MenuItemType menuItemType, String text, boolean centerX, boolean centerY, float x, float y, float width, float height) {
+        this.menuItemType = menuItemType;
         this.text = text;
         if (centerX) {
             this.x = gc.getWidth() / 2 - width / 2;
@@ -33,15 +41,15 @@ public class MenuItem {
         this.height = height;
     }
 
-    public boolean detHoveredOver(float x, float y) {
-        return (x >= this.x && x <= this.x + this.width) && (y >= this.y && y <= this.y + this.height);
+    public void detHoveredOver(float mouseX, float mouseY) {
+        this.hoveredOver =  (mouseX >= this.x && mouseX <= this.x + this.width) && (mouseY >= this.y && mouseY <= this.y + this.height);
     }
 
     public void render(Graphics g, GameContainer gc) {
-        if (hoveredOver) {
-            g.setColor(Color.yellow);
+        if (hoveredOver && this.menuItemType == MenuItemType.BUTTON) {
+            g.setColor(new Color(1, 1, 1, 0.5f));
         } else {
-            g.setColor(Color.white);
+            g.setColor(new Color(1, 1, 1, 1f));
         }
 
         g.drawString(text, x, y);
@@ -54,6 +62,38 @@ public class MenuItem {
 
     public void setHoveredOver(boolean hoveredOver) {
         this.hoveredOver = hoveredOver;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 
 }
