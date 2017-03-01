@@ -1,75 +1,101 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.info204.spellington.gameentities;
 
-import org.newdawn.slick.*;
 /**
+ * A DynamicEntity that can be affected by damage among other things.
  *
- * @author Celtis
+ * @author Cristian Aldea
+ * @see DynamicEntity
  */
-public abstract class LivingEntity extends GameEntity{
-    
-    protected Animation animation;
-    
-    protected int LifePointMax;
-    protected int LifePoint;
-    
-    protected int ResElectric;
-    protected int ResIce;
-    protected int ResFire;
-    
-    protected float MovementSpeed;
+public abstract class LivingEntity extends DynamicEntity {
 
-    public void setLifePoint(int LifePoint) {
-        this.LifePoint = LifePoint;
+    protected boolean collisionTop;
+    protected boolean collisionBottom;
+    protected boolean collisionRight;
+    protected boolean collisionLeft;
+
+    protected int lifePoint;
+
+    protected int resElectricity;
+    protected int resIce;
+    protected int resFire;
+
+    public LivingEntity(float x, float y, float width, float height) {
+        super(x, y, width, height);
+        collisionTop = false;
+        collisionBottom = false;
+        collisionRight = false;
+        collisionLeft = false;
     }
 
-    public void setResElectric(int ResElectric) {
-        this.ResElectric = ResElectric;
+    public void setLifePoint(int lifePoint) {
+        this.lifePoint = lifePoint;
     }
 
-    public void setResIce(int ResIce) {
-        this.ResIce = ResIce;
+    public void setResElectricity(int resElectricity) {
+        this.resElectricity = resElectricity;
     }
 
-    public void setResFire(int ResFire) {
-        this.ResFire = ResFire;
+    public void setResIce(int resIce) {
+        this.resIce = resIce;
     }
 
-    public void setMovementSpeed(float MovementSpeed) {
-        this.MovementSpeed = MovementSpeed;
+    public void setResFire(int resFire) {
+        this.resFire = resFire;
     }
 
     public int getLifePoint() {
-        return LifePoint;
+        return lifePoint;
     }
 
-    public int getResElectric() {
-        return ResElectric;
+    public int getResElectricity() {
+        return resElectricity;
     }
 
     public int getResIce() {
-        return ResIce;
+        return resIce;
     }
 
     public int getResFire() {
-        return ResFire;
+        return resFire;
     }
 
-    public float getMovementSpeed() {
-        return MovementSpeed;
+    public boolean getCollisionTop() {
+        return collisionTop;
     }
 
-    public int getLifePointMax() {
-        return LifePointMax;
+    public void setCollisionTop(boolean collisionTop) {
+        this.collisionTop = collisionTop;
     }
 
-    public void setLifePointMax(int LifePointMax) {
-        this.LifePointMax = LifePointMax;
+    public boolean getCollisionBottom() {
+        return collisionBottom;
     }
-    
-    
+
+    public void setCollisionBottom(boolean collisionBottom) {
+        this.collisionBottom = collisionBottom;
+    }
+
+    public boolean getCollisionRight() {
+        return collisionRight;
+    }
+
+    public void setCollisionRight(boolean collisionRight) {
+        this.collisionRight = collisionRight;
+    }
+
+    public boolean getCollisionLeft() {
+        return collisionLeft;
+    }
+
+    public void setCollisionLeft(boolean collisionLeft) {
+        this.collisionLeft = collisionLeft;
+    }
+
+    public void resetCollisionState() {
+        this.collisionTop = false;
+        this.collisionBottom = false;
+        this.collisionRight = false;
+        this.collisionLeft = false;
+    }
+
 }
