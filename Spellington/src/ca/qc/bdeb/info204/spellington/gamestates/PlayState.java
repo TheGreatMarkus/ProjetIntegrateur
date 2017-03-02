@@ -6,7 +6,13 @@ import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import static java.awt.SystemColor.text;
 import java.awt.Toolkit;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -37,14 +43,15 @@ public class PlayState extends BasicGameState {
     //Temporary debug variable
     private static boolean debugMode = false;
     
-    private Image healthBarHUD, textRectangleHUD, utilitySquare1HUD, utilitySquare2HUD;
-    private static int HEALTHBARPOSX = 5, TEXTRECTANGLEPOSX = (GameCore.RENDER_SIZE.width/2) - 400, UTILITYSQUARE1POSX = GameCore.RENDER_SIZE.width - (5+100), UTILITYSQUARE2POSX = UTILITYSQUARE1POSX - (100+10);
+    //Variables and constants related to the rendering of the HUD
+    private Image statsBarHUD, inputTextHUD, passiveSpellHUD, activeSpellHUD, redPotionHUD, greenPotionHUD, bluePotionHUD, icePotionHUD;
     private static final int BARS_Y = 5;
-    //Not final elements since they will be modified at all times
-    private int barX = 69 + HEALTHBARPOSX; //common X position of the color bars
+    private int statsBarOffSetX = 75; //common X position of the color bars
+    private int xGap = 5, xGap2 = 40;
     private int healthBarY = 11 + BARS_Y; //Y position of the health bar
     private int xpBarY = 54 + BARS_Y; //Y position of the xp bar
-    private int barWidth = 258, barHeight = 26; 
+    private static final int STATSBARWIDTH = 258;
+    private static final int STATSBARHEIGHT = 27;
     private static int alpha = 127; //50% color transparency
     private static final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
 
@@ -55,15 +62,19 @@ public class PlayState extends BasicGameState {
         map = new TiledMap("src/resources/map/mapTestGrotte.tmx");
         extractMapInfo();
         spellington = new Spellington(1500, 400);
-        
-        this.healthBarHUD = new Image("src/resources/map/healthBar.png");
-        this.textRectangleHUD = new Image("src/resources/map/textRectangle.png");
-        this.utilitySquare1HUD = new Image("src/resources/map/utilitySquare.png");
-        this.utilitySquare2HUD = new Image("src/resources/map/utilitySquare.png");
+
+        this.statsBarHUD = new Image("src/resources/map/HUD/statsBar.png");
+        this.inputTextHUD = new Image("src/resources/map/HUD/textRectangle.png");
+        this.passiveSpellHUD = new Image("src/resources/map/HUD/utilitySquare.png");
+        this.activeSpellHUD = new Image("src/resources/map/HUD/utilitySquare.png");
+        this.redPotionHUD = new Image("src/resources/map/HUD/redPotion.png");
+        this.greenPotionHUD = new Image("src/resources/map/HUD/greenPotion.png");
+        this.bluePotionHUD = new Image("src/resources/map/HUD/bluePotion.png");
+        this.icePotionHUD = new Image("src/resources/map/HUD/icePotion.png");
     }
 
     @Override
-    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException{
+    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la permière ligne de render
 
         g.setColor(Color.white);
@@ -73,10 +84,10 @@ public class PlayState extends BasicGameState {
         spellington.render(g);
 
         g.setColor(Color.white);
-        g.drawString("ESC : Menu / F3 : DEBUG ", 10 , GameCore.RENDER_SIZE.height - 40);
+        g.drawString("ESC : Menu / F3 : DEBUG ", 10, GameCore.RENDER_SIZE.height - 40);
 
         debugInfo(g, gc);
-        
+
         displayHUD(g);
     }
 
@@ -147,7 +158,7 @@ public class PlayState extends BasicGameState {
             map.render(0, 0, 1);
             g.setColor(Color.white);
 
-            int textY = 10;
+            int textY = 120;
             int textX = 10;
             int textYIncrement = 15;
             g.drawString("DEBUG", textX, textY);
@@ -194,18 +205,41 @@ public class PlayState extends BasicGameState {
     }
 
     private void displayHUD(Graphics g) throws SlickException {
-        g.drawString("Active", UTILITYSQUARE1POSX, BARS_Y + 100);//using rendersize to place the items
-        g.drawString("Used", UTILITYSQUARE2POSX, BARS_Y + 100);
-        g.drawString("Potions:", UTILITYSQUARE2POSX - 180, BARS_Y);
+        String incantationText = "Text";
+        AffineTransform affinetransform = new AffineTransform();     
+        FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
+        Font font = new Font("Tahoma", Font.PLAIN, 16);//the third variable controls the text's position 
         
-        g.drawImage(this.healthBarHUD, HEALTHBARPOSX, BARS_Y);
-        g.drawImage(this.textRectangleHUD, TEXTRECTANGLEPOSX, BARS_Y);
-        g.drawImage(this.utilitySquare1HUD, UTILITYSQUARE1POSX, BARS_Y);
-        g.drawImage(this.utilitySquare2HUD, UTILITYSQUARE2POSX, BARS_Y);
+        int incantationTextWidth = (int)(font.getStringBounds(incantationText, frc).getWidth());//prototype of the text's position calculation 
+        int incantationTextX = (GameCore.RENDER_SIZE.width / 2) - (incantationTextWidth / 2); 
+        int passiveX = GameCore.RENDER_SIZE.width - xGap - passiveSpellHUD.getWidth();
+        int activeX = passiveX - xGap - activeSpellHUD.getWidth();
+        int redPositionX = (GameCore.RENDER_SIZE.width / 2 + inputTextHUD.getWidth() / 2) + xGap2;
+        int greenPositionX = (GameCore.RENDER_SIZE.width / 2 + inputTextHUD.getWidth() / 2) + xGap2 + redPotionHUD.getWidth() + xGap;
+        int bluePositionX = (GameCore.RENDER_SIZE.width / 2 + inputTextHUD.getWidth() / 2) + xGap2 + redPotionHUD.getWidth() + greenPotionHUD.getWidth() + (xGap * 2);
+        int icePositionX = (GameCore.RENDER_SIZE.width / 2 + inputTextHUD.getWidth() / 2) + xGap2 + redPotionHUD.getWidth() + greenPotionHUD.getWidth() + bluePotionHUD.getWidth() + (xGap * 3);
+        
+        g.drawImage(this.statsBarHUD, xGap, BARS_Y);
+        g.drawImage(this.inputTextHUD, (GameCore.RENDER_SIZE.width / 2 - inputTextHUD.getWidth() / 2), BARS_Y);
+        g.drawImage(this.passiveSpellHUD, passiveX, BARS_Y);
+        g.drawImage(this.activeSpellHUD, activeX, BARS_Y);
+        g.drawImage(this.redPotionHUD, redPositionX, BARS_Y);
+        g.drawImage(this.greenPotionHUD, greenPositionX, BARS_Y);
+        g.drawImage(this.bluePotionHUD, bluePositionX, BARS_Y);
+        g.drawImage(this.icePotionHUD, icePositionX, BARS_Y);
+        
+        g.drawString(incantationText, incantationTextX, BARS_Y + 12);
+        g.drawString("Passive", activeX, BARS_Y + 100);
+        g.drawString("Active", passiveX, BARS_Y + 100);
+        g.drawString("1", redPositionX + (redPotionHUD.getWidth() / 2) - 3, BARS_Y + redPotionHUD.getHeight());
+        g.drawString("2", greenPositionX + (greenPotionHUD.getWidth() / 2) - 3, BARS_Y + greenPotionHUD.getHeight());
+        g.drawString("3", bluePositionX + (bluePotionHUD.getWidth() / 2) - 3, BARS_Y + bluePotionHUD.getHeight());
+        g.drawString("4", icePositionX + (icePotionHUD.getWidth() / 2) - 3, BARS_Y + icePotionHUD.getHeight());
+        
 
         g.setColor(HEALTHCOLOR);
-        g.fillRect(barX, healthBarY, 1f * barWidth, barHeight); //health constantly updated from 1f to 0f
+        g.fillRect(statsBarOffSetX, healthBarY, (spellington.getSLifePoint() / Spellington.INIT_MAX_LIFE) * STATSBARWIDTH , STATSBARHEIGHT); 
         g.setColor(XPCOLOR);
-        g.fillRect(barX, xpBarY, .5f * barWidth, barHeight);
+        g.fillRect(statsBarOffSetX, xpBarY, .5f * STATSBARWIDTH, STATSBARHEIGHT);
     }
 }

@@ -8,7 +8,6 @@ package ca.qc.bdeb.info204.spellington.gameentities;
  */
 public abstract class Projectile extends DynamicEntity {
 
-    protected float FlyingSpeed;
 
     protected int Damage;
 
