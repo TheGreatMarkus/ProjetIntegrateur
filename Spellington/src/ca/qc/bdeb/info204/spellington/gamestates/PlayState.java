@@ -3,12 +3,14 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import java.awt.Dimension;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -21,7 +23,9 @@ import org.newdawn.slick.tiled.TiledMap;
  * @author Cristian Aldea
  */
 public class PlayState extends BasicGameState {
-    
+
+    private static Image IMG_GAME_CROSSHAIR;
+
     private TiledMap map;
     private Spellington spellington;
     private Tile[][] mapCollision;
@@ -30,21 +34,22 @@ public class PlayState extends BasicGameState {
     public static final Vector2D GRAV_FORCE = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
 
-    //Temporary debug variable
+    //debug variable
     private static boolean debugMode = false;
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
-        //Very bad implementation of 
+        IMG_GAME_CROSSHAIR = new Image("resources/images/cursor/small_crosshair.png");
+
         map = new TiledMap("src/resources/map/mapTestGrotte.tmx");
         extractMapInfo();
-        spellington = new Spellington(1500, 400);
+        spellington = new Spellington(65, 760, LivingEntity.MouvementState.STANDING_R);
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la permière ligne de render
+        g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la première ligne de render
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
@@ -54,7 +59,10 @@ public class PlayState extends BasicGameState {
 
         g.setColor(Color.white);
         g.drawString("ESC : Menu / F3 : DEBUG ", GameCore.RENDER_SIZE.width - 230, 20);
-
+        float tempScale = 0.7f / GameCore.SCALE;
+        float renderMouseX = gc.getInput().getMouseX() / GameCore.SCALE;
+        float renderMouseY = gc.getInput().getMouseY() / GameCore.SCALE;
+        IMG_GAME_CROSSHAIR.draw(renderMouseX - IMG_GAME_CROSSHAIR.getWidth() * 0.5f * tempScale, renderMouseY - IMG_GAME_CROSSHAIR.getHeight() * 0.5f * tempScale, tempScale);
         debugInfo(g, gc);
 
     }
@@ -120,6 +128,11 @@ public class PlayState extends BasicGameState {
      */
     private void debugInfo(Graphics g, GameContainer gc) {
         if (debugMode) {
+            float actualMouseX = gc.getInput().getMouseX();
+            float actualMouseY = gc.getInput().getMouseY();
+            float renderMouseX = gc.getInput().getMouseX() / GameCore.SCALE;
+            float renderMouseY = gc.getInput().getMouseY() / GameCore.SCALE;
+
             map.render(0, 0, 1);
             g.setColor(Color.red);
 
@@ -138,13 +151,13 @@ public class PlayState extends BasicGameState {
             textY += textYIncrement;
             g.drawString("FPS : " + gc.getFPS(), textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington X : " + spellington.getX(), textX, textY);
+            g.drawString("Actual Mouse Position : (" + actualMouseX + "," + actualMouseY + ")", textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington Y : " + spellington.getY(), textX, textY);
+            g.drawString("Render Mouse Position : (" + renderMouseX + "," + renderMouseY + ")", textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington X Speed : " + spellington.getSpeedVector().getX(), textX, textY);
+            g.drawString("Spellington Position : (" + spellington.getX() + "," + spellington.getY() + ")", textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington Y Speed : " + spellington.getSpeedVector().getY(), textX, textY);
+            g.drawString("Spellington Speed : (" + spellington.getSpeedVector().getX() + "," + spellington.getSpeedVector().getY() + ")", textX, textY);
             textY += textYIncrement;
             g.drawString("Collision :", textX, textY);
             textY += textYIncrement;
@@ -168,7 +181,7 @@ public class PlayState extends BasicGameState {
             if (spellington.getCollisionLeft()) {
                 g.fillRect(startingX, startingY + tempSize, tempSize, tempSize);
             }
-            g.fillOval(gc.getInput().getMouseX() / GameCore.SCALE - 5, gc.getInput().getMouseY() / GameCore.SCALE - 5, 10, 10);
+            g.fillOval(renderMouseX - 3, renderMouseY - 3, 6, 6);
         }
     }
 

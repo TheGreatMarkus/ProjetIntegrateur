@@ -17,8 +17,6 @@ import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.font.effects.OutlineEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 /**
  * A BasicGameState corresponding with the main menu of the game.
@@ -28,7 +26,9 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  */
 public class MainMenuState extends BasicGameState {
 
-    //Default menu font.
+    public static Image IMG_MENU_CURSOR;
+
+//Default menu font.
     public static UnicodeFont universalFont;
     private Image backGround;
 
@@ -47,6 +47,7 @@ public class MainMenuState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
+        IMG_MENU_CURSOR = new Image("resources/images/cursor/small_cursor.png");
         //Initialisation du font pour le menu.
         textGap = 10.0f * GameCore.SCALE;
 
@@ -57,7 +58,7 @@ public class MainMenuState extends BasicGameState {
             universalFont = new UnicodeFont(tempTitleFont);
             universalFont.addAsciiGlyphs();
             universalFont.getEffects().add(new ColorEffect(java.awt.Color.black));
-            universalFont.getEffects().add(new OutlineEffect(2, java.awt.Color.white));
+            universalFont.getEffects().add(new OutlineEffect(1, java.awt.Color.white));
             universalFont.loadGlyphs();
         } catch (FontFormatException ex) {
 
@@ -81,6 +82,11 @@ public class MainMenuState extends BasicGameState {
         mnuItemPlay.render(g, gc);
         mnuItemOptions.render(g, gc);
         mnuItemExit.render(g, gc);
+        float tempScale = 0.7f;
+        float renderMouseX = gc.getInput().getMouseX();
+        float renderMouseY = gc.getInput().getMouseY();
+        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, tempScale);
+
     }
 
     @Override

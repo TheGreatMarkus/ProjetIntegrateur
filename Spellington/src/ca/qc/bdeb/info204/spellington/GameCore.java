@@ -56,9 +56,10 @@ public class GameCore extends StateBasedGame {
         }
 
         appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
+        appGameContainer.setMouseGrabbed(true);
         appGameContainer.setTargetFrameRate(TARGER_FPS);
         appGameContainer.setVSync(false);
-        appGameContainer.setIcon("src/resources/icon.png");
+        appGameContainer.setIcon("resources/images/icon.png");
         appGameContainer.setTitle(GAME_TITLE);
         appGameContainer.setShowFPS(false);
         //Start of the game.
@@ -86,12 +87,6 @@ public class GameCore extends StateBasedGame {
 
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
-    }
-
-    @Override
-    public void mouseReleased(int button, int x, int y) {
-        super.mouseReleased(button, x, y);
-
     }
 
 }

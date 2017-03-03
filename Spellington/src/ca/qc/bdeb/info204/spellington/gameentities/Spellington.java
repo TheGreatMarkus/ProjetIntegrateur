@@ -40,10 +40,11 @@ public class Spellington extends LivingEntity {
      *
      * @param x
      * @param y
+     * @param mouvementState
      * @throws SlickException
      */
-    public Spellington(float x, float y) throws SlickException {
-        super(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height);
+    public Spellington(float x, float y,MouvementState mouvementState) throws SlickException {
+        super(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height, mouvementState);
         lifePoint = INIT_MAX_LIFE;
 
         resElectricity = 0;
