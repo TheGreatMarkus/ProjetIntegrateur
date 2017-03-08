@@ -22,7 +22,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 public class MainMenuState extends BasicGameState {
 
     //Default menu font. Can be changed.
-    private static final TrueTypeFont MENU_FONT = new TrueTypeFont(new Font("Times New Roman", Font.PLAIN, 20), false);
+    public static final TrueTypeFont MENU_FONT = new TrueTypeFont(new Font("Times New Roman", Font.PLAIN, 20), false);
 
     //Text for the menu.
     private static final String MENU_TITLE = "Le réveil de Spellington, testage";

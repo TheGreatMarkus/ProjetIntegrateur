@@ -8,11 +8,6 @@ package ca.qc.bdeb.info204.spellington.gameentities;
  */
 public abstract class LivingEntity extends DynamicEntity {
 
-    protected boolean collisionTop;
-    protected boolean collisionBottom;
-    protected boolean collisionRight;
-    protected boolean collisionLeft;
-
     protected int lifePoint;
 
     protected int resElectricity;
@@ -21,10 +16,7 @@ public abstract class LivingEntity extends DynamicEntity {
 
     public LivingEntity(float x, float y, float width, float height) {
         super(x, y, width, height);
-        collisionTop = false;
-        collisionBottom = false;
-        collisionRight = false;
-        collisionLeft = false;
+
     }
 
     public void setLifePoint(int lifePoint) {
