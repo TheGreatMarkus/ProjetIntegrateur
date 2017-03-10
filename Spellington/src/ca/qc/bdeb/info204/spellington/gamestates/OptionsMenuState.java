@@ -37,11 +37,10 @@ public class OptionsMenuState extends BasicGameState {
         g.setFont(universalFont);
         mnuItemTitle.render(g, gc);
         mnuItemBack.render(g, gc);
-        
-        float tempScale = 0.7f;
+
         float renderMouseX = gc.getInput().getMouseX();
         float renderMouseY = gc.getInput().getMouseY();
-       IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, tempScale);
+        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
     }
 
     @Override
@@ -55,8 +54,8 @@ public class OptionsMenuState extends BasicGameState {
         if (mnuItemBack.getHoveredOver() && triedToClick) {
             game.enterState(GameCore.MAIN_MENU_STATE_ID);
         }
-
-    } 
+        GameCore.clearInputRecord(gc);
+    }
 
     @Override
     public int getID() {

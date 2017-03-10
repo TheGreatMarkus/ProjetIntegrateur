@@ -13,8 +13,8 @@ public abstract class LivingEntity extends DynamicEntity {
         STANDING_L,
         WALKING_R,
         WALKING_L,
-        AIR_R,
-        AIR_L,
+        JUMP_R,
+        JUMP_L,
         WALL_R,
         WALL_L
     }
@@ -111,5 +111,15 @@ public abstract class LivingEntity extends DynamicEntity {
         this.collisionRight = false;
         this.collisionLeft = false;
     }
+
+    public MouvementState getMouvementState() {
+        return mouvementState;
+    }
+
+    public void setMouvementState(MouvementState mouvementState) {
+        this.mouvementState = mouvementState;
+    }
+    
+    
 
 }

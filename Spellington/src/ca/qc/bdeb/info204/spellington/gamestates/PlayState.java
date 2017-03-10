@@ -31,7 +31,7 @@ public class PlayState extends BasicGameState {
     private Tile[][] mapCollision;
     private Tile[][] mapEvent;
 
-    public static final Vector2D GRAV_FORCE = new Vector2D(0, 0.001f);
+    public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
 
     //debug variable
@@ -40,9 +40,9 @@ public class PlayState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
-        IMG_GAME_CROSSHAIR = new Image("resources/images/cursor/small_crosshair.png");
+        IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
 
-        map = new TiledMap("src/resources/map/mapTestGrotte.tmx");
+        map = new TiledMap("res/map/mapTestGrotte.tmx");
         extractMapInfo();
         spellington = new Spellington(65, 760, LivingEntity.MouvementState.STANDING_R);
     }
@@ -59,10 +59,10 @@ public class PlayState extends BasicGameState {
 
         g.setColor(Color.white);
         g.drawString("ESC : Menu / F3 : DEBUG ", GameCore.RENDER_SIZE.width - 230, 20);
-        float tempScale = 0.7f / GameCore.SCALE;
+
         float renderMouseX = gc.getInput().getMouseX() / GameCore.SCALE;
         float renderMouseY = gc.getInput().getMouseY() / GameCore.SCALE;
-        IMG_GAME_CROSSHAIR.draw(renderMouseX - IMG_GAME_CROSSHAIR.getWidth() * 0.5f * tempScale, renderMouseY - IMG_GAME_CROSSHAIR.getHeight() * 0.5f * tempScale, tempScale);
+        IMG_GAME_CROSSHAIR.draw(renderMouseX - 12, renderMouseY - 12, 25, 25);
         debugInfo(g, gc);
 
     }
@@ -94,7 +94,7 @@ public class PlayState extends BasicGameState {
                 }
             }
         }
-        mapEvent = new Tile[18][32];
+        mapEvent = new Tile[DIM_MAP.height][DIM_MAP.width];
         for (int i = 0; i < map.getHeight(); i++) {
             for (int j = 0; j < map.getWidth(); j++) {
                 if (map.getTileId(j, i, 2) == 0) {
@@ -181,8 +181,9 @@ public class PlayState extends BasicGameState {
             if (spellington.getCollisionLeft()) {
                 g.fillRect(startingX, startingY + tempSize, tempSize, tempSize);
             }
-            g.fillOval(renderMouseX - 3, renderMouseY - 3, 6, 6);
+            g.fillOval(renderMouseX - 1, renderMouseY - 1, 3, 3);
         }
+        GameCore.clearInputRecord(gc);
     }
 
     @Override

@@ -44,10 +44,9 @@ public class PauseMenuState extends BasicGameState {
         mnuItemResume.render(g, gc);
         mnuItemMainMenu.render(g, gc);
 
-        float tempScale = 0.7f;
         float renderMouseX = gc.getInput().getMouseX();
         float renderMouseY = gc.getInput().getMouseY();
-        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, tempScale);
+        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
     }
 
     @Override
@@ -66,6 +65,7 @@ public class PauseMenuState extends BasicGameState {
         if (mnuItemMainMenu.getHoveredOver() && triedToClick) {
             game.enterState(GameCore.MAIN_MENU_STATE_ID);
         }
+        GameCore.clearInputRecord(gc);
     }
 
     @Override

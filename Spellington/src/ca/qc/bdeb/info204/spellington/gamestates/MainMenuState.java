@@ -47,13 +47,13 @@ public class MainMenuState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        IMG_MENU_CURSOR = new Image("resources/images/cursor/small_cursor.png");
+        IMG_MENU_CURSOR = new Image("res/image/cursor/small_cursor.png");
         //Initialisation du font pour le menu.
         textGap = 10.0f * GameCore.SCALE;
 
-        backGround = new Image("src/resources/images/menu/mm_background.jpg");
+        backGround = new Image("res/image/menu/mm_background.jpg");
         try {
-            Font tempTitleFont = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/resources/fonts/Paladin.ttf"));
+            Font tempTitleFont = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/res/font/Paladin.ttf"));
             tempTitleFont = tempTitleFont.deriveFont(Font.BOLD, 110.0f * GameCore.SCALE);
             universalFont = new UnicodeFont(tempTitleFont);
             universalFont.addAsciiGlyphs();
@@ -61,9 +61,9 @@ public class MainMenuState extends BasicGameState {
             universalFont.getEffects().add(new OutlineEffect(1, java.awt.Color.white));
             universalFont.loadGlyphs();
         } catch (FontFormatException ex) {
-
+            System.out.println("FAILED TO LOAD FONT");
         } catch (IOException ex) {
-
+            System.out.println("FAILED TO LOAD FONT");
         }
         mnuItemTitle = new MenuItem(gc, MenuItemType.TITLE, MM_TITLE, true, false, 0, textGap, universalFont.getWidth(MM_TITLE), universalFont.getHeight(MM_TITLE));
         mnuItemPlay = new MenuItem(gc, MenuItemType.BUTTON, MM_PLAY, true, true, 0, mnuItemTitle.getY() + mnuItemTitle.getHeight() + textGap, universalFont.getWidth(MM_PLAY), universalFont.getHeight(MM_PLAY));
@@ -74,7 +74,7 @@ public class MainMenuState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        backGround.draw(0, 0, GameCore.SCALE);
+        backGround.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
         g.setColor(Color.white);
         g.setFont(universalFont);
 
@@ -82,10 +82,10 @@ public class MainMenuState extends BasicGameState {
         mnuItemPlay.render(g, gc);
         mnuItemOptions.render(g, gc);
         mnuItemExit.render(g, gc);
-        float tempScale = 0.7f;
+        
         float renderMouseX = gc.getInput().getMouseX();
         float renderMouseY = gc.getInput().getMouseY();
-        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, tempScale);
+        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
 
     }
 
@@ -108,6 +108,8 @@ public class MainMenuState extends BasicGameState {
         if (mnuItemExit.getHoveredOver() && triedToClick) {
             gc.exit();
         }
+
+        GameCore.clearInputRecord(gc);
 
     }
 
