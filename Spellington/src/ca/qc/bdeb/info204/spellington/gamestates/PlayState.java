@@ -3,6 +3,7 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import java.awt.Dimension;
@@ -21,8 +22,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
@@ -32,37 +31,30 @@ import org.newdawn.slick.tiled.TiledMap;
  */
 public class PlayState extends BasicGameState {
 
+    private static Image IMG_GAME_CROSSHAIR;
+
     private TiledMap map;
     private Spellington spellington;
     private Tile[][] mapCollision;
     private Tile[][] mapEvent;
 
-    public static final Vector2D GRAV_FORCE = new Vector2D(0, 0.001f);
+    public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
 
-    //Temporary debug variable
+    //debug variable
     private static boolean debugMode = false;
     
     //Variables and constants related to the rendering of the HUD
     private Image statsBarHUD, inputTextHUD, passiveSpellHUD, activeSpellHUD, redPotionHUD, greenPotionHUD, bluePotionHUD, icePotionHUD;
-    private static final int BARS_Y = 5;
-    private int statsBarOffSetX = 75; //common X position of the color bars
-    private int xGap = 5, xGap2 = 40;
-    private int healthBarY = 11 + BARS_Y; //Y position of the health bar
-    private int xpBarY = 54 + BARS_Y; //Y position of the xp bar
-    private static final int STATSBARWIDTH = 258;
-    private static final int STATSBARHEIGHT = 27;
-    private static int alpha = 127; //50% color transparency
-    private static final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
+
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
-        //Very bad implementation of 
-        map = new TiledMap("src/resources/map/mapTestGrotte.tmx");
-        extractMapInfo();
-        spellington = new Spellington(1500, 400);
+        IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
 
+        map = new TiledMap("res/map/mapTestGrotte.tmx");
+        extractMapInfo();
         this.statsBarHUD = new Image("src/resources/map/HUD/statsBar.png");
         this.inputTextHUD = new Image("src/resources/map/HUD/textRectangle.png");
         this.passiveSpellHUD = new Image("src/resources/map/HUD/utilitySquare.png");
@@ -71,11 +63,12 @@ public class PlayState extends BasicGameState {
         this.greenPotionHUD = new Image("src/resources/map/HUD/greenPotion.png");
         this.bluePotionHUD = new Image("src/resources/map/HUD/bluePotion.png");
         this.icePotionHUD = new Image("src/resources/map/HUD/icePotion.png");
+        spellington = new Spellington(65, 760, LivingEntity.MouvementState.STANDING_R);
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la permière ligne de render
+        g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la première ligne de render
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
@@ -86,6 +79,9 @@ public class PlayState extends BasicGameState {
         g.setColor(Color.white);
         g.drawString("ESC : Menu / F3 : DEBUG ", 10, GameCore.RENDER_SIZE.height - 40);
 
+        float renderMouseX = gc.getInput().getMouseX() / GameCore.SCALE;
+        float renderMouseY = gc.getInput().getMouseY() / GameCore.SCALE;
+        IMG_GAME_CROSSHAIR.draw(renderMouseX - 12, renderMouseY - 12, 25, 25);
         debugInfo(g, gc);
 
         displayHUD(g);
@@ -93,13 +89,12 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-        if (gc.getInput().isKeyDown(Input.KEY_ESCAPE)) {
-            game.enterState(GameCore.MAIN_MENU_STATE_ID, new FadeOutTransition(), new FadeInTransition());
+        if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+            game.enterState(GameCore.PAUSE_MENU_STATE_ID);
         }
         if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
             debugMode = !debugMode;
         }
-
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(mapCollision, spellington);
     }
@@ -119,7 +114,7 @@ public class PlayState extends BasicGameState {
                 }
             }
         }
-        mapEvent = new Tile[18][32];
+        mapEvent = new Tile[DIM_MAP.height][DIM_MAP.width];
         for (int i = 0; i < map.getHeight(); i++) {
             for (int j = 0; j < map.getWidth(); j++) {
                 if (map.getTileId(j, i, 2) == 0) {
@@ -153,25 +148,38 @@ public class PlayState extends BasicGameState {
      */
     private void debugInfo(Graphics g, GameContainer gc) {
         if (debugMode) {
-            g.setColor(Color.lightGray);
+            float actualMouseX = gc.getInput().getMouseX();
+            float actualMouseY = gc.getInput().getMouseY();
+            float renderMouseX = gc.getInput().getMouseX() / GameCore.SCALE;
+            float renderMouseY = gc.getInput().getMouseY() / GameCore.SCALE;
 
             map.render(0, 0, 1);
-            g.setColor(Color.white);
+            g.setColor(Color.red);
+
 
             int textY = 120;
+            for (int i = 0; i < DIM_MAP.height; i++) {
+                g.drawRect(Calculations.TargetJ * 50, i * 50, 50, 50);
+            }
+            for (int j = 0; j < DIM_MAP.width; j++) {
+                g.drawRect(j * 50, Calculations.TargetI * 50, 50, 50);
+            }
+
+            g.setColor(Color.lightGray);
+            //int textY = 10;
             int textX = 10;
             int textYIncrement = 15;
             g.drawString("DEBUG", textX, textY);
             textY += textYIncrement;
             g.drawString("FPS : " + gc.getFPS(), textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington X : " + spellington.getX(), textX, textY);
+            g.drawString("Actual Mouse Position : (" + actualMouseX + "," + actualMouseY + ")", textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington Y : " + spellington.getY(), textX, textY);
+            g.drawString("Render Mouse Position : (" + renderMouseX + "," + renderMouseY + ")", textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington X Speed : " + spellington.getSpeedVector().getX(), textX, textY);
+            g.drawString("Spellington Position : (" + spellington.getX() + "," + spellington.getY() + ")", textX, textY);
             textY += textYIncrement;
-            g.drawString("Spellington Y Speed : " + spellington.getSpeedVector().getY(), textX, textY);
+            g.drawString("Spellington Speed : (" + spellington.getSpeedVector().getX() + "," + spellington.getSpeedVector().getY() + ")", textX, textY);
             textY += textYIncrement;
             g.drawString("Collision :", textX, textY);
             textY += textYIncrement;
@@ -195,16 +203,22 @@ public class PlayState extends BasicGameState {
             if (spellington.getCollisionLeft()) {
                 g.fillRect(startingX, startingY + tempSize, tempSize, tempSize);
             }
-            g.fillOval(gc.getInput().getMouseX() / GameCore.SCALE - 5, gc.getInput().getMouseY() / GameCore.SCALE - 5, 10, 10);
+            g.fillOval(renderMouseX - 1, renderMouseY - 1, 3, 3);
         }
-    }
-
-    @Override
-    public int getID() {
-        return GameCore.PLAY_STATE_ID;
+        GameCore.clearInputRecord(gc);
     }
 
     private void displayHUD(Graphics g) throws SlickException {
+        int statsBarOffSetX = 75; //common X position of the color bars
+        int xGap = 5, xGap2 = 40;
+        final int BARS_Y = 5;
+        int healthBarY = 11 + BARS_Y;; //Y position of the health bar
+        int xpBarY = 54 + BARS_Y; //Y position of the xp bar
+        final int STATSBARWIDTH = 381;
+        final int STATSBARHEIGHT = 27;
+        int alpha = 127; //50% color transparency
+        final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
+        
         String incantationText = "Text";
         AffineTransform affinetransform = new AffineTransform();     
         FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
@@ -238,8 +252,13 @@ public class PlayState extends BasicGameState {
         
 
         g.setColor(HEALTHCOLOR);
-        g.fillRect(statsBarOffSetX, healthBarY, (spellington.getSLifePoint() / Spellington.INIT_MAX_LIFE) * STATSBARWIDTH , STATSBARHEIGHT); 
+        g.fillRect(statsBarOffSetX, healthBarY, (spellington.getLifePoint() / Spellington.INIT_MAX_LIFE) * STATSBARWIDTH , STATSBARHEIGHT); 
         g.setColor(XPCOLOR);
         g.fillRect(statsBarOffSetX, xpBarY, .5f * STATSBARWIDTH, STATSBARHEIGHT);
     }
+    
+    @Override
+    public int getID() {
+        return GameCore.PLAY_STATE_ID;
+    }   
 }

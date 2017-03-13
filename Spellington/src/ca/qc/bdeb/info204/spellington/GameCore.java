@@ -3,6 +3,8 @@ package ca.qc.bdeb.info204.spellington;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import ca.qc.bdeb.info204.spellington.gamestates.MainMenuState;
 import ca.qc.bdeb.info204.spellington.gamestates.SpellBookState;
+import ca.qc.bdeb.info204.spellington.gamestates.OptionsMenuState;
+import ca.qc.bdeb.info204.spellington.gamestates.PauseMenuState;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
@@ -18,14 +20,17 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class GameCore extends StateBasedGame {
 
-    public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     //For testing and seeing the console text
+    public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     //public static final Dimension SCREEN_SIZE = new Dimension(800, 450);
+    //public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
     public static final Dimension RENDER_SIZE = new Dimension(1600, 900);
     public static float SCALE;
     public static final int MAIN_MENU_STATE_ID = 0;
     public static final int PLAY_STATE_ID = 1;
-    public static final int SPELLBOOK_STATE_ID = 2;
+    public static final int OPTIONS_MENU_STATE_ID = 2;
+    public static final int PAUSE_MENU_STATE_ID = 3;
+    public static final int SPELLBOOK_STATE_ID = 4;
 
     private static final String GAME_TITLE = "Réveil de Spellington";
 
@@ -43,8 +48,8 @@ public class GameCore extends StateBasedGame {
         System.setProperty("org.lwjgl.librarypath", new File("lib/natives").getAbsolutePath());
         System.setProperty("net.java.games.input.librarypath", new File("lib/natives").getAbsolutePath());
         /*Calculation of the scale of the in-game render. Uses the width and 
-        height of Screen Size and the Target render size to determine smallest 
-        scale.*/
+         height of Screen Size and the Target render size to determine smallest 
+         scale.*/
 
         if (((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width) < ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height)) {
             SCALE = ((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width);
@@ -53,9 +58,10 @@ public class GameCore extends StateBasedGame {
         }
 
         appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
+        appGameContainer.setMouseGrabbed(true);
         appGameContainer.setTargetFrameRate(TARGER_FPS);
-        appGameContainer.setVSync(false);
-        appGameContainer.setIcon("src/resources/icon.png");
+        appGameContainer.setVSync(true);
+        appGameContainer.setIcon("res/image/icon.png");
         appGameContainer.setTitle(GAME_TITLE);
         appGameContainer.setShowFPS(false);
         //Start of the game.
@@ -73,20 +79,23 @@ public class GameCore extends StateBasedGame {
         this.addState(new MainMenuState());
         this.addState(new PlayState());
         this.addState(new SpellBookState());
+        this.addState(new OptionsMenuState());
+        this.addState(new PauseMenuState());
 
         //Initialise game states.
         this.getState(MAIN_MENU_STATE_ID).init(gc, this);
         this.getState(PLAY_STATE_ID).init(gc, this);
         this.getState(SPELLBOOK_STATE_ID).init(gc, this);
-
-        //The game will being in the menu.
+        this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
+        this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
+        
+//The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
     }
-
-    @Override
-    public void mouseReleased(int button, int x, int y) {
-        super.mouseReleased(button, x, y);
-
+    
+     public static void clearInputRecord(GameContainer gc) {
+        gc.getInput().clearKeyPressedRecord();
+        gc.getInput().clearMousePressedRecord();
     }
 
 }
