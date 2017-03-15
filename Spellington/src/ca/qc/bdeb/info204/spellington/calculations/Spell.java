@@ -6,27 +6,30 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
+import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem.SpellKind;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import org.newdawn.slick.Animation;
 
 /**
  *
  * @author Celtis
  */
 public class Spell {
-    int id;
-    int damage;
-    Projectile.Trajectory trajectory;
-    SpellingSystem.spellKind spellKind;
-    GameEntity.Elements element;
-    String name;
-    String incantation;
-    int speedModifier;
-    int nbUses;
-    int masse;
-    
+    private int id;
+    private int damage;
+    private Projectile.Trajectory trajectory;
+    private SpellingSystem.SpellKind spellKind;
+    private GameEntity.Elements element;
+    private String name;
+    private String incantation;
+    private int speedModifier;
+    private int nbUses;
+    private Animation animation;
+    private int GRAVITY_MODIFIER;
 
-    public Spell(int id, int damage, Projectile.Trajectory trajectory, SpellingSystem.spellKind spellKind, GameEntity.Elements element, String name, int speedModifier, int nbUses) {
+    public Spell(int id, int damage, Projectile.Trajectory trajectory, SpellKind spellKind, GameEntity.Elements element, String name, int speedModifier, int nbUses,int GRAVITY_MODIFIER) {
         this.id = id;
         this.damage = damage;
         this.trajectory = trajectory;
@@ -35,11 +38,23 @@ public class Spell {
         this.name = name;
         this.speedModifier = speedModifier;
         this.nbUses = nbUses;
+        this.GRAVITY_MODIFIER = GRAVITY_MODIFIER;
     }
     
     public void spellActivation () {
     
         // selon le type de sort
+    }
+    
+    public Projectile createSpellProjectile (Spellington spellington) {
+        Projectile tempProj;
+        
+        if (spellKind.equals(SpellKind.projectile)) {
+     tempProj = new Projectile(spellington.getX(), spellington.getY(),new Animation(),GRAVITY_MODIFIER); 
+        } else {
+            tempProj = null;
+        }
+    return tempProj;
     }
 
     public int getId() {
@@ -54,7 +69,7 @@ public class Spell {
         return trajectory;
     }
 
-    public SpellingSystem.spellKind getSpellKind() {
+    public SpellingSystem.SpellKind getSpellKind() {
         return spellKind;
     }
 
@@ -77,6 +92,7 @@ public class Spell {
     public int getNbUses() {
         return nbUses;
     }
+
     
     
 }

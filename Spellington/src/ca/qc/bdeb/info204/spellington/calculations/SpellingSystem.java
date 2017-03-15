@@ -10,6 +10,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import java.util.ArrayList;
 import javafx.scene.input.KeyCode;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 
@@ -18,7 +19,9 @@ import org.newdawn.slick.KeyListener;
  * @author Celtis
  */
 public class SpellingSystem {
-    public enum spellKind {projectile, healing, breath, explosion, passive}
+    public enum SpellKind {projectile, healing, breath, explosion, passive}
+    
+   private static Spellington spellington;
     
    private static Spell passiveSpell;
    private static Spell activeSpell;
@@ -40,30 +43,30 @@ public class SpellingSystem {
 
     public SpellingSystem() {
         
-        Spell fireBall = new Spell(1,5,Projectile.Trajectory.curved,SpellingSystem.spellKind.projectile,GameEntity.Elements.FIRE,"Boule de feu",0,4);
-        Spell icePic = new Spell(2,5,Projectile.Trajectory.strait,SpellingSystem.spellKind.projectile,GameEntity.Elements.ICE,"Pic de glace",0,3);
-        Spell sparkle = new Spell(3,5,Projectile.Trajectory.curved,SpellingSystem.spellKind.explosion,GameEntity.Elements.ELECTRICITY,"Etincelle",0,2);
-        Spell heal = new Spell(4,10,Projectile.Trajectory.curved,SpellingSystem.spellKind.healing,GameEntity.Elements.NEUTRAL,"Soin",0,1);
-        Spell upStream = new Spell(5,0,Projectile.Trajectory.curved,SpellingSystem.spellKind.passive,GameEntity.Elements.NEUTRAL,"Courant ascendant",0,0);
-        Spell fireResistance = new Spell(6,10,Projectile.Trajectory.curved,SpellingSystem.spellKind.passive,GameEntity.Elements.FIRE,"Résistance feu",0,0);
-        Spell iceResistance = new Spell(7,10,Projectile.Trajectory.curved,SpellingSystem.spellKind.passive,GameEntity.Elements.ICE,"Résistance glace",0,0);
-        Spell lightningResistance = new Spell(8,10,Projectile.Trajectory.curved,SpellingSystem.spellKind.passive,GameEntity.Elements.ELECTRICITY,"Résistance electrique",0,0);
-        Spell explosiveBall = new Spell(9,10,Projectile.Trajectory.curved,SpellingSystem.spellKind.projectile,GameEntity.Elements.FIRE,"Boule explosive",0,2);
-        Spell fireBreath = new Spell(10,1,Projectile.Trajectory.curved,SpellingSystem.spellKind.breath,GameEntity.Elements.FIRE,"Soufle de feu",0,300);
-        Spell giantFireBall = new Spell(11,20,Projectile.Trajectory.curved,SpellingSystem.spellKind.projectile,GameEntity.Elements.FIRE,"Grosse boule de feu",0,2);
-        Spell lightningSwarm = new Spell(12,3,Projectile.Trajectory.curved,SpellingSystem.spellKind.explosion,GameEntity.Elements.ELECTRICITY,"Essain d'eclairs",0,1);
-        Spell teleportation = new Spell(13,0,Projectile.Trajectory.curved,SpellingSystem.spellKind.projectile,GameEntity.Elements.NEUTRAL,"Teleportation",0,1);
-        Spell lightningBouncingBall = new Spell(14,10,Projectile.Trajectory.curved,SpellingSystem.spellKind.projectile,GameEntity.Elements.ELECTRICITY,"Boule electrique rebondissante",0,2);
-        Spell iceBreath = new Spell(15,1,Projectile.Trajectory.curved,SpellingSystem.spellKind.breath,GameEntity.Elements.ICE,"Souffle de glace",0,300);
-        Spell iceSpikyBall = new Spell(16,10,Projectile.Trajectory.curved,SpellingSystem.spellKind.projectile,GameEntity.Elements.ICE,"Boule a pointes de glace",0,2);
-        Spell iceRune = new Spell(17,20,Projectile.Trajectory.curved,SpellingSystem.spellKind.explosion,GameEntity.Elements.ICE,"Rune de glace",0,1);
-        Spell fireImmunity = new Spell(18,999,Projectile.Trajectory.curved,SpellingSystem.spellKind.passive,GameEntity.Elements.FIRE,"Immunite feu",0,0);
-        Spell meteorSwarm = new Spell(19,20,Projectile.Trajectory.curved,SpellingSystem.spellKind.explosion,GameEntity.Elements.FIRE,"Pluie de meteors",0,1);
-        Spell lightningImmunity = new Spell(20,999,Projectile.Trajectory.curved,SpellingSystem.spellKind.passive,GameEntity.Elements.ELECTRICITY,"Immunite electrique",0,0);
-        Spell lightningSpear = new Spell(21,60,Projectile.Trajectory.strait,SpellingSystem.spellKind.projectile,GameEntity.Elements.ELECTRICITY,"Lance de foudre",0,1);
-        Spell iceStorm = new Spell(22,20,Projectile.Trajectory.curved,SpellingSystem.spellKind.explosion,GameEntity.Elements.ICE,"Tempete de glace",0,1);
-        Spell iceImmunity = new Spell(23,999,Projectile.Trajectory.curved,SpellingSystem.spellKind.passive,GameEntity.Elements.ICE,"Immunite glace",0,0);
-        Spell majorHealing = new Spell(24,100,Projectile.Trajectory.curved,SpellingSystem.spellKind.healing,GameEntity.Elements.NEUTRAL,"Soin majeur",0,1);
+        Spell fireBall = new Spell(1,5,Projectile.Trajectory.curved,SpellKind.projectile,GameEntity.Elements.FIRE,"Boule de feu",0,4,1);
+        Spell icePic = new Spell(2,5,Projectile.Trajectory.strait,SpellingSystem.SpellKind.projectile,GameEntity.Elements.ICE,"Pic de glace",0,3,1);
+        Spell sparkle = new Spell(3,5,Projectile.Trajectory.curved,SpellingSystem.SpellKind.explosion,GameEntity.Elements.ELECTRICITY,"Etincelle",0,2,1);
+        Spell heal = new Spell(4,10,Projectile.Trajectory.curved,SpellingSystem.SpellKind.healing,GameEntity.Elements.NEUTRAL,"Soin",0,1,1);
+        Spell upStream = new Spell(5,0,Projectile.Trajectory.curved,SpellingSystem.SpellKind.passive,GameEntity.Elements.NEUTRAL,"Courant ascendant",0,0,1);
+        Spell fireResistance = new Spell(6,10,Projectile.Trajectory.curved,SpellingSystem.SpellKind.passive,GameEntity.Elements.FIRE,"Résistance feu",0,0,1);
+        Spell iceResistance = new Spell(7,10,Projectile.Trajectory.curved,SpellingSystem.SpellKind.passive,GameEntity.Elements.ICE,"Résistance glace",0,0,1);
+        Spell lightningResistance = new Spell(8,10,Projectile.Trajectory.curved,SpellingSystem.SpellKind.passive,GameEntity.Elements.ELECTRICITY,"Résistance electrique",0,0,1);
+        Spell explosiveBall = new Spell(9,10,Projectile.Trajectory.curved,SpellingSystem.SpellKind.projectile,GameEntity.Elements.FIRE,"Boule explosive",0,2,1);
+        Spell fireBreath = new Spell(10,1,Projectile.Trajectory.curved,SpellingSystem.SpellKind.breath,GameEntity.Elements.FIRE,"Soufle de feu",0,300,1);
+        Spell giantFireBall = new Spell(11,20,Projectile.Trajectory.curved,SpellingSystem.SpellKind.projectile,GameEntity.Elements.FIRE,"Grosse boule de feu",0,2,1);
+        Spell lightningSwarm = new Spell(12,3,Projectile.Trajectory.curved,SpellingSystem.SpellKind.explosion,GameEntity.Elements.ELECTRICITY,"Essain d'eclairs",0,1,1);
+        Spell teleportation = new Spell(13,0,Projectile.Trajectory.curved,SpellingSystem.SpellKind.projectile,GameEntity.Elements.NEUTRAL,"Teleportation",0,1,1);
+        Spell lightningBouncingBall = new Spell(14,10,Projectile.Trajectory.curved,SpellingSystem.SpellKind.projectile,GameEntity.Elements.ELECTRICITY,"Boule electrique rebondissante",0,2,1);
+        Spell iceBreath = new Spell(15,1,Projectile.Trajectory.curved,SpellingSystem.SpellKind.breath,GameEntity.Elements.ICE,"Souffle de glace",0,300,1);
+        Spell iceSpikyBall = new Spell(16,10,Projectile.Trajectory.curved,SpellingSystem.SpellKind.projectile,GameEntity.Elements.ICE,"Boule a pointes de glace",0,2,1);
+        Spell iceRune = new Spell(17,20,Projectile.Trajectory.curved,SpellingSystem.SpellKind.explosion,GameEntity.Elements.ICE,"Rune de glace",0,1,1);
+        Spell fireImmunity = new Spell(18,999,Projectile.Trajectory.curved,SpellingSystem.SpellKind.passive,GameEntity.Elements.FIRE,"Immunite feu",0,0,1);
+        Spell meteorSwarm = new Spell(19,20,Projectile.Trajectory.curved,SpellingSystem.SpellKind.explosion,GameEntity.Elements.FIRE,"Pluie de meteors",0,1,1);
+        Spell lightningImmunity = new Spell(20,999,Projectile.Trajectory.curved,SpellingSystem.SpellKind.passive,GameEntity.Elements.ELECTRICITY,"Immunite electrique",0,0,1);
+        Spell lightningSpear = new Spell(21,60,Projectile.Trajectory.strait,SpellingSystem.SpellKind.projectile,GameEntity.Elements.ELECTRICITY,"Lance de foudre",0,1,1);
+        Spell iceStorm = new Spell(22,20,Projectile.Trajectory.curved,SpellingSystem.SpellKind.explosion,GameEntity.Elements.ICE,"Tempete de glace",0,1,1);
+        Spell iceImmunity = new Spell(23,999,Projectile.Trajectory.curved,SpellingSystem.SpellKind.passive,GameEntity.Elements.ICE,"Immunite glace",0,0,1);
+        Spell majorHealing = new Spell(24,100,Projectile.Trajectory.curved,SpellingSystem.SpellKind.healing,GameEntity.Elements.NEUTRAL,"Soin majeur",0,1,1);
         
         Spells.add(fireBall);
         Spells.add(icePic);
@@ -161,9 +164,9 @@ public class SpellingSystem {
     knownSpell.add(newSpell);   
     }
     
-    public static void update (Input input, Spellington mainMage, ArrayList<Projectile> projectileList) {
+    public static void update (Input input,Spellington spellington, ArrayList<Projectile> projectileList) {
         
-        
+        SpellingSystem.spellington = spellington;
         
         
                 
@@ -184,12 +187,16 @@ public class SpellingSystem {
         
             for (int i = 0; i < knownSpell.size(); i++) {
                 if (incantationText.equals(knownSpell.get(i).getIncantation())) {
-                    if(knownSpell.get(i).getSpellKind() == spellKind.passive) {
+                    if(knownSpell.get(i).getSpellKind() == SpellKind.passive) {
                     
                         passiveSpell = knownSpell.get(i);
                         newSpell = true;
                         
                     } else {
+                        if(knownSpell.get(i).getSpellKind().equals(SpellKind.projectile)){
+                        Projectile tempProjectile = knownSpell.get(i).createSpellProjectile(spellington);
+                        projectileList.add(tempProjectile);
+                        }
                     activeSpell = knownSpell.get(i);
                     nbSpellUses = knownSpell.get(i).getNbUses();
                     newSpell = true;
@@ -215,8 +222,6 @@ public class SpellingSystem {
     public static void spellActivation () {
     }
     
-    public static void createSpellProjectile (Spell spell) {
-    Projectile tempProj;
-    }
+    
     
 }

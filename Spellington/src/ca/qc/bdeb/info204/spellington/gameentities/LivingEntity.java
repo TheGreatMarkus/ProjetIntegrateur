@@ -30,13 +30,14 @@ public abstract class LivingEntity extends DynamicEntity {
     protected int resIce;
     protected int resFire;
 
-    public LivingEntity(float x, float y, float width, float height, MouvementState mouvementState) {
-        super(x, y, width, height);
+    public LivingEntity(float x, float y, float width, float height, MouvementState mouvementState, int GRAVITY_MODIFIER) {
+        super(x, y, width, height, GRAVITY_MODIFIER);
         this.mouvementState = mouvementState;
         collisionTop = false;
         collisionBottom = false;
         collisionRight = false;
         collisionLeft = false;
+        this.GRAVITY_MODIFIER = GRAVITY_MODIFIER;
     }
 
     public void setLifePoint(int lifePoint) {

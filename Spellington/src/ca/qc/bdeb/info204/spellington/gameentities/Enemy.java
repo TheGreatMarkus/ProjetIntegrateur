@@ -12,8 +12,8 @@ public abstract class Enemy extends LivingEntity {
 
     protected ArrayList<String> droppableSpells = new ArrayList<>();
 
-    public Enemy(float x, float y, float width, float height, MouvementState mouvementState) {
-        super(x, y, width, height, mouvementState);
+    public Enemy(float x, float y, float width, float height, MouvementState mouvementState, int GRAVITY_MODIFIER) {
+        super(x, y, width, height, mouvementState, GRAVITY_MODIFIER);
     }
 
     public ArrayList<String> getDroppableSpells() {
