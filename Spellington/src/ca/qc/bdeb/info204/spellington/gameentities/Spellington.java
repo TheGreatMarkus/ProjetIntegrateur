@@ -36,7 +36,7 @@ public class Spellington extends LivingEntity {
     private static final float AIR_JUMP_POWER = 0.6f;
 
     public static final float INIT_MAX_LIFE = 100;
-    private static final int GRAVITY_MODIFIER = 2;
+    public static final int GRAVITY_MODIFIER = 2;
     private static final float MAX_X_SPEED = 0.7f;
     private static final Vector2D X_ACC = new Vector2D(0.002f, 0);
     private static final Vector2D INIT_JUMP_SPEED = new Vector2D(0, -0.8f);
@@ -76,7 +76,7 @@ public class Spellington extends LivingEntity {
      */
     public void update(Input input, float time) {
         //To slowdown time for testing purposes
-        //time *= 1.0;
+        //time *= 0.5;
         //On divize par SCALE pour match la position de la souris avec le scale du render
         float mouseX = (float) input.getMouseX() / GameCore.SCALE;
         float mouseY = (float) input.getMouseY() / GameCore.SCALE;
@@ -191,10 +191,11 @@ public class Spellington extends LivingEntity {
                 animWalkR.draw(tempX, tempY, tempWidth, tempHeight);
                 break;
         }
-        //g.drawImage(IMG_SPELLINGTON, this.getX() - 68, this.getY() - 10);
-        g.drawRect(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height);
-        g.setColor(Color.red);
-        g.drawRect(tempX, tempY, tempWidth, tempHeight);
+        if (PlayState.debugMode) {
+            g.drawRect(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height);
+            g.setColor(Color.red);
+            g.drawRect(tempX, tempY, tempWidth, tempHeight);
+        }
     }
 
     private void initAnimation() {

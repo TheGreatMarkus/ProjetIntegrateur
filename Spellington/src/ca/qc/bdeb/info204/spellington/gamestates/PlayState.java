@@ -30,7 +30,7 @@ public class PlayState extends BasicGameState {
 
     private UnicodeFont fontSpellChant;
 
-    private static Image IMG_GAME_CROSSHAIR;
+    private Image IMG_GAME_CROSSHAIR;
 
     private TiledMap map;
     private Spellington spellington;
@@ -41,7 +41,7 @@ public class PlayState extends BasicGameState {
     public static final Dimension DIM_MAP = new Dimension(32, 18);
 
     //debug variable
-    private static boolean debugMode = false;
+    public static boolean debugMode = false;
     private static boolean displayHUD = true;
 
     //Variables and constants related to the rendering of the HUD
@@ -62,14 +62,14 @@ public class PlayState extends BasicGameState {
         map = new TiledMap("res/map/mapTestGrotte.tmx");
         extractMapInfo();
         //Loading HUD image components
-        this.statsBarHUD = new Image("src/res/map/HUD/statsBar.png");
-        this.inputTextHUD = new Image("src/res/map/HUD/textRectangle.png");
-        this.passiveSpellHUD = new Image("src/res/map/HUD/utilitySquare.png");
-        this.activeSpellHUD = new Image("src/res/map/HUD/utilitySquare.png");
-        this.redPotionHUD = new Image("src/res/map/HUD/redPotion.png");
-        this.greenPotionHUD = new Image("src/res/map/HUD/greenPotion.png");
-        this.bluePotionHUD = new Image("src/res/map/HUD/bluePotion.png");
-        this.icePotionHUD = new Image("src/res/map/HUD/icePotion.png");
+        this.statsBarHUD = new Image("src/res/image/HUD/statsBar.png");
+        this.inputTextHUD = new Image("src/res/image/HUD/textRectangle.png");
+        this.passiveSpellHUD = new Image("src/res/image/HUD/utilitySquare.png");
+        this.activeSpellHUD = new Image("src/res/image/HUD/utilitySquare.png");
+        this.redPotionHUD = new Image("src/res/image/HUD/redPotion.png");
+        this.greenPotionHUD = new Image("src/res/image/HUD/greenPotion.png");
+        this.bluePotionHUD = new Image("src/res/image/HUD/bluePotion.png");
+        this.icePotionHUD = new Image("src/res/image/HUD/icePotion.png");
         spellington = new Spellington(65, 760, LivingEntity.MouvementState.STANDING_R);
     }
 

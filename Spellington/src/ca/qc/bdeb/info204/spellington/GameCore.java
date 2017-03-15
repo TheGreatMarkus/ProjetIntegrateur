@@ -63,6 +63,8 @@ public class GameCore extends StateBasedGame {
         } else {
             SCALE = ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height);
         }
+        
+        
 
         try {
             fontPaladin = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Paladin.ttf"));

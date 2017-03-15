@@ -51,7 +51,7 @@ public class MenuItem {
         } else {
             g.setColor(new Color(1, 1, 1, 1f));
         }
-
+        
         g.drawString(text, x, y);
         g.drawRect(x, y, width, height);
     }
