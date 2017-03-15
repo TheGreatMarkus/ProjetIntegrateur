@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ca.qc.bdeb.info204.spellington.gameentities;
+package ca.qc.bdeb.info204.spellington.calculations;
 
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import java.util.ArrayList;
 import javafx.scene.input.KeyCode;
 import org.newdawn.slick.Input;
@@ -22,6 +25,8 @@ public class SpellingSystem {
    private static int nbSpellUses = 0;
     
    private static String incantationText;
+   
+   private static ArrayList<Integer> letters = new ArrayList<>();
     
    private static ArrayList<Spell> knownSpell = new ArrayList<>();
    private static ArrayList<Spell> Spells = new ArrayList<>();
@@ -34,9 +39,7 @@ public class SpellingSystem {
    private static ArrayList<Spell> masterChocSpell = new ArrayList<>();
 
     public SpellingSystem() {
-    }
-    
-    public static void init () {
+        
         Spell fireBall = new Spell(1,5,Projectile.Trajectory.curved,SpellingSystem.spellKind.projectile,GameEntity.Elements.FIRE,"Boule de feu",0,4);
         Spell icePic = new Spell(2,5,Projectile.Trajectory.strait,SpellingSystem.spellKind.projectile,GameEntity.Elements.ICE,"Pic de glace",0,3);
         Spell sparkle = new Spell(3,5,Projectile.Trajectory.curved,SpellingSystem.spellKind.explosion,GameEntity.Elements.ELECTRICITY,"Etincelle",0,2);
@@ -125,15 +128,7 @@ public class SpellingSystem {
         knownSpell.add(fireResistance);
         knownSpell.add(iceResistance);
         knownSpell.add(lightningResistance);
-    }
-    
-    public static void newKnownSpell (Spell newSpell) {
-    knownSpell.add(newSpell);   
-    }
-    
-    public static void update (Input input, Spellington mainMage, ArrayList<Projectile> projectileList) {
         
-        ArrayList<Integer> letters = new ArrayList<>();
         letters.add(Input.KEY_A);
         letters.add(Input.KEY_B);
         letters.add(Input.KEY_C);
@@ -160,6 +155,16 @@ public class SpellingSystem {
         letters.add(Input.KEY_X);
         letters.add(Input.KEY_Y);
         letters.add(Input.KEY_Z);
+    }
+    
+    public static void newKnownSpell (Spell newSpell) {
+    knownSpell.add(newSpell);   
+    }
+    
+    public static void update (Input input, Spellington mainMage, ArrayList<Projectile> projectileList) {
+        
+        
+        
         
                 
         for (int i = 0; i < letters.size() ; i++) {
@@ -210,5 +215,8 @@ public class SpellingSystem {
     public static void spellActivation () {
     }
     
+    public static void createSpellProjectile (Spell spell) {
+    Projectile tempProj;
+    }
     
 }
