@@ -18,8 +18,8 @@ public class Projectile extends DynamicEntity {
     protected Animation animation;
     
     
-    public Projectile(float x, float y, Animation anim,int GRAVITY_MODIFIER) {
-        super(x, y, anim.getWidth(), anim.getHeight(), GRAVITY_MODIFIER);
+    public Projectile(float x, float y, Animation anim,float GRAVITY_MODIFIER) {
+        super(x, y, 20, 20, GRAVITY_MODIFIER);
         
         this.animation = anim;
         

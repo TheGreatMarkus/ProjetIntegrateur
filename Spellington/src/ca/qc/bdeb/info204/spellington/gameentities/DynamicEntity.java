@@ -17,7 +17,7 @@ public abstract class DynamicEntity extends GameEntity {
     
     protected Vector2D speedVector;
 
-    protected int GRAVITY_MODIFIER;
+    protected float GRAVITY_MODIFIER;
     /**
      *
      * @param x
@@ -25,7 +25,7 @@ public abstract class DynamicEntity extends GameEntity {
      * @param width
      * @param height
      */
-    public DynamicEntity(float x, float y, float width, float height, int GRAVITY_MODIFIER) {
+    public DynamicEntity(float x, float y, float width, float height, float GRAVITY_MODIFIER) {
         super(x, y, width, height);
         collisionTop = false;
         collisionBottom = false;

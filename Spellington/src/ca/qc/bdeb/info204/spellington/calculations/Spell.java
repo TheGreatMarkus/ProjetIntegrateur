@@ -27,9 +27,9 @@ public class Spell {
     private int speedModifier;
     private int nbUses;
     private Animation animation;
-    private int GRAVITY_MODIFIER;
+    private float GRAVITY_MODIFIER;
 
-    public Spell(int id, int damage, Projectile.Trajectory trajectory, SpellKind spellKind, GameEntity.Elements element, String name, int speedModifier, int nbUses,int GRAVITY_MODIFIER) {
+    public Spell(int id, int damage, Projectile.Trajectory trajectory, SpellKind spellKind, GameEntity.Elements element, String name, int speedModifier, int nbUses,float GRAVITY_MODIFIER, Animation animSpell) {
         this.id = id;
         this.damage = damage;
         this.trajectory = trajectory;
@@ -39,6 +39,7 @@ public class Spell {
         this.speedModifier = speedModifier;
         this.nbUses = nbUses;
         this.GRAVITY_MODIFIER = GRAVITY_MODIFIER;
+        this.animation = animSpell;
     }
     
     public void spellActivation () {
@@ -46,11 +47,16 @@ public class Spell {
         // selon le type de sort
     }
     
+    public void endOfActivation () {
+        
+        
+    }
+    
     public Projectile createSpellProjectile (Spellington spellington) {
         Projectile tempProj;
         
         if (spellKind.equals(SpellKind.PROJECTILE)) {
-     tempProj = new Projectile(spellington.getX(), spellington.getY(),new Animation(),GRAVITY_MODIFIER); 
+     tempProj = new Projectile(spellington.getX(), spellington.getY() ,animation ,GRAVITY_MODIFIER); 
         } else {
             tempProj = null;
         }
@@ -91,6 +97,10 @@ public class Spell {
 
     public int getNbUses() {
         return nbUses;
+    }
+
+    public void setIncantation(String incantation) {
+        this.incantation = incantation;
     }
 
     
