@@ -79,5 +79,34 @@ public class Calculations {
             }
         }
     }
+    
+    public static float detAngle(float x, float y) {
+        //Calculate the base angle assuming the deltaX and DeltaY are positive
+        float tempAngle = (float) Math.atan(Math.abs(y) / Math.abs(x));
+        if (x > 0) {
+            if (y < 0) {
+                tempAngle = -tempAngle;
+            } else if (y == 0) {
+                tempAngle = 0;
+            }
+        } else if (x < 0) {
+            if (y > 0) {
+                tempAngle = (float) Math.PI - tempAngle;
+            } else if (y < 0) {
+                tempAngle = (float) Math.PI + tempAngle;
+            } else if (y == 0) {
+                tempAngle = (float) Math.PI;
+            }
+        } else if (x == 0) {
+            if (y > 0) {
+                tempAngle = (float) Math.PI / 2f;
+            } else if (y < 0) {
+                tempAngle = (float) -Math.PI / 2f;
+            } else if (y == 0) {
+                tempAngle = 0;
+            }
+        }
+        return tempAngle;
+    }
 
 }

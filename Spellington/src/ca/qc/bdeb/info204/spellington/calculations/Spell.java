@@ -5,18 +5,21 @@
  */
 package ca.qc.bdeb.info204.spellington.calculations;
 
+import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem.SpellKind;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Input;
 
 /**
  *
  * @author Celtis
  */
 public class Spell {
+
     private int id;
     private int damage;
     private Projectile.Trajectory trajectory;
@@ -29,7 +32,7 @@ public class Spell {
     private Animation animation;
     private float GRAVITY_MODIFIER;
 
-    public Spell(int id, int damage, Projectile.Trajectory trajectory, SpellKind spellKind, GameEntity.Elements element, String name, int speedModifier, int nbUses,float GRAVITY_MODIFIER, Animation animSpell) {
+    public Spell(int id, int damage, Projectile.Trajectory trajectory, SpellKind spellKind, GameEntity.Elements element, String name, int speedModifier, int nbUses, float GRAVITY_MODIFIER, Animation animSpell) {
         this.id = id;
         this.damage = damage;
         this.trajectory = trajectory;
@@ -41,26 +44,34 @@ public class Spell {
         this.GRAVITY_MODIFIER = GRAVITY_MODIFIER;
         this.animation = animSpell;
     }
-    
-    public void spellActivation () {
-    
+
+    public void spellActivation() {
+
         // selon le type de sort
     }
-    
-    public void endOfActivation () {
-        
-        
+
+    public void endOfActivation() {
+
     }
-    
-    public Projectile createSpellProjectile (Spellington spellington) {
+
+    public Projectile createSpellProjectile(Spellington spellington, Input input) {
         Projectile tempProj;
-        
         if (spellKind.equals(SpellKind.PROJECTILE)) {
-     tempProj = new Projectile(spellington.getX(), spellington.getY() ,animation ,GRAVITY_MODIFIER); 
+
+            float originX = spellington.getCenterX();
+            float originY = spellington.getCenterY();
+            float mouseX = (float) input.getMouseX() / GameCore.SCALE;
+            float mouseY = (float) input.getMouseY() / GameCore.SCALE;
+            float angle = Calculations.detAngle(mouseX - originX, mouseY - originY);
+            Vector2D temp = new Vector2D(2f, angle, true);
+            System.out.println(temp.getX());
+            System.out.println(temp.getY());
+            tempProj = new Projectile(originX, originY, temp, GRAVITY_MODIFIER, null);
+
         } else {
             tempProj = null;
         }
-    return tempProj;
+        return tempProj;
     }
 
     public int getId() {
@@ -103,6 +114,4 @@ public class Spell {
         this.incantation = incantation;
     }
 
-    
-    
 }

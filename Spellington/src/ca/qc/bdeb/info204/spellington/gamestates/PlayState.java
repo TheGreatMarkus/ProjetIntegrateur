@@ -39,9 +39,9 @@ public class PlayState extends BasicGameState {
     private Spellington spellington;
     private Tile[][] mapCollision;
     private Tile[][] mapEvent;
-    
+
     public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
-    
+
     public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
 
@@ -94,6 +94,10 @@ public class PlayState extends BasicGameState {
         float renderMouseX = gc.getInput().getMouseX() / GameCore.SCALE;
         float renderMouseY = gc.getInput().getMouseY() / GameCore.SCALE;
         IMG_GAME_CROSSHAIR.draw(renderMouseX - 12, renderMouseY - 12, 25, 25);
+
+        for (int i = 0; i < activeProjectiles.size(); i++) {
+            activeProjectiles.get(i).render(g);
+        }
         debugInfo(g, gc);
 
         displayHUD(g);
@@ -112,10 +116,10 @@ public class PlayState extends BasicGameState {
         }
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(mapCollision, spellington);
-        
+
         SpellingSystem.update(gc.getInput(), spellington, activeProjectiles);
         for (int i = 0; i < activeProjectiles.size(); i++) {
-            activeProjectiles.get(i).update(delta);
+            activeProjectiles.get(i).update((float) delta);
         }
     }
 
