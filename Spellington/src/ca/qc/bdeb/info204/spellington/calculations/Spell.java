@@ -31,8 +31,11 @@ public class Spell {
     private int nbUses;
     private Animation animation;
     private float GRAVITY_MODIFIER;
+    private int height;
+    private int width;
+    
 
-    public Spell(int id, int damage, Projectile.Trajectory trajectory, SpellKind spellKind, GameEntity.Elements element, String name, int speedModifier, int nbUses, float GRAVITY_MODIFIER, Animation animSpell) {
+    public Spell(int id, int damage, Projectile.Trajectory trajectory, SpellKind spellKind, GameEntity.Elements element, String name, int speedModifier, int nbUses, float GRAVITY_MODIFIER, Animation animSpell,int width ,int height) {
         this.id = id;
         this.damage = damage;
         this.trajectory = trajectory;
@@ -43,6 +46,8 @@ public class Spell {
         this.nbUses = nbUses;
         this.GRAVITY_MODIFIER = GRAVITY_MODIFIER;
         this.animation = animSpell;
+        this.height = height;
+        this.width = width;
     }
 
     public void spellActivation() {
@@ -63,10 +68,10 @@ public class Spell {
             float mouseX = (float) input.getMouseX() / GameCore.SCALE;
             float mouseY = (float) input.getMouseY() / GameCore.SCALE;
             float angle = Calculations.detAngle(mouseX - originX, mouseY - originY);
-            Vector2D temp = new Vector2D(2f, angle, true);
+            Vector2D temp = new Vector2D(speedModifier, angle, true);
             System.out.println(temp.getX());
             System.out.println(temp.getY());
-            tempProj = new Projectile(originX, originY, temp, GRAVITY_MODIFIER, null);
+            tempProj = new Projectile(originX-width/2, originY-height/2,width ,height ,temp ,GRAVITY_MODIFIER, animation);
 
         } else {
             tempProj = null;

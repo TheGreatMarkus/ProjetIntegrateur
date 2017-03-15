@@ -3,6 +3,7 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -20,8 +21,8 @@ public class Projectile extends DynamicEntity {
     protected int Damage;
     protected Animation animation;
 
-    public Projectile(float x, float y, Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim) {
-        super(x, y, 20, 20, GRAVITY_MODIFIER);
+    public Projectile(float x, float y,int width ,int height , Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim) {
+        super(x, y, width, width, GRAVITY_MODIFIER);
         this.animation = anim;
         this.speedVector = speedVector;
 
@@ -34,6 +35,6 @@ public class Projectile extends DynamicEntity {
     }
 
     public void render(Graphics g) {
-        g.fillOval(x, y, 5, 5);
+        this.animation.draw(x, y, width, width);
     }
 }
