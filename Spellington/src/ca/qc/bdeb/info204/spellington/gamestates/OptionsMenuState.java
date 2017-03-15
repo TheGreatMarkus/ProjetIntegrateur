@@ -8,8 +8,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.universalFont;
 import org.newdawn.slick.Input;
+import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.fontMenu;
 
 /**
  *
@@ -28,13 +28,13 @@ public class OptionsMenuState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         textGap = 10.0f * GameCore.SCALE;
-        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TITLE, OM_TITLE, true, false, 0, textGap, universalFont.getWidth(OM_TITLE), universalFont.getHeight(OM_TITLE));
-        mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, OM_BACK, false, false, textGap, textGap, universalFont.getWidth(OM_BACK), universalFont.getHeight(OM_BACK));
+        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TITLE, OM_TITLE, true, false, 0, textGap, fontMenu.getWidth(OM_TITLE), fontMenu.getHeight(OM_TITLE));
+        mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, OM_BACK, false, false, textGap, textGap, fontMenu.getWidth(OM_BACK), fontMenu.getHeight(OM_BACK));
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        g.setFont(universalFont);
+        g.setFont(fontMenu);
         mnuItemTitle.render(g, gc);
         mnuItemBack.render(g, gc);
 

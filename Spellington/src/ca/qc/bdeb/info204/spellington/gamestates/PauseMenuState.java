@@ -2,7 +2,6 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.IMG_MENU_CURSOR;
-import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.universalFont;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -10,6 +9,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.fontMenu;
 
 /**
  *
@@ -31,15 +31,15 @@ public class PauseMenuState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         textGap = 10.0f * GameCore.SCALE;
 
-        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TITLE, PM_TITLE, true, false, 0, textGap, universalFont.getWidth(PM_TITLE), universalFont.getHeight(PM_TITLE));
-        mnuItemResume = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_RESUME, true, true, 0, 0, universalFont.getWidth(PM_RESUME), universalFont.getHeight(PM_RESUME));
-        mnuItemMainMenu = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_MAIN_MENU, true, false, 0, mnuItemResume.getY() + mnuItemResume.getHeight() + textGap, universalFont.getWidth(PM_MAIN_MENU), universalFont.getHeight(PM_MAIN_MENU));
+        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TITLE, PM_TITLE, true, false, 0, textGap, fontMenu.getWidth(PM_TITLE), fontMenu.getHeight(PM_TITLE));
+        mnuItemResume = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_RESUME, true, true, 0, 0, fontMenu.getWidth(PM_RESUME), fontMenu.getHeight(PM_RESUME));
+        mnuItemMainMenu = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_MAIN_MENU, true, false, 0, mnuItemResume.getY() + mnuItemResume.getHeight() + textGap, fontMenu.getWidth(PM_MAIN_MENU), fontMenu.getHeight(PM_MAIN_MENU));
 
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        g.setFont(universalFont);
+        g.setFont(fontMenu);
         mnuItemTitle.render(g, gc);
         mnuItemResume.render(g, gc);
         mnuItemMainMenu.render(g, gc);

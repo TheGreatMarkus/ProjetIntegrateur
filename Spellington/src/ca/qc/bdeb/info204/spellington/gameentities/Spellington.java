@@ -35,7 +35,7 @@ public class Spellington extends LivingEntity {
     private static final int MAX_AIR_JUMPS = 1;
     private static final float AIR_JUMP_POWER = 0.6f;
 
-    private static final int INIT_MAX_LIFE = 100;
+    public static final float INIT_MAX_LIFE = 100;
     private static final int GRAVITY_MODIFIER = 2;
     private static final float MAX_X_SPEED = 0.7f;
     private static final Vector2D X_ACC = new Vector2D(0.002f, 0);
@@ -58,7 +58,7 @@ public class Spellington extends LivingEntity {
     public Spellington(float x, float y, MouvementState mouvementState) throws SlickException {
         super(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height, mouvementState);
         initAnimation();
-        lifePoint = INIT_MAX_LIFE;
+        lifePoint = (int) INIT_MAX_LIFE;
 
         resElectricity = 0;
         resIce = 0;
@@ -82,6 +82,7 @@ public class Spellington extends LivingEntity {
         float mouseY = (float) input.getMouseY() / GameCore.SCALE;
         //Using equation d = (vf^2 - vi^2)/2a. Distance from where Spellington should stop when approching the mouse
         float SLOWDOWN_DISTANCE = (this.speedVector.getX() * this.speedVector.getX()) / (2.0f * X_ACC.getX());
+
         //Correction of speed according to collision state
         if (this.collisionBottom || this.collisionTop) {
             this.speedVector.setY(0);
@@ -130,7 +131,7 @@ public class Spellington extends LivingEntity {
             }
         }
 
-        //Temporairy boolean because of a problem with isMousePressed.
+        //Temporary boolean because of a problem with isMousePressed.
         boolean triedToJump = false;
         if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
             triedToJump = true;
@@ -286,5 +287,4 @@ public class Spellington extends LivingEntity {
 
         return MouvementState.WALL_L;
     }
-
 }
