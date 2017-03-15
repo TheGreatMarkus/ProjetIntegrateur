@@ -2,6 +2,7 @@ package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
+import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 
 /**
  * Class dedicated to performing long or complex calculations for the game.
@@ -10,14 +11,21 @@ import ca.qc.bdeb.info204.spellington.gameentities.Tile;
  */
 public class Calculations {
 
+    public static int TargetI = 0;
+    public static int TargetJ = 0;
+
     /**
      * @author Cristian Aldea
      * @param map
      * @param creature
      */
     public static void checkMapCollision(Tile[][] map, LivingEntity creature) {
-        int TargetI = (int)(creature.getCenterY() / (float) Tile.DIM_TILE.width);
-        int TargetJ = (int)(creature.getCenterX() / (float) Tile.DIM_TILE.height);
+        TargetI = (int) (creature.getCenterY() / (float) Tile.DIM_TILE.width);
+        TargetJ = (int) (creature.getCenterX() / (float) Tile.DIM_TILE.height);
+        if (TargetI >= PlayState.DIM_MAP.height || TargetJ >= PlayState.DIM_MAP.width) {
+            TargetI = 0;
+            TargetJ = 0;
+        }
 
         for (int i = 0; i < map.length; i++) {
             Tile tempTile = map[i][TargetJ];
@@ -50,8 +58,8 @@ public class Calculations {
             float heightIntersection = Math.abs(bottom - top);
 
             /*The side of the correction is determined by calculating the 
-            shallowest side of the intersection and the relative x and y positions
-            of the entity to be moved*/
+             shallowest side of the intersection and the relative x and y positions
+             of the entity to be moved*/
             if (heightIntersection < widthIntersection) {
                 if (tile.getCenterY() < creature.getCenterY()) {
                     creature.setY(creature.getY() + heightIntersection);

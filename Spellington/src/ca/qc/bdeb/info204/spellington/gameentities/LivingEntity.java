@@ -8,10 +8,23 @@ package ca.qc.bdeb.info204.spellington.gameentities;
  */
 public abstract class LivingEntity extends DynamicEntity {
 
+    public static enum MouvementState {
+        STANDING_R,
+        STANDING_L,
+        WALKING_R,
+        WALKING_L,
+        JUMP_R,
+        JUMP_L,
+        WALL_R,
+        WALL_L
+    }
+
     protected boolean collisionTop;
     protected boolean collisionBottom;
     protected boolean collisionRight;
     protected boolean collisionLeft;
+
+    protected MouvementState mouvementState;
 
     protected int lifePoint;
 
@@ -19,8 +32,9 @@ public abstract class LivingEntity extends DynamicEntity {
     protected int resIce;
     protected int resFire;
 
-    public LivingEntity(float x, float y, float width, float height) {
+    public LivingEntity(float x, float y, float width, float height, MouvementState mouvementState) {
         super(x, y, width, height);
+        this.mouvementState = mouvementState;
         collisionTop = false;
         collisionBottom = false;
         collisionRight = false;
@@ -97,5 +111,15 @@ public abstract class LivingEntity extends DynamicEntity {
         this.collisionRight = false;
         this.collisionLeft = false;
     }
+
+    public MouvementState getMouvementState() {
+        return mouvementState;
+    }
+
+    public void setMouvementState(MouvementState mouvementState) {
+        this.mouvementState = mouvementState;
+    }
+    
+    
 
 }
