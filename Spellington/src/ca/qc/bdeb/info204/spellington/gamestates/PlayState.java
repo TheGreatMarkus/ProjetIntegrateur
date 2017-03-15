@@ -239,7 +239,7 @@ public class PlayState extends BasicGameState {
             int alpha = 127; //50% color transparency
             final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
 
-            String incantationText = "The quick brown fox jumps over the lazy dog";
+            String incantationText = SpellingSystem.getIncantationText();
             g.setFont(fontSpellChant);
 
             int passiveX = GameCore.RENDER_SIZE.width - xGap - passiveSpellHUD.getWidth();

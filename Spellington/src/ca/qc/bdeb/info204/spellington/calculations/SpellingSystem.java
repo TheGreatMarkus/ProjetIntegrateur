@@ -27,7 +27,7 @@ public class SpellingSystem {
    private static Spell activeSpell;
    private static int nbSpellUses = 0;
     
-   private static String incantationText;
+   private static String incantationText = "";
    
    private static ArrayList<Integer> letters = new ArrayList<>();
     
@@ -41,7 +41,7 @@ public class SpellingSystem {
    private static ArrayList<Spell> masterIceSpell = new ArrayList<>();
    private static ArrayList<Spell> masterChocSpell = new ArrayList<>();
 
-    public SpellingSystem() {
+    public static void initSpellingSystem() {
         
         Spell fireBall = new Spell(1,5,Projectile.Trajectory.curved,SpellKind.projectile,GameEntity.Elements.FIRE,"Boule de feu",0,4,1);
         Spell icePic = new Spell(2,5,Projectile.Trajectory.strait,SpellingSystem.SpellKind.projectile,GameEntity.Elements.ICE,"Pic de glace",0,3,1);
@@ -168,8 +168,8 @@ public class SpellingSystem {
         
         SpellingSystem.spellington = spellington;
         
-        
-                
+
+
         for (int i = 0; i < letters.size() ; i++) {
             if (input.isKeyPressed(letters.get(i))) {
                 incantationText = incantationText + Input.getKeyName(letters.get(i));
@@ -220,6 +220,11 @@ public class SpellingSystem {
     }
    
     public static void spellActivation () {
+        
+    }
+
+    public static String getIncantationText() {
+        return incantationText;
     }
     
     

@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington;
 
+import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import ca.qc.bdeb.info204.spellington.gamestates.MainMenuState;
 import ca.qc.bdeb.info204.spellington.gamestates.SpellBookState;
@@ -81,7 +82,7 @@ public class GameCore extends StateBasedGame {
         appGameContainer.setShowFPS(false);
         //Start of the game.
         appGameContainer.start();
-
+        
     }
 
     public GameCore() throws SlickException {
@@ -103,7 +104,8 @@ public class GameCore extends StateBasedGame {
         this.getState(SPELLBOOK_STATE_ID).init(gc, this);
         this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
         this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
-
+        SpellingSystem.initSpellingSystem();
+        
 //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
     }
