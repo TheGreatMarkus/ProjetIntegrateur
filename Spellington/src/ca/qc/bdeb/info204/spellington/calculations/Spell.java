@@ -49,7 +49,7 @@ public class Spell {
     public Projectile createSpellProjectile (Spellington spellington) {
         Projectile tempProj;
         
-        if (spellKind.equals(SpellKind.projectile)) {
+        if (spellKind.equals(SpellKind.PROJECTILE)) {
      tempProj = new Projectile(spellington.getX(), spellington.getY(),new Animation(),GRAVITY_MODIFIER); 
         } else {
             tempProj = null;
