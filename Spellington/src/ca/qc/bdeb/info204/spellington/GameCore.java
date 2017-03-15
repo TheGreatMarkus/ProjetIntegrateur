@@ -6,8 +6,13 @@ import ca.qc.bdeb.info204.spellington.gamestates.SpellBookState;
 import ca.qc.bdeb.info204.spellington.gamestates.OptionsMenuState;
 import ca.qc.bdeb.info204.spellington.gamestates.PauseMenuState;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -38,6 +43,8 @@ public class GameCore extends StateBasedGame {
 
     private static AppGameContainer appGameContainer;
 
+    public static Font fontPaladin;
+
     /**
      * Main method of the program
      *
@@ -55,6 +62,14 @@ public class GameCore extends StateBasedGame {
             SCALE = ((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width);
         } else {
             SCALE = ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height);
+        }
+
+        try {
+            fontPaladin = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Paladin.ttf"));
+        } catch (FontFormatException ex) {
+            Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
@@ -78,9 +93,9 @@ public class GameCore extends StateBasedGame {
         //It is important to keep the state addition order.
         this.addState(new MainMenuState());
         this.addState(new PlayState());
-        this.addState(new SpellBookState());
         this.addState(new OptionsMenuState());
         this.addState(new PauseMenuState());
+        this.addState(new SpellBookState());
 
         //Initialise game states.
         this.getState(MAIN_MENU_STATE_ID).init(gc, this);
@@ -88,12 +103,12 @@ public class GameCore extends StateBasedGame {
         this.getState(SPELLBOOK_STATE_ID).init(gc, this);
         this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
         this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
-        
+
 //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
     }
-    
-     public static void clearInputRecord(GameContainer gc) {
+
+    public static void clearInputRecord(GameContainer gc) {
         gc.getInput().clearKeyPressedRecord();
         gc.getInput().clearMousePressedRecord();
     }
