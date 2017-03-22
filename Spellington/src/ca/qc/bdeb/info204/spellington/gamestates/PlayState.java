@@ -2,6 +2,7 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import static ca.qc.bdeb.info204.spellington.GameCore.fontPaladin;
+import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
@@ -41,6 +42,7 @@ public class PlayState extends BasicGameState {
     private Tile[][] mapEvent;
 
     public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
+    public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
 
     public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
@@ -117,7 +119,7 @@ public class PlayState extends BasicGameState {
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(mapCollision, spellington);
 
-        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles);
+        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations);
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
         }
@@ -271,7 +273,7 @@ public class PlayState extends BasicGameState {
             g.drawString("4", icePositionX + 3, BARS_Y + icePotionHUD.getHeight());
 
             g.setColor(HEALTHCOLOR);
-            g.fillRect(statsBarOffSetX, healthBarY, (spellington.getLifePoint() / Spellington.INIT_MAX_LIFE) * STATSBARWIDTH, STATSBARHEIGHT);
+            g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) Spellington.INIT_MAX_LIFE) * (float) STATSBARWIDTH, STATSBARHEIGHT);
             g.setColor(XPCOLOR);
             g.fillRect(statsBarOffSetX, xpBarY, .5f * STATSBARWIDTH, STATSBARHEIGHT);
         }

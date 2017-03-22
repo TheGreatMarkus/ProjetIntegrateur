@@ -32,10 +32,10 @@ public class Spellington extends LivingEntity {
 
     //Temporairy code fo air jumps
     private int airJumps;
-    private static final int MAX_AIR_JUMPS = 1;
+    private int MAX_AIR_JUMPS = 1;
     private static final float AIR_JUMP_POWER = 0.6f;
 
-    public static final float INIT_MAX_LIFE = 100;
+    public static final int INIT_MAX_LIFE = 100;
     private static final float GRAVITY_MODIFIER = 2;
     private static final float MAX_X_SPEED = 0.7f;
     private static final Vector2D X_ACC = new Vector2D(0.002f, 0);
@@ -56,9 +56,9 @@ public class Spellington extends LivingEntity {
      * @throws SlickException
      */
     public Spellington(float x, float y, MouvementState mouvementState) throws SlickException {
-        super(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height, mouvementState, GRAVITY_MODIFIER);
+        super(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height, mouvementState, GRAVITY_MODIFIER, INIT_MAX_LIFE);
         initAnimation();
-        lifePoint = (int) INIT_MAX_LIFE;
+        
 
         resElectricity = 0;
         resIce = 0;
@@ -287,4 +287,15 @@ public class Spellington extends LivingEntity {
 
         return MouvementState.WALL_L;
     }
+
+    public int getMAX_AIR_JUMPS() {
+        return MAX_AIR_JUMPS;
+    }
+
+    public void setMAX_AIR_JUMPS(int MAX_AIR_JUMPS) {
+        this.MAX_AIR_JUMPS = MAX_AIR_JUMPS;
+    }
+
+    
+    
 }

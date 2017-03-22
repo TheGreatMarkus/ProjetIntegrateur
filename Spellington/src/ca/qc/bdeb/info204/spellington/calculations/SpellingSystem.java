@@ -206,11 +206,13 @@ public class SpellingSystem {
         knownSpell.add(newSpell);
     }
 
-    public static void update(Input input, Spellington spellington, ArrayList<Projectile> projectileList) {
+    public static void update(Input input, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations) {
 
         for (int i = 0; i < letters.size(); i++) {
             if (input.isKeyPressed(letters.get(i))) {
-                incantationText = incantationText + Input.getKeyName(letters.get(i));
+                if(incantationText.length() < 30){
+                    incantationText = incantationText + Input.getKeyName(letters.get(i));
+                }
             }
         }
 
@@ -225,9 +227,11 @@ public class SpellingSystem {
             for (int i = 0; i < knownSpell.size(); i++) {
                 if (incantationText.equals(knownSpell.get(i).getIncantation())) {
                     if (knownSpell.get(i).getSpellKind() == SpellKind.PASSIVE) {
-                        knownSpell.get(i).spellActivation();
-                        passiveSpell.endOfActivation();
+                        if (passiveSpell != null) {
+                            passiveSpell.endOfActivation(spellington);
+                        }
                         passiveSpell = knownSpell.get(i);
+                        passiveSpell.spellActivation(spellington, input, activeAnimations, activeProjectiles);
                         newSpell = true;
 
                     } else {
@@ -239,9 +243,7 @@ public class SpellingSystem {
 
             }
             if (!newSpell && activeSpell != null) {
-                Projectile tempProjectile = activeSpell.createSpellProjectile(spellington, input);
-                projectileList.add(tempProjectile);
-                activeSpell.spellActivation();
+                activeSpell.spellActivation(spellington, input, activeAnimations, activeProjectiles);
                 nbSpellUses--;
             }
             if (nbSpellUses <= 0) {
@@ -254,7 +256,20 @@ public class SpellingSystem {
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
             incantationText = spellList.get(0).getIncantation();
-            System.out.println(projectileList.size());
+            System.out.println(activeProjectiles.size());
+        }
+
+        if (input.isKeyPressed(Input.KEY_F2)) {
+            incantationText = spellList.get(3).getIncantation();
+        }
+
+        if (input.isKeyPressed(Input.KEY_F9)) {
+            incantationText = spellList.get(4).getIncantation();
+        }
+
+        if (input.isKeyPressed(Input.KEY_F1)) {
+            spellington.subLifePoint(10);
+            System.out.println(spellington.getLifePoint());
         }
         //test fin..........................................................
     }
@@ -298,9 +313,9 @@ public class SpellingSystem {
         }
         readerBuffer.close();
 
-        for (int i = 0; i < tutoSpell.size(); i++) {
+        for (int i = 0; i < spellList.size(); i++) {
             int tempdice = dice.nextInt(tempWord.size());
-            tutoSpell.get(i).setIncantation(tempWord.get(tempdice));
+            spellList.get(i).setIncantation(tempWord.get(tempdice));
             tempWord.remove(tempdice);
         }
 
