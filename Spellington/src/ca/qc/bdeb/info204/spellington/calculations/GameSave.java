@@ -9,10 +9,14 @@ import java.io.Serializable;
 public class GameSave implements Serializable {
 
     private String saveName;
-    private int spellingtonLevel;
+    private int sLevel;
+    private int sXP;
 
     public GameSave(String saveName) {
-        spellingtonLevel = 0;
+        this.saveName = saveName;
+        sLevel = 0;
+        sXP = 0;
+
     }
 
 }
