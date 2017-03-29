@@ -3,7 +3,6 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -14,9 +13,7 @@ import org.newdawn.slick.Graphics;
  */
 public class Projectile extends DynamicEntity {
 
-    public enum Trajectory {
-        curved, strait
-    };
+    
 
     protected int Damage;
     protected Animation animation;
