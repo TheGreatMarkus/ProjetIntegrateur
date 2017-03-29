@@ -9,10 +9,11 @@ import org.newdawn.slick.geom.Rectangle;
  */
 public abstract class GameEntity extends Rectangle {
 
-    public static enum Element {
+    public static enum ElementalType {
         FIRE,
         ICE,
-        ELECTRICITY
+        LIGHTNING,
+        NEUTRAL
     }
 
     public GameEntity(float x, float y, float width, float height) {

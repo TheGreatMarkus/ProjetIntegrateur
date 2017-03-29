@@ -20,6 +20,11 @@ public class Vector2D {
         this.y = v.y;
     }
 
+    public Vector2D(float norm, float angle, boolean temp) {
+        this.x = (float) norm * (float) Math.cos(angle);
+        this.y = (float) norm * (float) Math.sin(angle);
+    }
+
     public void set(float x, float y) {
         this.x = x;
         this.y = y;

@@ -14,9 +14,10 @@ public abstract class DynamicEntity extends GameEntity {
     protected boolean collisionBottom;
     protected boolean collisionRight;
     protected boolean collisionLeft;
-
+    
     protected Vector2D speedVector;
 
+    protected float GRAVITY_MODIFIER;
     /**
      *
      * @param x
@@ -24,13 +25,14 @@ public abstract class DynamicEntity extends GameEntity {
      * @param width
      * @param height
      */
-    public DynamicEntity(float x, float y, float width, float height) {
+    public DynamicEntity(float x, float y, float width, float height, float GRAVITY_MODIFIER) {
         super(x, y, width, height);
         collisionTop = false;
         collisionBottom = false;
         collisionRight = false;
         collisionLeft = false;
         speedVector = new Vector2D(0, 0);
+        this.GRAVITY_MODIFIER = GRAVITY_MODIFIER;
     }
 
     public Vector2D getSpeedVector() {

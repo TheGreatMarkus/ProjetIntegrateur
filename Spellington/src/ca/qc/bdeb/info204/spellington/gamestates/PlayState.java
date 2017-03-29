@@ -2,13 +2,17 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import static ca.qc.bdeb.info204.spellington.GameCore.fontPaladin;
+import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
+import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -36,6 +40,9 @@ public class PlayState extends BasicGameState {
     private Spellington spellington;
     private Tile[][] mapCollision;
     private Tile[][] mapEvent;
+
+    public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
+    public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
 
     public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
@@ -89,6 +96,10 @@ public class PlayState extends BasicGameState {
         float renderMouseX = gc.getInput().getMouseX() / GameCore.SCALE;
         float renderMouseY = gc.getInput().getMouseY() / GameCore.SCALE;
         IMG_GAME_CROSSHAIR.draw(renderMouseX - 12, renderMouseY - 12, 25, 25);
+
+        for (int i = 0; i < activeProjectiles.size(); i++) {
+            activeProjectiles.get(i).render(g);
+        }
         debugInfo(g, gc);
 
         displayHUD(g);
@@ -107,6 +118,11 @@ public class PlayState extends BasicGameState {
         }
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(mapCollision, spellington);
+
+        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations);
+        for (int i = 0; i < activeProjectiles.size(); i++) {
+            activeProjectiles.get(i).update((float) delta);
+        }
     }
 
     /**
@@ -229,7 +245,7 @@ public class PlayState extends BasicGameState {
             int alpha = 127; //50% color transparency
             final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
 
-            String incantationText = "The quick brown fox jumps over the lazy dog";
+            String incantationText = SpellingSystem.getIncantationText();
             g.setFont(fontSpellChant);
 
             int passiveX = GameCore.RENDER_SIZE.width - xGap - passiveSpellHUD.getWidth();
@@ -257,7 +273,7 @@ public class PlayState extends BasicGameState {
             g.drawString("4", icePositionX + 3, BARS_Y + icePotionHUD.getHeight());
 
             g.setColor(HEALTHCOLOR);
-            g.fillRect(statsBarOffSetX, healthBarY, (spellington.getLifePoint() / Spellington.INIT_MAX_LIFE) * STATSBARWIDTH, STATSBARHEIGHT);
+            g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) Spellington.INIT_MAX_LIFE) * (float) STATSBARWIDTH, STATSBARHEIGHT);
             g.setColor(XPCOLOR);
             g.fillRect(statsBarOffSetX, xpBarY, .5f * STATSBARWIDTH, STATSBARHEIGHT);
         }
