@@ -27,13 +27,7 @@ import org.newdawn.slick.SlickException;
  */
 public class SpellingSystem {
 
-    public enum SpellType {
-        PROJECTILE,
-        HEALING,
-        BREATH,
-        EXPLOSION,
-        PASSIVE
-    }
+    
 
     private static Spell passiveSpell;
     private static Spell activeSpell;
