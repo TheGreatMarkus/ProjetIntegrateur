@@ -36,7 +36,7 @@ public class Spellington extends LivingEntity {
     private static final float AIR_JUMP_POWER = 0.6f;
 
     public static final int INIT_MAX_LIFE = 100;
-    public static final float GRAVITY_MODIFIER = 2;
+    private static final float GRAVITY_MODIFIER = 2;
     
     private static final float MAX_X_SPEED = 0.7f;
     private static final Vector2D X_ACC = new Vector2D(0.002f, 0);
