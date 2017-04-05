@@ -27,8 +27,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class GameCore extends StateBasedGame {
 
     //For testing and seeing the console text
-    //public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    public static final Dimension SCREEN_SIZE = new Dimension(800, 450);
+    public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    //public static final Dimension SCREEN_SIZE = new Dimension(800, 450);
     //public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
     public static final Dimension RENDER_SIZE = new Dimension(1600, 900);
     public static float SCALE;
@@ -73,7 +73,7 @@ public class GameCore extends StateBasedGame {
             Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, false);
+        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
         appGameContainer.setMouseGrabbed(true);
         appGameContainer.setTargetFrameRate(TARGER_FPS);
         appGameContainer.setVSync(true);

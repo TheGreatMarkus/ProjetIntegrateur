@@ -71,7 +71,13 @@ public class Spell {
         } else if (this.spellKind == SpellKind.PASSIVE) {
             if (this.id == 5) {
                 spellington.setMAX_AIR_JUMPS(3);
-            }
+            } else if (this.id == 6) {
+                spellington.setResFire(10);
+            } else if (this.id == 7) {
+                spellington.setResIce(10);
+            } else if (this.id == 8) {
+                spellington.setResElectricity(10);
+            } 
 
         } else if (this.spellKind == SpellKind.PROJECTILE) {
             if (this.getSpellKind() == SpellKind.PROJECTILE) {
@@ -86,7 +92,13 @@ public class Spell {
         if (this.spellKind == SpellKind.PASSIVE) {
             if (this.id == 5) {
                 spellington.setMAX_AIR_JUMPS(1);
-            }
+            } else if (this.id == 6) {
+                spellington.setResFire(0);
+            } else if (this.id == 7) {
+                spellington.setResIce(0);
+            } else if (this.id == 8) {
+                spellington.setResElectricity(0);
+            } 
 
         }
     }
