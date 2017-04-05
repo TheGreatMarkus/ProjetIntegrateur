@@ -4,6 +4,7 @@ import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gameentities.Enemy;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -44,7 +45,7 @@ public class ProjectileSpell extends Spell {
     }
 
     @Override
-    public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles) {
+    public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         Projectile tempProjectile = this.createSpellProjectile(spellington, input);
         activeProjectiles.add(tempProjectile);
     }

@@ -6,6 +6,7 @@ import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gameentities.Enemy;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -43,6 +44,7 @@ public class PlayState extends BasicGameState {
 
     public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
     public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
+    public ArrayList<Enemy> activeEnemy = new ArrayList<>();
 
     public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
@@ -119,7 +121,7 @@ public class PlayState extends BasicGameState {
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(mapCollision, spellington);
 
-        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations);
+        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, activeEnemy);
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
         }

@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington.spell;
 
 import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
+import ca.qc.bdeb.info204.spellington.gameentities.Enemy;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -35,7 +36,7 @@ public abstract class Spell {
         this.width = width;
     }
 
-    public abstract void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles);
+    public abstract void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy);
 
     public abstract void endOfActivation(Spellington spellington);
 
