@@ -26,17 +26,21 @@ public abstract class LivingEntity extends DynamicEntity {
     protected boolean collisionLeft;
     protected MouvementState mouvementState;
     protected int lifePoint;
+    protected int maxLifePoint;
     protected int resElectricity;
     protected int resIce;
     protected int resFire;
 
-    public LivingEntity(float x, float y, float width, float height, MouvementState mouvementState) {
-        super(x, y, width, height);
+    public LivingEntity(float x, float y, float width, float height, MouvementState mouvementState, float GRAVITY_MODIFIER, int maxLifePoint) {
+        super(x, y, width, height, GRAVITY_MODIFIER);
         this.mouvementState = mouvementState;
         collisionTop = false;
         collisionBottom = false;
         collisionRight = false;
         collisionLeft = false;
+        this.GRAVITY_MODIFIER = GRAVITY_MODIFIER;
+        this.maxLifePoint = maxLifePoint;
+        this.lifePoint = maxLifePoint;
     }
 
     public void setLifePoint(int lifePoint) {
@@ -117,4 +121,23 @@ public abstract class LivingEntity extends DynamicEntity {
     public void setMouvementState(MouvementState mouvementState) {
         this.mouvementState = mouvementState;
     }
+    
+    public void addLifePoint(int i) {
+        lifePoint = lifePoint + i;
+        if(lifePoint > maxLifePoint){
+        lifePoint = maxLifePoint;
+        }
+    }
+    
+    public void subLifePoint(int i) {
+        lifePoint = lifePoint - i;
+        if(lifePoint < 0){
+        lifePoint = 0;
+        }
+    }
+
+    public int getMaxLifePoint() {
+        return maxLifePoint;
+    }
+    
 }
