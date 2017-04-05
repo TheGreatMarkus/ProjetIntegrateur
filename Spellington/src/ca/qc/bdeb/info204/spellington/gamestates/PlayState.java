@@ -66,7 +66,7 @@ public class PlayState extends BasicGameState {
         //Loading crosshair image.
         IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
         //Loading test map information.
-        map = new TiledMap("res/map/mapTestGrotte.tmx");
+        map = new TiledMap("res/map/mapTuto3.tmx");
         extractMapInfo();
         //Loading HUD image components
         this.statsBarHUD = new Image("src/res/map/HUD/statsBar.png");
