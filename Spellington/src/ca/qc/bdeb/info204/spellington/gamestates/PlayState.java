@@ -10,9 +10,14 @@ import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -57,8 +62,17 @@ public class PlayState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         //Loading font for the spell chant in the HUD.
-        fontPaladin = fontPaladin.deriveFont(Font.PLAIN, 20.0f);
-        fontSpellChant = new UnicodeFont(fontPaladin);
+        try {
+            Font tempFont = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Viking.ttf"));
+            tempFont = tempFont.deriveFont(20f);
+            fontSpellChant = new UnicodeFont(tempFont);
+            
+        } catch (FontFormatException ex) {
+            Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         fontSpellChant.addAsciiGlyphs();
         fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
         fontSpellChant.loadGlyphs();
@@ -120,9 +134,17 @@ public class PlayState extends BasicGameState {
         Calculations.checkMapCollision(mapCollision, spellington);
 
         SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations);
+
+        ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
+        ArrayList<Enemy> temp = new ArrayList<>();
+
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
+            if (Calculations.checkProjectileCollision(mapCollision, temp, activeProjectiles.get(i))) {
+                projectilesToBeRemoved.add(activeProjectiles.get(i));
+            }
         }
+        activeProjectiles.removeAll(projectilesToBeRemoved);
     }
 
     /**

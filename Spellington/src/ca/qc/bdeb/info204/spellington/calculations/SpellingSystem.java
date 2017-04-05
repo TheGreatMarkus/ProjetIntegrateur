@@ -27,8 +27,6 @@ import org.newdawn.slick.SlickException;
  */
 public class SpellingSystem {
 
-    
-
     private static Spell passiveSpell;
     private static Spell activeSpell;
     private static int nbSpellUses = 0;
@@ -125,8 +123,8 @@ public class SpellingSystem {
 //Spell iceStorm = new              Spell(22    , 20        , SpellingSystem.SpellKind.EXPLOSION , GameEntity.Elements.ICE        , "Tempete de glace"              , 0                , 1         , 1f                    , animIceStorm             , 100      , 100       );
 //Spell iceImmunity = new           Spell(23    , 999       , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.ICE        , "Immunite glace"                , 0                , 0         , 1f                    , animIceImmunity          , 100      , 100       );
 //Spell majorHealing = new          Spell(24    , 100       , SpellingSystem.SpellKind.HEALING   , GameEntity.Elements.NEUTRAL    , "Soin majeur"                   , 0                , 1         , 1f                    , animMajorHealing         , 100      , 100       );
-        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", 5, animFireBall, 100, 100, 1, 1, 5);
-        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", 3, animIceSpike, 100, 100, 1, 0, 5);
+        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", 5, animFireBall, 20, 20, 1, 1, 5);
+        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", 3, animIceSpike, 20, 20, 1, 0, 5);
         Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", 2, animSpark, 100, 100, 5, 5);
         Spell heal = new HealingSpell(ID_HEAL, "Soin", 1, animHeal, 100, 100, 10);
         Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", animAscendingCurrent, 100, 100);

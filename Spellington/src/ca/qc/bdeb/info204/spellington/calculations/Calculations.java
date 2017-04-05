@@ -1,8 +1,11 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
+import java.util.ArrayList;
 
 /**
  * Class dedicated to performing long or complex calculations for the game.
@@ -29,22 +32,22 @@ public class Calculations {
 
         for (int i = 0; i < map.length; i++) {
             Tile tempTile = map[i][TargetJ];
-            checkCollision(tempTile, creature);
+            checkTileAndLivingCollision(tempTile, creature);
         }
         for (int j = 0; j < map[0].length; j++) {
             Tile tempTile = map[TargetI][j];
-            checkCollision(tempTile, creature);
+            checkTileAndLivingCollision(tempTile, creature);
         }
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 Tile tempTile = map[i][j];
-                checkCollision(tempTile, creature);
+                checkTileAndLivingCollision(tempTile, creature);
 
             }
         }
     }
 
-    public static void checkCollision(Tile tile, LivingEntity creature) {
+    public static void checkTileAndLivingCollision(Tile tile, LivingEntity creature) {
         if (creature.intersects(tile) && tile.getTileState() == Tile.TileState.IMPASSABLE) {
             //If a collision is found and the tile is impassable
 
@@ -79,7 +82,23 @@ public class Calculations {
             }
         }
     }
-    
+
+    public static boolean checkProjectileCollision(Tile[][] map, ArrayList<Enemy> activeEnemies, Projectile projectile) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (projectile.intersects(map[i][j]) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
+                    return true;
+                }
+            }
+        }
+//        for (Enemy activeEnemy : activeEnemies) {
+//            if (projectile.intersects(activeEnemy)) {
+//                return true;
+//            }
+//        }
+        return false;
+    }
+
     public static float detAngle(float x, float y) {
         //Calculate the base angle assuming the deltaX and DeltaY are positive
         float tempAngle = (float) Math.atan(Math.abs(y) / Math.abs(x));
