@@ -126,7 +126,7 @@ public class SpellingSystem {
 //Spell iceStorm = new              Spell(22    , 20        , SpellingSystem.SpellKind.EXPLOSION , GameEntity.Elements.ICE        , "Tempete de glace"              , 0                , 1         , 1f                    , animIceStorm             , 100      , 100       );
 //Spell iceImmunity = new           Spell(23    , 999       , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.ICE        , "Immunite glace"                , 0                , 0         , 1f                    , animIceImmunity          , 100      , 100       );
 //Spell majorHealing = new          Spell(24    , 100       , SpellingSystem.SpellKind.HEALING   , GameEntity.Elements.NEUTRAL    , "Soin majeur"                   , 0                , 1         , 1f                    , animMajorHealing         , 100      , 100       );
-        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", 5, animFireBall, 100, 100, 1, 1, 5);
+        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", 5, animFireBall, 122, 150, 1, 1, 5);
         Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", 3, animIceSpike, 100, 100, 1, 0, 5);
         Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", 2, animSpark, 100, 100, 5, 5);
         Spell heal = new HealingSpell(ID_HEAL, "Soin", 1, animHeal, 100, 100, 10);
@@ -333,9 +333,21 @@ public class SpellingSystem {
 
             Image[] tempImgFireBall = new Image[31];
             for (int i = 0; i < tempImgFireBall.length; i++) {
-                tempImgFireBall[i] = new Image("res/image/animation/spells/tuto_fireball/" + (i + 1) + ".png");
+                tempImgFireBall[i] = new Image("res/image/animation/spells/tuto_fireball/fireBall (" + (i + 1) + ").png");
             }
             animFireBall = new Animation(tempImgFireBall, 15);
+            
+            Image[] tempImgUpStream = new Image[19];
+            for (int i = 0; i < tempImgUpStream.length; i++) {
+                tempImgUpStream[i] = new Image("res/image/animation/spells/upStream/upStream (" + (i + 1) + ").png");
+            }
+            animAscendingCurrent = new Animation(tempImgUpStream, 15);
+            
+            Image[] tempImgIceRes = new Image[19];
+            for (int i = 0; i < tempImgIceRes.length; i++) {
+                tempImgIceRes[i] = new Image("res/image/animation/spells/iceRes/iceRes (" + (i + 1) + ").png");
+            }
+            animIceResistance = new Animation(tempImgIceRes, 15);
 
         } catch (SlickException ex) {
         }
