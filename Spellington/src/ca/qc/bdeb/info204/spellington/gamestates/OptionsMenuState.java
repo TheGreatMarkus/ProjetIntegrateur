@@ -28,7 +28,7 @@ public class OptionsMenuState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         textGap = 10.0f * GameCore.SCALE;
-        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TITLE, OM_TITLE, true, false, 0, textGap, fontMenu.getWidth(OM_TITLE), fontMenu.getHeight(OM_TITLE));
+        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, OM_TITLE, true, false, 0, textGap, fontMenu.getWidth(OM_TITLE), fontMenu.getHeight(OM_TITLE));
         mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, OM_BACK, false, false, textGap, textGap, fontMenu.getWidth(OM_BACK), fontMenu.getHeight(OM_BACK));
     }
 

@@ -12,8 +12,7 @@ public class MenuItem {
 
     public static enum MenuItemType {
         BUTTON,
-        TEXT,
-        TITLE
+        TEXT
     }
 
     private MenuItemType menuItemType;
@@ -32,17 +31,21 @@ public class MenuItem {
         } else {
             this.x = x;
         }
+        this.x -= 10;
         if (centerY) {
             this.y = gc.getHeight() / 2 - height / 2;
         } else {
             this.y = y;
         }
+        this.y -= 10;
         this.width = width;
         this.height = height;
+        this.width += 20;
+        this.height += 20;
     }
 
     public void detHoveredOver(float mouseX, float mouseY) {
-        this.hoveredOver =  (mouseX >= this.x && mouseX <= this.x + this.width) && (mouseY >= this.y && mouseY <= this.y + this.height);
+        this.hoveredOver = (mouseX >= this.x && mouseX <= this.x + this.width) && (mouseY >= this.y && mouseY <= this.y + this.height);
     }
 
     public void render(Graphics g, GameContainer gc) {
@@ -51,9 +54,9 @@ public class MenuItem {
         } else {
             g.setColor(new Color(1, 1, 1, 1f));
         }
-        
-        g.drawString(text, x, y);
-        g.drawRect(x, y, width, height);
+
+        g.fillRoundRect(x, y, width, height,20);
+        g.drawString(text, x + 10, y + 10);
     }
 
     public boolean getHoveredOver() {

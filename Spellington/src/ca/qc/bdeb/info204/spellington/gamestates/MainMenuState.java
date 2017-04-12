@@ -34,12 +34,14 @@ public class MainMenuState extends BasicGameState {
 
     //Text for the main menu.
     private static final String MM_TITLE = "Le réveil de Spellington";
-    private static final String MM_PLAY = "Jouer";
+    private static final String MM_NEW_GAME = "Nouvelle partie";
+    private static final String MM_LOAD_GAME = "Charger une partie";
     private static final String MM_OPTIONS = "Options";
     private static final String MM_EXIT = "Quitter";
 
     private MenuItem mnuItemTitle;
-    private MenuItem mnuItemPlay;
+    private MenuItem mnuItemNewGame;
+    private MenuItem mnuItemLoadGame;
     private MenuItem mnuItemOptions;
     private MenuItem mnuItemExit;
 
@@ -60,9 +62,10 @@ public class MainMenuState extends BasicGameState {
         fontMenu.getEffects().add(new OutlineEffect(1, java.awt.Color.white));
         fontMenu.loadGlyphs();
 
-        mnuItemTitle = new MenuItem(gc, MenuItemType.TITLE, MM_TITLE, true, false, 0, textGap, fontMenu.getWidth(MM_TITLE), fontMenu.getHeight(MM_TITLE));
-        mnuItemPlay = new MenuItem(gc, MenuItemType.BUTTON, MM_PLAY, true, true, 0, mnuItemTitle.getY() + mnuItemTitle.getHeight() + textGap, fontMenu.getWidth(MM_PLAY), fontMenu.getHeight(MM_PLAY));
-        mnuItemOptions = new MenuItem(gc, MenuItemType.BUTTON, MM_OPTIONS, true, false, 0, mnuItemPlay.getY() + mnuItemPlay.getHeight() + textGap, fontMenu.getWidth(MM_OPTIONS), fontMenu.getHeight(MM_OPTIONS));
+        mnuItemTitle = new MenuItem(gc, MenuItemType.TEXT, MM_TITLE, true, false, 0, textGap, fontMenu.getWidth(MM_TITLE), fontMenu.getHeight(MM_TITLE));
+        mnuItemNewGame = new MenuItem(gc, MenuItemType.BUTTON, MM_NEW_GAME, true, true, 0, 0, fontMenu.getWidth(MM_NEW_GAME), fontMenu.getHeight(MM_NEW_GAME));
+        mnuItemLoadGame = new MenuItem(gc, MenuItemType.BUTTON, MM_LOAD_GAME, true, false, 0, mnuItemNewGame.getY() + mnuItemNewGame.getHeight() + textGap, fontMenu.getWidth(MM_LOAD_GAME), fontMenu.getHeight(MM_LOAD_GAME));
+        mnuItemOptions = new MenuItem(gc, MenuItemType.BUTTON, MM_OPTIONS, true, false, 0, mnuItemLoadGame.getY() + mnuItemLoadGame.getHeight() + textGap, fontMenu.getWidth(MM_OPTIONS), fontMenu.getHeight(MM_OPTIONS));
         mnuItemExit = new MenuItem(gc, MenuItemType.BUTTON, MM_EXIT, true, false, 0, mnuItemOptions.getY() + mnuItemOptions.getHeight() + textGap, fontMenu.getWidth(MM_EXIT), fontMenu.getHeight(MM_EXIT));
 
     }
@@ -74,7 +77,7 @@ public class MainMenuState extends BasicGameState {
         g.setFont(fontMenu);
 
         mnuItemTitle.render(g, gc);
-        mnuItemPlay.render(g, gc);
+        mnuItemNewGame.render(g, gc);
         mnuItemOptions.render(g, gc);
         mnuItemExit.render(g, gc);
 
@@ -88,13 +91,13 @@ public class MainMenuState extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         int mouseX = gc.getInput().getMouseX();
         int mouseY = gc.getInput().getMouseY();
-        mnuItemPlay.detHoveredOver(mouseX, mouseY);
+        mnuItemNewGame.detHoveredOver(mouseX, mouseY);
         mnuItemOptions.detHoveredOver(mouseX, mouseY);
         mnuItemExit.detHoveredOver(mouseX, mouseY);
 
         boolean triedToClick = gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
 
-        if (mnuItemPlay.getHoveredOver() && triedToClick) {
+        if (mnuItemNewGame.getHoveredOver() && triedToClick) {
             game.enterState(GameCore.PLAY_STATE_ID);
         }
         if (mnuItemOptions.getHoveredOver() && triedToClick) {

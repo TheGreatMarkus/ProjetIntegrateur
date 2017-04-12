@@ -31,7 +31,7 @@ public class PauseMenuState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         textGap = 10.0f * GameCore.SCALE;
 
-        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TITLE, PM_TITLE, true, false, 0, textGap, fontMenu.getWidth(PM_TITLE), fontMenu.getHeight(PM_TITLE));
+        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, PM_TITLE, true, false, 0, textGap, fontMenu.getWidth(PM_TITLE), fontMenu.getHeight(PM_TITLE));
         mnuItemResume = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_RESUME, true, true, 0, 0, fontMenu.getWidth(PM_RESUME), fontMenu.getHeight(PM_RESUME));
         mnuItemMainMenu = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_MAIN_MENU, true, false, 0, mnuItemResume.getY() + mnuItemResume.getHeight() + textGap, fontMenu.getWidth(PM_MAIN_MENU), fontMenu.getHeight(PM_MAIN_MENU));
 
