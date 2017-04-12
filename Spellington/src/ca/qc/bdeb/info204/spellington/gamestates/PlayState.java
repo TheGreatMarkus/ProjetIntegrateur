@@ -102,6 +102,11 @@ public class PlayState extends BasicGameState {
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).render(g);
         }
+        
+        for (int i = 0; i < activeAnimations.size(); i++) {
+            activeAnimations.get(i).render(g, spellington);
+        }
+        
         debugInfo(g, gc);
 
         displayHUD(g);
@@ -124,6 +129,10 @@ public class PlayState extends BasicGameState {
         SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, activeEnemy);
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
+            
+        for (int j = 0; j < activeAnimations.size(); j++) {
+                activeAnimations.get(j).update();
+            }
         }
     }
 

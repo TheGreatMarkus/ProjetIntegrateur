@@ -38,7 +38,7 @@ public abstract class Spell {
 
     public abstract void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy);
 
-    public abstract void endOfActivation(Spellington spellington);
+    public abstract void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations);
 
     public int getId() {
         return id;
