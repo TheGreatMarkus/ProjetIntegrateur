@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
+ <tileset firstgid="1" name="tuiles cachot lave" tilewidth="50" tileheight="50" tilecount="64" columns="8">
+  <image source="tuiles/tuiles cachot lave.png" width="400" height="400"/>
+ </tileset>
+ <tileset firstgid="65" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
+  <image source="tuiles/collisionTile.png" width="150" height="200"/>
+ </tileset>
+ <layer name="terrain" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC8WWaUvDQBCGl3qgoaLWfrEGxaYWbKPFJio9PP7/r3Ie+gaHUmi2BDLw0D1md3bn2PQohDAw+saXMTS+jdyYGysj1fjCKIypMTGujVujNBKNdd26vvqJbIw0nmnNROvbEmy/t2g/bdn+zZ55/LMMm3yoIx3jcY8O930Om1x6q7nvtpBD8wPXelkLcp17jhrYM0awme0YPw77Y1NHqNWqHrlbX23ihA+J72LHuqn0qO+eca4zFSLT+c6MsXFvzIwfjdWVhc5RCfnwYtxF7LEtrxG62C5df1csYuUqQhef+hpIG7BPHIgbPiTe1BqxJ26JqITc8LVNPD6MyxB3j5lrx8SOc65dv5RdeDJOjRP3W7V9H8Zuj5gaxheF6/M2kRPUR5Xb+OIibPxCbn1qjt9fzT24PQauvRR8V6kXYkEtZeH/O9hEznnJI/U7DduP3Q+f97SO/wPEhPcn1xz5QUx5q/AZ9TKUbq61K/XJn0LjtKmvrnRG0kmlw3eKN+4P9dJsKgAJAAA=
+  </data>
+ </layer>
+ <layer name="collision" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC3NhYGBwGWDsM0B41H789pMaR8SopUb8UyvcBjot4rKTlv4jxs/0ys/o6qkRD5TaT40wH2j7iY0ffOFPqj+o5X9k7EgkppX95KR5csyjNM7JTX/USnOU2j+QGABYq4orAAkAAA==
+  </data>
+ </layer>
+ <layer name="event" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAX0Bq4D7QA04DLQDhgA4ERFfeSaNQroA0iJHw8oPdjy6FAGo/mDOsCbTH24wt+RXIcMIwAAp6K6nQAJAAA=
+  </data>
+ </layer>
+</map>

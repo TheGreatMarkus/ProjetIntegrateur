@@ -4,6 +4,7 @@ import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
@@ -35,9 +36,9 @@ public abstract class Spell {
         this.width = width;
     }
 
-    public abstract void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles);
+    public abstract void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy);
 
-    public abstract void endOfActivation(Spellington spellington);
+    public abstract void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations);
 
     public int getId() {
         return id;

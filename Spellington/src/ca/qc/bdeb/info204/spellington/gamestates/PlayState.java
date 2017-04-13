@@ -1,7 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
-import static ca.qc.bdeb.info204.spellington.GameCore.fontPaladin;
 import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
@@ -48,6 +47,7 @@ public class PlayState extends BasicGameState {
 
     public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
     public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
+    public ArrayList<Enemy> activeEnemy = new ArrayList<>();
 
     public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
@@ -66,7 +66,7 @@ public class PlayState extends BasicGameState {
             Font tempFont = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Viking.ttf"));
             tempFont = tempFont.deriveFont(20f);
             fontSpellChant = new UnicodeFont(tempFont);
-            
+
         } catch (FontFormatException ex) {
             Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -80,7 +80,7 @@ public class PlayState extends BasicGameState {
         //Loading crosshair image.
         IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
         //Loading test map information.
-        map = new TiledMap("res/map/mapTestGrotte.tmx");
+        map = new TiledMap("res/map/mapTuto3.tmx");
         extractMapInfo();
         //Loading HUD image components
         this.statsBarHUD = new Image("src/res/image/HUD/statsBar.png");
@@ -114,6 +114,11 @@ public class PlayState extends BasicGameState {
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).render(g);
         }
+
+        for (int i = 0; i < activeAnimations.size(); i++) {
+            activeAnimations.get(i).render(g, spellington);
+        }
+
         debugInfo(g, gc);
 
         displayHUD(g);
@@ -133,8 +138,6 @@ public class PlayState extends BasicGameState {
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(mapCollision, spellington);
 
-        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations);
-
         ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
         ArrayList<Enemy> temp = new ArrayList<>();
 
@@ -144,6 +147,12 @@ public class PlayState extends BasicGameState {
                 projectilesToBeRemoved.add(activeProjectiles.get(i));
             }
         }
+
+        for (int j = 0; j < activeAnimations.size(); j++) {
+            activeAnimations.get(j).update();
+
+        }
+
         activeProjectiles.removeAll(projectilesToBeRemoved);
     }
 

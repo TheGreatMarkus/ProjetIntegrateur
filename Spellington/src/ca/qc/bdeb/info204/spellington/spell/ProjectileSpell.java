@@ -3,10 +3,12 @@ package ca.qc.bdeb.info204.spellington.spell;
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
+import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
@@ -42,13 +44,13 @@ public class ProjectileSpell extends Spell {
     }
 
     @Override
-    public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles) {
+    public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         Projectile tempProjectile = this.createSpellProjectile(spellington, input);
         activeProjectiles.add(tempProjectile);
     }
 
     @Override
-    public void endOfActivation(Spellington spellington) {
+    public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
 
     }
 
@@ -67,5 +69,17 @@ public class ProjectileSpell extends Spell {
     public void setGravModifier(float gravModifier) {
         this.gravModifier = gravModifier;
     }
-
+    public void spellCollisionEffect (Spellington spellington, int x, int y, String direction) {
+        if(this.id == SpellingSystem.ID_TELEPORTATION) {
+            switch (direction) {
+                case "top": spellington.setLocation(x, y);;break; //corriger les collisions selon la direction de la collision
+                case "bottom": spellington.setLocation(x, y);;break;
+                case "right": spellington.setLocation(x, y);;break;
+                case "left": spellington.setLocation(x, y);;break;
+                
+            }
+            
+            
+        }
+    }
 }
