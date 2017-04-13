@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.textEntities;
 
+import ca.qc.bdeb.info204.spellington.GameCore;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,6 +15,8 @@ public class MenuItem {
         BUTTON,
         TEXT
     }
+
+    private static final float TEXT_GAP = 10f * GameCore.SCALE;
 
     private MenuItemType menuItemType;
     private String text;
@@ -31,17 +34,17 @@ public class MenuItem {
         } else {
             this.x = x;
         }
-        this.x -= 10;
+        this.x -= TEXT_GAP;
         if (centerY) {
             this.y = gc.getHeight() / 2 - height / 2;
         } else {
             this.y = y;
         }
-        this.y -= 10;
+        this.y -= TEXT_GAP;
         this.width = width;
         this.height = height;
-        this.width += 20;
-        this.height += 20;
+        this.width += TEXT_GAP * 2f;
+        this.height += TEXT_GAP * 2f;
     }
 
     public void detHoveredOver(float mouseX, float mouseY) {
@@ -55,8 +58,8 @@ public class MenuItem {
             g.setColor(new Color(1, 1, 1, 1f));
         }
 
-        g.fillRoundRect(x, y, width, height,20);
-        g.drawString(text, x + 10, y + 10);
+        g.drawRoundRect(x, y, width, height,12);
+        g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
     }
 
     public boolean getHoveredOver() {

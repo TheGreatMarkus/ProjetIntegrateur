@@ -80,8 +80,7 @@ public class PlayState extends BasicGameState {
         //Loading crosshair image.
         IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
         //Loading test map information.
-        map = new TiledMap("res/map/mapTuto3.tmx");
-        extractMapInfo();
+
         //Loading HUD image components
         this.statsBarHUD = new Image("src/res/image/HUD/statsBar.png");
         this.inputTextHUD = new Image("src/res/image/HUD/textRectangle.png");
@@ -91,7 +90,13 @@ public class PlayState extends BasicGameState {
         this.greenPotionHUD = new Image("src/res/image/HUD/greenPotion.png");
         this.bluePotionHUD = new Image("src/res/image/HUD/bluePotion.png");
         this.icePotionHUD = new Image("src/res/image/HUD/icePotion.png");
-        spellington = new Spellington(65, 760, LivingEntity.MouvementState.STANDING_R);
+
+    }
+
+    public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
+        spellington = new Spellington(spellingtonX, spellingtonY, LivingEntity.MouvementState.STANDING_R);
+        map = currentMap;
+        extractMapInfo();
     }
 
     @Override
@@ -137,6 +142,8 @@ public class PlayState extends BasicGameState {
         }
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(mapCollision, spellington);
+
+        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, activeEnemy);
 
         ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
         ArrayList<Enemy> temp = new ArrayList<>();

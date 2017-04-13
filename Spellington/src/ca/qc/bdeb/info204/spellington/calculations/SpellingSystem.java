@@ -343,7 +343,7 @@ public class SpellingSystem {
 
             Image[] tempImgFireBall = new Image[31];
             for (int i = 0; i < tempImgFireBall.length; i++) {
-                tempImgFireBall[i] = new Image("res/image/animation/spells/tuto_fireball/fireBall (" + (i + 1) + ").png");
+                tempImgFireBall[i] = new Image("res/image/animation/spells/tutoFireball/fireBall (" + (i + 1) + ").png");
             }
             animFireBall = new Animation(tempImgFireBall, 15);
 

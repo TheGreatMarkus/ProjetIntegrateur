@@ -17,8 +17,6 @@ import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.fontMenu;
  */
 public class OptionsMenuState extends BasicGameState {
 
-    private static float textGap;
-
     private static final String OM_TITLE = "Options";
     private static final String OM_BACK = "Revenir";
 
@@ -27,9 +25,9 @@ public class OptionsMenuState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        textGap = 10.0f * GameCore.SCALE;
-        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, OM_TITLE, true, false, 0, textGap, fontMenu.getWidth(OM_TITLE), fontMenu.getHeight(OM_TITLE));
-        mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, OM_BACK, false, false, textGap, textGap, fontMenu.getWidth(OM_BACK), fontMenu.getHeight(OM_BACK));
+
+        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, OM_TITLE, true, false, 0, MainMenuState.TEXT_GAP, fontMenu.getWidth(OM_TITLE), fontMenu.getHeight(OM_TITLE));
+        mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, OM_BACK, false, false, MainMenuState.TEXT_GAP, MainMenuState.TEXT_GAP, fontMenu.getWidth(OM_BACK), fontMenu.getHeight(OM_BACK));
     }
 
     @Override
