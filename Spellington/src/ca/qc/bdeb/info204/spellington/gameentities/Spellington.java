@@ -59,7 +59,6 @@ public class Spellington extends LivingEntity {
     public Spellington(float x, float y, MouvementState mouvementState) throws SlickException {
         super(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height, mouvementState, GRAVITY_MODIFIER, INIT_MAX_LIFE);
         initAnimation();
-        
 
         resElectricity = 0;
         resIce = 0;
@@ -210,12 +209,12 @@ public class Spellington extends LivingEntity {
 
             Image[] tempImgWalkL = new Image[40];
             for (int i = 0; i < tempImgWalkL.length; i++) {
-                tempImgWalkL[i] = new Image("res/image/animation/spellington/walk_l/" + "walk_l (" +(i + 1)+ ")" + ".png");
+                tempImgWalkL[i] = new Image("res/image/animation/spellington/walk_l/" + "walk_l (" + (i + 1) + ")" + ".png");
             }
- 
+
             Image[] tempImgWalkR = new Image[40];
             for (int i = 0; i < tempImgWalkR.length; i++) {
-                tempImgWalkR[i] = new Image("res/image/animation/spellington/walk_r/" + "walk_r (" +(i + 1)+ ")" + ".png");
+                tempImgWalkR[i] = new Image("res/image/animation/spellington/walk_r/" + "walk_r (" + (i + 1) + ")" + ".png");
             }
 
             animWalkL = new Animation(tempImgWalkL, 15);
@@ -275,9 +274,17 @@ public class Spellington extends LivingEntity {
             return MouvementState.JUMP_L;
         } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
             return MouvementState.JUMP_R;
+        } else if (!collisionBottom && mouvementState == MouvementState.WALL_L) {
+            return MouvementState.JUMP_L;
+        } else if (!collisionBottom && mouvementState == MouvementState.WALL_R) {
+            return MouvementState.JUMP_R;
         } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
             return MouvementState.STANDING_L;
         } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
+            return MouvementState.STANDING_R;
+        } else if (collisionBottom && mouvementState == MouvementState.WALL_L) {
+            return MouvementState.STANDING_L;
+        } else if (collisionBottom && mouvementState == MouvementState.WALL_R) {
             return MouvementState.STANDING_R;
         }
         if (mouvementState == MouvementState.STANDING_L) {
@@ -298,6 +305,4 @@ public class Spellington extends LivingEntity {
         this.MAX_AIR_JUMPS = MAX_AIR_JUMPS;
     }
 
-    
-    
 }

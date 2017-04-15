@@ -3,12 +3,12 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
+import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
-import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -42,8 +42,6 @@ public class PlayState extends BasicGameState {
 
     private TiledMap map;
     private Spellington spellington;
-    private Tile[][] mapCollision;
-    private Tile[][] mapEvent;
 
     public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
     public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
@@ -90,13 +88,11 @@ public class PlayState extends BasicGameState {
         this.greenPotionHUD = new Image("src/res/image/HUD/greenPotion.png");
         this.bluePotionHUD = new Image("src/res/image/HUD/bluePotion.png");
         this.icePotionHUD = new Image("src/res/image/HUD/icePotion.png");
-
     }
 
     public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
         spellington = new Spellington(spellingtonX, spellingtonY, LivingEntity.MouvementState.STANDING_R);
         map = currentMap;
-        extractMapInfo();
     }
 
     @Override
@@ -131,6 +127,9 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+        if (delta > 40) {
+            delta = 40;
+        }
         if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
             game.enterState(GameCore.PAUSE_MENU_STATE_ID);
         }
@@ -141,7 +140,7 @@ public class PlayState extends BasicGameState {
             displayHUD = !displayHUD;
         }
         spellington.update(gc.getInput(), delta);
-        Calculations.checkMapCollision(mapCollision, spellington);
+        Calculations.checkMapCollision(GameManager.getMapInformation(), spellington);
 
         SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, activeEnemy);
 
@@ -150,7 +149,7 @@ public class PlayState extends BasicGameState {
 
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
-            if (Calculations.checkProjectileCollision(mapCollision, temp, activeProjectiles.get(i))) {
+            if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), temp, activeProjectiles.get(i))) {
                 projectilesToBeRemoved.add(activeProjectiles.get(i));
             }
         }
@@ -161,48 +160,6 @@ public class PlayState extends BasicGameState {
         }
 
         activeProjectiles.removeAll(projectilesToBeRemoved);
-    }
-
-    /**
-     *
-     * @author Cristian Aldea
-     */
-    private void extractMapInfo() {
-        mapCollision = new Tile[DIM_MAP.height][DIM_MAP.width];
-        for (int i = 0; i < map.getHeight(); i++) {
-            for (int j = 0; j < map.getWidth(); j++) {
-                if (map.getTileId(j, i, 1) == map.getTileSet(1).firstGID + 11) {
-                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
-                } else {
-                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.IMPASSABLE, Tile.TileEvent.NONE);
-                }
-            }
-        }
-        mapEvent = new Tile[DIM_MAP.height][DIM_MAP.width];
-        for (int i = 0; i < map.getHeight(); i++) {
-            for (int j = 0; j < map.getWidth(); j++) {
-                if (map.getTileId(j, i, 2) == 0) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
-                }
-                if (map.getTileId(j, i, 2) == 1) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.EXIT);
-                }
-                if (map.getTileId(j, i, 2) == 2) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.SPAWN);
-                }
-                if (map.getTileId(j, i, 2) == 3) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.SPAWN);
-                }
-                if (map.getTileId(j, i, 2) == 4) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.SPAWN);
-                }
-                if (map.getTileId(j, i, 2) == 5) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.LEVER);
-                } else {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
-                }
-            }
-        }
     }
 
     /**

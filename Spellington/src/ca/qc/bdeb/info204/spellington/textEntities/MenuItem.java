@@ -25,6 +25,7 @@ public class MenuItem {
     private float width;
     private float height;
     private boolean hoveredOver;
+    private boolean clickable;
 
     public MenuItem(GameContainer gc, MenuItemType menuItemType, String text, boolean centerX, boolean centerY, float x, float y, float width, float height) {
         this.menuItemType = menuItemType;
@@ -45,6 +46,7 @@ public class MenuItem {
         this.height = height;
         this.width += TEXT_GAP * 2f;
         this.height += TEXT_GAP * 2f;
+        this.clickable = true;
     }
 
     public void detHoveredOver(float mouseX, float mouseY) {
@@ -52,13 +54,13 @@ public class MenuItem {
     }
 
     public void render(Graphics g, GameContainer gc) {
-        if (hoveredOver && this.menuItemType == MenuItemType.BUTTON) {
+        if (hoveredOver && this.menuItemType == MenuItemType.BUTTON || !clickable) {
             g.setColor(new Color(1, 1, 1, 0.5f));
         } else {
             g.setColor(new Color(1, 1, 1, 1f));
         }
 
-        g.drawRoundRect(x, y, width, height,12);
+        g.drawRoundRect(x, y, width, height, 12);
         g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
     }
 
@@ -100,6 +102,14 @@ public class MenuItem {
 
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    public boolean getClickable() {
+        return clickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        this.clickable = clickable;
     }
 
 }

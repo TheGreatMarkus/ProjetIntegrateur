@@ -5,6 +5,7 @@
  */
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
+import java.awt.Dimension;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -13,8 +14,8 @@ import org.newdawn.slick.Graphics;
  */
 public class MeleeEnemy extends Enemy {
 
-    public MeleeEnemy(float x, float y, float width, float height, MouvementState mouvementState, float GRAVITY_MODIFIER, int maxLifePoint, EnemyType enemyType) {
-        super(x, y, width, height, mouvementState, GRAVITY_MODIFIER, maxLifePoint, enemyType);
+    public MeleeEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, int maxLifePoint, EnemyType enemyType) {
+        super(x, y, dim, mouvementState, GRAVITY_MODIFIER, maxLifePoint, enemyType);
     }
 
     @Override

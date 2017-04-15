@@ -28,9 +28,9 @@ public class PauseMenuState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
-        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, PM_TITLE, true, false, 0,  MainMenuState.TEXT_GAP, fontMenu.getWidth(PM_TITLE), fontMenu.getHeight(PM_TITLE));
+        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, PM_TITLE, true, false, 0, MainMenuState.TEXT_GAP, fontMenu.getWidth(PM_TITLE), fontMenu.getHeight(PM_TITLE));
         mnuItemResume = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_RESUME, true, true, 0, 0, fontMenu.getWidth(PM_RESUME), fontMenu.getHeight(PM_RESUME));
-        mnuItemMainMenu = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_MAIN_MENU, true, false, 0, mnuItemResume.getY() + mnuItemResume.getHeight() +  MainMenuState.TEXT_GAP, fontMenu.getWidth(PM_MAIN_MENU), fontMenu.getHeight(PM_MAIN_MENU));
+        mnuItemMainMenu = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_MAIN_MENU, true, false, 0, mnuItemResume.getY() + mnuItemResume.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(PM_MAIN_MENU), fontMenu.getHeight(PM_MAIN_MENU));
 
     }
 
@@ -60,6 +60,7 @@ public class PauseMenuState extends BasicGameState {
         }
 
         if (mnuItemMainMenu.getHoveredOver() && triedToClick) {
+            ((MainMenuState) game.getState(GameCore.MAIN_MENU_STATE_ID)).prepareMainMenu();
             game.enterState(GameCore.MAIN_MENU_STATE_ID);
         }
         GameCore.clearInputRecord(gc);

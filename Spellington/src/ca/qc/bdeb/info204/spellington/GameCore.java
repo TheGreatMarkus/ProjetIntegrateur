@@ -8,7 +8,6 @@ import ca.qc.bdeb.info204.spellington.gamestates.MainMenuState;
 import ca.qc.bdeb.info204.spellington.gamestates.SpellBookState;
 import ca.qc.bdeb.info204.spellington.gamestates.OptionsMenuState;
 import ca.qc.bdeb.info204.spellington.gamestates.PauseMenuState;
-import ca.qc.bdeb.info204.spellington.gamestates.SaveScreenState;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -30,9 +29,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class GameCore extends StateBasedGame {
 
     //For testing and seeing the console text
-    //public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     //public static final Dimension SCREEN_SIZE = new Dimension(800, 450);
-    public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
+    //public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
     public static final Dimension RENDER_SIZE = new Dimension(1600, 900);
     public static float SCALE;
     public static final int MAIN_MENU_STATE_ID = 0;
@@ -78,7 +77,7 @@ public class GameCore extends StateBasedGame {
             Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, false);
+        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
         appGameContainer.setMouseGrabbed(true);
         appGameContainer.setTargetFrameRate(TARGER_FPS);
         appGameContainer.setVSync(true);
@@ -103,7 +102,6 @@ public class GameCore extends StateBasedGame {
         this.addState(new PauseMenuState());
         this.addState(new SpellBookState());
         this.addState(new LevelSelectionState());
-        this.addState(new SaveScreenState());
 
         //Initialise game states.
         this.getState(MAIN_MENU_STATE_ID).init(gc, this);

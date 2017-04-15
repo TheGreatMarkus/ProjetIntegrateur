@@ -68,7 +68,16 @@ public class MainMenuState extends BasicGameState {
         mnuItemLoadGame = new MenuItem(gc, MenuItemType.BUTTON, MM_LOAD_GAME, true, false, 0, mnuItemNewGame.getY() + mnuItemNewGame.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_LOAD_GAME), fontMenu.getHeight(MM_LOAD_GAME));
         mnuItemOptions = new MenuItem(gc, MenuItemType.BUTTON, MM_OPTIONS, true, false, 0, mnuItemLoadGame.getY() + mnuItemLoadGame.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_OPTIONS), fontMenu.getHeight(MM_OPTIONS));
         mnuItemExit = new MenuItem(gc, MenuItemType.BUTTON, MM_EXIT, true, false, 0, mnuItemOptions.getY() + mnuItemOptions.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_EXIT), fontMenu.getHeight(MM_EXIT));
+        prepareMainMenu();
+    }
 
+    public void prepareMainMenu() {
+        if (!GameManager.loadGameSave()) {
+            mnuItemLoadGame.setClickable(false);
+        } else {
+            mnuItemLoadGame.setClickable(true);
+
+        }
     }
 
     @Override
@@ -104,9 +113,8 @@ public class MainMenuState extends BasicGameState {
             GameManager.newGame();
             game.enterState(GameCore.PLAY_STATE_ID);
         }
-        if (mnuItemLoadGame.getHoveredOver() && triedToClick) {
-
-            game.enterState(GameCore.PLAY_STATE_ID);
+        if (mnuItemLoadGame.getHoveredOver() && triedToClick && mnuItemLoadGame.getClickable()) {
+            game.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
         }
 
         if (mnuItemOptions.getHoveredOver() && triedToClick) {

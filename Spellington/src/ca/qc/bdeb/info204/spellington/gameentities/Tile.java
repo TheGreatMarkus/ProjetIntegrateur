@@ -15,13 +15,22 @@ public class Tile extends StaticEntity {
     public static enum TileState {
         PASSABLE,
         IMPASSABLE,
+        DAMAGE
     }
     public static enum TileEvent {
         NONE,
-        DAMAGE,
-        SPAWN,
-        EXIT,
-        LEVER,
+        SPELLINGTON_EXIT,
+        SPELLINGTON_ENTRY,
+        SPECIAL_ENEMY_SPAWN,
+        RANDOM_SLIME_SPAWN,
+        MELEE_ENEMY_SPAWN,
+        RANGED_ENEMY_SPAWN,
+        TREASURE_SPAWN,
+        MAGE_ENEMY_SPAWN,
+        WHAT_IS_THIS,
+        MESSAGE_1,
+        MESSAGE_2,
+        MESSAGE_3
     }
     private TileState tileState;
     

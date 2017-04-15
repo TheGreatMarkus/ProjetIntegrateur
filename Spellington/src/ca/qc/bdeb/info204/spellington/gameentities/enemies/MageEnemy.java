@@ -5,10 +5,27 @@
  */
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
+import java.awt.Dimension;
+import org.newdawn.slick.Graphics;
+
 /**
  *
  * @author 1522888
  */
-public class MageEnemy {
-    
+public class MageEnemy extends Enemy {
+
+    public MageEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, int maxLifePoint, EnemyType enemyType) {
+        super(x, y, dim, mouvementState, GRAVITY_MODIFIER, maxLifePoint, enemyType);
+    }
+
+    @Override
+    public void update(float time) {
+
+    }
+
+    @Override
+    public void render(Graphics g) {
+
+    }
+
 }

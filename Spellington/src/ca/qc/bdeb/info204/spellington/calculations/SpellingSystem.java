@@ -345,31 +345,31 @@ public class SpellingSystem {
             for (int i = 0; i < tempImgFireBall.length; i++) {
                 tempImgFireBall[i] = new Image("res/image/animation/spells/tutoFireball/fireBall (" + (i + 1) + ").png");
             }
-            animFireBall = new Animation(tempImgFireBall, 15);
+            animFireBall = new Animation(tempImgFireBall, 30);
 
             Image[] tempImgUpStream = new Image[19];
-            for (int i = 0; i < tempImgUpStream.length; i++) {
-                tempImgUpStream[i] = new Image("res/image/animation/spells/upStream/upStream (" + (i + 1) + ").png");
+            for (int i = 18; i >= 0; i--) {
+                tempImgUpStream[18-i] = new Image("res/image/animation/spells/upStream/upStream (" + (i + 1) + ").png");
             }
-            animAscendingCurrent = new Animation(tempImgUpStream, 20);
+            animAscendingCurrent = new Animation(tempImgUpStream, 40);
 
             Image[] tempImgFireRes = new Image[19];
             for (int i = 0; i < tempImgFireRes.length; i++) {
                 tempImgFireRes[i] = new Image("res/image/animation/spells/fireRes/fireRes (" + (i + 1) + ").png");
             }
-            animFireResistance = new Animation(tempImgFireRes, 15);
+            animFireResistance = new Animation(tempImgFireRes, 30);
 
             Image[] tempImgIceRes = new Image[19];
             for (int i = 0; i < tempImgIceRes.length; i++) {
                 tempImgIceRes[i] = new Image("res/image/animation/spells/iceRes/iceRes (" + (i + 1) + ").png");
             }
-            animIceResistance = new Animation(tempImgIceRes, 15);
+            animIceResistance = new Animation(tempImgIceRes, 30);
             
             Image[] tempImgeElectricRes = new Image[19];
             for (int i = 0; i < tempImgeElectricRes.length; i++) {
                 tempImgeElectricRes[i] = new Image("res/image/animation/spells/electricRes/electricRes (" + (i + 1) + ").png");
             }
-            animLightningResistance = new Animation(tempImgeElectricRes, 15);
+            animLightningResistance = new Animation(tempImgeElectricRes, 30);
 
         } catch (SlickException ex) {
         }

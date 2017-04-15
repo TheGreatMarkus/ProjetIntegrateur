@@ -50,6 +50,7 @@ public class OptionsMenuState extends BasicGameState {
         boolean triedToClick = gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
 
         if (mnuItemBack.getHoveredOver() && triedToClick) {
+            ((MainMenuState) game.getState(GameCore.MAIN_MENU_STATE_ID)).prepareMainMenu();
             game.enterState(GameCore.MAIN_MENU_STATE_ID);
         }
         GameCore.clearInputRecord(gc);
