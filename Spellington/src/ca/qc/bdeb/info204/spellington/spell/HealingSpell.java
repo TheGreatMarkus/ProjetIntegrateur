@@ -17,8 +17,8 @@ public class HealingSpell extends Spell {
 
     private int healing;
 
-    public HealingSpell(int id, String name, int uses, Animation animation, int width, int height, int healing) {
-        super(id, GameEntity.ElementalType.NEUTRAL, name, uses, animation, width, height);
+    public HealingSpell(int id, String name, String shortDescription, int uses, Animation animation, int width, int height, int healing) {
+        super(id, GameEntity.ElementalType.NEUTRAL, name, "Guérison", shortDescription, uses, animation, width, height);
         this.healing = healing;
     }
 
@@ -32,4 +32,11 @@ public class HealingSpell extends Spell {
         
     }
 
+    public int getHealing() {
+        return healing;
+    }
+
+    public void setHealing(int healing) {
+        this.healing = healing;
+    }
 }

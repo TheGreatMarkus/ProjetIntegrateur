@@ -15,14 +15,13 @@ import org.newdawn.slick.Input;
  * @author Fallen Angel
  */
 public class PassiveSpell extends Spell {
-    
-    
+
     protected GameAnimation PassiveSpellAnimation;
 
-    public PassiveSpell(int id, GameEntity.ElementalType element, String name, Animation animation, int width, int height, int yModifier) {
-        super(id, element, name, 0, animation, width, height);
-        
-        PassiveSpellAnimation = new GameAnimation(-200, -200, width, height, animation, -1 , yModifier);
+    public PassiveSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, Animation animation, int width, int height, int yModifier) {
+        super(id, element, name, "Passif", shortDescription, 0, animation, width, height);
+        PassiveSpellAnimation = new GameAnimation(-200, -200, width, height, animation, -1, yModifier);
+
     }
 
     @Override
@@ -36,11 +35,9 @@ public class PassiveSpell extends Spell {
         } else if (this.id == SpellingSystem.ID_LIGHTNING_RES) {
             spellington.setResElectricity(spellington.getResElectricity() + 5);
         }
-        
-        
-        
+
         activeAnimations.add(PassiveSpellAnimation);
-        
+
     }
 
     @Override
@@ -55,8 +52,7 @@ public class PassiveSpell extends Spell {
             spellington.setResElectricity(spellington.getResElectricity() - 5);
         }
 
-        
         activeAnimations.remove(PassiveSpellAnimation);
     }
-    
+
 }

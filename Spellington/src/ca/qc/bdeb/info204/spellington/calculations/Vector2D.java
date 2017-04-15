@@ -15,7 +15,7 @@ public class Vector2D {
         this.y = y;
     }
 
-    public Vector2D(Vector2D v) {
+    public Vector2D(Vector2D v) {//calling a vector
         this.x = v.x;
         this.y = v.y;
     }

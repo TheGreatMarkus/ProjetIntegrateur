@@ -36,7 +36,7 @@ public class SpellingSystem {
 
     private static ArrayList<Integer> letters = new ArrayList<>();
 
-    private static ArrayList<Spell> knownSpell = new ArrayList<>();
+    public static ArrayList<Spell> knownSpell = new ArrayList<>();
     private static ArrayList<Spell> spellList = new ArrayList<>();
     private static ArrayList<Spell> tutoSpell = new ArrayList<>();
     private static ArrayList<Spell> adeptLavaSpell = new ArrayList<>();
@@ -96,6 +96,31 @@ public class SpellingSystem {
     public static final int ID_ICE_IMMUNITY = 23;
     public static final int ID_GREAT_HEAL = 24;
 
+    private static final String FIRE_BALL_DESC = "Boule en feu traditionnelle " + '\n' + "déployée à l'aide d'une trajectoire parabolique.";
+    private static final String ICE_SPIKE_DESC = "Pic de glace suivant une " + '\n' + "trajectoire majoritairement linéaire.";
+    private static final String SPARK_DESC = "Explosion d'étincelles " + '\n' + "engendrée par le clic de la souris.";
+    private static final String HEAL_DESC = "Guérison de base.";
+    private static final String ASCENDING_CURRENT_DESC = "Accorde un saut " + '\n' + "supplémentaire à Spellington.";
+    private static final String FIRE_RES_DESC = "Réduit les dégats infligés " + '\n' + "par les attaques pyromanes.";
+    private static final String ICE_RES_DESC = "Réduit les dégats infligés " + '\n' + "par les attaques glaciales.";
+    private static final String LIGHTNING_RES_DESC = "Réduit les dégats infligés " + '\n' + "par les attaques électrocutantes.";
+    private static final String EXPLOSIVE_BALL_DESC = "";
+    private static final String FIRE_BREATH_DESC = "";
+    private static final String GIANT_FIRE_BALL_DESC = "";
+    private static final String LIGHTNING_SWARM_DESC = "";
+    private static final String TELEPORTATION_DESC = "";
+    private static final String LIGHTNING_BALL_DESC = "";
+    private static final String ICE_BREATH_DESC = "";
+    private static final String ICE_SPIKE_BALL_DESC = "";
+    private static final String ICE_RUNE_DESC = "";
+    private static final String FIRE_IMMUNITY_DESC = "";
+    private static final String METEOR_SWARM_DESC = "";
+    private static final String LIGHTNING_IMMUNITY_DESC = "";
+    private static final String LIGHTNING_SPEAR_DESC = "";
+    private static final String ICE_STORM_DESC = "";
+    private static final String ICE_IMMUNITY_DESC = "";
+    private static final String GREAT_HEAL_DESC = "";
+
     public static void initSpellingSystem() {
         initAnimation();
 
@@ -124,31 +149,30 @@ public class SpellingSystem {
 //Spell iceStorm = new              Spell(22    , 20        , SpellingSystem.SpellKind.EXPLOSION , GameEntity.Elements.ICE        , "Tempete de glace"              , 0                , 1         , 1f                    , animIceStorm             , 100      , 100       );
 //Spell iceImmunity = new           Spell(23    , 999       , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.ICE        , "Immunite glace"                , 0                , 0         , 1f                    , animIceImmunity          , 100      , 100       );
 //Spell majorHealing = new          Spell(24    , 100       , SpellingSystem.SpellKind.HEALING   , GameEntity.Elements.NEUTRAL    , "Soin majeur"                   , 0                , 1         , 1f                    , animMajorHealing         , 100      , 100       );
-
-        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", 5, animFireBall, 20, 20, 1, 1, 5);
-        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", 3, animIceSpike, 20, 20, 1, 0, 5);
-        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", 2, animSpark, 100, 100, 5, 5);
-        Spell heal = new HealingSpell(ID_HEAL, "Soin", 1, animHeal, 100, 100, 10);
-        Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", animAscendingCurrent, 100, 100, 0);
-        Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, "Résistance feu", animFireResistance, 100, 30, -40);
-        Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, "Résistance glace", animIceResistance, 100, 30, -40);
-        Spell lightningResistance = new PassiveSpell(ID_LIGHTNING_RES, ElementalType.LIGHTNING, "Résistance electrique", animLightningResistance, 100, 30, -40);
-        Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", 2, animExplosiveBall, 100, 100, 1, 1, 10);
-        Spell fireBreath = new BreathSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", 300, animFireBreath, 100, 100, 1, 1, 1, 0.35f, 5);
-        Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", 2, animGiantFireBall, 200, 200, 1, 1, 20);
-        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", 1, animLightningSwarm, 100, 100, 3, 5);
-        Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", 1, animTeleportation, 100, 100, 1, 1, 0);
-        Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", 2, animLightningBouncingBall, 100, 100, 1, 1, 10);
-        Spell iceBreath = new BreathSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", 300, animIceBreath, 100, 100, 1, 0, 1, 0.35f, 15);
-        Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", 2, animIceSpikeBall, 100, 100, 1, 1, 10);
-        Spell iceRune = new ExplosionSpell(ID_ICE_RUNE, ElementalType.ICE, "Rune de glace", 1, animIceRune, 100, 100, 20, 10);
-        Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", animFireImmunity, 100, 100, 0);
-        Spell meteorSwarm = new ExplosionSpell(ID_METEOR_SWARM, ElementalType.FIRE, "Pluie de meteors", 1, animMeteorSwarm, 100, 100, 20, 9999);
-        Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", animLightningImmunity, 100, 100, 0);
-        Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", 1, animLightningSpear, 100, 100, 1, 1, 60);
-        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", 1, animIceStorm, 100, 100, 20, 9999);
-        Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", animIceImmunity, 100, 100, 0);
-        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", 1, animGreatHeal, 100, 100, Integer.MAX_VALUE);
+        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 5, animFireBall, 20, 20, 1, 1, 5);
+        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", ICE_SPIKE_DESC, 3, animIceSpike, 20, 20, 1, 0, 5);
+        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", SPARK_DESC, 2, animSpark, 100, 100, 5, 5);
+        Spell heal = new HealingSpell(ID_HEAL, "Soin", HEAL_DESC, 1, animHeal, 100, 100, 10);
+        Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", ASCENDING_CURRENT_DESC, animAscendingCurrent, 100, 100, 0);
+        Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, "Résistance feu", FIRE_RES_DESC, animFireResistance, 100, 30, -40);
+        Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, "Résistance glace", ICE_RES_DESC, animIceResistance, 100, 30, -40);
+        Spell lightningResistance = new PassiveSpell(ID_LIGHTNING_RES, ElementalType.LIGHTNING, "Résistance electrique", LIGHTNING_RES_DESC, animLightningResistance, 100, 30, -40);
+        Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", EXPLOSIVE_BALL_DESC, 2, animExplosiveBall, 100, 100, 1, 1, 10);
+        Spell fireBreath = new BreathSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", FIRE_BREATH_DESC, 300, animFireBreath, 100, 100, 1, 1, 1, 0.35f, 5);
+        Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", GIANT_FIRE_BALL_DESC, 2, animGiantFireBall, 200, 200, 1, 1, 20);
+        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", LIGHTNING_SWARM_DESC, 1, animLightningSwarm, 100, 100, 3, 5);
+        Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", TELEPORTATION_DESC, 1, animTeleportation, 100, 100, 1, 1, 0);
+        Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", LIGHTNING_BALL_DESC, 2, animLightningBouncingBall, 100, 100, 1, 1, 10);
+        Spell iceBreath = new BreathSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", ICE_BREATH_DESC, 300, animIceBreath, 100, 100, 1, 0, 1, 0.35f, 15);
+        Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", ICE_SPIKE_BALL_DESC, 2, animIceSpikeBall, 100, 100, 1, 1, 10);
+        Spell iceRune = new ExplosionSpell(ID_ICE_RUNE, ElementalType.ICE, "Rune de glace", ICE_RUNE_DESC, 1, animIceRune, 100, 100, 20, 10);
+        Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", FIRE_IMMUNITY_DESC, animFireImmunity, 100, 100, 0);
+        Spell meteorSwarm = new ExplosionSpell(ID_METEOR_SWARM, ElementalType.FIRE, "Pluie de meteors", METEOR_SWARM_DESC, 1, animMeteorSwarm, 100, 100, 20, 9999);
+        Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", LIGHTNING_IMMUNITY_DESC, animLightningImmunity, 100, 100, 0);
+        Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", LIGHTNING_SPEAR_DESC, 1, animLightningSpear, 100, 100, 1, 1, 60);
+        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", ICE_STORM_DESC, 1, animIceStorm, 100, 100, 20, 9999);
+        Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", ICE_IMMUNITY_DESC, animIceImmunity, 100, 100, 0);
+        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 100, Integer.MAX_VALUE);
 
         spellList.add(fireBall);
         spellList.add(iceSpike);
@@ -314,15 +338,15 @@ public class SpellingSystem {
         if (input.isKeyPressed(Input.KEY_F9)) {
             incantationText = spellList.get(4).getIncantation();
         }
-        
+
         if (input.isKeyPressed(Input.KEY_F8)) {
             incantationText = spellList.get(5).getIncantation();
         }
-        
+
         if (input.isKeyPressed(Input.KEY_F7)) {
             incantationText = spellList.get(6).getIncantation();
         }
-        
+
         if (input.isKeyPressed(Input.KEY_F6)) {
             incantationText = spellList.get(7).getIncantation();
         }
@@ -349,7 +373,7 @@ public class SpellingSystem {
 
             Image[] tempImgUpStream = new Image[19];
             for (int i = 18; i >= 0; i--) {
-                tempImgUpStream[18-i] = new Image("res/image/animation/spells/upStream/upStream (" + (i + 1) + ").png");
+                tempImgUpStream[18 - i] = new Image("res/image/animation/spells/upStream/upStream (" + (i + 1) + ").png");
             }
             animAscendingCurrent = new Animation(tempImgUpStream, 40);
 
@@ -364,7 +388,7 @@ public class SpellingSystem {
                 tempImgIceRes[i] = new Image("res/image/animation/spells/iceRes/iceRes (" + (i + 1) + ").png");
             }
             animIceResistance = new Animation(tempImgIceRes, 30);
-            
+
             Image[] tempImgeElectricRes = new Image[19];
             for (int i = 0; i < tempImgeElectricRes.length; i++) {
                 tempImgeElectricRes[i] = new Image("res/image/animation/spells/electricRes/electricRes (" + (i + 1) + ").png");

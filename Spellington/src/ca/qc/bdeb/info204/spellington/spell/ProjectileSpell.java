@@ -23,8 +23,8 @@ public class ProjectileSpell extends Spell {
     private float gravModifier;
     private int damage;
 
-    public ProjectileSpell(int id, GameEntity.ElementalType element, String name, int uses, Animation animation, int width, int height, float initSpeed, float gravModifier, int damage) {
-        super(id, element, name, uses, animation, width, height);
+    public ProjectileSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int width, int height, float initSpeed, float gravModifier, int damage) {
+        super(id, element, name, "Projectile", shortDescription, uses, animation, width, height);
         this.initSpeed = initSpeed;
         this.gravModifier = gravModifier;
         this.damage = damage;
@@ -69,17 +69,38 @@ public class ProjectileSpell extends Spell {
     public void setGravModifier(float gravModifier) {
         this.gravModifier = gravModifier;
     }
-    public void spellCollisionEffect (Spellington spellington, int x, int y, String direction) {
-        if(this.id == SpellingSystem.ID_TELEPORTATION) {
+
+    public void spellCollisionEffect(Spellington spellington, int x, int y, String direction) {
+        if (this.id == SpellingSystem.ID_TELEPORTATION) {
             switch (direction) {
-                case "top": spellington.setLocation(x, y);;break; //corriger les collisions selon la direction de la collision
-                case "bottom": spellington.setLocation(x, y);;break;
-                case "right": spellington.setLocation(x, y);;break;
-                case "left": spellington.setLocation(x, y);;break;
-                
+                case "top":
+                    spellington.setLocation(x, y);
+                    ;
+                    break; //corriger les collisions selon la direction de la collision
+                case "bottom":
+                    spellington.setLocation(x, y);
+                    ;
+                    break;
+                case "right":
+                    spellington.setLocation(x, y);
+                    ;
+                    break;
+                case "left":
+                    spellington.setLocation(x, y);
+                    ;
+                    break;
+
             }
-            
-            
+
         }
     }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
 }

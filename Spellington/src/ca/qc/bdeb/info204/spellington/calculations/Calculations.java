@@ -63,19 +63,19 @@ public class Calculations {
             /*The side of the correction is determined by calculating the 
              shallowest side of the intersection and the relative x and y positions
              of the entity to be moved*/
-            if (heightIntersection < widthIntersection) {
-                if (tile.getCenterY() < creature.getCenterY()) {
+            if (heightIntersection < widthIntersection) {//collision with a wide object
+                if (tile.getCenterY() < creature.getCenterY()) {//object over the creature
                     creature.setY(creature.getY() + heightIntersection);
                     creature.setCollisionTop(true);
-                } else if (tile.getCenterY() > creature.getCenterY()) {
+                } else if (tile.getCenterY() > creature.getCenterY()) {//object under the creature
                     creature.setY(creature.getY() - (heightIntersection));
                     creature.setCollisionBottom(true);
                 }
-            } else if (widthIntersection < heightIntersection) {
-                if (tile.getCenterX() < creature.getCenterX()) {
+            } else if (widthIntersection < heightIntersection) { //collision with a tall object
+                if (tile.getCenterX() < creature.getCenterX()) {// collision to the left 
                     creature.setX(creature.getX() + widthIntersection);
                     creature.setCollisionLeft(true);
-                } else if (tile.getCenterX() > creature.getCenterX()) {
+                } else if (tile.getCenterX() > creature.getCenterX()) {//collision to the right
                     creature.setX(creature.getX() - widthIntersection);
                     creature.setCollisionRight(true);
                 }

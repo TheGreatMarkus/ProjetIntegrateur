@@ -15,8 +15,8 @@ import org.newdawn.slick.Input;
  */
 public class Potions extends Spell {
 
-    public Potions(int id, GameEntity.ElementalType element, String name, int uses, Animation animation, int width, int height) {
-        super(id, element, name, uses, animation, width, height);
+    public Potions(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int width, int height) {
+        super(id, element, name, "Potions", shortDescription, uses, animation, width, height);
     }
 
     @Override

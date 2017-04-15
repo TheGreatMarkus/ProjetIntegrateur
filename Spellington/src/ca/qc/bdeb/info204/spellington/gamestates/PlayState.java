@@ -59,21 +59,23 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        //Loading font for the spell chant in the HUD.
+
+        Font fontViking;
+
         try {
-            Font tempFont = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Viking.ttf"));
-            tempFont = tempFont.deriveFont(20f);
-            fontSpellChant = new UnicodeFont(tempFont);
+            //Loading font for the spell chant in the HUD.
+            fontViking = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Viking.ttf"));
 
+            fontViking = fontViking.deriveFont(Font.PLAIN, 15.0f);
+            fontSpellChant = new UnicodeFont(fontViking);
+            fontSpellChant.addAsciiGlyphs();
+            fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
+            fontSpellChant.loadGlyphs();
         } catch (FontFormatException ex) {
-            Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayState.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayState.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        fontSpellChant.addAsciiGlyphs();
-        fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
-        fontSpellChant.loadGlyphs();
 
         //Loading crosshair image.
         IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
@@ -239,8 +241,8 @@ public class PlayState extends BasicGameState {
             final int STATSBARHEIGHT = 27;
             int alpha = 127; //50% color transparency
             final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
-
             String incantationText = SpellingSystem.getIncantationText();
+
             g.setFont(fontSpellChant);
 
             int passiveX = GameCore.RENDER_SIZE.width - xGap - passiveSpellHUD.getWidth();

@@ -110,11 +110,13 @@ public class GameCore extends StateBasedGame {
         this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
         this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
         SpellingSystem.initSpellingSystem();
+
         GameManager.initGameManager(this);
         GameManager.loadMaps();
 
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
+
     }
 
     public static void clearInputRecord(GameContainer gc) {

@@ -25,8 +25,8 @@ public class BreathSpell extends Spell {
     private float angle;
     private int projectileQuantity;
 
-    public BreathSpell(int id, GameEntity.ElementalType element, String name, int uses, Animation animation, int width, int height, float initSpeed, float gravModifier, int damage, float angle, int projectileQuantity) {
-        super(id, element, name, uses, animation, width, height);
+    public BreathSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int width, int height, float initSpeed, float gravModifier, int damage, float angle, int projectileQuantity) {
+        super(id, element, name, "Sort de souffle", shortDescription, uses, animation, width, height);
         this.initSpeed = initSpeed;
         this.gravModifier = gravModifier;
         this.damage = damage;
@@ -61,11 +61,21 @@ public class BreathSpell extends Spell {
         float mouseX = (float) input.getMouseX() / GameCore.SCALE;
         float mouseY = (float) input.getMouseY() / GameCore.SCALE;
         float angle = Calculations.detAngle(mouseX - originX, mouseY - originY);
-        Vector2D temp = new Vector2D(initSpeed, angle + (this.angle * (float)(Math.random()*2-1)), true);
+        Vector2D temp = new Vector2D(initSpeed, angle + (this.angle * (float) (Math.random() * 2 - 1)), true);
         System.out.println(temp.getX());
         System.out.println(temp.getY());
         tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation);
 
         return tempProj;
+
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+
     }
 }

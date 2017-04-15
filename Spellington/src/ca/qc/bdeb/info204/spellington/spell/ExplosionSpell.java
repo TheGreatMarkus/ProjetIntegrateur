@@ -16,16 +16,17 @@ import org.newdawn.slick.geom.Circle;
  * @author Fallen Angel
  */
 public class ExplosionSpell extends Spell {
-    
+
     private int damage;
     private float ray;
-    
-    public ExplosionSpell(int id, GameEntity.ElementalType element, String name, int uses, Animation animation, int width, int height, int damage, float ray) {
-        super(id, element, name, uses, animation, width, height);
+
+    public ExplosionSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int width, int height, int damage, float ray) {
+        super(id, element, name, "Explosion", shortDescription, uses, animation, width, height);
+
         this.damage = damage;
         this.ray = ray;
     }
-    
+
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         if (this.id == SpellingSystem.ID_SPARK && this.id == SpellingSystem.ID_LIGHTNING_SWARM) {
@@ -34,7 +35,7 @@ public class ExplosionSpell extends Spell {
             exposionSpellGeneral(activeEnemy);
         }
     }
-    
+
     private void exposionSpellOnMouse(Input input, ArrayList<Enemy> activeEnemy) {
         Circle explo = new Circle(input.getMouseX(), input.getMouseY(), ray);
         for (int i = 0; i < activeEnemy.size(); i++) {
@@ -43,15 +44,23 @@ public class ExplosionSpell extends Spell {
             }
         }
     }
-    
+
     private void exposionSpellGeneral(ArrayList<Enemy> activeEnemy) {
         for (int i = 0; i < activeEnemy.size(); i++) {
-                activeEnemy.get(i).subLifePoint(this.damage, this.element);
+            activeEnemy.get(i).subLifePoint(this.damage, this.element);
         }
     }
-    
+
     @Override
     public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
     }
-    
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
 }

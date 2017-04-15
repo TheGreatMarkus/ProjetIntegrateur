@@ -19,6 +19,9 @@ public abstract class Spell {
     protected int id;
     protected ElementalType element;
     protected String name;
+    protected String type;
+    protected int damage;
+    protected String shortDescription;
     protected String incantation;
     protected int uses;
     protected Animation animation;
@@ -26,10 +29,12 @@ public abstract class Spell {
     protected int width;
     protected Image icon;
 
-    public Spell(int id, ElementalType element, String name, int uses, Animation animation, int width, int height) {
+    public Spell(int id, ElementalType element, String name, /**/String type, String shortDescription /**/, int uses, Animation animation, int width, int height) {
         this.id = id;
         this.element = element;
         this.name = name;
+        this.type = type;
+        this.shortDescription = shortDescription;
         this.uses = uses;
         this.animation = animation;
         this.height = height;
@@ -62,6 +67,22 @@ public abstract class Spell {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     public String getIncantation() {
