@@ -17,8 +17,6 @@ import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.fontMenu;
  */
 public class OptionsMenuState extends BasicGameState {
 
-    private static float textGap;
-
     private static final String OM_TITLE = "Options";
     private static final String OM_BACK = "Revenir";
 
@@ -27,9 +25,9 @@ public class OptionsMenuState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        textGap = 10.0f * GameCore.SCALE;
-        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TITLE, OM_TITLE, true, false, 0, textGap, fontMenu.getWidth(OM_TITLE), fontMenu.getHeight(OM_TITLE));
-        mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, OM_BACK, false, false, textGap, textGap, fontMenu.getWidth(OM_BACK), fontMenu.getHeight(OM_BACK));
+
+        mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, OM_TITLE, true, false, 0, MainMenuState.TEXT_GAP, fontMenu.getWidth(OM_TITLE), fontMenu.getHeight(OM_TITLE));
+        mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, OM_BACK, false, false, MainMenuState.TEXT_GAP, MainMenuState.TEXT_GAP, fontMenu.getWidth(OM_BACK), fontMenu.getHeight(OM_BACK));
     }
 
     @Override
@@ -52,6 +50,7 @@ public class OptionsMenuState extends BasicGameState {
         boolean triedToClick = gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
 
         if (mnuItemBack.getHoveredOver() && triedToClick) {
+            ((MainMenuState) game.getState(GameCore.MAIN_MENU_STATE_ID)).prepareMainMenu();
             game.enterState(GameCore.MAIN_MENU_STATE_ID);
         }
         GameCore.clearInputRecord(gc);

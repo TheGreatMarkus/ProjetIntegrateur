@@ -1,6 +1,8 @@
 package ca.qc.bdeb.info204.spellington;
 
+import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
+import ca.qc.bdeb.info204.spellington.gamestates.LevelSelectionState;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import ca.qc.bdeb.info204.spellington.gamestates.MainMenuState;
 import ca.qc.bdeb.info204.spellington.gamestates.SpellBookState;
@@ -37,6 +39,8 @@ public class GameCore extends StateBasedGame {
     public static final int OPTIONS_MENU_STATE_ID = 2;
     public static final int PAUSE_MENU_STATE_ID = 3;
     public static final int SPELLBOOK_STATE_ID = 4;
+    public static final int LEVEL_SELECTION_STATE_ID = 5;
+    public static final int SAVE_SCREEN_STATE_ID = 6;
 
     private static final String GAME_TITLE = "Réveil de Spellington";
 
@@ -82,7 +86,7 @@ public class GameCore extends StateBasedGame {
         appGameContainer.setShowFPS(false);
         //Start of the game.
         appGameContainer.start();
-        
+
     }
 
     public GameCore() throws SlickException {
@@ -97,6 +101,7 @@ public class GameCore extends StateBasedGame {
         this.addState(new OptionsMenuState());
         this.addState(new PauseMenuState());
         this.addState(new SpellBookState());
+        this.addState(new LevelSelectionState());
 
         //Initialise game states.
         this.getState(MAIN_MENU_STATE_ID).init(gc, this);
@@ -105,9 +110,13 @@ public class GameCore extends StateBasedGame {
         this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
         this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
         SpellingSystem.initSpellingSystem();
-        
-//The game will being in the menu.
+
+        GameManager.initGameManager(this);
+        GameManager.loadMaps();
+
+        //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
+
     }
 
     public static void clearInputRecord(GameContainer gc) {

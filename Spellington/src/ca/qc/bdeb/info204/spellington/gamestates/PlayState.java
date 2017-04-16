@@ -1,18 +1,22 @@
 package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
-import static ca.qc.bdeb.info204.spellington.GameCore.fontPaladin;
 import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
+import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
-import ca.qc.bdeb.info204.spellington.gameentities.Tile;
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -34,21 +38,20 @@ public class PlayState extends BasicGameState {
 
     private UnicodeFont fontSpellChant;
 
-    private static Image IMG_GAME_CROSSHAIR;
+    private Image IMG_GAME_CROSSHAIR;
 
     private TiledMap map;
     private Spellington spellington;
-    private Tile[][] mapCollision;
-    private Tile[][] mapEvent;
 
     public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
     public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
+    public ArrayList<Enemy> activeEnemy = new ArrayList<>();
 
     public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
 
     //debug variable
-    private static boolean debugMode = false;
+    public static boolean debugMode = false;
     private static boolean displayHUD = true;
 
     //Variables and constants related to the rendering of the HUD
@@ -56,28 +59,42 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        //Loading font for the spell chant in the HUD.
-        fontPaladin = fontPaladin.deriveFont(Font.PLAIN, 20.0f);
-        fontSpellChant = new UnicodeFont(fontPaladin);
-        fontSpellChant.addAsciiGlyphs();
-        fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
-        fontSpellChant.loadGlyphs();
+
+        Font fontViking;
+
+        try {
+            //Loading font for the spell chant in the HUD.
+            fontViking = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Viking.ttf"));
+
+            fontViking = fontViking.deriveFont(Font.PLAIN, 15.0f);
+            fontSpellChant = new UnicodeFont(fontViking);
+            fontSpellChant.addAsciiGlyphs();
+            fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
+            fontSpellChant.loadGlyphs();
+        } catch (FontFormatException ex) {
+            Logger.getLogger(PlayState.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PlayState.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         //Loading crosshair image.
         IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
         //Loading test map information.
-        map = new TiledMap("res/map/mapTestGrotte.tmx");
-        extractMapInfo();
+
         //Loading HUD image components
-        this.statsBarHUD = new Image("src/res/map/HUD/statsBar.png");
-        this.inputTextHUD = new Image("src/res/map/HUD/textRectangle.png");
-        this.passiveSpellHUD = new Image("src/res/map/HUD/utilitySquare.png");
-        this.activeSpellHUD = new Image("src/res/map/HUD/utilitySquare.png");
-        this.redPotionHUD = new Image("src/res/map/HUD/redPotion.png");
-        this.greenPotionHUD = new Image("src/res/map/HUD/greenPotion.png");
-        this.bluePotionHUD = new Image("src/res/map/HUD/bluePotion.png");
-        this.icePotionHUD = new Image("src/res/map/HUD/icePotion.png");
-        spellington = new Spellington(65, 760, LivingEntity.MouvementState.STANDING_R);
+        this.statsBarHUD = new Image("src/res/image/HUD/statsBar.png");
+        this.inputTextHUD = new Image("src/res/image/HUD/textRectangle.png");
+        this.passiveSpellHUD = new Image("src/res/image/HUD/utilitySquare.png");
+        this.activeSpellHUD = new Image("src/res/image/HUD/utilitySquare.png");
+        this.redPotionHUD = new Image("src/res/image/HUD/redPotion.png");
+        this.greenPotionHUD = new Image("src/res/image/HUD/greenPotion.png");
+        this.bluePotionHUD = new Image("src/res/image/HUD/bluePotion.png");
+        this.icePotionHUD = new Image("src/res/image/HUD/icePotion.png");
+    }
+
+    public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
+        spellington = new Spellington(spellingtonX, spellingtonY, LivingEntity.MouvementState.STANDING_R);
+        map = currentMap;
     }
 
     @Override
@@ -100,6 +117,11 @@ public class PlayState extends BasicGameState {
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).render(g);
         }
+
+        for (int i = 0; i < activeAnimations.size(); i++) {
+            activeAnimations.get(i).render(g, spellington);
+        }
+
         debugInfo(g, gc);
 
         displayHUD(g);
@@ -107,6 +129,9 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+        if (delta > 40) {
+            delta = 40;
+        }
         if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
             game.enterState(GameCore.PAUSE_MENU_STATE_ID);
         }
@@ -117,54 +142,26 @@ public class PlayState extends BasicGameState {
             displayHUD = !displayHUD;
         }
         spellington.update(gc.getInput(), delta);
-        Calculations.checkMapCollision(mapCollision, spellington);
+        Calculations.checkMapCollision(GameManager.getMapInformation(), spellington);
 
-        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations);
+        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, activeEnemy);
+
+        ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
+        ArrayList<Enemy> temp = new ArrayList<>();
+
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
+            if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), temp, activeProjectiles.get(i))) {
+                projectilesToBeRemoved.add(activeProjectiles.get(i));
+            }
         }
-    }
 
-    /**
-     *
-     * @author Cristian Aldea
-     */
-    private void extractMapInfo() {
-        mapCollision = new Tile[DIM_MAP.height][DIM_MAP.width];
-        for (int i = 0; i < map.getHeight(); i++) {
-            for (int j = 0; j < map.getWidth(); j++) {
-                if (map.getTileId(j, i, 1) == map.getTileSet(1).firstGID + 11) {
-                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
-                } else {
-                    mapCollision[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.IMPASSABLE, Tile.TileEvent.NONE);
-                }
-            }
+        for (int j = 0; j < activeAnimations.size(); j++) {
+            activeAnimations.get(j).update();
+
         }
-        mapEvent = new Tile[DIM_MAP.height][DIM_MAP.width];
-        for (int i = 0; i < map.getHeight(); i++) {
-            for (int j = 0; j < map.getWidth(); j++) {
-                if (map.getTileId(j, i, 2) == 0) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
-                }
-                if (map.getTileId(j, i, 2) == 1) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.EXIT);
-                }
-                if (map.getTileId(j, i, 2) == 2) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.SPAWN);
-                }
-                if (map.getTileId(j, i, 2) == 3) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.SPAWN);
-                }
-                if (map.getTileId(j, i, 2) == 4) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.SPAWN);
-                }
-                if (map.getTileId(j, i, 2) == 5) {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.LEVER);
-                } else {
-                    mapEvent[i][j] = new Tile(50 * j, 50 * i, 50, 50, Tile.TileState.PASSABLE, Tile.TileEvent.NONE);
-                }
-            }
-        }
+
+        activeProjectiles.removeAll(projectilesToBeRemoved);
     }
 
     /**
@@ -244,8 +241,8 @@ public class PlayState extends BasicGameState {
             final int STATSBARHEIGHT = 27;
             int alpha = 127; //50% color transparency
             final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
-
             String incantationText = SpellingSystem.getIncantationText();
+
             g.setFont(fontSpellChant);
 
             int passiveX = GameCore.RENDER_SIZE.width - xGap - passiveSpellHUD.getWidth();

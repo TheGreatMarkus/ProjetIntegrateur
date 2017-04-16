@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.textEntities;
 
+import ca.qc.bdeb.info204.spellington.GameCore;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,9 +13,10 @@ public class MenuItem {
 
     public static enum MenuItemType {
         BUTTON,
-        TEXT,
-        TITLE
+        TEXT
     }
+
+    private static final float TEXT_GAP = 10f * GameCore.SCALE;
 
     private MenuItemType menuItemType;
     private String text;
@@ -23,6 +25,7 @@ public class MenuItem {
     private float width;
     private float height;
     private boolean hoveredOver;
+    private boolean clickable;
 
     public MenuItem(GameContainer gc, MenuItemType menuItemType, String text, boolean centerX, boolean centerY, float x, float y, float width, float height) {
         this.menuItemType = menuItemType;
@@ -32,28 +35,34 @@ public class MenuItem {
         } else {
             this.x = x;
         }
+        this.x -= TEXT_GAP;
         if (centerY) {
             this.y = gc.getHeight() / 2 - height / 2;
         } else {
             this.y = y;
         }
+        this.y -= TEXT_GAP;
         this.width = width;
         this.height = height;
+        this.width += TEXT_GAP * 2f;
+        this.height += TEXT_GAP * 2f;
+        this.clickable = true;
     }
 
     public void detHoveredOver(float mouseX, float mouseY) {
-        this.hoveredOver =  (mouseX >= this.x && mouseX <= this.x + this.width) && (mouseY >= this.y && mouseY <= this.y + this.height);
+        this.hoveredOver = (mouseX >= this.x && mouseX <= this.x + this.width) && (mouseY >= this.y && mouseY <= this.y + this.height);
     }
 
     public void render(Graphics g, GameContainer gc) {
-        if (hoveredOver && this.menuItemType == MenuItemType.BUTTON) {
+        if (hoveredOver && this.menuItemType == MenuItemType.BUTTON || !clickable) {
             g.setColor(new Color(1, 1, 1, 0.5f));
         } else {
             g.setColor(new Color(1, 1, 1, 1f));
         }
 
-        g.drawString(text, x, y);
-        g.drawRect(x, y, width, height);
+        g.drawRoundRect(x, y, width, height, 12);
+        g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
+
     }
 
     public boolean getHoveredOver() {
@@ -94,6 +103,14 @@ public class MenuItem {
 
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    public boolean getClickable() {
+        return clickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        this.clickable = clickable;
     }
 
 }

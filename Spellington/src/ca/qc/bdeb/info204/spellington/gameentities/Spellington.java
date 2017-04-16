@@ -37,6 +37,7 @@ public class Spellington extends LivingEntity {
 
     public static final int INIT_MAX_LIFE = 100;
     private static final float GRAVITY_MODIFIER = 2;
+
     private static final float MAX_X_SPEED = 0.7f;
     private static final Vector2D X_ACC = new Vector2D(0.002f, 0);
     private static final Vector2D INIT_JUMP_SPEED = new Vector2D(0, -0.8f);
@@ -58,7 +59,6 @@ public class Spellington extends LivingEntity {
     public Spellington(float x, float y, MouvementState mouvementState) throws SlickException {
         super(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height, mouvementState, GRAVITY_MODIFIER, INIT_MAX_LIFE);
         initAnimation();
-        
 
         resElectricity = 0;
         resIce = 0;
@@ -76,7 +76,7 @@ public class Spellington extends LivingEntity {
      */
     public void update(Input input, float time) {
         //To slowdown time for testing purposes
-        //time *= 1.0;
+        //time *= 0.5;
         //On divize par SCALE pour match la position de la souris avec le scale du render
         float mouseX = (float) input.getMouseX() / GameCore.SCALE;
         float mouseY = (float) input.getMouseY() / GameCore.SCALE;
@@ -191,10 +191,11 @@ public class Spellington extends LivingEntity {
                 animWalkR.draw(tempX, tempY, tempWidth, tempHeight);
                 break;
         }
-        //g.drawImage(IMG_SPELLINGTON, this.getX() - 68, this.getY() - 10);
-        g.drawRect(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height);
-        g.setColor(Color.red);
-        g.drawRect(tempX, tempY, tempWidth, tempHeight);
+        if (PlayState.debugMode) {
+            g.drawRect(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height);
+            g.setColor(Color.red);
+            g.drawRect(tempX, tempY, tempWidth, tempHeight);
+        }
     }
 
     private void initAnimation() {
@@ -208,12 +209,12 @@ public class Spellington extends LivingEntity {
 
             Image[] tempImgWalkL = new Image[40];
             for (int i = 0; i < tempImgWalkL.length; i++) {
-                tempImgWalkL[i] = new Image("res/image/animation/spellington/walk_l/" + (i + 1) + ".png");
+                tempImgWalkL[i] = new Image("res/image/animation/spellington/walk_l/" + "walk_l (" + (i + 1) + ")" + ".png");
             }
 
             Image[] tempImgWalkR = new Image[40];
             for (int i = 0; i < tempImgWalkR.length; i++) {
-                tempImgWalkR[i] = new Image("res/image/animation/spellington/walk_r/" + (i + 1) + ".png");
+                tempImgWalkR[i] = new Image("res/image/animation/spellington/walk_r/" + "walk_r (" + (i + 1) + ")" + ".png");
             }
 
             animWalkL = new Animation(tempImgWalkL, 15);
@@ -273,9 +274,17 @@ public class Spellington extends LivingEntity {
             return MouvementState.JUMP_L;
         } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
             return MouvementState.JUMP_R;
+        } else if (!collisionBottom && mouvementState == MouvementState.WALL_L) {
+            return MouvementState.JUMP_L;
+        } else if (!collisionBottom && mouvementState == MouvementState.WALL_R) {
+            return MouvementState.JUMP_R;
         } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
             return MouvementState.STANDING_L;
         } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
+            return MouvementState.STANDING_R;
+        } else if (collisionBottom && mouvementState == MouvementState.WALL_L) {
+            return MouvementState.STANDING_L;
+        } else if (collisionBottom && mouvementState == MouvementState.WALL_R) {
             return MouvementState.STANDING_R;
         }
         if (mouvementState == MouvementState.STANDING_L) {
@@ -296,6 +305,4 @@ public class Spellington extends LivingEntity {
         this.MAX_AIR_JUMPS = MAX_AIR_JUMPS;
     }
 
-    
-    
 }

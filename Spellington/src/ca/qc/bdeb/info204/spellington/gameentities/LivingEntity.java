@@ -7,7 +7,7 @@ package ca.qc.bdeb.info204.spellington.gameentities;
  * @see DynamicEntity
  */
 public abstract class LivingEntity extends DynamicEntity {
-    
+
     public static enum MouvementState {
         STANDING_R,
         STANDING_L,
@@ -18,8 +18,7 @@ public abstract class LivingEntity extends DynamicEntity {
         WALL_R,
         WALL_L
     }
-   
-    
+
     protected boolean collisionTop;
     protected boolean collisionBottom;
     protected boolean collisionRight;
@@ -113,31 +112,50 @@ public abstract class LivingEntity extends DynamicEntity {
         this.collisionRight = false;
         this.collisionLeft = false;
     }
-    
+
     public MouvementState getMouvementState() {
         return mouvementState;
     }
-    
+
     public void setMouvementState(MouvementState mouvementState) {
         this.mouvementState = mouvementState;
     }
-    
+
     public void addLifePoint(int i) {
         lifePoint = lifePoint + i;
-        if(lifePoint > maxLifePoint){
-        lifePoint = maxLifePoint;
+        if (lifePoint > maxLifePoint) {
+            lifePoint = maxLifePoint;
         }
     }
-    
-    public void subLifePoint(int i) {
+
+    public void subLifePoint(int i, ElementalType element) {
+        switch (element) {
+            case FIRE:
+                i = i - this.resFire;
+                break;
+            case ICE:
+                i = i - this.resIce;
+                break;
+            case LIGHTNING:
+                i = i - this.resElectricity;
+                break;
+            case NEUTRAL:;
+                break;
+        }
+
+        if (i < 0) {
+            i = 0;
+        }
+
         lifePoint = lifePoint - i;
-        if(lifePoint < 0){
-        lifePoint = 0;
+
+        if (lifePoint < 0) {
+            lifePoint = 0;
         }
     }
 
     public int getMaxLifePoint() {
         return maxLifePoint;
     }
-    
+
 }
