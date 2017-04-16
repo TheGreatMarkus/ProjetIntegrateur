@@ -97,7 +97,7 @@ public class SpellBookState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        background = new Image("src/res/map/Grimoire/spellbook.png");
+        background = new Image("src/res/map/spellbook/spellbook.png");
 
         fontPaladin = fontPaladin.deriveFont(Font.PLAIN, 30.0f * GameCore.SCALE);
         fontSpellChant = new UnicodeFont(fontPaladin);
@@ -160,7 +160,7 @@ public class SpellBookState extends BasicGameState {
         infoList.add("7");
         infoList.add("8");
 
-        this.icon = new Image("src/res/map/Grimoire/icon.png");
+        this.icon = new Image("src/res/map/spellbook/icon.png");
         this.iconImage = iconImage;
     }
 

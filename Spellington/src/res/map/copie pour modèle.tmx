@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
- <tileset firstgid="1" name="tuiles cachot lave" tilewidth="50" tileheight="50" tilecount="64" columns="8">
-  <image source="tuiles cachot lave.png" width="400" height="400"/>
+ <tileset firstgid="1" name="dungeonTile.png" tilewidth="50" tileheight="50" tilecount="64" columns="8">
+  <image source="tiles/dungeonTile.png" width="400" height="400"/>
   <terraintypes>
    <terrain name="Nouveau terrain" tile="-1"/>
    <terrain name="la" tile="-1"/>
