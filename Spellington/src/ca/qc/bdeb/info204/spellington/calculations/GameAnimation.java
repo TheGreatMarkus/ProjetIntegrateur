@@ -29,7 +29,7 @@ public class GameAnimation extends GameEntity {
     }
 
     public void update() {
-        if(this.vie != -1) {
+        if(this.vie > 0) {
             this.vie--;
         }
     }
@@ -41,4 +41,9 @@ public class GameAnimation extends GameEntity {
         this.animation.draw(this.x, this.y, width, height);
         }
     }
+
+    public int getVie() {
+        return vie;
+    }
+
 }

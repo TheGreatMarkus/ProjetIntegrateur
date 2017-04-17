@@ -39,12 +39,8 @@ public class SpellingSystem {
     public static ArrayList<Spell> knownSpell = new ArrayList<>();
     private static ArrayList<Spell> spellList = new ArrayList<>();
     private static ArrayList<Spell> tutoSpell = new ArrayList<>();
-    private static ArrayList<Spell> adeptLavaSpell = new ArrayList<>();
-    private static ArrayList<Spell> adeptIceSpell = new ArrayList<>();
-    private static ArrayList<Spell> adeptChocSpell = new ArrayList<>();
-    private static ArrayList<Spell> masterLavaSpell = new ArrayList<>();
-    private static ArrayList<Spell> masterIceSpell = new ArrayList<>();
-    private static ArrayList<Spell> masterChocSpell = new ArrayList<>();
+    private static ArrayList<Spell> adeptSpell = new ArrayList<>();
+    private static ArrayList<Spell> masterSpell = new ArrayList<>();
 
     private static Animation animFireBall;
     private static Animation animIceSpike;
@@ -207,27 +203,25 @@ public class SpellingSystem {
         tutoSpell.add(fireResistance);
         tutoSpell.add(iceResistance);
         tutoSpell.add(lightningResistance);
+        
+        
 
-        adeptLavaSpell.add(explosiveBall);
-        adeptLavaSpell.add(fireBreath);
-        adeptLavaSpell.add(giantFireBall);
+        adeptSpell.add(explosiveBall);
+        adeptSpell.add(fireBreath);
+        adeptSpell.add(giantFireBall);
+        adeptSpell.add(lightningSwarm);
+        adeptSpell.add(teleportation);
+        adeptSpell.add(lightningBouncingBall);
+        adeptSpell.add(iceBreath);
+        adeptSpell.add(iceSpikeBall);
+        adeptSpell.add(iceRune);
 
-        adeptChocSpell.add(lightningSwarm);
-        adeptChocSpell.add(teleportation);
-        adeptChocSpell.add(lightningBouncingBall);
-
-        adeptIceSpell.add(iceBreath);
-        adeptIceSpell.add(iceSpikeBall);
-        adeptIceSpell.add(iceRune);
-
-        masterLavaSpell.add(fireImmunity);
-        masterLavaSpell.add(meteorSwarm);
-
-        masterChocSpell.add(lightningImmunity);
-        masterChocSpell.add(lightningSpear);
-
-        masterIceSpell.add(iceStorm);
-        masterIceSpell.add(iceImmunity);
+        masterSpell.add(fireImmunity);
+        masterSpell.add(meteorSwarm);
+        masterSpell.add(lightningImmunity);
+        masterSpell.add(lightningSpear);
+        masterSpell.add(iceStorm);
+        masterSpell.add(iceImmunity);
 
         knownSpell.add(fireBall);
         knownSpell.add(iceSpike);
@@ -237,6 +231,7 @@ public class SpellingSystem {
         knownSpell.add(fireResistance);
         knownSpell.add(iceResistance);
         knownSpell.add(lightningResistance);
+        knownSpell.add(lightningBouncingBall);
 
         letters.add(Input.KEY_A);
         letters.add(Input.KEY_B);
@@ -348,7 +343,7 @@ public class SpellingSystem {
         }
 
         if (input.isKeyPressed(Input.KEY_F6)) {
-            incantationText = spellList.get(7).getIncantation();
+            incantationText = spellList.get(ID_LIGHTNING_BALL).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F1)) {
@@ -394,6 +389,24 @@ public class SpellingSystem {
                 tempImgeElectricRes[i] = new Image("res/image/animation/spells/electricRes/electricRes (" + (i + 1) + ").png");
             }
             animLightningResistance = new Animation(tempImgeElectricRes, 30);
+            
+            Image[] tempImgeElectricBolt = new Image[19];
+            for (int i = 0; i < tempImgeElectricBolt.length; i++) {
+                tempImgeElectricBolt[i] = new Image("res/image/animation/spells/lightningBolt/lightningBolt (" + (i + 1) + ").png");
+            }
+            animLightningBouncingBall = new Animation(tempImgeElectricBolt, 15);
+            
+            Image[] tempImgeHealSmall = new Image[19];
+            for (int i = 0; i < tempImgeHealSmall.length; i++) {
+                tempImgeHealSmall[i] = new Image("res/image/animation/spells/healSmall/healSmall " + (i + 1) + ".png");
+            }
+            animHeal = new Animation(tempImgeHealSmall, 30);
+            
+            Image[] tempImgeHealBig = new Image[19];
+            for (int i = 0; i < tempImgeHealBig.length; i++) {
+                tempImgeHealBig[i] = new Image("res/image/animation/spells/healBig/healBig " + (i + 1) + ".png");
+            }
+            animGreatHeal = new Animation(tempImgeHealBig, 30);
 
         } catch (SlickException ex) {
         }
@@ -416,14 +429,57 @@ public class SpellingSystem {
         }
         readerBuffer.close();
 
-        for (int i = 0; i < spellList.size(); i++) {
+        for (int i = 0; i < tutoSpell.size(); i++) {
             int tempdice = dice.nextInt(tempWord.size());
-            spellList.get(i).setIncantation(tempWord.get(tempdice));
+            tutoSpell.get(i).setIncantation(tempWord.get(tempdice));
             if (tempWord.size() <= 1) {
                 System.out.print("Erreur: il n'y a pas assez de mots dans noviceWord.txt");
             }
             tempWord.remove(tempdice);
         }
+        
+         readerBuffer = null;
+         line = null;
+         filePath = new File("").getAbsolutePath();
+        try {
+            readerBuffer = new BufferedReader(new FileReader(filePath + "\\src\\res\\wordbank\\adepteWord.txt"));
+        } catch (FileNotFoundException exc) {
+            System.out.println("Erreur d'ouverture");
+        }
+        while ((line = readerBuffer.readLine()) != null) {
+            tempWord.add(line);
+        }
+        readerBuffer.close();
 
+        for (int i = 0; i < adeptSpell.size(); i++) {
+            int tempdice = dice.nextInt(tempWord.size());
+            adeptSpell.get(i).setIncantation(tempWord.get(tempdice));
+            if (tempWord.size() <= 1) {
+                System.out.print("Erreur: il n'y a pas assez de mots dans adepteWord.txt");
+            }
+            tempWord.remove(tempdice);
+        }
+        
+        readerBuffer = null;
+         line = null;
+         filePath = new File("").getAbsolutePath();
+        try {
+            readerBuffer = new BufferedReader(new FileReader(filePath + "\\src\\res\\wordbank\\masterWord.txt"));
+        } catch (FileNotFoundException exc) {
+            System.out.println("Erreur d'ouverture");
+        }
+        while ((line = readerBuffer.readLine()) != null) {
+            tempWord.add(line);
+        }
+        readerBuffer.close();
+
+        for (int i = 0; i < masterSpell.size(); i++) {
+            int tempdice = dice.nextInt(tempWord.size());
+            masterSpell.get(i).setIncantation(tempWord.get(tempdice));
+            if (tempWord.size() <= 1) {
+                System.out.print("Erreur: il n'y a pas assez de mots dans masterWord.txt");
+            }
+            tempWord.remove(tempdice);
+        }
     }
 }

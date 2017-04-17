@@ -156,10 +156,13 @@ public class PlayState extends BasicGameState {
             }
         }
 
+        ArrayList<GameAnimation> animationsToBeRemoved = new ArrayList<>();
         for (int j = 0; j < activeAnimations.size(); j++) {
             activeAnimations.get(j).update();
-
+            if (activeAnimations.get(j).getVie() == 0) {animationsToBeRemoved.add(activeAnimations.get(j));}
         }
+        
+        activeAnimations.removeAll(animationsToBeRemoved);
 
         activeProjectiles.removeAll(projectilesToBeRemoved);
     }
