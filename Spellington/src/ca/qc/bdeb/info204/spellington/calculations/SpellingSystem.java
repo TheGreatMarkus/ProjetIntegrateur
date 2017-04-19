@@ -184,7 +184,7 @@ public class SpellingSystem {
         Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", FIRE_IMMUNITY_DESC, animFireImmunity, 100, 100, 0);
         Spell meteorSwarm = new ExplosionSpell(ID_METEOR_SWARM, ElementalType.FIRE, "Pluie de meteors", METEOR_SWARM_DESC, 1, animMeteorSwarm, 100, 100, 20, 9999);
         Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", LIGHTNING_IMMUNITY_DESC, animLightningImmunity, 100, 100, 0);
-        Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", LIGHTNING_SPEAR_DESC, 1, animLightningSpear, 100, 100, 1, 1, 60);
+        Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", LIGHTNING_SPEAR_DESC, 1, animLightningSpear, 100, 50, 1, 0, 60);
         Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", ICE_STORM_DESC, 1, animIceStorm, 100, 100, 20, 9999);
         Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", ICE_IMMUNITY_DESC, animIceImmunity, 100, 100, 0);
         Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 200, 999);
@@ -266,6 +266,9 @@ public class SpellingSystem {
         knownSpell.add(fireBreath);
         knownSpell.add(fireImmunity);
         knownSpell.add(iceBreath);
+        knownSpell.add(iceSpikeBall);
+        knownSpell.add(lightningSpear);
+        knownSpell.add(lightningSwarm);
         
         
 
@@ -408,7 +411,7 @@ public class SpellingSystem {
         }
 
         if (input.isKeyPressed(Input.KEY_F7)) {
-            incantationText = spellList.get(6).getIncantation();
+            incantationText = spellList.get(ID_LIGHTNING_SPEAR-1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F6)) {
@@ -491,21 +494,45 @@ public class SpellingSystem {
             
             Image[] tempImgFireImmu = new Image[19];
             for (int i = 0; i < tempImgFireImmu.length; i++) {
-                tempImgFireImmu[i] = new Image("res/image/animation/spells/fireRes/fireRes (" + (i + 1) + ").png");//animation temporaire
+                tempImgFireImmu[i] = new Image("res/image/animation/spells/fireImmu/fireImmu " + (i + 1) + ".png");
             }
             animFireImmunity = new Animation(tempImgFireImmu, 30);
 
             Image[] tempImgIceImmu = new Image[19];
             for (int i = 0; i < tempImgIceImmu.length; i++) {
-                tempImgIceImmu[i] = new Image("res/image/animation/spells/iceRes/iceRes (" + (i + 1) + ").png");//animation temporaire
+                tempImgIceImmu[i] = new Image("res/image/animation/spells/iceImmu/iceImmu " + (i + 1) + ".png");
             }
             animIceImmunity = new Animation(tempImgIceImmu, 30);
 
             Image[] tempImgeElectricImmu = new Image[19];
             for (int i = 0; i < tempImgeElectricImmu.length; i++) {
-                tempImgeElectricImmu[i] = new Image("res/image/animation/spells/electricRes/electricRes (" + (i + 1) + ").png");//animation temporaire
+                tempImgeElectricImmu[i] = new Image("res/image/animation/spells/electricImmu/electricImmu " + (i + 1) + ".png");
             }
             animLightningImmunity = new Animation(tempImgeElectricImmu, 30);
+            
+            Image[] tempImgeElectricSpark = new Image[19];
+            for (int i = 0; i < tempImgeElectricSpark.length; i++) {
+                tempImgeElectricSpark[i] = new Image("res/image/animation/spells/lightningSpark/spark " + (i + 1) + ".png");
+            }
+            animSpark = new Animation(tempImgeElectricSpark, 30);
+            
+            Image[] tempImgeElectricSwarm = new Image[19];
+            for (int i = 0; i < tempImgeElectricSwarm.length; i++) {
+                tempImgeElectricSwarm[i] = new Image("res/image/animation/spells/lightningSwarm/lightningSwarm " + (i + 1) + ".png");
+            }
+            animLightningSpear = new Animation(tempImgeElectricSwarm, 30);
+            
+            Image[] tempImgeElectricSpear = new Image[19];
+            for (int i = 0; i < tempImgeElectricSpear.length; i++) {
+                tempImgeElectricSpear[i] = new Image("res/image/animation/spells/lightningSpear/lightningSpear " + (i + 1) + ".png");
+            }
+            animLightningSpear = new Animation(tempImgeElectricSpear, 30);
+            
+            Image[] tempImgeIceSpikeBall = new Image[19];
+            for (int i = 0; i < tempImgeIceSpikeBall.length; i++) {
+                tempImgeIceSpikeBall[i] = new Image("res/image/animation/spells/iceSpikeBall/iceSpikeBall " + (i + 1) + ".png");
+            }
+            animIceSpikeBall = new Animation(tempImgeIceSpikeBall, 30);
 
         } catch (SlickException ex) {
         }

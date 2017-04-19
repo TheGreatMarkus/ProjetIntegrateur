@@ -19,7 +19,7 @@ public class Projectile extends DynamicEntity {
     protected Animation animation;
 
     public Projectile(float x, float y,int width ,int height , Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim) {
-        super(x, y, width, width, GRAVITY_MODIFIER);
+        super(x, y, width, height, GRAVITY_MODIFIER);
         this.animation = anim;
         this.speedVector = speedVector;
 
@@ -32,7 +32,7 @@ public class Projectile extends DynamicEntity {
     }
 
     public void render(Graphics g) {
-        this.animation.draw(x, y, width, width);
+        this.animation.draw(x, y, width, height);
         //g.drawRect(x, y, width, height);
     }
 }

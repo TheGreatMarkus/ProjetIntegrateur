@@ -77,7 +77,7 @@ public class GameCore extends StateBasedGame {
             Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
+        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, false);
         appGameContainer.setMouseGrabbed(true);
         appGameContainer.setTargetFrameRate(TARGER_FPS);
         appGameContainer.setVSync(true);
