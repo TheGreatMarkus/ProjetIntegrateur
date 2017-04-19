@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington.spell;
 
 import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
+import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -21,12 +22,18 @@ public class PotionsSpecial extends Spell {
 
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.id == SpellingSystem.ID_POTION_PAST) {
+            SpellingSystem.pastSpellPotion(spellington, activeAnimations);
+            
+           activeAnimations.add(new GameAnimation(spellington.getX()-20, spellington.getY()-10, width, height, animation, 15, 0));
+        }
+        
     }
 
     @Override
     public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
     }
 
     

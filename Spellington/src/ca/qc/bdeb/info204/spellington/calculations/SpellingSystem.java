@@ -31,12 +31,19 @@ public class SpellingSystem {
 
     private static Spell passiveSpell;
     private static Spell activeSpell;
+    private static Spell pastSpell;
     private static int nbSpellUses = 0;
+    
+    private static int nbPotionAcid = 5;
+    private static int nbPotionHeal = 5;
+    private static int nbPotionTime = 5;
+    private static int nbPotionPast = 5;
 
     private static String incantationText = "";
 
     private static ArrayList<Integer> letters = new ArrayList<>();
 
+    public static ArrayList<Spell> potionList = new ArrayList<>();
     public static ArrayList<Spell> knownSpell = new ArrayList<>();
     private static ArrayList<Spell> spellList = new ArrayList<>();
     private static ArrayList<Spell> tutoSpell = new ArrayList<>();
@@ -180,13 +187,17 @@ public class SpellingSystem {
         Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", LIGHTNING_SPEAR_DESC, 1, animLightningSpear, 100, 100, 1, 1, 60);
         Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", ICE_STORM_DESC, 1, animIceStorm, 100, 100, 20, 9999);
         Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", ICE_IMMUNITY_DESC, animIceImmunity, 100, 100, 0);
-        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 100, 999);
+        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 200, 999);
         
         Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Potion d'acide", POTION_ACID_DESC, 1, animAcid, 100, 100, 1, 1, 20);
         Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion Soin", POTION_HEAL_DESC, 1, animHeal, 100, 100, 20);
         Spell PotionTime = new PotionsSpecial(ID_POTION_TIME, "Potion de ralentissement du temps", POTION_TIME_DESC, 1, animTemps, 100, 100);
         Spell PotionPast = new PotionsSpecial(ID_POTION_PAST, "Potion du Passé", POTION_PAST_DESC, 1, animPast, 100, 100);
-
+        
+        potionList.add(PotionAcid);
+        potionList.add(PotionHeal);
+        potionList.add(PotionTime);
+        potionList.add(PotionPast);
         
         spellList.add(fireBall);
         spellList.add(iceSpike);
@@ -250,9 +261,7 @@ public class SpellingSystem {
         knownSpell.add(fireResistance);
         knownSpell.add(iceResistance);
         knownSpell.add(lightningResistance);
-        knownSpell.add(lightningBouncingBall);//-----------------------
-        knownSpell.add(greatHeal);//----------------------
-        knownSpell.add(fireBreath);//----------------------
+        
         
 
         letters.add(Input.KEY_A);
@@ -335,12 +344,45 @@ public class SpellingSystem {
             if (nbSpellUses <= 0) {
                 if (activeSpell != null) {
                     activeSpell.endOfActivation(spellington, activeAnimations);
+                    pastSpell = activeSpell;
                 }
                 activeSpell = null;
                 nbSpellUses = 0;
             }
             incantationText = "";
         }
+        
+        //potions start-----------
+        
+        if (input.isKeyPressed(Input.KEY_1)) {
+            if (nbPotionAcid > 0) {
+            potionList.get(0).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy); 
+            nbPotionAcid--;
+            }
+        }
+        
+        if (input.isKeyPressed(Input.KEY_2)) {
+            if (nbPotionHeal > 0) {
+            potionList.get(1).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
+            nbPotionHeal--;
+            }
+        }
+        
+        if (input.isKeyPressed(Input.KEY_3)) {
+            if (nbPotionTime > 0) {
+            potionList.get(2).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy); 
+            nbPotionTime--;
+            }
+        }
+        
+        if (input.isKeyPressed(Input.KEY_4)) {
+        if (nbPotionPast > 0) {
+            potionList.get(3).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy); 
+            nbPotionPast--;
+            }
+        }
+        
+        //potions end-----------
 
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
@@ -519,4 +561,16 @@ public class SpellingSystem {
         }
         tempWord.clear();
     }
+    
+    public static void pastSpellPotion (Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
+    if (pastSpell != null) {
+        if (activeSpell != null) {
+                    activeSpell.endOfActivation(spellington, activeAnimations);
+                }
+        activeSpell = pastSpell;
+        nbSpellUses = pastSpell.getUses();
+        
+    }
+    }
+
 }
