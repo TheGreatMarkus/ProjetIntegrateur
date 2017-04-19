@@ -10,6 +10,7 @@ import ca.qc.bdeb.info204.spellington.spell.BreathSpell;
 import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
 import ca.qc.bdeb.info204.spellington.spell.HealingSpell;
 import ca.qc.bdeb.info204.spellington.spell.PassiveSpell;
+import ca.qc.bdeb.info204.spellington.spell.PotionsSpecial;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -66,6 +67,9 @@ public class SpellingSystem {
     private static Animation animIceStorm;
     private static Animation animIceImmunity;
     private static Animation animGreatHeal;
+    private static Animation animAcid;
+    private static Animation animTemps;
+    private static Animation animPast;
 
     public static final int ID_FIRE_BALL = 1;
     public static final int ID_ICE_SPIKE = 2;
@@ -91,6 +95,10 @@ public class SpellingSystem {
     public static final int ID_ICE_STORM = 22;
     public static final int ID_ICE_IMMUNITY = 23;
     public static final int ID_GREAT_HEAL = 24;
+    public static final int ID_POTION_ACID = 25;
+    public static final int ID_POTION_HEAL = 26;
+    public static final int ID_POTION_TIME = 27;
+    public static final int ID_POTION_PAST = 28;
 
     private static final String FIRE_BALL_DESC = "Boule en feu traditionnelle " + '\n' + "déployée à l'aide d'une trajectoire parabolique.";
     private static final String ICE_SPIKE_DESC = "Pic de glace suivant une " + '\n' + "trajectoire majoritairement linéaire.";
@@ -116,6 +124,10 @@ public class SpellingSystem {
     private static final String ICE_STORM_DESC = "";
     private static final String ICE_IMMUNITY_DESC = "";
     private static final String GREAT_HEAL_DESC = "";
+    private static final String POTION_ACID_DESC = "";
+    private static final String POTION_HEAL_DESC = "";
+    private static final String POTION_TIME_DESC = "";
+    private static final String POTION_PAST_DESC = "";
 
     public static void initSpellingSystem() {
         initAnimation();
@@ -154,12 +166,12 @@ public class SpellingSystem {
         Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, "Résistance glace", ICE_RES_DESC, animIceResistance, 100, 30, -40);
         Spell lightningResistance = new PassiveSpell(ID_LIGHTNING_RES, ElementalType.LIGHTNING, "Résistance electrique", LIGHTNING_RES_DESC, animLightningResistance, 100, 30, -40);
         Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", EXPLOSIVE_BALL_DESC, 2, animExplosiveBall, 100, 100, 1, 1, 10);
-        Spell fireBreath = new BreathSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", FIRE_BREATH_DESC, 300, animFireBreath, 100, 100, 1, 1, 1, 0.35f, 5);
+        Spell fireBreath = new BreathSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", FIRE_BREATH_DESC, 3, animFireBreath, 40, 40, 1, 1, 1, 0.35f, 5);
         Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", GIANT_FIRE_BALL_DESC, 2, animGiantFireBall, 200, 200, 1, 1, 20);
         Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", LIGHTNING_SWARM_DESC, 1, animLightningSwarm, 100, 100, 3, 5);
         Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", TELEPORTATION_DESC, 1, animTeleportation, 100, 100, 1, 1, 0);
-        Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", LIGHTNING_BALL_DESC, 2, animLightningBouncingBall, 100, 100, 1, 1, 10);
-        Spell iceBreath = new BreathSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", ICE_BREATH_DESC, 300, animIceBreath, 100, 100, 1, 0, 1, 0.35f, 15);
+        Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", LIGHTNING_BALL_DESC, 2, animLightningBouncingBall, 30, 30, 1, 1, 10);
+        Spell iceBreath = new BreathSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", ICE_BREATH_DESC, 2, animIceBreath, 100, 100, 1, 0, 1, 0.35f, 15);
         Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", ICE_SPIKE_BALL_DESC, 2, animIceSpikeBall, 100, 100, 1, 1, 10);
         Spell iceRune = new ExplosionSpell(ID_ICE_RUNE, ElementalType.ICE, "Rune de glace", ICE_RUNE_DESC, 1, animIceRune, 100, 100, 20, 10);
         Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", FIRE_IMMUNITY_DESC, animFireImmunity, 100, 100, 0);
@@ -168,8 +180,14 @@ public class SpellingSystem {
         Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", LIGHTNING_SPEAR_DESC, 1, animLightningSpear, 100, 100, 1, 1, 60);
         Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", ICE_STORM_DESC, 1, animIceStorm, 100, 100, 20, 9999);
         Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", ICE_IMMUNITY_DESC, animIceImmunity, 100, 100, 0);
-        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 100, Integer.MAX_VALUE);
+        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 100, 999);
+        
+        Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Potion d'acide", POTION_ACID_DESC, 1, animAcid, 100, 100, 1, 1, 20);
+        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion Soin", POTION_HEAL_DESC, 1, animHeal, 100, 100, 20);
+        Spell PotionTime = new PotionsSpecial(ID_POTION_TIME, "Potion de ralentissement du temps", POTION_TIME_DESC, 1, animTemps, 100, 100);
+        Spell PotionPast = new PotionsSpecial(ID_POTION_PAST, "Potion du Passé", POTION_PAST_DESC, 1, animPast, 100, 100);
 
+        
         spellList.add(fireBall);
         spellList.add(iceSpike);
         spellList.add(spark);
@@ -222,6 +240,7 @@ public class SpellingSystem {
         masterSpell.add(lightningSpear);
         masterSpell.add(iceStorm);
         masterSpell.add(iceImmunity);
+        masterSpell.add(greatHeal);
 
         knownSpell.add(fireBall);
         knownSpell.add(iceSpike);
@@ -231,7 +250,10 @@ public class SpellingSystem {
         knownSpell.add(fireResistance);
         knownSpell.add(iceResistance);
         knownSpell.add(lightningResistance);
-        knownSpell.add(lightningBouncingBall);
+        knownSpell.add(lightningBouncingBall);//-----------------------
+        knownSpell.add(greatHeal);//----------------------
+        knownSpell.add(fireBreath);//----------------------
+        
 
         letters.add(Input.KEY_A);
         letters.add(Input.KEY_B);
@@ -343,7 +365,7 @@ public class SpellingSystem {
         }
 
         if (input.isKeyPressed(Input.KEY_F6)) {
-            incantationText = spellList.get(ID_LIGHTNING_BALL).getIncantation();
+            incantationText = spellList.get(7).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F1)) {
@@ -407,6 +429,18 @@ public class SpellingSystem {
                 tempImgeHealBig[i] = new Image("res/image/animation/spells/healBig/healBig " + (i + 1) + ".png");
             }
             animGreatHeal = new Animation(tempImgeHealBig, 30);
+            
+            Image[] tempImgeFireBreath = new Image[19];
+            for (int i = 0; i < tempImgeFireBreath.length; i++) {
+                tempImgeFireBreath[i] = new Image("res/image/animation/spells/lightningBolt/lightningBolt (" + (i + 1) + ").png");//animation temporaire
+            }
+            animFireBreath = new Animation(tempImgeFireBreath, 30);
+            
+            Image[] tempImgeIceBreath = new Image[19];
+            for (int i = 0; i < tempImgeIceBreath.length; i++) {
+                tempImgeIceBreath[i] = new Image("res/image/animation/spells/lightningBolt/lightningBolt (" + (i + 1) + ").png");//animation temporaire
+            }
+            animFireBreath = new Animation(tempImgeIceBreath, 30);
 
         } catch (SlickException ex) {
         }
@@ -437,19 +471,20 @@ public class SpellingSystem {
             }
             tempWord.remove(tempdice);
         }
+        tempWord.clear();
         
-         readerBuffer = null;
-         line = null;
-         filePath = new File("").getAbsolutePath();
+         BufferedReader readerBuffer2 = null;
+         String line2 = null;
+         String filePath2 = new File("").getAbsolutePath();
         try {
-            readerBuffer = new BufferedReader(new FileReader(filePath + "\\src\\res\\wordbank\\adepteWord.txt"));
+            readerBuffer2 = new BufferedReader(new FileReader(filePath2 + "\\src\\res\\wordbank\\adepteWord.txt"));
         } catch (FileNotFoundException exc) {
             System.out.println("Erreur d'ouverture");
         }
-        while ((line = readerBuffer.readLine()) != null) {
-            tempWord.add(line);
+        while ((line2 = readerBuffer2.readLine()) != null) {
+            tempWord.add(line2);
         }
-        readerBuffer.close();
+        readerBuffer2.close();
 
         for (int i = 0; i < adeptSpell.size(); i++) {
             int tempdice = dice.nextInt(tempWord.size());
@@ -459,19 +494,20 @@ public class SpellingSystem {
             }
             tempWord.remove(tempdice);
         }
+        tempWord.clear();
         
-        readerBuffer = null;
-         line = null;
-         filePath = new File("").getAbsolutePath();
+        BufferedReader readerBuffer3 = null;
+         String line3 = null;
+         String filePath3 = new File("").getAbsolutePath();
         try {
-            readerBuffer = new BufferedReader(new FileReader(filePath + "\\src\\res\\wordbank\\masterWord.txt"));
+            readerBuffer3 = new BufferedReader(new FileReader(filePath3 + "\\src\\res\\wordbank\\masterWord.txt"));
         } catch (FileNotFoundException exc) {
             System.out.println("Erreur d'ouverture");
         }
-        while ((line = readerBuffer.readLine()) != null) {
-            tempWord.add(line);
+        while ((line3 = readerBuffer3.readLine()) != null) {
+            tempWord.add(line3);
         }
-        readerBuffer.close();
+        readerBuffer3.close();
 
         for (int i = 0; i < masterSpell.size(); i++) {
             int tempdice = dice.nextInt(tempWord.size());
@@ -481,5 +517,6 @@ public class SpellingSystem {
             }
             tempWord.remove(tempdice);
         }
+        tempWord.clear();
     }
 }
