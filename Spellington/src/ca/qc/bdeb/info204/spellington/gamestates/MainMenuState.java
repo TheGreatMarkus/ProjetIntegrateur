@@ -46,7 +46,7 @@ public class MainMenuState extends BasicGameState {
     private MenuItem mnuItemOptions;
     private MenuItem mnuItemExit;
 
-    public static final float TEXT_GAP = 20.0f * GameCore.SCALE;
+    public static final float TEXT_GAP = 10.0f * GameCore.SCALE;
 
     ;
 

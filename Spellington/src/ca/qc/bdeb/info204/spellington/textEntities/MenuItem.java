@@ -35,13 +35,11 @@ public class MenuItem {
         } else {
             this.x = x;
         }
-        this.x -= TEXT_GAP;
         if (centerY) {
             this.y = gc.getHeight() / 2 - height / 2;
         } else {
             this.y = y;
         }
-        this.y -= TEXT_GAP;
         this.width = width;
         this.height = height;
         this.width += TEXT_GAP * 2f;
@@ -59,8 +57,9 @@ public class MenuItem {
         } else {
             g.setColor(new Color(1, 1, 1, 1f));
         }
-
-        g.drawRoundRect(x, y, width, height, 12);
+        if (this.menuItemType == MenuItemType.BUTTON) {
+            g.drawRoundRect(x, y, width, height, 12);
+        }
         g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
 
     }

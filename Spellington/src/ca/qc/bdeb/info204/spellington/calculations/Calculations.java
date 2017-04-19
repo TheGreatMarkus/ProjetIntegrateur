@@ -1,7 +1,7 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
-import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
@@ -83,7 +83,7 @@ public class Calculations {
         }
     }
 
-    public static boolean checkProjectileCollision(Tile[][] map, ArrayList<Enemy> activeEnemies, Projectile projectile) {
+    public static boolean checkProjectileCollision(Tile[][] map, ArrayList<Enemy> activeEnemies, GameEntity projectile) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 if (projectile.intersects(map[i][j]) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {

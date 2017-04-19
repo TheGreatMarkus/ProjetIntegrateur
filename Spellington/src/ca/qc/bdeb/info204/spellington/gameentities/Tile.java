@@ -21,7 +21,7 @@ public class Tile extends StaticEntity {
         NONE,
         SPELLINGTON_EXIT,
         SPELLINGTON_ENTRY,
-        SPECIAL_ENEMY_SPAWN,
+        DUMMY_SPAWN,
         RANDOM_SLIME_SPAWN,
         MELEE_ENEMY_SPAWN,
         RANGED_ENEMY_SPAWN,

@@ -33,6 +33,6 @@ public class Projectile extends DynamicEntity {
 
     public void render(Graphics g) {
         this.animation.draw(x, y, width, width);
-        //g.drawRect(x, y, width, height);
+        g.drawRect(x, y, width, height);
     }
 }

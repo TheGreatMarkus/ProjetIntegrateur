@@ -6,13 +6,18 @@ import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
+import ca.qc.bdeb.info204.spellington.spell.BreathSpell;
+import ca.qc.bdeb.info204.spellington.spell.ProjectileSpell;
+import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -45,7 +50,6 @@ public class PlayState extends BasicGameState {
 
     public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
     public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
-    public ArrayList<Enemy> activeEnemy = new ArrayList<>();
 
     public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
@@ -56,6 +60,7 @@ public class PlayState extends BasicGameState {
 
     //Variables and constants related to the rendering of the HUD
     private Image statsBarHUD, inputTextHUD, passiveSpellHUD, activeSpellHUD, redPotionHUD, greenPotionHUD, bluePotionHUD, icePotionHUD;
+    private boolean drawAimingHelp;
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
@@ -121,10 +126,18 @@ public class PlayState extends BasicGameState {
         for (int i = 0; i < activeAnimations.size(); i++) {
             activeAnimations.get(i).render(g, spellington);
         }
+        for (int i = 0; i < GameManager.getActiveEnemy().size(); i++) {
+     
+            GameManager.getActiveEnemy().get(i).render(g);
+        }
 
         debugInfo(g, gc);
 
         displayHUD(g);
+        if (SpellingSystem.getActiveSpell() instanceof ProjectileSpell
+                || SpellingSystem.getActiveSpell() instanceof BreathSpell) {
+            drawAimingHelp(g, gc.getInput(), SpellingSystem.getActiveSpell(), spellington);
+        }
     }
 
     @Override
@@ -144,7 +157,7 @@ public class PlayState extends BasicGameState {
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(GameManager.getMapInformation(), spellington);
 
-        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, activeEnemy);
+        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, GameManager.getActiveEnemy());
 
         ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
         ArrayList<Enemy> temp = new ArrayList<>();
@@ -160,8 +173,14 @@ public class PlayState extends BasicGameState {
             activeAnimations.get(j).update();
 
         }
+        
+        for (int j = 0; j < GameManager.getActiveEnemy().size(); j++) {
+            GameManager.getActiveEnemy().get(j).update(delta);
+
+        }
 
         activeProjectiles.removeAll(projectilesToBeRemoved);
+
     }
 
     /**
@@ -232,6 +251,7 @@ public class PlayState extends BasicGameState {
 
     private void displayHUD(Graphics g) throws SlickException {
         if (displayHUD) {
+            g.setColor(Color.white);
             int statsBarOffSetX = 75; //common X position of the stats bars
             int xGap = 5;
             final int BARS_Y = 5; //Universal Y position for most HUD components
@@ -280,4 +300,39 @@ public class PlayState extends BasicGameState {
     public int getID() {
         return GameCore.PLAY_STATE_ID;
     }
+
+    private void drawAimingHelp(Graphics g, Input input, Spell activeSpell, Spellington spellington) {
+        float spellingtonX = spellington.getCenterX();
+        float spellingtonY = spellington.getCenterY();
+        float mouseX = input.getMouseX() / GameCore.SCALE;
+        float mouseY = input.getMouseY() / GameCore.SCALE;
+
+        g.setColor(new Color(255, 255, 255, 90));
+        if (activeSpell instanceof ProjectileSpell) {
+            g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
+            float spellX = spellingtonX - activeSpell.getWidth() / 2;
+            float spellY = spellingtonY - activeSpell.getHeight() / 2;
+            float angle = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY);
+            float gravModifier = ((ProjectileSpell) activeSpell).getGravModifier();
+            Vector2D tempSpeedVector = new Vector2D(((ProjectileSpell) activeSpell).getInitSpeed(), angle, true);
+            float time = 16;
+            boolean endLoop = false;
+            boolean oob = false;
+            while (!endLoop && !oob) {
+                g.drawOval(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight());
+                tempSpeedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
+                spellX += tempSpeedVector.getX() * time;
+                spellY += tempSpeedVector.getY() * time;
+                endLoop = Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemy(), new GameEntity(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight()) {
+                });
+                if (spellX < 0 || spellX > 1600 || spellY < 0 || spellY > 900) {
+                    oob = true;
+                }
+            }
+
+        } else if (activeSpell instanceof ProjectileSpell) {
+
+        }
+    }
+
 }

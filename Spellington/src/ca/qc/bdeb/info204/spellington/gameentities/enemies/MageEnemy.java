@@ -14,8 +14,8 @@ import org.newdawn.slick.Graphics;
  */
 public class MageEnemy extends Enemy {
 
-    public MageEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, int maxLifePoint, EnemyType enemyType) {
-        super(x, y, dim, mouvementState, GRAVITY_MODIFIER, maxLifePoint, enemyType);
+    public MageEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
+        super(x, y, dim, mouvementState, GRAVITY_MODIFIER, enemyType);
     }
 
     @Override

@@ -124,32 +124,7 @@ public class SpellingSystem {
     public static void initSpellingSystem() {
         initAnimation();
 
-//public                            Spell(int id, int damage, SpellKind spellKind                , GameEntity.Elements element, String name                         , int speedModifier, int nbUses, float GRAVITY_MODIFIER, Animation animSpell      , int width, int height) {    
-//Spell fireBall = new              Spell(1     , 5         , SpellKind.PROJECTILE               , GameEntity.Elements.FIRE       , "Boule de feu"                  , 1                , 5         , 1                     , animFireBall             , 100      , 100       );
-//Spell icePic = new                Spell(2     , 5         , SpellingSystem.SpellKind.PROJECTILE, GameEntity.Elements.ICE        , "Pic de glace"                  , 0                , 3         , 1f                    , animIcePic               , 100      , 100       );
-//Spell sparkle = new               Spell(3     , 5         , SpellingSystem.SpellKind.EXPLOSION , GameEntity.Elements.ELECTRICITY, "Etincelle"                     , 0                , 2         , 1f                    , animSparkle              , 100      , 100       );
-//Spell heal = new                  Spell(4     , 10        , SpellingSystem.SpellKind.HEALING   , GameEntity.Elements.NEUTRAL    , "Soin"                          , 0                , 1         , 1f                    , animHeal                 , 100      , 100       );
-//Spell upStream = new              Spell(5     , 0         , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.NEUTRAL    , "Courant ascendant"             , 0                , 0         , 1f                    , animUpStream             , 100      , 100       );
-//Spell fireResistance = new        Spell(6     , 10        , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.FIRE       , "Résistance feu"                , 0                , 0         , 1f                    , animFireResistance       , 100      , 30        );
-//Spell iceResistance = new         Spell(7     , 10        , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.ICE        , "Résistance glace"              , 0                , 0         , 1f                    , animIceResistance        , 100      , 30        );
-//Spell lightningResistance = new   Spell(8     , 10        , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.ELECTRICITY, "Résistance electrique"         , 0                , 0         , 1f                    , animLightningResistance  , 100      , 30        );
-//Spell explosiveBall = new         Spell(9     , 10        , SpellingSystem.SpellKind.PROJECTILE, GameEntity.Elements.FIRE       , "Boule explosive"               , 0                , 2         , 1f                    , animExplosiveBall        , 100      , 100       );
-//Spell fireBreath = new            Spell(10    , 1         , SpellingSystem.SpellKind.BREATH    , GameEntity.Elements.FIRE       , "Soufle de feu"                 , 0                , 300       , 1f                    , animFireBreath           , 100      , 100       );
-//Spell giantFireBall = new         Spell(11    , 20        , SpellingSystem.SpellKind.PROJECTILE, GameEntity.Elements.FIRE       , "Grosse boule de feu"           , 0                , 2         , 1f                    , animGiantFireBall        , 200      , 200       );
-//Spell lightningSwarm = new        Spell(12    , 3         , SpellingSystem.SpellKind.EXPLOSION , GameEntity.Elements.ELECTRICITY, "Essain d'eclairs"              , 0                , 1         , 1f                    , animLightningSwarm       , 100      , 100       );
-//Spell teleportation = new         Spell(13    , 0         , SpellingSystem.SpellKind.PROJECTILE, GameEntity.Elements.NEUTRAL    , "Teleportation"                 , 0                , 1         , 1f                    , animTeleportation        , 100      , 100       );
-//Spell lightningBouncingBall = new Spell(14    , 10        , SpellingSystem.SpellKind.PROJECTILE, GameEntity.Elements.ELECTRICITY, "Boule electrique rebondissante", 0                , 2         , 1                     , animLightningBouncingBall, 100      , 100       );
-//Spell iceBreath = new             Spell(15    , 1         , SpellingSystem.SpellKind.BREATH    , GameEntity.Elements.ICE        , "Souffle de glace"              , 0                , 300       , 1f                    , animIceBreath            , 100      , 100       );
-//Spell iceSpikyBall = new          Spell(16    , 10        , SpellingSystem.SpellKind.PROJECTILE, GameEntity.Elements.ICE        , "Boule a pointes de glace"      , 0                , 2         , 1f                    , animIceSpikyBall         , 100      , 100       );
-//Spell iceRune = new               Spell(17    , 20        , SpellingSystem.SpellKind.EXPLOSION , GameEntity.Elements.ICE        , "Rune de glace"                 , 0                , 1         , 1f                    , animIceRune              , 100      , 100       );
-//Spell fireImmunity = new          Spell(18    , 999       , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.FIRE       , "Immunite feu"                  , 0                , 0         , 1f                    , animFireImmunity         , 100      , 100       );
-//Spell meteorSwarm = new           Spell(19    , 20        , SpellingSystem.SpellKind.EXPLOSION, GameEntity.Elements.FIRE        , "Pluie de meteors"              , 0                , 1         , 1f                    , animMeteorSwarm          , 100      , 100       );
-//Spell lightningImmunity = new     Spell(20    , 999       , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.ELECTRICITY, "Immunite electrique"           , 0                , 0         , 1f                    , animLightningImmunity    , 100      , 100       );
-//Spell lightningSpear = new        Spell(21    , 60        , SpellingSystem.SpellKind.PROJECTILE, GameEntity.Elements.ELECTRICITY, "Lance de foudre"               , 0                , 1         , 1f                    , animLightningSpear       , 100      , 100       );
-//Spell iceStorm = new              Spell(22    , 20        , SpellingSystem.SpellKind.EXPLOSION , GameEntity.Elements.ICE        , "Tempete de glace"              , 0                , 1         , 1f                    , animIceStorm             , 100      , 100       );
-//Spell iceImmunity = new           Spell(23    , 999       , SpellingSystem.SpellKind.PASSIVE   , GameEntity.Elements.ICE        , "Immunite glace"                , 0                , 0         , 1f                    , animIceImmunity          , 100      , 100       );
-//Spell majorHealing = new          Spell(24    , 100       , SpellingSystem.SpellKind.HEALING   , GameEntity.Elements.NEUTRAL    , "Soin majeur"                   , 0                , 1         , 1f                    , animMajorHealing         , 100      , 100       );
-        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 5, animFireBall, 20, 20, 1, 1, 5);
+        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 5, animFireBall, 30, 30, 1, 1, 5);
         Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", ICE_SPIKE_DESC, 3, animIceSpike, 20, 20, 1, 0, 5);
         Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", SPARK_DESC, 2, animSpark, 100, 100, 5, 5);
         Spell heal = new HealingSpell(ID_HEAL, "Soin", HEAL_DESC, 1, animHeal, 100, 100, 10);
@@ -426,4 +401,9 @@ public class SpellingSystem {
         }
 
     }
+
+    public static Spell getActiveSpell() {
+        return activeSpell;
+    }
+
 }
