@@ -261,6 +261,11 @@ public class SpellingSystem {
         knownSpell.add(fireResistance);
         knownSpell.add(iceResistance);
         knownSpell.add(lightningResistance);
+        //-- test -----------------------------------------------
+        knownSpell.add(greatHeal);
+        knownSpell.add(fireBreath);
+        knownSpell.add(fireImmunity);
+        knownSpell.add(iceBreath);
         
         
 
@@ -407,11 +412,11 @@ public class SpellingSystem {
         }
 
         if (input.isKeyPressed(Input.KEY_F6)) {
-            incantationText = spellList.get(7).getIncantation();
+            incantationText = spellList.get(17).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F1)) {
-            spellington.subLifePoint(10, ElementalType.NEUTRAL);
+            spellington.subLifePoint(30, ElementalType.FIRE);
             System.out.println(spellington.getLifePoint());
         }
         //test fin..........................................................
@@ -482,7 +487,25 @@ public class SpellingSystem {
             for (int i = 0; i < tempImgeIceBreath.length; i++) {
                 tempImgeIceBreath[i] = new Image("res/image/animation/spells/lightningBolt/lightningBolt (" + (i + 1) + ").png");//animation temporaire
             }
-            animFireBreath = new Animation(tempImgeIceBreath, 30);
+            animIceBreath = new Animation(tempImgeIceBreath, 30);
+            
+            Image[] tempImgFireImmu = new Image[19];
+            for (int i = 0; i < tempImgFireImmu.length; i++) {
+                tempImgFireImmu[i] = new Image("res/image/animation/spells/fireRes/fireRes (" + (i + 1) + ").png");//animation temporaire
+            }
+            animFireImmunity = new Animation(tempImgFireImmu, 30);
+
+            Image[] tempImgIceImmu = new Image[19];
+            for (int i = 0; i < tempImgIceImmu.length; i++) {
+                tempImgIceImmu[i] = new Image("res/image/animation/spells/iceRes/iceRes (" + (i + 1) + ").png");//animation temporaire
+            }
+            animIceImmunity = new Animation(tempImgIceImmu, 30);
+
+            Image[] tempImgeElectricImmu = new Image[19];
+            for (int i = 0; i < tempImgeElectricImmu.length; i++) {
+                tempImgeElectricImmu[i] = new Image("res/image/animation/spells/electricRes/electricRes (" + (i + 1) + ").png");//animation temporaire
+            }
+            animLightningImmunity = new Animation(tempImgeElectricImmu, 30);
 
         } catch (SlickException ex) {
         }

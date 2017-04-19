@@ -51,7 +51,6 @@ public class BreathSpell extends Spell {
 
     @Override
     public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public Projectile createSpellProjectileBreath(Spellington spellington, Input input) {
