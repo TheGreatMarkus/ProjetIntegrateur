@@ -2,6 +2,7 @@ package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Class dedicated to performing long or complex calculations for the game.
  *
- * @author Cristian Aldea
+ * @author Cristian Aldea.
  */
 public class Calculations {
 
@@ -18,9 +19,11 @@ public class Calculations {
     public static int TargetJ = 0;
 
     /**
-     * @author Cristian Aldea
-     * @param map
-     * @param creature
+     * Checks collision between the map and a LivingEntity.
+     *
+     * @param map The map that will be checked for collision.
+     * @param creature The LivingEntity that will be checked for collision.
+     * @author Cristian Aldea.
      */
     public static void checkMapCollision(Tile[][] map, LivingEntity creature) {
         TargetI = (int) (creature.getCenterY() / (float) Tile.DIM_TILE.width);
@@ -47,6 +50,14 @@ public class Calculations {
         }
     }
 
+    /**
+     * Checks collision between a tile and a LivingEntity. Also does the
+     * collision resolution after that collision is detected.
+     *
+     * @param tile The tile that will be checked for collision.
+     * @param creature The LivingEntity that will be checked for collision.
+     * @author Cristian Aldea.
+     */
     public static void checkTileAndLivingCollision(Tile tile, LivingEntity creature) {
         if (creature.intersects(tile) && tile.getTileState() == Tile.TileState.IMPASSABLE) {
             //If a collision is found and the tile is impassable
@@ -83,7 +94,18 @@ public class Calculations {
         }
     }
 
-    public static boolean checkProjectileCollision(Tile[][] map, ArrayList<Enemy> activeEnemies, GameEntity projectile) {
+    /**
+     * Checks the collisions for projectiles.
+     *
+     * @param map The map that will be checked for collision.
+     * @param activeEnemies The enemies that will be checked for collision.
+     * @param spellington Spellington that will be checked for collision.
+     * @param projectile The projectile that will be checked for collision.
+     * @return If the projectile should be removed from the activeProjectile
+     * list.
+     * @author Cristian Aldea.
+     */
+    public static boolean checkProjectileCollision(Tile[][] map, ArrayList<Enemy> activeEnemies, Spellington spellington, GameEntity projectile) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 if (projectile.intersects(map[i][j]) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
@@ -99,6 +121,14 @@ public class Calculations {
         return false;
     }
 
+    /**
+     * Calculates angle (in radians) from a delta x and a delta y.
+     *
+     * @param x The delta x.
+     * @param y The delta y.
+     * @return The calculated angle.
+     * @author Cristian Aldea.
+     */
     public static float detAngle(float x, float y) {
         //Calculate the base angle assuming the deltaX and DeltaY are positive
         float tempAngle = (float) Math.atan(Math.abs(y) / Math.abs(x));

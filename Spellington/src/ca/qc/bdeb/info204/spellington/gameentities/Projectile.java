@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
+import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import org.newdawn.slick.Animation;
@@ -13,12 +14,10 @@ import org.newdawn.slick.Graphics;
  */
 public class Projectile extends DynamicEntity {
 
-    
-
     protected int Damage;
     protected Animation animation;
 
-    public Projectile(float x, float y,int width ,int height , Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim) {
+    public Projectile(float x, float y, int width, int height, Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim) {
         super(x, y, width, width, GRAVITY_MODIFIER);
         this.animation = anim;
         this.speedVector = speedVector;
@@ -32,7 +31,10 @@ public class Projectile extends DynamicEntity {
     }
 
     public void render(Graphics g) {
+        float tempAngle = Calculations.detAngle(this.speedVector.getX(), this.speedVector.getY());
+        g.rotate(x + width / 2, y + height / 2, (float)Math.toDegrees(tempAngle));
         this.animation.draw(x, y, width, width);
         g.drawRect(x, y, width, height);
+        g.rotate(x + width / 2, y + height / 2, -(float)Math.toDegrees(tempAngle));
     }
 }

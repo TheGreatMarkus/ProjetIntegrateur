@@ -126,7 +126,7 @@ public class SpellingSystem {
 
         Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 5, animFireBall, 30, 30, 1, 1, 5);
         Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", ICE_SPIKE_DESC, 3, animIceSpike, 20, 20, 1, 0, 5);
-        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", SPARK_DESC, 2, animSpark, 100, 100, 5, 5);
+        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", SPARK_DESC, 2, animSpark, 5, 100);
         Spell heal = new HealingSpell(ID_HEAL, "Soin", HEAL_DESC, 1, animHeal, 100, 100, 10);
         Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", ASCENDING_CURRENT_DESC, animAscendingCurrent, 100, 100, 0);
         Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, "Résistance feu", FIRE_RES_DESC, animFireResistance, 100, 30, -40);
@@ -135,17 +135,17 @@ public class SpellingSystem {
         Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", EXPLOSIVE_BALL_DESC, 2, animExplosiveBall, 100, 100, 1, 1, 10);
         Spell fireBreath = new BreathSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", FIRE_BREATH_DESC, 300, animFireBreath, 100, 100, 1, 1, 1, 0.35f, 5);
         Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", GIANT_FIRE_BALL_DESC, 2, animGiantFireBall, 200, 200, 1, 1, 20);
-        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", LIGHTNING_SWARM_DESC, 1, animLightningSwarm, 100, 100, 3, 5);
+        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", LIGHTNING_SWARM_DESC, 1, animLightningSwarm, 3, 5);
         Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", TELEPORTATION_DESC, 1, animTeleportation, 100, 100, 1, 1, 0);
         Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", LIGHTNING_BALL_DESC, 2, animLightningBouncingBall, 100, 100, 1, 1, 10);
         Spell iceBreath = new BreathSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", ICE_BREATH_DESC, 300, animIceBreath, 100, 100, 1, 0, 1, 0.35f, 15);
         Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", ICE_SPIKE_BALL_DESC, 2, animIceSpikeBall, 100, 100, 1, 1, 10);
-        Spell iceRune = new ExplosionSpell(ID_ICE_RUNE, ElementalType.ICE, "Rune de glace", ICE_RUNE_DESC, 1, animIceRune, 100, 100, 20, 10);
+        Spell iceRune = new ExplosionSpell(ID_ICE_RUNE, ElementalType.ICE, "Rune de glace", ICE_RUNE_DESC, 1, animIceRune, 20, 10);
         Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", FIRE_IMMUNITY_DESC, animFireImmunity, 100, 100, 0);
-        Spell meteorSwarm = new ExplosionSpell(ID_METEOR_SWARM, ElementalType.FIRE, "Pluie de meteors", METEOR_SWARM_DESC, 1, animMeteorSwarm, 100, 100, 20, 9999);
+        Spell meteorSwarm = new ExplosionSpell(ID_METEOR_SWARM, ElementalType.FIRE, "Pluie de meteors", METEOR_SWARM_DESC, 1, animMeteorSwarm, 20, 9999);
         Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", LIGHTNING_IMMUNITY_DESC, animLightningImmunity, 100, 100, 0);
         Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", LIGHTNING_SPEAR_DESC, 1, animLightningSpear, 100, 100, 1, 1, 60);
-        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", ICE_STORM_DESC, 1, animIceStorm, 100, 100, 20, 9999);
+        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", ICE_STORM_DESC, 1, animIceStorm, 20, 9999);
         Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", ICE_IMMUNITY_DESC, animIceImmunity, 100, 100, 0);
         Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 100, Integer.MAX_VALUE);
 

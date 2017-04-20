@@ -12,12 +12,12 @@ import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.spell.BreathSpell;
+import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
 import ca.qc.bdeb.info204.spellington.spell.ProjectileSpell;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -127,17 +127,16 @@ public class PlayState extends BasicGameState {
             activeAnimations.get(i).render(g, spellington);
         }
         for (int i = 0; i < GameManager.getActiveEnemy().size(); i++) {
-     
+
             GameManager.getActiveEnemy().get(i).render(g);
         }
 
         debugInfo(g, gc);
 
         displayHUD(g);
-        if (SpellingSystem.getActiveSpell() instanceof ProjectileSpell
-                || SpellingSystem.getActiveSpell() instanceof BreathSpell) {
-            drawAimingHelp(g, gc.getInput(), SpellingSystem.getActiveSpell(), spellington);
-        }
+
+        drawAimingHelp(g, gc.getInput(), SpellingSystem.getActiveSpell(), spellington);
+
     }
 
     @Override
@@ -160,11 +159,10 @@ public class PlayState extends BasicGameState {
         SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, GameManager.getActiveEnemy());
 
         ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
-        ArrayList<Enemy> temp = new ArrayList<>();
 
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
-            if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), temp, activeProjectiles.get(i))) {
+            if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemy(), spellington, activeProjectiles.get(i))) {
                 projectilesToBeRemoved.add(activeProjectiles.get(i));
             }
         }
@@ -173,7 +171,7 @@ public class PlayState extends BasicGameState {
             activeAnimations.get(j).update();
 
         }
-        
+
         for (int j = 0; j < GameManager.getActiveEnemy().size(); j++) {
             GameManager.getActiveEnemy().get(j).update(delta);
 
@@ -307,8 +305,8 @@ public class PlayState extends BasicGameState {
         float mouseX = input.getMouseX() / GameCore.SCALE;
         float mouseY = input.getMouseY() / GameCore.SCALE;
 
-        g.setColor(new Color(255, 255, 255, 90));
         if (activeSpell instanceof ProjectileSpell) {
+            g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
             float spellX = spellingtonX - activeSpell.getWidth() / 2;
             float spellY = spellingtonY - activeSpell.getHeight() / 2;
@@ -318,20 +316,26 @@ public class PlayState extends BasicGameState {
             float time = 16;
             boolean endLoop = false;
             boolean oob = false;
+            g.setColor(new Color(255, 255, 255, 50));
             while (!endLoop && !oob) {
                 g.drawOval(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight());
                 tempSpeedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
                 spellX += tempSpeedVector.getX() * time;
                 spellY += tempSpeedVector.getY() * time;
-                endLoop = Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemy(), new GameEntity(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight()) {
+                endLoop = Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemy(), spellington, new GameEntity(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight()) {
                 });
                 if (spellX < 0 || spellX > 1600 || spellY < 0 || spellY > 900) {
                     oob = true;
                 }
             }
 
-        } else if (activeSpell instanceof ProjectileSpell) {
-
+        } else if (activeSpell instanceof BreathSpell) {
+        } else if (activeSpell instanceof ExplosionSpell) {
+            float ray = ((ExplosionSpell) activeSpell).getRay();
+            float spellX = mouseX - ray;
+            float spellY = mouseY - ray;
+            g.setColor(new Color(255, 255, 255, 90));
+            g.drawOval(spellX, spellY, ray * 2, ray * 2);
         }
     }
 

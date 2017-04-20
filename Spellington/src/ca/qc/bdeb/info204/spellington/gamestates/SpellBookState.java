@@ -167,7 +167,7 @@ public class SpellBookState extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         background.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
-        g.setFont(fontMenu);
+        //g.setFont(fontMenu);
 
         switch (pageState) {
             case 0:
@@ -629,7 +629,7 @@ public class SpellBookState extends BasicGameState {
         infItemBar7.renderTransparent(g, gc);
         infItemBar8.renderTransparent(g, gc);
 
-        g.setFont(fontSpellChant);
+        //g.setFont(fontSpellChant);
 
         float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
         float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.SCALE;
@@ -692,7 +692,7 @@ public class SpellBookState extends BasicGameState {
         infItemBar3.renderTransparent(g, gc);
         infItemBar4.renderTransparent(g, gc);
 
-        g.setFont(fontSpellChant);
+        //g.setFont(fontSpellChant);
 
         float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
         float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.SCALE;
@@ -723,7 +723,7 @@ public class SpellBookState extends BasicGameState {
         infItemBar7.renderTransparent(g, gc);
         infItemBar8.renderTransparent(g, gc);
 
-        g.setFont(fontSpellChant);
+        //g.setFont(fontSpellChant);
 
         float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
         float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.SCALE;

@@ -66,7 +66,6 @@ public class GameManager {
         gameSave = newSave;
         saveGameSave();
         //Temp, à changer
-        System.out.println(TUTORIAL_ROOMS.size());
         activeMap = TUTORIAL_ROOMS.get(2);
         extractMapInfo();
         ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
@@ -76,7 +75,6 @@ public class GameManager {
     public static void levelSelected(int level) throws SlickException {
         activeLevel = level;
         //Temp, à changer
-        System.out.println("the level selectied is " + level);
         switch (level) {
             case 1:
                 activeMap = TUTORIAL_ROOMS.get(rand.nextInt(TUTORIAL_ROOM_NUMBER));

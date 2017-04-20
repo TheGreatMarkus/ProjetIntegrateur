@@ -20,8 +20,8 @@ public class ExplosionSpell extends Spell {
     private int damage;
     private float ray;
 
-    public ExplosionSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int width, int height, int damage, float ray) {
-        super(id, element, name, "Explosion", shortDescription, uses, animation, width, height);
+    public ExplosionSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int damage, float ray) {
+        super(id, element, name, "Explosion", shortDescription, uses, animation, (int) (ray * 2), (int) (ray * 2));
 
         this.damage = damage;
         this.ray = ray;
@@ -30,13 +30,13 @@ public class ExplosionSpell extends Spell {
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         if (this.id == SpellingSystem.ID_SPARK && this.id == SpellingSystem.ID_LIGHTNING_SWARM) {
-            exposionSpellOnMouse(input, activeEnemy);
+            explosionSpellOnMouse(input, activeEnemy);
         } else if (this.id == SpellingSystem.ID_METEOR_SWARM && this.id == SpellingSystem.ID_ICE_STORM) {
-            exposionSpellGeneral(activeEnemy);
+            explosionSpellGeneral(activeEnemy);
         }
     }
 
-    private void exposionSpellOnMouse(Input input, ArrayList<Enemy> activeEnemy) {
+    private void explosionSpellOnMouse(Input input, ArrayList<Enemy> activeEnemy) {
         Circle explo = new Circle(input.getMouseX(), input.getMouseY(), ray);
         for (int i = 0; i < activeEnemy.size(); i++) {
             if (explo.intersects(activeEnemy.get(i))) {
@@ -45,7 +45,7 @@ public class ExplosionSpell extends Spell {
         }
     }
 
-    private void exposionSpellGeneral(ArrayList<Enemy> activeEnemy) {
+    private void explosionSpellGeneral(ArrayList<Enemy> activeEnemy) {
         for (int i = 0; i < activeEnemy.size(); i++) {
             activeEnemy.get(i).subLifePoint(this.damage, this.element);
         }
@@ -61,6 +61,14 @@ public class ExplosionSpell extends Spell {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public float getRay() {
+        return ray;
+    }
+
+    public void setRay(float ray) {
+        this.ray = ray;
     }
 
 }
