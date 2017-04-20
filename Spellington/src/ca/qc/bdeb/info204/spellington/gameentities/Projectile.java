@@ -28,7 +28,7 @@ public class Projectile extends DynamicEntity {
     }
 
     public void update(float time) {
-        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * GRAVITY_MODIFIER));
+        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
         this.setX(this.getX() + this.getSpeedVector().getX() * time);
         this.setY(this.getY() + this.getSpeedVector().getY() * time);
     }

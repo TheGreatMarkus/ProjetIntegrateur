@@ -28,6 +28,7 @@ public class PassiveSpell extends Spell {
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         if (this.id == SpellingSystem.ID_ASCENDING_CURRENT) {
             spellington.setMAX_AIR_JUMPS(5);
+            System.out.println("asdfasdfasdfasdfasdfasdf");
         } else if (this.id == SpellingSystem.ID_FIRE_RES) {
             spellington.setResFire(spellington.getResFire() + 5);
         } else if (this.id == SpellingSystem.ID_ICE_RES) {

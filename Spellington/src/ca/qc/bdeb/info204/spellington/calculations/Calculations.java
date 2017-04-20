@@ -117,7 +117,6 @@ public class Calculations {
         for (Enemy activeEnemy : activeEnemies) {
             if (projectile.intersects(activeEnemy)) {
                 activeEnemy.subLifePoint(projectile.getDamage(), projectile.getDamageType());
-                System.out.println(activeEnemy.getLifePoint());
                 return true;
             }
         }

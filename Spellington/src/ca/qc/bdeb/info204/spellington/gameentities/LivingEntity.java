@@ -37,7 +37,7 @@ public abstract class LivingEntity extends DynamicEntity {
         collisionBottom = false;
         collisionRight = false;
         collisionLeft = false;
-        this.GRAVITY_MODIFIER = GRAVITY_MODIFIER;
+        this.gravModifier = GRAVITY_MODIFIER;
         this.maxLifePoint = maxLifePoint;
         this.lifePoint = maxLifePoint;
     }

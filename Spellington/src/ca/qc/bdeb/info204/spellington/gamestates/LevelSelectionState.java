@@ -46,6 +46,9 @@ public class LevelSelectionState extends BasicGameState {
         mnuItemLevel3 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL3, false, false, MainMenuState.TEXT_GAP, mnuItemLevel2.getY() + mnuItemLevel2.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL3), fontMenu.getHeight(LS_LEVEL3));
         mnuItemLevel4 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL4, false, false, MainMenuState.TEXT_GAP, mnuItemLevel3.getY() + mnuItemLevel3.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL4), fontMenu.getHeight(LS_LEVEL4));
         mnuItemLevel5 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL5, false, false, MainMenuState.TEXT_GAP, mnuItemLevel4.getY() + mnuItemLevel4.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL5), fontMenu.getHeight(LS_LEVEL5));
+        mnuItemLevel3.setClickable(false);
+        mnuItemLevel4.setClickable(false);
+        mnuItemLevel5.setClickable(false);
     }
 
     @Override

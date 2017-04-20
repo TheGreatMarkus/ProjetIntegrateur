@@ -2,6 +2,7 @@ package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileEvent;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileState;
@@ -18,10 +19,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -33,6 +34,7 @@ public class GameManager {
 
     private static final String GAME_SAVE_PATH = "save.data";
     private static int activeLevel;
+    private static int activeMapIndex;
     private static GameSave gameSave;
     private static StateBasedGame stateBasedGame;
 
@@ -54,7 +56,7 @@ public class GameManager {
     private static final int CASTLE_ROOM_NUMBER = 10;
     private static final int BOSS_ROOM_NUMBER = 10;
 
-    private static ArrayList<Enemy> activeEnemy = new ArrayList<>();
+    private static ArrayList<Enemy> activeEnemies = new ArrayList<>();
 
     public static void initGameManager(StateBasedGame stateBasedGame) {
         GameManager.stateBasedGame = stateBasedGame;
@@ -65,35 +67,18 @@ public class GameManager {
         gameSave = newSave;
         saveGameSave();
         //Temp, à changer
-        activeMap = TUTORIAL_ROOMS.get(2);
+        activeLevel = 1;
+        activeMapIndex = 0;
+        activeMap = TUTORIAL_ROOMS.get(activeMapIndex);
         extractMapInfo();
         ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
+        stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
 
     }
 
     public static void levelSelected(int level) throws SlickException {
         activeLevel = level;
-        //Temp, à changer
-        switch (level) {
-            case 1:
-                activeMap = TUTORIAL_ROOMS.get(GameCore.rand.nextInt(TUTORIAL_ROOM_NUMBER));
-                break;
-            case 2:
-                activeMap = DUNGEON_ROOMS.get(GameCore.rand.nextInt(DUNGEON_ROOM_NUMBER));
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            default:
-                System.out.println("SECRET LEVEL");
-                break;
-
-        }
-        extractMapInfo();
-        ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
+        loadLevel();
     }
 
     public static boolean loadGameSave() {
@@ -160,7 +145,7 @@ public class GameManager {
      */
     private static void extractMapInfo() {
         mapInformation = new Tile[DIM_MAP.height][DIM_MAP.width];
-        activeEnemy = new ArrayList<>();
+        activeEnemies = new ArrayList<>();
         for (int i = 0; i < activeMap.getHeight(); i++) {
             for (int j = 0; j < activeMap.getWidth(); j++) {
                 TileState tempState;
@@ -192,6 +177,7 @@ public class GameManager {
                     entryPoint = new Point(50 * j, 50 * i);
                 } else if (activeMap.getTileId(j, i, 2) == dummyID) {
                     tempEvent = TileEvent.DUMMY_SPAWN;
+                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), Enemy.SLIME_SIZE, LivingEntity.MouvementState.STANDING_L, 1, Enemy.EnemyType.DUMMY));
                 } else if (activeMap.getTileId(j, i, 2) == randomSlimeID) {
                     tempEvent = TileEvent.RANDOM_SLIME_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -206,7 +192,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.LIGHTNING_SLIME;
                             break;
                     }
-                    activeEnemy.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), Enemy.SLIME_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), Enemy.SLIME_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == meleeEnemyID) {
                     tempEvent = TileEvent.MELEE_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -218,7 +204,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.GUARD;
                             break;
                     }
-                    activeEnemy.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == rangedEnemyID) {
                     tempEvent = TileEvent.RANGED_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -230,7 +216,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.CROSSBOWMAN;
                             break;
                     }
-                    activeEnemy.add(new RangedEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new RangedEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == tresureID) {
                     tempEvent = TileEvent.TREASURE_SPAWN;
                 } else if (activeMap.getTileId(j, i, 2) == mageSpawnID) {
@@ -247,7 +233,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.ELECTROMANCER;
                             break;
                     }
-                    activeEnemy.add(new RangedEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new RangedEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == whatIsThis) {
                     tempEvent = TileEvent.WHAT_IS_THIS;
                 } else if (activeMap.getTileId(j, i, 2) == message1ID) {
@@ -264,12 +250,52 @@ public class GameManager {
         }
     }
 
+    public static void checkEndOfLevel(Spellington spellington) throws SlickException {
+        if (activeEnemies.isEmpty() && spellington.intersects(new Rectangle(exitPoint.x, exitPoint.y, Tile.DIM_TILE.width, Tile.DIM_TILE.height))) {
+            loadLevel();
+        }
+    }
+
+    private static void loadLevel() throws SlickException {
+        switch (activeLevel) {
+            case 1:
+                activeMapIndex = GameCore.rand.nextInt(TUTORIAL_ROOM_NUMBER);
+                activeMap = TUTORIAL_ROOMS.get(activeMapIndex);
+                break;
+            case 2:
+                activeMapIndex = GameCore.rand.nextInt(DUNGEON_ROOM_NUMBER);
+                activeMap = DUNGEON_ROOMS.get(activeMapIndex);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            default:
+                System.out.println("SECRET LEVEL");
+                break;
+
+        }
+        extractMapInfo();
+        ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
+        stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
+    }
+
     public static Tile[][] getMapInformation() {
         return mapInformation;
     }
 
-    public static ArrayList<Enemy> getActiveEnemy() {
-        return activeEnemy;
+    public static ArrayList<Enemy> getActiveEnemies() {
+        return activeEnemies;
+    }
+
+    public static Point getExitPoint() {
+        return exitPoint;
+    }
+
+    public static Point getEntryPoint() {
+        return entryPoint;
     }
 
 }

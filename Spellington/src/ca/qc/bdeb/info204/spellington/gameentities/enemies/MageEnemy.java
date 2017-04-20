@@ -8,6 +8,7 @@ package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Dimension;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -29,14 +30,18 @@ public class MageEnemy extends Enemy {
             this.speedVector.setX(0);
         }
         this.speedVector.setX(-0.01f);
-        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * GRAVITY_MODIFIER));
+        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
         this.setX(this.getX() + this.getSpeedVector().getX() * time);
         this.setY(this.getY() + this.getSpeedVector().getY() * time);
+        this.resetCollisionState();
     }
 
     @Override
     public void render(Graphics g) {
-
+        g.setColor(Color.white);
+        g.drawString("HP :" + this.lifePoint, x, y);
+        g.setColor(Color.magenta);
+        g.drawRect(x, y, width, height);
     }
 
 }

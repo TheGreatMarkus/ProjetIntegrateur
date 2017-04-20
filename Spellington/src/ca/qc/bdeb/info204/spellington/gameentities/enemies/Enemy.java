@@ -48,13 +48,14 @@ public abstract class Enemy extends LivingEntity {
     protected EnemyType enemyType;
     protected int damage;
 
-    public Enemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
-        super(x, y, dim.width, dim.height, mouvementState, GRAVITY_MODIFIER, 0);
+    public Enemy(float x, float y, Dimension dim, MouvementState mouvementState, float gravModifier, EnemyType enemyType) {
+        super(x, y, dim.width, dim.height, mouvementState, gravModifier, 0);
         this.enemyType = enemyType;
         //Missing resistances
         if (this instanceof MeleeEnemy) {
             switch (this.enemyType) {
                 case KEEPER:
+
                     this.maxLifePoint = 20;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.NEUTRAL;
@@ -137,6 +138,7 @@ public abstract class Enemy extends LivingEntity {
                     break;
             }
         }
+        this.gravModifier = 2;
         this.lifePoint = this.maxLifePoint;
         //loadAnimations(this.enemyType);
 

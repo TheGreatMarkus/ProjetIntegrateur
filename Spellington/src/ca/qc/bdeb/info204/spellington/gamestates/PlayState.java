@@ -6,7 +6,6 @@ import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
-import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -128,9 +127,9 @@ public class PlayState extends BasicGameState {
         for (int i = 0; i < activeAnimations.size(); i++) {
             activeAnimations.get(i).render(g, spellington);
         }
-        for (int i = 0; i < GameManager.getActiveEnemy().size(); i++) {
+        for (int i = 0; i < GameManager.getActiveEnemies().size(); i++) {
 
-            GameManager.getActiveEnemy().get(i).render(g);
+            GameManager.getActiveEnemies().get(i).render(g);
         }
 
         debugInfo(g, gc);
@@ -155,32 +154,41 @@ public class PlayState extends BasicGameState {
         if (gc.getInput().isKeyPressed(Input.KEY_F4)) {
             displayHUD = !displayHUD;
         }
+        //Update of Spellington
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(GameManager.getMapInformation(), spellington);
 
-        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, GameManager.getActiveEnemy());
+        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, GameManager.getActiveEnemies());
 
+        //Update of projectiles
         ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
-
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
-            if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemy(), spellington, activeProjectiles.get(i))) {
+            if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, activeProjectiles.get(i))) {
                 projectilesToBeRemoved.add(activeProjectiles.get(i));
             }
         }
+        activeProjectiles.removeAll(projectilesToBeRemoved);
 
+        //Update of animations
         for (int i = 0; i < activeAnimations.size(); i++) {
             activeAnimations.get(i).update();
 
         }
+        //Update of enemies
+        ArrayList<Enemy> enemiesToBeRemoved = new ArrayList<>();
+        for (Enemy enemy : GameManager.getActiveEnemies()) {
+            enemy.update(delta);
+            Calculations.checkMapCollision(GameManager.getMapInformation(), enemy);
+            if (enemy.getLifePoint() <= 0) {
+                enemiesToBeRemoved.add(enemy);
+            }
 
-        for (int i = 0; i < GameManager.getActiveEnemy().size(); i++) {
-            GameManager.getActiveEnemy().get(i).update(delta);
-            Calculations.checkMapCollision(GameManager.getMapInformation(), GameManager.getActiveEnemy().get(i));
         }
+        GameManager.getActiveEnemies().removeAll(enemiesToBeRemoved);
 
-        activeProjectiles.removeAll(projectilesToBeRemoved);
-
+        GameManager.checkEndOfLevel(spellington);
+        GameCore.clearInputRecord(gc);
     }
 
     /**
@@ -199,12 +207,6 @@ public class PlayState extends BasicGameState {
             g.setColor(Color.red);
 
             int textY = 120;
-            for (int i = 0; i < DIM_MAP.height; i++) {
-                g.drawRect(Calculations.TargetJ * 50, i * 50, 50, 50);
-            }
-            for (int j = 0; j < DIM_MAP.width; j++) {
-                g.drawRect(j * 50, Calculations.TargetI * 50, 50, 50);
-            }
 
             g.setColor(Color.lightGray);
             //int textY = 10;
@@ -245,8 +247,12 @@ public class PlayState extends BasicGameState {
                 g.fillRect(startingX, startingY + tempSize, tempSize, tempSize);
             }
             g.fillOval(renderMouseX - 1, renderMouseY - 1, 3, 3);
+            g.setColor(Color.cyan);
+            g.drawRect(GameManager.getExitPoint().x, GameManager.getExitPoint().y, Tile.DIM_TILE.width, Tile.DIM_TILE.height);
+            g.setColor(Color.red);
+            g.drawRect(GameManager.getEntryPoint().x, GameManager.getEntryPoint().y, Tile.DIM_TILE.width, Tile.DIM_TILE.height);
         }
-        GameCore.clearInputRecord(gc);
+
     }
 
     private void displayHUD(Graphics g) throws SlickException {

@@ -111,7 +111,6 @@ public class MainMenuState extends BasicGameState {
 
         if (mnuItemNewGame.getHoveredOver() && triedToClick) {
             GameManager.newGame();
-            game.enterState(GameCore.PLAY_STATE_ID);
         }
         if (mnuItemLoadGame.getHoveredOver() && triedToClick && mnuItemLoadGame.getClickable()) {
             game.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
