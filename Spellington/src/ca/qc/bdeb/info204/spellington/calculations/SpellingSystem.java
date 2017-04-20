@@ -179,7 +179,7 @@ public class SpellingSystem {
         Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", TELEPORTATION_DESC, 1, animTeleportation, 100, 100, 1, 1, 0);
         Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", LIGHTNING_BALL_DESC, 2, animLightningBouncingBall, 30, 30, 1, 1, 10);
         Spell iceBreath = new BreathSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", ICE_BREATH_DESC, 2, animIceBreath, 100, 100, 1, 0, 1, 0.35f, 15);
-        Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", ICE_SPIKE_BALL_DESC, 2, animIceSpikeBall, 100, 100, 1, 1, 10);
+        Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", ICE_SPIKE_BALL_DESC, 2, animIceSpikeBall, 50, 50, 1, 1, 10);
         Spell iceRune = new ExplosionSpell(ID_ICE_RUNE, ElementalType.ICE, "Rune de glace", ICE_RUNE_DESC, 1, animIceRune, 100, 100, 20, 10);
         Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", FIRE_IMMUNITY_DESC, animFireImmunity, 100, 100, 0);
         Spell meteorSwarm = new ExplosionSpell(ID_METEOR_SWARM, ElementalType.FIRE, "Pluie de meteors", METEOR_SWARM_DESC, 1, animMeteorSwarm, 100, 100, 20, 9999);
@@ -411,7 +411,7 @@ public class SpellingSystem {
         }
 
         if (input.isKeyPressed(Input.KEY_F7)) {
-            incantationText = spellList.get(ID_LIGHTNING_SPEAR-1).getIncantation();
+            incantationText = spellList.get(ID_LIGHTNING_SWARM-1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F6)) {
@@ -520,13 +520,14 @@ public class SpellingSystem {
             for (int i = 0; i < tempImgeElectricSwarm.length; i++) {
                 tempImgeElectricSwarm[i] = new Image("res/image/animation/spells/lightningSwarm/lightningSwarm " + (i + 1) + ".png");
             }
-            animLightningSpear = new Animation(tempImgeElectricSwarm, 30);
+            animLightningSwarm = new Animation(tempImgeElectricSwarm, 30);
             
             Image[] tempImgeElectricSpear = new Image[19];
             for (int i = 0; i < tempImgeElectricSpear.length; i++) {
                 tempImgeElectricSpear[i] = new Image("res/image/animation/spells/lightningSpear/lightningSpear " + (i + 1) + ".png");
             }
             animLightningSpear = new Animation(tempImgeElectricSpear, 30);
+            
             
             Image[] tempImgeIceSpikeBall = new Image[19];
             for (int i = 0; i < tempImgeIceSpikeBall.length; i++) {
