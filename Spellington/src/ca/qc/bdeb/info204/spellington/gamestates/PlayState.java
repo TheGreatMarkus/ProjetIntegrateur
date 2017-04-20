@@ -10,6 +10,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.spell.BreathSpell;
 import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
@@ -30,6 +31,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -167,14 +169,14 @@ public class PlayState extends BasicGameState {
             }
         }
 
-        for (int j = 0; j < activeAnimations.size(); j++) {
-            activeAnimations.get(j).update();
+        for (int i = 0; i < activeAnimations.size(); i++) {
+            activeAnimations.get(i).update();
 
         }
 
-        for (int j = 0; j < GameManager.getActiveEnemy().size(); j++) {
-            GameManager.getActiveEnemy().get(j).update(delta);
-
+        for (int i = 0; i < GameManager.getActiveEnemy().size(); i++) {
+            GameManager.getActiveEnemy().get(i).update(delta);
+            Calculations.checkMapCollision(GameManager.getMapInformation(), GameManager.getActiveEnemy().get(i));
         }
 
         activeProjectiles.removeAll(projectilesToBeRemoved);
@@ -322,8 +324,14 @@ public class PlayState extends BasicGameState {
                 tempSpeedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
                 spellX += tempSpeedVector.getX() * time;
                 spellY += tempSpeedVector.getY() * time;
-                endLoop = Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemy(), spellington, new GameEntity(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight()) {
-                });
+                Rectangle tempRect = new Rectangle(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight());
+                for (int i = 0; i < GameManager.getMapInformation().length; i++) {
+                    for (int j = 0; j < GameManager.getMapInformation()[i].length; j++) {
+                        if (tempRect.intersects(GameManager.getMapInformation()[i][j]) && GameManager.getMapInformation()[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
+                            endLoop = true;
+                        }
+                    }
+                }
                 if (spellX < 0 || spellX > 1600 || spellY < 0 || spellY > 900) {
                     oob = true;
                 }

@@ -38,7 +38,7 @@ public class ProjectileSpell extends Spell {
         float mouseY = (float) input.getMouseY() / GameCore.SCALE;
         float angle = Calculations.detAngle(mouseX - originX, mouseY - originY);
         Vector2D temp = new Vector2D(initSpeed, angle, true);
-        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation);
+        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation, this.damage, this.element);
 
         return tempProj;
     }

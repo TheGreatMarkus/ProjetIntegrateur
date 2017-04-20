@@ -5,6 +5,9 @@
  */
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
+import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Dimension;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -21,7 +24,16 @@ public class MeleeEnemy extends Enemy {
 
     @Override
     public void update(float time) {
-        x--;
+        if (this.collisionBottom || this.collisionTop) {
+            this.speedVector.setY(0);
+        }
+        if (this.collisionRight || this.collisionLeft) {
+            this.speedVector.setX(0);
+        }
+        this.speedVector.setX((float) GameCore.rand.nextInt(4) * 0.01f - 0.02f);
+        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * GRAVITY_MODIFIER));
+        this.setX(this.getX() + this.getSpeedVector().getX() * time);
+        this.setY(this.getY() + this.getSpeedVector().getY() * time);
     }
 
     @Override

@@ -51,6 +51,7 @@ public abstract class Enemy extends LivingEntity {
     public Enemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
         super(x, y, dim.width, dim.height, mouvementState, GRAVITY_MODIFIER, 0);
         this.enemyType = enemyType;
+        //Missing resistances
         if (this instanceof MeleeEnemy) {
             switch (this.enemyType) {
                 case KEEPER:

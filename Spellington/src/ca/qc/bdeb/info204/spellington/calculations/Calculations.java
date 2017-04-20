@@ -2,6 +2,7 @@ package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
@@ -105,7 +106,7 @@ public class Calculations {
      * list.
      * @author Cristian Aldea.
      */
-    public static boolean checkProjectileCollision(Tile[][] map, ArrayList<Enemy> activeEnemies, Spellington spellington, GameEntity projectile) {
+    public static boolean checkProjectileCollision(Tile[][] map, ArrayList<Enemy> activeEnemies, Spellington spellington, Projectile projectile) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 if (projectile.intersects(map[i][j]) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
@@ -113,11 +114,13 @@ public class Calculations {
                 }
             }
         }
-//        for (Enemy activeEnemy : activeEnemies) {
-//            if (projectile.intersects(activeEnemy)) {
-//                return true;
-//            }
-//        }
+        for (Enemy activeEnemy : activeEnemies) {
+            if (projectile.intersects(activeEnemy)) {
+                activeEnemy.subLifePoint(projectile.getDamage(), projectile.getDamageType());
+                System.out.println(activeEnemy.getLifePoint());
+                return true;
+            }
+        }
         return false;
     }
 

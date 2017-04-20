@@ -14,6 +14,7 @@ import java.awt.FontFormatException;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
@@ -49,6 +50,7 @@ public class GameCore extends StateBasedGame {
     private static AppGameContainer appGameContainer;
 
     public static Font fontPaladin;
+    public static Random rand = new Random();
 
     /**
      * Main method of the program.

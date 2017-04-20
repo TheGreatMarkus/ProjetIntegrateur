@@ -64,7 +64,7 @@ public class BreathSpell extends Spell {
         Vector2D temp = new Vector2D(initSpeed, angle + (this.angle * (float) (Math.random() * 2 - 1)), true);
         System.out.println(temp.getX());
         System.out.println(temp.getY());
-        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation);
+        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation, this.damage,element);
 
         return tempProj;
 

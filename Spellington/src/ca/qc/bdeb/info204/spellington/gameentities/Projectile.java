@@ -14,13 +14,16 @@ import org.newdawn.slick.Graphics;
  */
 public class Projectile extends DynamicEntity {
 
-    protected int Damage;
+    protected int damage;
     protected Animation animation;
+    protected ElementalType damageType;
 
-    public Projectile(float x, float y, int width, int height, Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim) {
+    public Projectile(float x, float y, int width, int height, Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim, int damage, ElementalType damageType) {
         super(x, y, width, width, GRAVITY_MODIFIER);
         this.animation = anim;
         this.speedVector = speedVector;
+        this.damage = damage;
+        this.damageType = damageType;
 
     }
 
@@ -37,4 +40,22 @@ public class Projectile extends DynamicEntity {
         g.drawRect(x, y, width, height);
         g.rotate(x + width / 2, y + height / 2, -(float)Math.toDegrees(tempAngle));
     }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public ElementalType getDamageType() {
+        return damageType;
+    }
+
+    public void setDamageType(ElementalType damageType) {
+        this.damageType = damageType;
+    }
+    
+    
 }

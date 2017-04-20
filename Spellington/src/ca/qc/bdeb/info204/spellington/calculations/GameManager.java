@@ -54,7 +54,6 @@ public class GameManager {
     private static final int CASTLE_ROOM_NUMBER = 10;
     private static final int BOSS_ROOM_NUMBER = 10;
 
-    private static Random rand = new Random();
     private static ArrayList<Enemy> activeEnemy = new ArrayList<>();
 
     public static void initGameManager(StateBasedGame stateBasedGame) {
@@ -77,10 +76,10 @@ public class GameManager {
         //Temp, à changer
         switch (level) {
             case 1:
-                activeMap = TUTORIAL_ROOMS.get(rand.nextInt(TUTORIAL_ROOM_NUMBER));
+                activeMap = TUTORIAL_ROOMS.get(GameCore.rand.nextInt(TUTORIAL_ROOM_NUMBER));
                 break;
             case 2:
-                activeMap = DUNGEON_ROOMS.get(rand.nextInt(DUNGEON_ROOM_NUMBER));
+                activeMap = DUNGEON_ROOMS.get(GameCore.rand.nextInt(DUNGEON_ROOM_NUMBER));
                 break;
             case 3:
                 break;
@@ -196,7 +195,7 @@ public class GameManager {
                 } else if (activeMap.getTileId(j, i, 2) == randomSlimeID) {
                     tempEvent = TileEvent.RANDOM_SLIME_SPAWN;
                     Enemy.EnemyType tempType = null;
-                    switch (rand.nextInt(3)) {
+                    switch (GameCore.rand.nextInt(3)) {
                         case 0:
                             tempType = Enemy.EnemyType.FIRE_SLIME;
                             break;
@@ -211,7 +210,7 @@ public class GameManager {
                 } else if (activeMap.getTileId(j, i, 2) == meleeEnemyID) {
                     tempEvent = TileEvent.MELEE_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
-                    switch (rand.nextInt(2)) {
+                    switch (GameCore.rand.nextInt(2)) {
                         case 0:
                             tempType = Enemy.EnemyType.KEEPER;
                             break;
@@ -223,7 +222,7 @@ public class GameManager {
                 } else if (activeMap.getTileId(j, i, 2) == rangedEnemyID) {
                     tempEvent = TileEvent.RANGED_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
-                    switch (rand.nextInt(2)) {
+                    switch (GameCore.rand.nextInt(2)) {
                         case 0:
                             tempType = Enemy.EnemyType.ARCHER;
                             break;
