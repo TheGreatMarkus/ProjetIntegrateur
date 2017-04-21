@@ -170,11 +170,6 @@ public class PlayState extends BasicGameState {
         }
         activeProjectiles.removeAll(projectilesToBeRemoved);
 
-        //Update of animations
-        for (int i = 0; i < activeAnimations.size(); i++) {
-            activeAnimations.get(i).update();
-
-        }
         //Update of enemies
         ArrayList<Enemy> enemiesToBeRemoved = new ArrayList<>();
         for (Enemy enemy : GameManager.getActiveEnemies()) {
@@ -183,9 +178,19 @@ public class PlayState extends BasicGameState {
             if (enemy.getLifePoint() <= 0) {
                 enemiesToBeRemoved.add(enemy);
             }
-
         }
         GameManager.getActiveEnemies().removeAll(enemiesToBeRemoved);
+
+        //Update of animations
+        ArrayList<GameAnimation> animationsToBeRemoved = new ArrayList<>();
+        for (int j = 0; j < activeAnimations.size(); j++) {
+            activeAnimations.get(j).update();
+            if (activeAnimations.get(j).getVie() == 0) {
+                animationsToBeRemoved.add(activeAnimations.get(j));
+            }
+        }
+
+        activeAnimations.removeAll(animationsToBeRemoved);
 
         GameManager.checkEndOfLevel(spellington);
         GameCore.clearInputRecord(gc);
@@ -344,6 +349,7 @@ public class PlayState extends BasicGameState {
             }
 
         } else if (activeSpell instanceof BreathSpell) {
+
         } else if (activeSpell instanceof ExplosionSpell) {
             float ray = ((ExplosionSpell) activeSpell).getRay();
             float spellX = mouseX - ray;

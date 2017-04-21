@@ -34,11 +34,12 @@ public class Projectile extends DynamicEntity {
     }
 
     public void render(Graphics g) {
+
         float tempAngle = Calculations.detAngle(this.speedVector.getX(), this.speedVector.getY());
-        g.rotate(x + width / 2, y + height / 2, (float)Math.toDegrees(tempAngle));
+        g.rotate(x + width / 2, y + height / 2, (float) Math.toDegrees(tempAngle));
         this.animation.draw(x, y, width, width);
         g.drawRect(x, y, width, height);
-        g.rotate(x + width / 2, y + height / 2, -(float)Math.toDegrees(tempAngle));
+        g.rotate(x + width / 2, y + height / 2, -(float) Math.toDegrees(tempAngle));
     }
 
     public int getDamage() {
@@ -47,6 +48,8 @@ public class Projectile extends DynamicEntity {
 
     public void setDamage(int damage) {
         this.damage = damage;
+        this.animation.draw(x, y, width, height);
+        //g.drawRect(x, y, width, height);
     }
 
     public ElementalType getDamageType() {
@@ -56,6 +59,5 @@ public class Projectile extends DynamicEntity {
     public void setDamageType(ElementalType damageType) {
         this.damageType = damageType;
     }
-    
-    
+
 }

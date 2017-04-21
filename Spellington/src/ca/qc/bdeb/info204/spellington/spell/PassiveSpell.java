@@ -35,6 +35,12 @@ public class PassiveSpell extends Spell {
             spellington.setResIce(spellington.getResIce() + 5);
         } else if (this.id == SpellingSystem.ID_LIGHTNING_RES) {
             spellington.setResElectricity(spellington.getResElectricity() + 5);
+        } else if (this.id == SpellingSystem.ID_FIRE_IMMUNITY) {
+            spellington.setResFire(spellington.getResFire() + 999);
+        } else if (this.id == SpellingSystem.ID_ICE_IMMUNITY) {
+            spellington.setResIce(spellington.getResIce() + 999);
+        } else if (this.id == SpellingSystem.ID_LIGHTNING_IMMUNITY) {
+            spellington.setResElectricity(spellington.getResElectricity() + 999);
         }
 
         activeAnimations.add(PassiveSpellAnimation);
@@ -51,6 +57,12 @@ public class PassiveSpell extends Spell {
             spellington.setResIce(spellington.getResIce() - 5);
         } else if (this.id == SpellingSystem.ID_LIGHTNING_RES) {
             spellington.setResElectricity(spellington.getResElectricity() - 5);
+        } else if (this.id == SpellingSystem.ID_FIRE_IMMUNITY) {
+            spellington.setResFire(spellington.getResFire() - 999);
+        } else if (this.id == SpellingSystem.ID_ICE_IMMUNITY) {
+            spellington.setResIce(spellington.getResIce() - 999);
+        } else if (this.id == SpellingSystem.ID_LIGHTNING_IMMUNITY) {
+            spellington.setResElectricity(spellington.getResElectricity() - 999);
         }
 
         activeAnimations.remove(PassiveSpellAnimation);

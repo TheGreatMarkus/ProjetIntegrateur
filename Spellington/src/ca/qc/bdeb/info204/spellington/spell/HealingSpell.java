@@ -25,6 +25,8 @@ public class HealingSpell extends Spell {
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         spellington.addLifePoint(this.healing);
+        
+        activeAnimations.add(new GameAnimation(spellington.getX()-20, spellington.getY()-10, width, height, animation, 15, 0));
     }
 
     @Override
