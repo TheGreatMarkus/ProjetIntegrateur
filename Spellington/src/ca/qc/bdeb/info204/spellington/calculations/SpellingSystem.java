@@ -374,7 +374,7 @@ public class SpellingSystem {
         //potions end-----------
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = spellList.get(2).getIncantation();
+            incantationText = spellList.get(0).getIncantation();
             System.out.println(activeProjectiles.size());
         }
 
