@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
+ <tileset firstgid="1" name="dungeonTile.png" tilewidth="50" tileheight="50" tilecount="64" columns="8">
+  <image source="tiles/dungeonTile.png" width="400" height="400"/>
+ </tileset>
+ <tileset firstgid="65" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
+  <image source="collisionTile.png" width="150" height="200"/>
+ </tileset>
+ <layer name="terrain" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC8VVi04CQQysAhEERHyLAicqiahnAIEEUfj/r7KTnQtlXe6AxNBksne9bqfbDktJRD4Vb8SX4kExU7wryvS/KO4V34onRY/rmeJO0VDkmKuiyNPf43PF5EL+V+5Fzn0Zarv4h7wHG8bh/D974r8VN99cYO+m9Yeso5hKel8fZamlaYB/V4OuSoqBOP2WAzHQN7SX6HBGWH5ovaaIZNkP1Nlhfuj5UNEXN78Bcw7ph67qihFjG+RC3hy/DVlLhXssf0ERZ5w1yvhu7WpNvkPW7Z+/sEH+4hb8R4qPgD+Z0SDAH4q31tqCf6Foej7wJHfQyPNjJjcZOccBXySu7q64MyeG54l5h7bm4u7KmPGW/1yyz7/O5uRaGF+bnLYeaAI6vRTXb8sPjZ7uyC/Mbet/ltV5dYlj1uvzYy5Z/U8z8PnztnYirgd11unzY/61wL4QT0v+zgpnaqfsmzA//h+vZVVL4O+zRmtFL8bCN8yumsIfMQa/f9xr9p5Evhb5CwZj7z0NMbHuO2pDz/AfgHsRdyh6jt9DntwR15j1VLkmudFjaLfL2BZX6AZzQX+hwzZXnLfJGPRyQvwCsYnYhwAJAAA=
+  </data>
+ </layer>
+ <layer name="collision" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2TOw4AIAhDuRqJo4f0qK7GIFSCMujQwe9L2lKIqCSrJull/in/kX9P5Y90C+mgtH9zBhjwZcc3xIvPt+9b/FWmSJd2+cgMoHwO5Gu8LL6Vk5fvzc+Tf0TfBX7T+DxoXmuS3kvnIz9JrQNG8sl3AAkAAA==
+  </data>
+ </layer>
+ <layer name="event" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGJnAkYZmu9LQ7MEGnIhU50VTV4yCwQSGQvr3GGgHjIJRgAW4DLQDRhgAAL4veg4ACQAA
+  </data>
+ </layer>
+</map>

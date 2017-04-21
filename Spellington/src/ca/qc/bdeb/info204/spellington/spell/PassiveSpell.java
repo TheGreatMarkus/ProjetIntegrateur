@@ -21,7 +21,6 @@ public class PassiveSpell extends Spell {
     public PassiveSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, Animation animation, int width, int height, int yModifier) {
         super(id, element, name, "Passif", shortDescription, 0, animation, width, height);
         PassiveSpellAnimation = new GameAnimation(-200, -200, width, height, animation, -1, yModifier);
-
     }
 
     @Override
