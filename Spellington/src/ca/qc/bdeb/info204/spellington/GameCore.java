@@ -14,6 +14,7 @@ import java.awt.FontFormatException;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
@@ -24,7 +25,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Core of the game.
  *
- * @author Cristian Aldea
+ * @author Cristian Aldea.
  */
 public class GameCore extends StateBasedGame {
 
@@ -49,12 +50,14 @@ public class GameCore extends StateBasedGame {
     private static AppGameContainer appGameContainer;
 
     public static Font fontPaladin;
+    public static Random rand = new Random();
 
     /**
-     * Main method of the program
+     * Main method of the program.
      *
-     * @param args the command line arguments
-     * @throws org.newdawn.slick.SlickException
+     * @param args the command line arguments.
+     * @throws SlickException General Slick exception.
+     * @author Cristian Aldea.
      */
     public static void main(String[] args) throws SlickException {
         System.setProperty("org.lwjgl.librarypath", new File("lib/natives").getAbsolutePath());
@@ -93,6 +96,13 @@ public class GameCore extends StateBasedGame {
         super(GAME_TITLE);
     }
 
+    /**
+     * Initialises the different states that are going to be used in the game.
+     *
+     * @param gc The GameContainer.
+     * @throws SlickException General Slick exception.
+     * @author Cristian Aldea.
+     */
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
         //It is important to keep the state addition order.
@@ -119,6 +129,12 @@ public class GameCore extends StateBasedGame {
 
     }
 
+    /**
+     * Clears the input cache.
+     *
+     * @param gc The GameContainer.
+     * @author Cristian Aldea.
+     */
     public static void clearInputRecord(GameContainer gc) {
         gc.getInput().clearKeyPressedRecord();
         gc.getInput().clearMousePressedRecord();

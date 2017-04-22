@@ -9,7 +9,12 @@ import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
+import ca.qc.bdeb.info204.spellington.spell.BreathSpell;
+import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
+import ca.qc.bdeb.info204.spellington.spell.ProjectileSpell;
+import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -25,6 +30,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -45,7 +51,6 @@ public class PlayState extends BasicGameState {
 
     public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
     public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
-    public ArrayList<Enemy> activeEnemy = new ArrayList<>();
 
     public static final Vector2D GRAV_ACC = new Vector2D(0, 0.001f);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
@@ -56,6 +61,7 @@ public class PlayState extends BasicGameState {
 
     //Variables and constants related to the rendering of the HUD
     private Image statsBarHUD, inputTextHUD, passiveSpellHUD, activeSpellHUD, redPotionHUD, greenPotionHUD, bluePotionHUD, icePotionHUD;
+    private boolean drawAimingHelp;
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
@@ -121,10 +127,17 @@ public class PlayState extends BasicGameState {
         for (int i = 0; i < activeAnimations.size(); i++) {
             activeAnimations.get(i).render(g, spellington);
         }
+        for (int i = 0; i < GameManager.getActiveEnemies().size(); i++) {
+
+            GameManager.getActiveEnemies().get(i).render(g);
+        }
 
         debugInfo(g, gc);
 
         displayHUD(g);
+
+        drawAimingHelp(g, gc.getInput(), SpellingSystem.getActiveSpell(), spellington);
+
     }
 
     @Override
@@ -141,27 +154,46 @@ public class PlayState extends BasicGameState {
         if (gc.getInput().isKeyPressed(Input.KEY_F4)) {
             displayHUD = !displayHUD;
         }
+        //Update of Spellington
         spellington.update(gc.getInput(), delta);
         Calculations.checkMapCollision(GameManager.getMapInformation(), spellington);
 
-        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, activeEnemy);
+        SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, GameManager.getActiveEnemies());
 
+        //Update of projectiles
         ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
-        ArrayList<Enemy> temp = new ArrayList<>();
-
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
-            if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), temp, activeProjectiles.get(i))) {
+            if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, activeProjectiles.get(i))) {
                 projectilesToBeRemoved.add(activeProjectiles.get(i));
             }
         }
+        activeProjectiles.removeAll(projectilesToBeRemoved);
 
+        //Update of enemies
+        ArrayList<Enemy> enemiesToBeRemoved = new ArrayList<>();
+        for (Enemy enemy : GameManager.getActiveEnemies()) {
+            enemy.update(delta);
+            Calculations.checkMapCollision(GameManager.getMapInformation(), enemy);
+            if (enemy.getLifePoint() <= 0) {
+                enemiesToBeRemoved.add(enemy);
+            }
+        }
+        GameManager.getActiveEnemies().removeAll(enemiesToBeRemoved);
+
+        //Update of animations
+        ArrayList<GameAnimation> animationsToBeRemoved = new ArrayList<>();
         for (int j = 0; j < activeAnimations.size(); j++) {
             activeAnimations.get(j).update();
-
+            if (activeAnimations.get(j).getVie() == 0) {
+                animationsToBeRemoved.add(activeAnimations.get(j));
+            }
         }
 
-        activeProjectiles.removeAll(projectilesToBeRemoved);
+        activeAnimations.removeAll(animationsToBeRemoved);
+
+        GameManager.checkEndOfLevel(spellington);
+        GameCore.clearInputRecord(gc);
     }
 
     /**
@@ -180,12 +212,6 @@ public class PlayState extends BasicGameState {
             g.setColor(Color.red);
 
             int textY = 120;
-            for (int i = 0; i < DIM_MAP.height; i++) {
-                g.drawRect(Calculations.TargetJ * 50, i * 50, 50, 50);
-            }
-            for (int j = 0; j < DIM_MAP.width; j++) {
-                g.drawRect(j * 50, Calculations.TargetI * 50, 50, 50);
-            }
 
             g.setColor(Color.lightGray);
             //int textY = 10;
@@ -226,12 +252,17 @@ public class PlayState extends BasicGameState {
                 g.fillRect(startingX, startingY + tempSize, tempSize, tempSize);
             }
             g.fillOval(renderMouseX - 1, renderMouseY - 1, 3, 3);
+            g.setColor(Color.cyan);
+            g.drawRect(GameManager.getExitPoint().x, GameManager.getExitPoint().y, Tile.DIM_TILE.width, Tile.DIM_TILE.height);
+            g.setColor(Color.red);
+            g.drawRect(GameManager.getEntryPoint().x, GameManager.getEntryPoint().y, Tile.DIM_TILE.width, Tile.DIM_TILE.height);
         }
-        GameCore.clearInputRecord(gc);
+
     }
 
     private void displayHUD(Graphics g) throws SlickException {
         if (displayHUD) {
+            g.setColor(Color.white);
             int statsBarOffSetX = 75; //common X position of the stats bars
             int xGap = 5;
             final int BARS_Y = 5; //Universal Y position for most HUD components
@@ -280,4 +311,52 @@ public class PlayState extends BasicGameState {
     public int getID() {
         return GameCore.PLAY_STATE_ID;
     }
+
+    private void drawAimingHelp(Graphics g, Input input, Spell activeSpell, Spellington spellington) {
+        float spellingtonX = spellington.getCenterX();
+        float spellingtonY = spellington.getCenterY();
+        float mouseX = input.getMouseX() / GameCore.SCALE;
+        float mouseY = input.getMouseY() / GameCore.SCALE;
+
+        if (activeSpell instanceof ProjectileSpell) {
+            g.setColor(new Color(255, 255, 255));
+            g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
+            float spellX = spellingtonX - activeSpell.getWidth() / 2;
+            float spellY = spellingtonY - activeSpell.getHeight() / 2;
+            float angle = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY);
+            float gravModifier = ((ProjectileSpell) activeSpell).getGravModifier();
+            Vector2D tempSpeedVector = new Vector2D(((ProjectileSpell) activeSpell).getInitSpeed(), angle, true);
+            float time = 16;
+            boolean endLoop = false;
+            boolean oob = false;
+            g.setColor(new Color(255, 255, 255, 50));
+            while (!endLoop && !oob) {
+                g.drawOval(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight());
+                tempSpeedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
+                spellX += tempSpeedVector.getX() * time;
+                spellY += tempSpeedVector.getY() * time;
+                Rectangle tempRect = new Rectangle(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight());
+                for (int i = 0; i < GameManager.getMapInformation().length; i++) {
+                    for (int j = 0; j < GameManager.getMapInformation()[i].length; j++) {
+                        if (tempRect.intersects(GameManager.getMapInformation()[i][j]) && GameManager.getMapInformation()[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
+                            endLoop = true;
+                        }
+                    }
+                }
+                if (spellX < 0 || spellX > 1600 || spellY < 0 || spellY > 900) {
+                    oob = true;
+                }
+            }
+
+        } else if (activeSpell instanceof BreathSpell) {
+
+        } else if (activeSpell instanceof ExplosionSpell) {
+            float ray = ((ExplosionSpell) activeSpell).getRay();
+            float spellX = mouseX - ray;
+            float spellY = mouseY - ray;
+            g.setColor(new Color(255, 255, 255, 90));
+            g.drawOval(spellX, spellY, ray * 2, ray * 2);
+        }
+    }
+
 }

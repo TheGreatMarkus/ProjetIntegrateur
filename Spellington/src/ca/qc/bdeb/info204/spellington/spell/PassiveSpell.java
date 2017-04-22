@@ -28,12 +28,19 @@ public class PassiveSpell extends Spell {
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         if (this.id == SpellingSystem.ID_ASCENDING_CURRENT) {
             spellington.setMAX_AIR_JUMPS(5);
+            System.out.println("asdfasdfasdfasdfasdfasdf");
         } else if (this.id == SpellingSystem.ID_FIRE_RES) {
             spellington.setResFire(spellington.getResFire() + 5);
         } else if (this.id == SpellingSystem.ID_ICE_RES) {
             spellington.setResIce(spellington.getResIce() + 5);
         } else if (this.id == SpellingSystem.ID_LIGHTNING_RES) {
             spellington.setResElectricity(spellington.getResElectricity() + 5);
+        } else if (this.id == SpellingSystem.ID_FIRE_IMMUNITY) {
+            spellington.setResFire(spellington.getResFire() + 999);
+        } else if (this.id == SpellingSystem.ID_ICE_IMMUNITY) {
+            spellington.setResIce(spellington.getResIce() + 999);
+        } else if (this.id == SpellingSystem.ID_LIGHTNING_IMMUNITY) {
+            spellington.setResElectricity(spellington.getResElectricity() + 999);
         }
 
         activeAnimations.add(PassiveSpellAnimation);
@@ -50,6 +57,12 @@ public class PassiveSpell extends Spell {
             spellington.setResIce(spellington.getResIce() - 5);
         } else if (this.id == SpellingSystem.ID_LIGHTNING_RES) {
             spellington.setResElectricity(spellington.getResElectricity() - 5);
+        } else if (this.id == SpellingSystem.ID_FIRE_IMMUNITY) {
+            spellington.setResFire(spellington.getResFire() - 999);
+        } else if (this.id == SpellingSystem.ID_ICE_IMMUNITY) {
+            spellington.setResIce(spellington.getResIce() - 999);
+        } else if (this.id == SpellingSystem.ID_LIGHTNING_IMMUNITY) {
+            spellington.setResElectricity(spellington.getResElectricity() - 999);
         }
 
         activeAnimations.remove(PassiveSpellAnimation);

@@ -24,6 +24,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 
+
 /**
  *
  * @author Tarik
@@ -90,14 +91,15 @@ public class SpellBookState extends BasicGameState {
     private String shortDescription;
     private String effect;
     private String page;
-
+    
     private int pageNumber = 1;
-    private int spellKind;
+    private int spellKind, potionKind;
     private boolean showRightPage = false;
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        background = new Image("src/res/map/spellbook/spellbook.png");
+
+        background = new Image("src/res/map/spellbook/Grimoire.png");
 
         fontPaladin = fontPaladin.deriveFont(Font.PLAIN, 30.0f * GameCore.SCALE);
         fontSpellChant = new UnicodeFont(fontPaladin);
@@ -108,10 +110,14 @@ public class SpellBookState extends BasicGameState {
         textGap = 10.0f * GameCore.SCALE;
 
         mnuItemMainTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_MAINTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_MAINTITLE), fontMenu.getHeight(SB_MAINTITLE));
+        mnuItemMainTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_MAINTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_MAINTITLE), fontMenu.getHeight(SB_MAINTITLE));
         mnuItemSpells = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_SPELLS, false, false, 0, mnuItemMainTitle.getY() + (mnuItemMainTitle.getHeight() * 2), fontMenu.getWidth(SB_SPELLS), fontMenu.getHeight(SB_SPELLS));
         mnuItemPotions = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_POTIONS, false, false, 0, mnuItemSpells.getY() + mnuItemSpells.getHeight() + textGap, fontMenu.getWidth(SB_POTIONS), fontMenu.getHeight(SB_POTIONS));
         mnuItemEnnemies = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_ENNEMIES, false, false, 0, mnuItemPotions.getY() + mnuItemPotions.getHeight() + textGap, fontMenu.getWidth(SB_ENNEMIES), fontMenu.getHeight(SB_ENNEMIES));
         mnuItemRetour = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_RETOUR, false, false, 0, mnuItemEnnemies.getY() + mnuItemEnnemies.getHeight() + textGap, fontMenu.getWidth(SB_RETOUR), fontMenu.getHeight(SB_RETOUR));
+        mnuItemSpellTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_SPELLTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_SPELLTITLE), fontMenu.getHeight(SB_SPELLTITLE));
+        mnuItemPotionsTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_POTIONSTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_POTIONSTITLE), fontMenu.getHeight(SB_POTIONSTITLE));
+        mnuItemEnnemiesTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_ENNEMIESTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_ENNEMIESTITLE), fontMenu.getHeight(SB_ENNEMIESTITLE));
         mnuItemSpellTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_SPELLTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_SPELLTITLE), fontMenu.getHeight(SB_SPELLTITLE));
         mnuItemPotionsTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_POTIONSTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_POTIONSTITLE), fontMenu.getHeight(SB_POTIONSTITLE));
         mnuItemEnnemiesTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_ENNEMIESTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_ENNEMIESTITLE), fontMenu.getHeight(SB_ENNEMIESTITLE));
@@ -167,7 +173,7 @@ public class SpellBookState extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         background.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
-        g.setFont(fontMenu);
+        //g.setFont(fontMenu);
 
         switch (pageState) {
             case 0:
@@ -264,226 +270,217 @@ public class SpellBookState extends BasicGameState {
                 }
 
                 if (infItemBar.getHoveredOver() && triedToClick) {
-                    //spellKind = infoList.get(0);
-                    switch (spellsSubPageState) {
+                    switch(spellsSubPageState){
                         case 0:
                             spellKind = 0;
                             showRightPage = true;
                             break;
-
+                        
                         case 1:
-                            if (SpellingSystem.knownSpell.size() >= 9) {
+                            if(SpellingSystem.knownSpell.size()>=9){
                                 spellKind = 8;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
                             break;
-
+                            
                         case 2:
-                            if (SpellingSystem.knownSpell.size() >= 17) {
+                            if(SpellingSystem.knownSpell.size()>=17){
                                 spellKind = 16;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
-                            break;
+                            break;      
                     }
                 }
 
                 if (infItemBar2.getHoveredOver() && triedToClick) {
-                    //spellKind = infoList.get(1);
-                    switch (spellsSubPageState) {
+                    switch(spellsSubPageState){
                         case 0:
                             spellKind = 1;
                             showRightPage = true;
                             break;
-
+                        
                         case 1:
-                            if (SpellingSystem.knownSpell.size() >= 10) {
+                            if(SpellingSystem.knownSpell.size()>=10){
                                 spellKind = 9;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
                             break;
-
+                            
                         case 2:
-                            if (SpellingSystem.knownSpell.size() >= 18) {
+                            if(SpellingSystem.knownSpell.size()>=18){
                                 spellKind = 17;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
-                            break;
+                            break;      
                     }
                 }
 
                 if (infItemBar3.getHoveredOver() && triedToClick) {
-                    //spellKind = infoList.get(2);
-                    switch (spellsSubPageState) {
+                    switch(spellsSubPageState){
                         case 0:
                             spellKind = 2;
                             showRightPage = true;
-                            break;
-
+                            break;               
                         case 1:
-                            if (SpellingSystem.knownSpell.size() >= 11) {
+                            if(SpellingSystem.knownSpell.size()>=11){
                                 spellKind = 10;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
                             break;
-
+                            
                         case 2:
-                            if (SpellingSystem.knownSpell.size() >= 19) {
+                            if(SpellingSystem.knownSpell.size()>=19){
                                 spellKind = 18;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
-                            break;
+                            break;      
                     }
                 }
 
                 if (infItemBar4.getHoveredOver() && triedToClick) {
-                    //spellKind = infoList.get(3);
-                    switch (spellsSubPageState) {
+                    switch(spellsSubPageState){
                         case 0:
                             spellKind = 3;
                             showRightPage = true;
                             break;
-
+                        
                         case 1:
-                            if (SpellingSystem.knownSpell.size() >= 12) {
+                            if(SpellingSystem.knownSpell.size()>=12){
                                 spellKind = 11;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
                             break;
-
+                            
                         case 2:
-                            if (SpellingSystem.knownSpell.size() >= 20) {
+                            if(SpellingSystem.knownSpell.size()>=20){
                                 spellKind = 19;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
-                            break;
+                            break;      
                     }
                 }
 
                 if (infItemBar5.getHoveredOver() && triedToClick) {
-                    //spellKind = infoList.get(4);
-                    switch (spellsSubPageState) {
+                    switch(spellsSubPageState){
                         case 0:
                             spellKind = 4;
                             showRightPage = true;
                             break;
-
+                            
                         case 1:
-                            if (SpellingSystem.knownSpell.size() >= 13) {
+                            if(SpellingSystem.knownSpell.size()>=13){
                                 spellKind = 12;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
                             break;
-
+                            
                         case 2:
-                            if (SpellingSystem.knownSpell.size() >= 21) {
+                            if(SpellingSystem.knownSpell.size()>=21){
                                 spellKind = 20;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
-                            break;
+                            break;      
                     }
                 }
 
                 if (infItemBar6.getHoveredOver() && triedToClick) {
-                    //spellKind = infoList.get(5);
-                    switch (spellsSubPageState) {
+                    switch(spellsSubPageState){
                         case 0:
                             spellKind = 5;
                             showRightPage = true;
                             break;
-
+                        
                         case 1:
-                            if (SpellingSystem.knownSpell.size() >= 14) {
+                            if(SpellingSystem.knownSpell.size()>=14){
                                 spellKind = 13;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
                             break;
-
+                            
                         case 2:
-                            if (SpellingSystem.knownSpell.size() >= 22) {
+                            if(SpellingSystem.knownSpell.size()>=22){
                                 spellKind = 21;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
-                            break;
+                            break;      
                     }
                 }
 
                 if (infItemBar7.getHoveredOver() && triedToClick) {
-                    //spellKind = infoList.get(6);
-                    switch (spellsSubPageState) {
+                    switch(spellsSubPageState){
                         case 0:
                             spellKind = 6;
                             showRightPage = true;
                             break;
-
+                        
                         case 1:
-                            if (SpellingSystem.knownSpell.size() >= 15) {
+                            if(SpellingSystem.knownSpell.size()>=15){
                                 spellKind = 14;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
                             break;
-
+                            
                         case 2:
-                            if (SpellingSystem.knownSpell.size() >= 23) {
+                            if(SpellingSystem.knownSpell.size()>=23){
                                 spellKind = 22;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
-                            break;
+                            break;      
                     }
                 }
 
                 if (infItemBar8.getHoveredOver() && triedToClick) {
-                    //spellKind = infoList.get(7);
-                    switch (spellsSubPageState) {
+                    switch(spellsSubPageState){
                         case 0:
                             spellKind = 7;
                             showRightPage = true;
                             break;
-
+                        
                         case 1:
-                            if (SpellingSystem.knownSpell.size() >= 16) {
+                            if(SpellingSystem.knownSpell.size()>=16){
                                 spellKind = 15;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
                             break;
-
+                            
                         case 2:
-                            if (SpellingSystem.knownSpell.size() >= 24) {
+                            if(SpellingSystem.knownSpell.size()>=24){
                                 spellKind = 23;
                                 showRightPage = true;
-                            } else {
+                            }else{
                                 showRightPage = false;
                             }
-                            break;
+                            break;      
                     }
                 }
                 break;
@@ -516,22 +513,38 @@ public class SpellBookState extends BasicGameState {
                     showRightPage = false;
                 }
 
-                if (infItemBar.getHoveredOver() && triedToClick) {
-
-                }
-
-                if (infItemBar2.getHoveredOver() && triedToClick) {
-
-                }
-
-                if (infItemBar3.getHoveredOver() && triedToClick) {
-
-                }
-
-                if (infItemBar4.getHoveredOver() && triedToClick) {
-
-                }
-                break;
+//                if (infItemBar.getHoveredOver() && triedToClick) {
+//                    potionKind = 0;
+//                    showRightPage = true;
+//                }
+//
+//                if (infItemBar2.getHoveredOver() && triedToClick) {
+//                    if (SpellingSystem.knownPotion.size() >= 2) {
+//                        potionKind = 1;
+//                        showRightPage = true;
+//                    } else {
+//                        showRightPage = false;
+//                    }
+//                }
+//
+//                if (infItemBar3.getHoveredOver() && triedToClick) {
+//                    if (SpellingSystem.knownPotion.size() >= 3) {
+//                        potionKind = 2;
+//                        showRightPage = true;
+//                    } else {
+//                        showRightPage = false;
+//                    }   
+//                }
+//
+//                if (infItemBar4.getHoveredOver() && triedToClick) {
+//                    if (SpellingSystem.knownPotion.size() >= 4) {
+//                        potionKind = 3;
+//                        showRightPage = true;
+//                    } else {
+//                        showRightPage = false;
+//                    }
+//                }
+//                break;
 
             case 3:
                 mnuItemBack.detHoveredOver(mouseX, mouseY);
@@ -629,7 +642,7 @@ public class SpellBookState extends BasicGameState {
         infItemBar7.renderTransparent(g, gc);
         infItemBar8.renderTransparent(g, gc);
 
-        g.setFont(fontSpellChant);
+        //g.setFont(fontSpellChant);
 
         float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
         float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.SCALE;
@@ -685,26 +698,33 @@ public class SpellBookState extends BasicGameState {
     private void displayPotionsLeftPage(Graphics g, GameContainer gc) throws SlickException {
         mnuItemPotionsTitle.render(g, gc);
         mnuItemBack.render(g, gc);
-        mnuItemNext.render(g, gc);
         mnuItemChangeType.render(g, gc);
         infItemBar.renderTransparent(g, gc);
         infItemBar2.renderTransparent(g, gc);
         infItemBar3.renderTransparent(g, gc);
         infItemBar4.renderTransparent(g, gc);
 
-        g.setFont(fontSpellChant);
+        //g.setFont(fontSpellChant);
 
         float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
         float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.SCALE;
         float iconSize = 200 * GameCore.SCALE;
         float gap = 30 * GameCore.SCALE;
         int i;
+        
+//        for (infoBarFill = 0, i = 0; i < 4; infoBarFill++, i++) {
+//            if (infoBarFill < SpellingSystem.knownPotion.size()) {
+//                infoList.set(i, SpellingSystem.knownPotion.get(i).getName());
+//            } else {
+//                infoList.set(i, " ");
+//            }
+//        }
 
         g.setColor(new Color(1, 1, 1, 1f));
-        g.drawString("Régénération", infItemBar.getX() + (gap / 3), infItemBar.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString("Poison", infItemBar.getX() + (gap / 3), infItemBar2.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString("Passé", infItemBar.getX() + (gap / 3), infItemBar3.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString("Acier", infItemBar.getX() + (gap / 3), infItemBar4.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(0), infItemBar.getX() + (gap / 3), infItemBar.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(1), infItemBar.getX() + (gap / 3), infItemBar2.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(2), infItemBar.getX() + (gap / 3), infItemBar3.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(3), infItemBar.getX() + (gap / 3), infItemBar4.getY() + (infoBarHeight / 12) + textGap);
 
         displayPotionsRightPage(g, iconX, iconY, iconSize, gap);
     }
@@ -723,7 +743,7 @@ public class SpellBookState extends BasicGameState {
         infItemBar7.renderTransparent(g, gc);
         infItemBar8.renderTransparent(g, gc);
 
-        g.setFont(fontSpellChant);
+        //g.setFont(fontSpellChant);
 
         float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
         float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.SCALE;
@@ -758,11 +778,11 @@ public class SpellBookState extends BasicGameState {
 
     private void displaySpellsRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
         page = Integer.toString(pageNumber);
-        g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3) / 4) - 20 * GameCore.SCALE, GameCore.SCREEN_SIZE.height - gap * 2);
-
+        g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3)/4) - 20*GameCore.SCALE, GameCore.SCREEN_SIZE.height - gap*2);
+        
         if (showRightPage) {
             icon.draw(iconX, iconY, iconSize, iconSize);
-
+            
             name = "Nom: " + SpellingSystem.knownSpell.get(spellKind).getName();
             type = "Type: " + SpellingSystem.knownSpell.get(spellKind).getType();
             incantationText = "Mot déclencheur: " + SpellingSystem.knownSpell.get(spellKind).getIncantation();
@@ -775,79 +795,79 @@ public class SpellBookState extends BasicGameState {
                     damage = "Dégâts: " + damagePoints;
                     g.drawString(damage, iconX + iconSize + gap, iconY + 4 * gap);
                     break;
-
+                    
                 case "Explosion":
                     damagePoints = Integer.toString(((ExplosionSpell) SpellingSystem.knownSpell.get(spellKind)).getDamage());
                     damage = "Dégâts: " + damagePoints;
                     g.drawString(damage, iconX + iconSize + gap, iconY + 4 * gap);
                     break;
-
+                    
                 case "Projectile":
                     damagePoints = Integer.toString(((ProjectileSpell) SpellingSystem.knownSpell.get(spellKind)).getDamage());
                     damage = "Dégâts: " + damagePoints;
                     g.drawString(damage, iconX + iconSize + gap, iconY + 4 * gap);
                     break;
-
+                    
                 case "Guérison":
                     String healingPoints = Integer.toString(((HealingSpell) SpellingSystem.knownSpell.get(spellKind)).getHealing());
                     effect = "Effet: " + healingPoints + " points de santé";
                     g.drawString(effect, iconX + iconSize + gap, iconY + 4 * gap);
                     break;
-
+                
                 case "Passif":
-
-                    switch (SpellingSystem.knownSpell.get(spellKind).getName()) {
+                    
+                    switch(SpellingSystem.knownSpell.get(spellKind).getName()){
                         case "Courant ascendant":
                             effect = "Effet: Saut additionnel";
                             break;
                         case "Résistance feu":
                             effect = "Effet: 10 points de résistance";
                             break;
-
+                            
                         case "Résistance glace":
                             effect = "Effet: 10 points de résistance";
-                            break;
-
+                            break;     
+                            
                         case "Résistance electrique":
                             effect = "Effet: 10 points de résistance";
                             break;
-
+                            
                         case "Immunite feu":
                             effect = "Effet: 999 points de résistance";
                             break;
-
+                        
                         case "Immunite électrique":
                             effect = "Effet: 999 points de résistance";
                             break;
-
+                            
                         case "Immunite glace":
                             effect = "Effet: 999 points de résistance";
                             break;
                     }
-
+                    
                     g.drawString(effect, iconX + iconSize + gap, iconY + 4 * gap);
-                    break;
+                    break;   
             }
-
-            switch (SpellingSystem.knownSpell.get(spellKind).getElement()) {
+            
+            switch(SpellingSystem.knownSpell.get(spellKind).getElement()){
                 case FIRE:
                     element = "Élément: Feu";
                     break;
-
+                    
                 case ICE:
                     element = "Élément: Glace";
                     break;
-
+                    
                 case LIGHTNING:
                     element = "Élément: Éclair";
                     break;
-
+                    
                 case NEUTRAL:
                     element = "Élément: Neutre";
                     break;
             }
             //iconImage.draw(iconX, iconY, iconSize - 10*GameCore.SCALE, iconSize - 10*GameCore.SCALE);
-
+            
             g.drawString(name, iconX + iconSize + gap, iconY);
             g.drawString(type, iconX + iconSize + gap, iconY + 2 * gap);
             g.drawString(element, iconX + iconSize + gap, iconY + 6 * gap);
@@ -857,9 +877,53 @@ public class SpellBookState extends BasicGameState {
     }
 
     private void displayPotionsRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
+        page = Integer.toString(pageNumber);
+        g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3)/4) - 20*GameCore.SCALE, GameCore.SCREEN_SIZE.height - gap*2);
+        
+        if (showRightPage) {
+            icon.draw(iconX, iconY, iconSize, iconSize);
+            
+//            name = "Nom: " + SpellingSystem.knownPotion.get(potionKind).getName();
+//            type = "Type: " + SpellingSystem.knownPotion.get(potionKind).getType();
+//            element = "Élément: Neutre";
+//            incantationText = "Mot déclencheur: " + SpellingSystem.knownPotion.get(potionKind).getIncantation();
+//            shortDescription = "Petite description: " + SpellingSystem.knownPotion.get(potionKind).getShortDescription();
+//            iconImage = SpellingSystem.knownPotion.get(potionKind).getIcon();
+//
+//            switch (SpellingSystem.knownPotion.get(potionKind).getName()) {
+//                case "Soin instantané":
+//                    String healingPoints = Integer.toString(((Potions) SpellingSystem.knownPotion.get(potionKind)).getHealing());
+//                    effect = "Effet: " + healingPoints + " points de santé";
+//                    g.drawString(effect, iconX + iconSize + gap, iconY + 4 * gap);
+//                    break;
+//                    
+//                case "Acide":
+//                    String damagePoints = Integer.toString(((Potions) SpellingSystem.knownPotion.get(potionKind)).getDamage());
+//                    damage = "Dégâts: " + damagePoints;
+//                    g.drawString(damage, iconX + iconSize + gap, iconY + 4 * gap);
+//                    break;
+//                    
+//                case "Passé":
+//                    effect = "Effet: Sort précédent";
+//                    g.drawString(effect, iconX + iconSize + gap, iconY + 4 * gap);
+//                    break;
+//                    
+//                case "Acier":
+//                    effect = "Effet: Invicibilité temporaire";
+//                    g.drawString(effect, iconX + iconSize + gap, iconY + 4 * gap);
+//                    break;  
+//            }
 
+            //iconImage.draw(iconX, iconY, iconSize - 10*GameCore.SCALE, iconSize - 10*GameCore.SCALE);
+            
+            g.drawString(name, iconX + iconSize + gap, iconY);
+            g.drawString(type, iconX + iconSize + gap, iconY + 2 * gap);
+            g.drawString(element, iconX + iconSize + gap, iconY + 6 * gap);
+            g.drawString(incantationText, iconX, iconY + 8 * gap);
+            g.drawString(shortDescription, iconX, iconY + 10 * gap);
+        }
     }
-
+    
     private void displayEnnemiesRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
 
     }

@@ -10,7 +10,7 @@ import org.newdawn.slick.Image;
 /**
  * A LivingEntity opposing the player.
  *
- * @author Celtis
+ * @author Celtis, Cristian
  * @see LivingEntity
  */
 public abstract class Enemy extends LivingEntity {
@@ -26,10 +26,11 @@ public abstract class Enemy extends LivingEntity {
         FIRE_SLIME,
         ICE_SLIME,
         LIGHTNING_SLIME,
+        DUMMY,
         BOSS
     }
 
-    public static Dimension HUMANOID_SIZE = new Dimension(50, 50);
+    public static Dimension HUMANOID_SIZE = new Dimension(50, 100);
     public static Dimension MAGE_SIZE = new Dimension(50, 50);
     public static Dimension SLIME_SIZE = new Dimension(50, 50);
     public static Dimension BOSS_SIZE = new Dimension(50, 50);
@@ -38,8 +39,6 @@ public abstract class Enemy extends LivingEntity {
     protected static Image imgJumpR;
     protected static Image imgStandingL;
     protected static Image imgStandingR;
-    protected static Image imgWallL;
-    protected static Image imgWallR;
     protected static Animation animWalkL;
     protected static Animation animWalkR;
 
@@ -49,32 +48,45 @@ public abstract class Enemy extends LivingEntity {
     protected EnemyType enemyType;
     protected int damage;
 
-    public Enemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, int maxLifePoint, EnemyType enemyType) {
-        super(x, y, dim.width, dim.height, mouvementState, GRAVITY_MODIFIER, maxLifePoint);
+    public Enemy(float x, float y, Dimension dim, MouvementState mouvementState, float gravModifier, EnemyType enemyType) {
+        super(x, y, dim.width, dim.height, mouvementState, gravModifier, 0);
         this.enemyType = enemyType;
+        //Missing resistances
         if (this instanceof MeleeEnemy) {
             switch (this.enemyType) {
                 case KEEPER:
+
+                    this.maxLifePoint = 20;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.NEUTRAL;
                     this.damage = 12;
                     break;
                 case GUARD:
+                    this.maxLifePoint = 50;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.LIGHTNING;
                     this.damage = 12;
                     break;
                 case FIRE_SLIME:
+                    this.maxLifePoint = 60;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.FIRE;
                     this.damage = 10;
                     break;
                 case ICE_SLIME:
+                    this.maxLifePoint = 60;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.ICE;
                     this.damage = 10;
                     break;
                 case LIGHTNING_SLIME:
+                    this.maxLifePoint = 60;
+                    this.xpOnKill = 0;
+                    this.damageType = ElementalType.LIGHTNING;
+                    this.damage = 10;
+                    break;
+                case DUMMY:
+                    this.maxLifePoint = 60;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.LIGHTNING;
                     this.damage = 10;
@@ -83,11 +95,13 @@ public abstract class Enemy extends LivingEntity {
         } else if (this instanceof RangedEnemy) {
             switch (this.enemyType) {
                 case ARCHER:
+                    this.maxLifePoint = 10;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.NEUTRAL;
                     this.damage = 5;
                     break;
                 case CROSSBOWMAN:
+                    this.maxLifePoint = 20;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.LIGHTNING;
                     this.damage = 20;
@@ -96,16 +110,19 @@ public abstract class Enemy extends LivingEntity {
         } else if (this instanceof MageEnemy) {
             switch (this.enemyType) {
                 case PYROMANCER:
+                    this.maxLifePoint = 30;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.FIRE;
                     this.damage = 30;
                     break;
                 case CRYOMANCER:
+                    this.maxLifePoint = 30;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.ICE;
                     this.damage = 20;
                     break;
                 case ELECTROMANCER:
+                    this.maxLifePoint = 30;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.LIGHTNING;
                     this.damage = 50;
@@ -114,12 +131,15 @@ public abstract class Enemy extends LivingEntity {
         } else if (this instanceof BossEnemy) {
             switch (this.enemyType) {
                 case BOSS:
+                    this.maxLifePoint = 9999;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.LIGHTNING;
                     this.damage = 50;
                     break;
             }
         }
+        this.gravModifier = 2;
+        this.lifePoint = this.maxLifePoint;
         //loadAnimations(this.enemyType);
 
     }
@@ -132,8 +152,8 @@ public abstract class Enemy extends LivingEntity {
         this.droppableSpells = droppableSpells;
     }
 
-    private void loadAnimations(EnemyType enemyType) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void loadAnimations(String enemyType) {
+
     }
 
     public abstract void update(float time);

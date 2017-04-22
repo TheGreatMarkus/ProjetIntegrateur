@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
+import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import org.newdawn.slick.Animation;
@@ -13,26 +14,50 @@ import org.newdawn.slick.Graphics;
  */
 public class Projectile extends DynamicEntity {
 
-    
-
-    protected int Damage;
+    protected int damage;
     protected Animation animation;
+    protected ElementalType damageType;
 
-    public Projectile(float x, float y,int width ,int height , Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim) {
+    public Projectile(float x, float y, int width, int height, Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim, int damage, ElementalType damageType) {
         super(x, y, width, width, GRAVITY_MODIFIER);
         this.animation = anim;
         this.speedVector = speedVector;
+        this.damage = damage;
+        this.damageType = damageType;
 
     }
 
     public void update(float time) {
-        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * GRAVITY_MODIFIER));
+        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
         this.setX(this.getX() + this.getSpeedVector().getX() * time);
         this.setY(this.getY() + this.getSpeedVector().getY() * time);
     }
 
     public void render(Graphics g) {
+
+        float tempAngle = Calculations.detAngle(this.speedVector.getX(), this.speedVector.getY());
+        g.rotate(x + width / 2, y + height / 2, (float) Math.toDegrees(tempAngle));
         this.animation.draw(x, y, width, width);
+        g.drawRect(x, y, width, height);
+        g.rotate(x + width / 2, y + height / 2, -(float) Math.toDegrees(tempAngle));
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+        this.animation.draw(x, y, width, height);
         //g.drawRect(x, y, width, height);
     }
+
+    public ElementalType getDamageType() {
+        return damageType;
+    }
+
+    public void setDamageType(ElementalType damageType) {
+        this.damageType = damageType;
+    }
+
 }

@@ -46,7 +46,7 @@ public class MainMenuState extends BasicGameState {
     private MenuItem mnuItemOptions;
     private MenuItem mnuItemExit;
 
-    public static final float TEXT_GAP = 20.0f * GameCore.SCALE;
+    public static final float TEXT_GAP = 10.0f * GameCore.SCALE;
 
     ;
 
@@ -111,7 +111,6 @@ public class MainMenuState extends BasicGameState {
 
         if (mnuItemNewGame.getHoveredOver() && triedToClick) {
             GameManager.newGame();
-            game.enterState(GameCore.PLAY_STATE_ID);
         }
         if (mnuItemLoadGame.getHoveredOver() && triedToClick && mnuItemLoadGame.getClickable()) {
             game.enterState(GameCore.LEVEL_SELECTION_STATE_ID);

@@ -17,7 +17,7 @@ public abstract class DynamicEntity extends GameEntity {
     
     protected Vector2D speedVector;
 
-    protected float GRAVITY_MODIFIER;
+    protected float gravModifier;
     /**
      *
      * @param x
@@ -32,7 +32,7 @@ public abstract class DynamicEntity extends GameEntity {
         collisionRight = false;
         collisionLeft = false;
         speedVector = new Vector2D(0, 0);
-        this.GRAVITY_MODIFIER = GRAVITY_MODIFIER;
+        this.gravModifier = GRAVITY_MODIFIER;
     }
 
     public Vector2D getSpeedVector() {
