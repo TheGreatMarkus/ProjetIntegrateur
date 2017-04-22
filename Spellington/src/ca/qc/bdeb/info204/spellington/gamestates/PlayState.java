@@ -17,11 +17,7 @@ import ca.qc.bdeb.info204.spellington.spell.ProjectileSpell;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -66,22 +62,10 @@ public class PlayState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
-        Font fontViking;
-
-        try {
-            //Loading font for the spell chant in the HUD.
-            fontViking = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Viking.ttf"));
-
-            fontViking = fontViking.deriveFont(Font.PLAIN, 15.0f);
-            fontSpellChant = new UnicodeFont(fontViking);
-            fontSpellChant.addAsciiGlyphs();
-            fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
-            fontSpellChant.loadGlyphs();
-        } catch (FontFormatException ex) {
-            Logger.getLogger(PlayState.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(PlayState.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        fontSpellChant = new UnicodeFont(GameCore.getFontViking(Font.BOLD, 25));
+        fontSpellChant.addAsciiGlyphs();
+        fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
+        fontSpellChant.loadGlyphs();
 
         //Loading crosshair image.
         IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
@@ -262,6 +246,7 @@ public class PlayState extends BasicGameState {
 
     private void displayHUD(Graphics g) throws SlickException {
         if (displayHUD) {
+            g.scale(1f / GameCore.SCALE, 1f / GameCore.SCALE);
             g.setColor(Color.white);
             int statsBarOffSetX = 75; //common X position of the stats bars
             int xGap = 5;
@@ -276,7 +261,7 @@ public class PlayState extends BasicGameState {
 
             g.setFont(fontSpellChant);
 
-            int passiveX = GameCore.RENDER_SIZE.width - xGap - passiveSpellHUD.getWidth();
+            int passiveX = GameCore.SCREEN_SIZE.width - xGap - passiveSpellHUD.getWidth();
             int activeX = passiveX - xGap - activeSpellHUD.getWidth();
             int icePositionX = activeX - xGap - redPotionHUD.getWidth();
             int bluePositionX = icePositionX - xGap - bluePotionHUD.getWidth();
@@ -284,7 +269,7 @@ public class PlayState extends BasicGameState {
             int redPositionX = greenPositionX - xGap - redPotionHUD.getWidth();
 
             g.drawImage(this.statsBarHUD, xGap, BARS_Y);
-            g.drawImage(this.inputTextHUD, (GameCore.RENDER_SIZE.width / 2 - inputTextHUD.getWidth() / 2), BARS_Y);
+            g.drawImage(this.inputTextHUD, (GameCore.SCREEN_SIZE.width / 2 - inputTextHUD.getWidth() / 2), BARS_Y);
             g.drawImage(this.passiveSpellHUD, passiveX, BARS_Y);
             g.drawImage(this.activeSpellHUD, activeX, BARS_Y);
             g.drawImage(this.redPotionHUD, redPositionX, BARS_Y);
@@ -292,7 +277,7 @@ public class PlayState extends BasicGameState {
             g.drawImage(this.bluePotionHUD, bluePositionX, BARS_Y);
             g.drawImage(this.icePotionHUD, icePositionX, BARS_Y);
 
-            g.drawString(incantationText, (GameCore.RENDER_SIZE.width / 2) - (fontSpellChant.getWidth(incantationText) / 2), BARS_Y + 12);
+            g.drawString(incantationText, (GameCore.SCREEN_SIZE.width / 2) - (fontSpellChant.getWidth(incantationText) / 2), BARS_Y + 8);
             g.drawString("Passive", activeX, BARS_Y + passiveSpellHUD.getHeight());
             g.drawString("Active", passiveX, BARS_Y + passiveSpellHUD.getHeight());
             g.drawString("1", redPositionX + 3, BARS_Y + redPotionHUD.getHeight());
@@ -304,12 +289,8 @@ public class PlayState extends BasicGameState {
             g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) Spellington.INIT_MAX_LIFE) * (float) STATSBARWIDTH, STATSBARHEIGHT);
             g.setColor(XPCOLOR);
             g.fillRect(statsBarOffSetX, xpBarY, .5f * STATSBARWIDTH, STATSBARHEIGHT);
+            g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la première ligne de render
         }
-    }
-
-    @Override
-    public int getID() {
-        return GameCore.PLAY_STATE_ID;
     }
 
     private void drawAimingHelp(Graphics g, Input input, Spell activeSpell, Spellington spellington) {
@@ -357,6 +338,11 @@ public class PlayState extends BasicGameState {
             g.setColor(new Color(255, 255, 255, 90));
             g.drawOval(spellX, spellY, ray * 2, ray * 2);
         }
+    }
+
+    @Override
+    public int getID() {
+        return GameCore.PLAY_STATE_ID;
     }
 
 }

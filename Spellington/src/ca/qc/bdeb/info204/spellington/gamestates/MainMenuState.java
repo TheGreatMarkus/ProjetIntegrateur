@@ -1,7 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
-import static ca.qc.bdeb.info204.spellington.GameCore.fontPaladin;
 import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem.MenuItemType;
@@ -56,8 +55,7 @@ public class MainMenuState extends BasicGameState {
         //Initialisation du font pour le menu.
         backGround = new Image("res/image/menu/mm_background.png");
 
-        fontPaladin = fontPaladin.deriveFont(Font.BOLD, 90.0f * GameCore.SCALE);
-        fontMenu = new UnicodeFont(fontPaladin);
+        fontMenu = new UnicodeFont(GameCore.getFontPaladin(Font.BOLD, 80.0f * GameCore.SCALE));
         fontMenu.addAsciiGlyphs();
         fontMenu.getEffects().add(new ColorEffect(java.awt.Color.black));
         fontMenu.getEffects().add(new OutlineEffect(1, java.awt.Color.white));

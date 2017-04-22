@@ -41,8 +41,6 @@ public class SpellingSystem {
 
     private static String incantationText = "";
 
-    private static ArrayList<Integer> letters = new ArrayList<>();
-
     public static ArrayList<Spell> potionList = new ArrayList<>();
     public static ArrayList<Spell> knownSpell = new ArrayList<>();
     private static ArrayList<Spell> spellList = new ArrayList<>();
@@ -254,33 +252,6 @@ public class SpellingSystem {
         knownSpell.add(lightningSpear);
         knownSpell.add(lightningSwarm);
 
-        letters.add(Input.KEY_A);
-        letters.add(Input.KEY_B);
-        letters.add(Input.KEY_C);
-        letters.add(Input.KEY_D);
-        letters.add(Input.KEY_E);
-        letters.add(Input.KEY_F);
-        letters.add(Input.KEY_G);
-        letters.add(Input.KEY_H);
-        letters.add(Input.KEY_I);
-        letters.add(Input.KEY_J);
-        letters.add(Input.KEY_K);
-        letters.add(Input.KEY_L);
-        letters.add(Input.KEY_M);
-        letters.add(Input.KEY_N);
-        letters.add(Input.KEY_O);
-        letters.add(Input.KEY_P);
-        letters.add(Input.KEY_Q);
-        letters.add(Input.KEY_R);
-        letters.add(Input.KEY_S);
-        letters.add(Input.KEY_T);
-        letters.add(Input.KEY_U);
-        letters.add(Input.KEY_V);
-        letters.add(Input.KEY_W);
-        letters.add(Input.KEY_X);
-        letters.add(Input.KEY_Y);
-        letters.add(Input.KEY_Z);
-
         try {
             initSpellsIncantations();
         } catch (IOException ioe) {
@@ -292,14 +263,6 @@ public class SpellingSystem {
     }
 
     public static void update(Input input, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, ArrayList<Enemy> activeEnemy) {
-
-        for (int i = 0; i < letters.size(); i++) {
-            if (input.isKeyPressed(letters.get(i))) {
-                if (incantationText.length() < 30) {
-                    incantationText = incantationText + Input.getKeyName(letters.get(i));
-                }
-            }
-        }
 
         boolean tabUsed = false;
         if (input.isKeyPressed(Input.KEY_TAB)) {
@@ -375,7 +338,6 @@ public class SpellingSystem {
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
             incantationText = spellList.get(0).getIncantation();
-            System.out.println(activeProjectiles.size());
         }
 
         if (input.isKeyPressed(Input.KEY_F2)) {
@@ -400,13 +362,8 @@ public class SpellingSystem {
 
         if (input.isKeyPressed(Input.KEY_F1)) {
             spellington.subLifePoint(30, ElementalType.FIRE);
-            System.out.println(spellington.getLifePoint());
         }
         //test fin..........................................................
-    }
-
-    public static String getIncantationText() {
-        return incantationText;
     }
 
     private static void initAnimation() {
@@ -605,6 +562,14 @@ public class SpellingSystem {
 
     public static Spell getActiveSpell() {
         return activeSpell;
+    }
+
+    public static String getIncantationText() {
+        return incantationText;
+    }
+
+    public static void setIncantationText(String incantationText) {
+        SpellingSystem.incantationText = incantationText;
     }
 
 }

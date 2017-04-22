@@ -298,4 +298,8 @@ public class GameManager {
         return entryPoint;
     }
 
+    public static StateBasedGame getStateBasedGame() {
+        return stateBasedGame;
+    }
+
 }

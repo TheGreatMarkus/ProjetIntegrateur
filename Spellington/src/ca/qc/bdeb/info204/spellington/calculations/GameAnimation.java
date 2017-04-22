@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
@@ -30,16 +25,16 @@ public class GameAnimation extends GameEntity {
     }
 
     public void update() {
-        if(this.vie > 0) {
+        if (this.vie > 0) {
             this.vie--;
         }
     }
 
     public void render(Graphics g, Spellington spellington) {
         if (this.vie == -1) {
-        this.animation.draw(spellington.getX()-20, spellington.getY()-(10+yModifier), width, height);
+            this.animation.draw(spellington.getX() - 20, spellington.getY() - (10 + yModifier), width, height);
         } else {
-        this.animation.draw(this.x, this.y, width, height);
+            this.animation.draw(this.x, this.y, width, height);
         }
     }
 

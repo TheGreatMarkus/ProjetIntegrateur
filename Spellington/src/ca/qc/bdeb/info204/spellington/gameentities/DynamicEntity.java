@@ -14,10 +14,11 @@ public abstract class DynamicEntity extends GameEntity {
     protected boolean collisionBottom;
     protected boolean collisionRight;
     protected boolean collisionLeft;
-    
+
     protected Vector2D speedVector;
 
     protected float gravModifier;
+
     /**
      *
      * @param x

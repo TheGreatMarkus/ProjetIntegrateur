@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington;
 
 import ca.qc.bdeb.info204.spellington.calculations.GameManager;
+import ca.qc.bdeb.info204.spellington.calculations.IncantationTextManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.gamestates.LevelSelectionState;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
@@ -49,7 +50,8 @@ public class GameCore extends StateBasedGame {
 
     private static AppGameContainer appGameContainer;
 
-    public static Font fontPaladin;
+    private static Font fontPaladin;
+    private static Font fontViking;
     public static Random rand = new Random();
 
     /**
@@ -74,6 +76,7 @@ public class GameCore extends StateBasedGame {
 
         try {
             fontPaladin = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Paladin.ttf"));
+            fontViking = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Meath.ttf"));
         } catch (FontFormatException ex) {
             Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -87,8 +90,10 @@ public class GameCore extends StateBasedGame {
         appGameContainer.setIcon("res/image/icon.png");
         appGameContainer.setTitle(GAME_TITLE);
         appGameContainer.setShowFPS(false);
+
         //Start of the game.
         appGameContainer.start();
+        System.out.println("asdfasdf");
 
     }
 
@@ -105,6 +110,7 @@ public class GameCore extends StateBasedGame {
      */
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
+        gc.getInput().addKeyListener(new IncantationTextManager());
         //It is important to keep the state addition order.
         this.addState(new MainMenuState());
         this.addState(new PlayState());
@@ -138,6 +144,14 @@ public class GameCore extends StateBasedGame {
     public static void clearInputRecord(GameContainer gc) {
         gc.getInput().clearKeyPressedRecord();
         gc.getInput().clearMousePressedRecord();
+    }
+
+    public static Font getFontPaladin(int style, float size) {
+        return fontPaladin.deriveFont(TARGER_FPS, size);
+    }
+
+    public static Font getFontViking(int style, float size) {
+        return fontViking.deriveFont(size);
     }
 
 }
