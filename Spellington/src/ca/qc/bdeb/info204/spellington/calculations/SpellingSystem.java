@@ -564,6 +564,10 @@ public class SpellingSystem {
         return activeSpell;
     }
 
+    public static Spell getPassiveSpell() {
+        return passiveSpell;
+    }
+
     public static String getIncantationText() {
         return incantationText;
     }

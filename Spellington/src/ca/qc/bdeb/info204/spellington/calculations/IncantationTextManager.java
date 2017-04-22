@@ -18,15 +18,17 @@ public class IncantationTextManager implements KeyListener {
         //Please see http://www.asciitable.com/ for complete ASCII table IDs
         if (GameManager.getStateBasedGame() != null) {
             if (GameManager.getStateBasedGame().getCurrentState().getID() == GameCore.PLAY_STATE_ID) {
+
                 if (c == 8 && !SpellingSystem.getIncantationText().isEmpty()) {//Backspace char ID
                     SpellingSystem.setIncantationText(SpellingSystem.getIncantationText().substring(0, SpellingSystem.getIncantationText().length() - 1));
-                } else if (c == 9 || c == 27) {
+                } else if (c < 32) {
                     //Do nothing
                 } else {
                     SpellingSystem.setIncantationText(SpellingSystem.getIncantationText() + c);
                 }
             }
         }
+        System.out.println("Current text : " + SpellingSystem.getIncantationText());
     }
 
     @Override

@@ -284,7 +284,16 @@ public class PlayState extends BasicGameState {
             g.drawString("2", greenPositionX + 3, BARS_Y + greenPotionHUD.getHeight());
             g.drawString("3", bluePositionX + 3, BARS_Y + bluePotionHUD.getHeight());
             g.drawString("4", icePositionX + 3, BARS_Y + icePotionHUD.getHeight());
-
+            if (SpellingSystem.getActiveSpell() != null) {
+                if (SpellingSystem.getActiveSpell().getAnimation() != null) {
+                    SpellingSystem.getActiveSpell().getAnimation().draw(GameCore.SCREEN_SIZE.width - 100, 15, 80, 80);
+                }
+            }
+            if (SpellingSystem.getPassiveSpell()!= null) {
+                if (SpellingSystem.getPassiveSpell().getAnimation() != null) {
+                    SpellingSystem.getPassiveSpell().getAnimation().draw(GameCore.SCREEN_SIZE.width - 200, 15, 80, 80);
+                }
+            }
             g.setColor(HEALTHCOLOR);
             g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) Spellington.INIT_MAX_LIFE) * (float) STATSBARWIDTH, STATSBARHEIGHT);
             g.setColor(XPCOLOR);

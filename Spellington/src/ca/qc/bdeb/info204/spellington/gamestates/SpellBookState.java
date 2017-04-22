@@ -170,7 +170,7 @@ public class SpellBookState extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         background.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
-        g.setFont(fontMenu);
+        //g.setFont(fontMenu);
 
         switch (pageState) {
             case 0:
