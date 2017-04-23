@@ -28,7 +28,7 @@ public class IncantationTextManager implements KeyListener {
                 }
             }
         }
-        System.out.println("Current text : " + SpellingSystem.getIncantationText());
+        //System.out.println("Current text : " + SpellingSystem.getIncantationText());
     }
 
     @Override
