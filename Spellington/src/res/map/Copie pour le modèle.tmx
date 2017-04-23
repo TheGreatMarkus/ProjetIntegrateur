@@ -65,19 +65,19 @@
   <tile id="63" terrain="1,1,1,1"/>
  </tileset>
  <tileset firstgid="65" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
-  <image source="collisionTile.png" width="150" height="200"/>
+  <image source="tiles/collisionTile.png" width="150" height="200"/>
  </tileset>
- <layer name="terrain" width="32" height="18">
+ <layer name="terrain" width="32" height="18" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQB8GfAKkrAACQAA
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3NhYGBwGWDsM0B41P5R+0ftH7V/1P5R+0ei/T6DxP6BxAAJGbSZAAkAAA==
+   H4sIAAAAAAAAC3NhYGBwGWDsM0B41P5R+0ftH7V/1P5R+0ftHzj7BxIDALHG2JQACQAA
   </data>
  </layer>
- <layer name="event" width="32" height="18">
+ <layer name="event" width="32" height="18" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQB8GfAKkrAACQAA
   </data>

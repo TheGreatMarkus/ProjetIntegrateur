@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
- <tileset firstgid="1" name="dungeonTile" tilewidth="50" tileheight="50" tilecount="64" columns="8">
+ <tileset firstgid="1" name="dungeonTile.png" tilewidth="50" tileheight="50" tilecount="64" columns="8">
   <image source="tiles/dungeonTile.png" width="400" height="400"/>
  </tileset>
  <tileset firstgid="65" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
@@ -8,17 +8,17 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8WW604CMRCFJywaQRPlkhCQRGT9Iwsa5RZxVd7/qTwnczZuCFgIkE7ypXuZ7Wl3Zto2zawPrkEOUtAEU/AJGiDRPa+fwRx8gC54At9gBcby4fueSPTNPajrm6LfXO9jWaZxxbKh+b+OZRXzGMQy5scqoj5z+uvEfdYO8GX8sy3P38xjw7artmpec6wt5ixr7V3XnAPrkP+yJ799jH6jA8Z7amuZzyuWce79M/Y/MV/z8h06jGF6Rv2QMZfaEfX3if8AvIIluAMvR+gxDqwT1hb3O9bVf+sPfTvgAlyW2tsjxlC2VGPZZjfmtbze0C64CvTNdSO0t1V26HNdYb5y315s6JbH8RPQD+U2tXkWeDQ/D4ylmUmfMX9Qy/kyD9bmOTGQ30y+c42b9VbEmEzt78wx1H0iLb7/BWUhJ80ACQAA
+   H4sIAAAAAAAAC8VWsZKEIAxNs6eNQLNKo2uj5dphuf7/V13e+DJQ3Mx5VyAzb1gg5IXwiOtEZCa8IilaxaYYFIdiVXwUPe0C+10RaYf1N7Fz/0hf8NHRj+dvz3XY39UiY7mrLXLm9K6Gu4k38uP8qTLnTE7ob5JTk9AqdBgq8D8UjeIp57s4OEZcbSV+vFfcO95fkvyWp0r8VisWouO4xlt8FFyBPc6OPIxcL2ExxR/WrsDuNBVzg+TaORdjJ2c+XnLWhUZyfbA8Nfw90c5y+KSPllx9MSeFfcNzruwXydrzf8rk/9ooWf+JvWMMrgJ/L/muoUPkFDmIUqcWgct0NzCOkXPrxf2Wwy/Cxq+L+00vyPfOOMKF/fbdNx0av807+b2Gmvas9mMM3b0ZE+a3wm4iPP3D5sO+45zjnp1nQAwHYf9p7Fu70V8gxzdzbiXTAAkAAA==
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3NhYGBwGWDsM0B41P5R+6ltPynm4bKfXnlqOIb/YLKfUJwMd/9Tw35q1hek5hVa11n4zKI0j1OihhrlDLlxS28MAFvhr9YACQAA
+   H4sIAAAAAAAAC3NhYGBwGWDsM0B41P6RZ/9Ap0XHUfsHtf2OaBjmJmxyxGBs+skpHyktXwdLWTxqP2X2Y0ur5Oon1X5ceYUSMwYaAwB6CW/hAAkAAA==
   </data>
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjYHAC14F2wCgYBYMEOA20A0YBzYALFcwgJn0gq3Gkgp3DAQAAS8WiIgAJAAA=
+   H4sIAAAAAAAAC2NgGAWjgP7AY6AdMApGwSgYksCVSLGhCpyGiJnDAQAA6mDUZgAJAAA=
   </data>
  </layer>
 </map>
