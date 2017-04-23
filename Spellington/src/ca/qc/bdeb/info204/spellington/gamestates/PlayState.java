@@ -89,7 +89,6 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        
         g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la première ligne de render
 
         g.setColor(Color.white);
