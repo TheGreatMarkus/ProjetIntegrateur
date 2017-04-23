@@ -31,23 +31,23 @@ public class Spellington extends LivingEntity {
     private static Animation animWalkR;
 
     //Temporairy code fo air jumps
-    private int airJumps;
-    private int MAX_AIR_JUMPS = 1;
-    private static final float AIR_JUMP_POWER = 0.6f;
+    private static final float AIR_JUMP_POWER = 0.8f;
 
     public static final int INIT_MAX_LIFE = 100;
     private static final float GRAVITY_MODIFIER = 2;
-
     private static final float MAX_X_SPEED = 0.7f;
     private static final Vector2D X_ACC = new Vector2D(0.003f, 0);
     private static final Vector2D INIT_JUMP_SPEED = new Vector2D(0, -0.8f);
     //WJ : WallJump
-    private static final float WJ_ANGLE = (float) Math.toRadians(60);
+    private static final float WJ_ANGLE = (float) Math.toRadians(65);
     //WJ : WallJump
     private static final Vector2D LEFT_WJ_INIT_SPEED = new Vector2D(INIT_JUMP_SPEED.getY() * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED.getY() * (float) Math.sin(WJ_ANGLE));
     private static final Vector2D RIGHT_WJ_INIT_SPEED = new Vector2D(-INIT_JUMP_SPEED.getY() * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED.getY() * (float) Math.sin(WJ_ANGLE));
 
     private static final Dimension SPELLINGTON_SIZE = new Dimension(45, 90);
+
+    private int airJumps;
+    private int maxAirJumps = 1;
 
     /**
      *
@@ -64,7 +64,7 @@ public class Spellington extends LivingEntity {
         resIce = 0;
         resFire = 0;
 
-        airJumps = MAX_AIR_JUMPS;
+        airJumps = maxAirJumps;
 
     }
 
@@ -77,9 +77,9 @@ public class Spellington extends LivingEntity {
     public void update(Input input, float time) {
         //To slowdown time for testing purposes
         //time *= 0.5;
-        //On divize par SCALE pour match la position de la souris avec le scale du render
-        float mouseX = (float) input.getMouseX() / GameCore.SCALE;
-        float mouseY = (float) input.getMouseY() / GameCore.SCALE;
+        //On divize par scale pour match la position de la souris avec le scale du render
+        float mouseX = (float) input.getMouseX() / GameCore.scale;
+        float mouseY = (float) input.getMouseY() / GameCore.scale;
         //Using equation d = (vf^2 - vi^2)/2a. Distance from where Spellington should stop when approching the mouse
         float SLOWDOWN_DISTANCE = (this.speedVector.getX() * this.speedVector.getX()) / (2.0f * X_ACC.getX());
 
@@ -132,7 +132,7 @@ public class Spellington extends LivingEntity {
         //Jumping
 
         if (collisionBottom) {
-            airJumps = MAX_AIR_JUMPS;
+            airJumps = maxAirJumps;
         }
         if (triedToJump && collisionBottom) {
             this.speedVector.setY(INIT_JUMP_SPEED.getY());
@@ -290,12 +290,20 @@ public class Spellington extends LivingEntity {
         return MouvementState.WALL_L;
     }
 
-    public int getMAX_AIR_JUMPS() {
-        return MAX_AIR_JUMPS;
+    public int getMaxAirJumps() {
+        return maxAirJumps;
     }
 
-    public void setMAX_AIR_JUMPS(int MAX_AIR_JUMPS) {
-        this.MAX_AIR_JUMPS = MAX_AIR_JUMPS;
+    public void setMaxAirJumps(int maxAirJumps) {
+        this.maxAirJumps = maxAirJumps;
+    }
+
+    public int getAirJumps() {
+        return airJumps;
+    }
+
+    public void setAirJumps(int airJumps) {
+        this.airJumps = airJumps;
     }
 
 }

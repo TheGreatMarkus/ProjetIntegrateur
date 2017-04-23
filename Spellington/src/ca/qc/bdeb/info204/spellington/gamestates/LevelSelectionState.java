@@ -56,6 +56,7 @@ public class LevelSelectionState extends BasicGameState {
         mnuItemLevel3.render(g, gc);
         mnuItemLevel4.render(g, gc);
         mnuItemLevel5.render(g, gc);
+        MainMenuState.renderMouseCursor(gc);
     }
 
     @Override

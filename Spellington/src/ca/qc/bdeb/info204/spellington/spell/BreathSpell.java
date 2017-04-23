@@ -57,8 +57,8 @@ public class BreathSpell extends Spell {
         Projectile tempProj;
         float originX = spellington.getCenterX();
         float originY = spellington.getCenterY();
-        float mouseX = (float) input.getMouseX() / GameCore.SCALE;
-        float mouseY = (float) input.getMouseY() / GameCore.SCALE;
+        float mouseX = (float) input.getMouseX() / GameCore.scale;
+        float mouseY = (float) input.getMouseY() / GameCore.scale;
         float angle = Calculations.detAngle(mouseX - originX, mouseY - originY);
         Vector2D temp = new Vector2D(initSpeed, angle + (this.angle * (float) (Math.random() * 2 - 1)), true);
         tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation, this.damage,element);

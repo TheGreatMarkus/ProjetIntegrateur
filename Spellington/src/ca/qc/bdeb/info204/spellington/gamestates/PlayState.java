@@ -61,8 +61,8 @@ public class PlayState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-
-        fontSpellChant = new UnicodeFont(GameCore.getFontViking(Font.BOLD, 25));
+        spellington = new Spellington(0, 0, LivingEntity.MouvementState.JUMP_R);
+        fontSpellChant = new UnicodeFont(GameCore.getFontViking(Font.BOLD, 25 * GameCore.scale));
         fontSpellChant.addAsciiGlyphs();
         fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
         fontSpellChant.loadGlyphs();
@@ -83,14 +83,18 @@ public class PlayState extends BasicGameState {
     }
 
     public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
-        spellington = new Spellington(spellingtonX, spellingtonY, LivingEntity.MouvementState.STANDING_R);
+        spellington.setMouvementState(LivingEntity.MouvementState.STANDING_R);
+        spellington.setX(spellingtonX);
+        spellington.setY(spellingtonY);
         map = currentMap;
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        
-        g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la première ligne de render
+        //Must be the first in the PlayState renger method.
+        g.scale(GameCore.scale, GameCore.scale);
+        //Currently broken, gonna look for a solution later.
+        //g.translate(GameCore.screenTranslateX, GameCore.screenTranslateY);
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
@@ -101,8 +105,9 @@ public class PlayState extends BasicGameState {
         g.setColor(Color.white);
         g.drawString("ESC : Menu / F3 : TOGGLE DEBUG / F4 : TOGGLE HUD", 10, GameCore.RENDER_SIZE.height - 40);
 
-        float renderMouseX = gc.getInput().getMouseX() / GameCore.SCALE;
-        float renderMouseY = gc.getInput().getMouseY() / GameCore.SCALE;
+        //Render mouse cursor during gameplay.
+        float renderMouseX = gc.getInput().getMouseX() / GameCore.scale;
+        float renderMouseY = gc.getInput().getMouseY() / GameCore.scale;
         IMG_GAME_CROSSHAIR.draw(renderMouseX - 12, renderMouseY - 12, 25, 25);
 
         for (int i = 0; i < activeProjectiles.size(); i++) {
@@ -190,13 +195,13 @@ public class PlayState extends BasicGameState {
         if (debugMode) {
             float actualMouseX = gc.getInput().getMouseX();
             float actualMouseY = gc.getInput().getMouseY();
-            float renderMouseX = gc.getInput().getMouseX() / GameCore.SCALE;
-            float renderMouseY = gc.getInput().getMouseY() / GameCore.SCALE;
+            float renderMouseX = gc.getInput().getMouseX() / GameCore.scale;
+            float renderMouseY = gc.getInput().getMouseY() / GameCore.scale;
 
             map.render(0, 0, 1);
             g.setColor(Color.red);
 
-            int textY = 120;
+            int textY = 80;
 
             g.setColor(Color.lightGray);
             //int textY = 10;
@@ -215,6 +220,8 @@ public class PlayState extends BasicGameState {
             g.drawString("Spellington Speed : (" + spellington.getSpeedVector().getX() + "," + spellington.getSpeedVector().getY() + ")", textX, textY);
             textY += textYIncrement;
             g.drawString("Collision :", textX, textY);
+            textY += textYIncrement;
+            g.drawString("Current max air jumps : " + spellington.getAirJumps(), textX, textY);
             textY += textYIncrement;
 
             int startingX = 10;
@@ -247,67 +254,75 @@ public class PlayState extends BasicGameState {
 
     private void displayHUD(Graphics g) throws SlickException {
         if (displayHUD) {
-            g.scale(1f / GameCore.SCALE, 1f / GameCore.SCALE);
-            g.setColor(Color.white);
-            int statsBarOffSetX = 75; //common X position of the stats bars
-            int xGap = 5;
-            final int BARS_Y = 5; //Universal Y position for most HUD components
-            int healthBarY = 11 + BARS_Y; //Y position of the health bar
-            int xpBarY = 54 + BARS_Y; //Y position of the xp bar
-            final int STATSBARWIDTH = 381;
-            final int STATSBARHEIGHT = 27;
-            int alpha = 127; //50% color transparency
-            final Color HEALTHCOLOR = new Color(255, 0, 0, alpha), XPCOLOR = new Color(0, 0, 255, alpha);
+            g.scale(1f / GameCore.scale, 1f / GameCore.scale);
+            float statsBarOffSetX = 75 * GameCore.scale; //common X position of the stats bars
+            float xGap = 5 * GameCore.scale;
+            float barsY = 5 * GameCore.scale; //Universal Y position for most HUD components
+            float healthBarY = (10f + barsY) * GameCore.scale; //Y position of the health bar
+            float xpBarY = (54f + barsY) * GameCore.scale; //Y position of the xp bar
+            float statBarWidth = 381 * GameCore.scale;
+            float statBarHeight = 27 * GameCore.scale;
+            float alpha = 0.5f; //50% color transparency
+            final Color healthColor = new Color(1, 0, 0, alpha), xpColor = new Color(0, 0, 1, alpha), textColor = new Color(1, 1, 1, alpha);
             String incantationText = SpellingSystem.getIncantationText();
+            
+            float statsBarWidth = (float) statsBarHUD.getWidth() * GameCore.scale;
+            float statsBarHeight = (float) statsBarHUD.getHeight() * GameCore.scale;
+            float inputTextWidth = (float) inputTextHUD.getWidth() * GameCore.scale;
+            float inputTextHeight = (float) inputTextHUD.getHeight() * GameCore.scale;
+            float spellWidth = (float) activeSpellHUD.getWidth() * GameCore.scale;
+            float spellHeight = (float) activeSpellHUD.getHeight() * GameCore.scale;
+            float potionWidth = (float) redPotionHUD.getWidth() * GameCore.scale;
+            float potionHeight = (float) redPotionHUD.getHeight() * GameCore.scale;
+
+            float passiveX = GameCore.SCREEN_SIZE.width - xGap - spellWidth;
+            float activeX = passiveX - xGap - spellWidth;
+            float icePotionX = activeX - xGap - potionWidth;
+            float bluePotionX = icePotionX - xGap - potionWidth;
+            float greenPotionX = bluePotionX - xGap - potionWidth;
+            float redPotionX = greenPotionX - xGap - potionWidth;
+
+            this.statsBarHUD.draw(xGap, barsY, statsBarWidth, statsBarHeight);
+            this.inputTextHUD.draw(((float) GameCore.SCREEN_SIZE.width / 2 - inputTextWidth / 2), barsY, inputTextWidth, inputTextHeight);
+            this.passiveSpellHUD.draw(passiveX, barsY, spellWidth, spellHeight);
+            this.activeSpellHUD.draw(activeX, barsY, spellWidth, spellHeight);
+            this.redPotionHUD.draw(redPotionX, barsY, potionWidth, potionHeight);
+            this.greenPotionHUD.draw(greenPotionX, barsY, potionWidth, potionHeight);
+            this.bluePotionHUD.draw(bluePotionX, barsY, potionWidth, potionHeight);
+            this.icePotionHUD.draw(icePotionX, barsY, potionWidth, potionHeight);
 
             g.setFont(fontSpellChant);
-
-            int passiveX = GameCore.SCREEN_SIZE.width - xGap - passiveSpellHUD.getWidth();
-            int activeX = passiveX - xGap - activeSpellHUD.getWidth();
-            int icePositionX = activeX - xGap - redPotionHUD.getWidth();
-            int bluePositionX = icePositionX - xGap - bluePotionHUD.getWidth();
-            int greenPositionX = bluePositionX - xGap - greenPotionHUD.getWidth();
-            int redPositionX = greenPositionX - xGap - redPotionHUD.getWidth();
-
-            g.drawImage(this.statsBarHUD, xGap, BARS_Y);
-            g.drawImage(this.inputTextHUD, (GameCore.SCREEN_SIZE.width / 2 - inputTextHUD.getWidth() / 2), BARS_Y);
-            g.drawImage(this.passiveSpellHUD, passiveX, BARS_Y);
-            g.drawImage(this.activeSpellHUD, activeX, BARS_Y);
-            g.drawImage(this.redPotionHUD, redPositionX, BARS_Y);
-            g.drawImage(this.greenPotionHUD, greenPositionX, BARS_Y);
-            g.drawImage(this.bluePotionHUD, bluePositionX, BARS_Y);
-            g.drawImage(this.icePotionHUD, icePositionX, BARS_Y);
-
-            g.drawString(incantationText, (GameCore.SCREEN_SIZE.width / 2) - (fontSpellChant.getWidth(incantationText) / 2), BARS_Y + 8);
-            g.drawString("Passive", activeX, BARS_Y + passiveSpellHUD.getHeight());
-            g.drawString("Active", passiveX, BARS_Y + passiveSpellHUD.getHeight());
-            g.drawString("1", redPositionX + 3, BARS_Y + redPotionHUD.getHeight());
-            g.drawString("2", greenPositionX + 3, BARS_Y + greenPotionHUD.getHeight());
-            g.drawString("3", bluePositionX + 3, BARS_Y + bluePotionHUD.getHeight());
-            g.drawString("4", icePositionX + 3, BARS_Y + icePotionHUD.getHeight());
+            g.setColor(textColor);
+            g.drawString(incantationText, (GameCore.SCREEN_SIZE.width / 2) - (fontSpellChant.getWidth(incantationText) / 2), barsY + 8f * GameCore.scale);
+            g.drawString("Passive", activeX, barsY + spellHeight);
+            g.drawString("Active", passiveX, barsY + spellHeight);
+            g.drawString("1", redPotionX + 3, barsY + potionHeight);
+            g.drawString("2", greenPotionX + 3, barsY + potionHeight);
+            g.drawString("3", bluePotionX + 3, barsY + potionHeight);
+            g.drawString("4", icePotionX + 3, barsY + potionHeight);
             if (SpellingSystem.getActiveSpell() != null) {
                 if (SpellingSystem.getActiveSpell().getAnimation() != null) {
                     SpellingSystem.getActiveSpell().getAnimation().draw(GameCore.SCREEN_SIZE.width - 100, 15, 80, 80);
                 }
             }
-            if (SpellingSystem.getPassiveSpell()!= null) {
+            if (SpellingSystem.getPassiveSpell() != null) {
                 if (SpellingSystem.getPassiveSpell().getAnimation() != null) {
                     SpellingSystem.getPassiveSpell().getAnimation().draw(GameCore.SCREEN_SIZE.width - 200, 15, 80, 80);
                 }
             }
-            g.setColor(HEALTHCOLOR);
-            g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) Spellington.INIT_MAX_LIFE) * (float) STATSBARWIDTH, STATSBARHEIGHT);
-            g.setColor(XPCOLOR);
-            g.fillRect(statsBarOffSetX, xpBarY, .5f * STATSBARWIDTH, STATSBARHEIGHT);
-            g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la première ligne de render
+            g.setColor(healthColor);
+            g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) Spellington.INIT_MAX_LIFE) * (float) statBarWidth, statBarHeight);
+            g.setColor(xpColor);
+            g.fillRect(statsBarOffSetX, xpBarY, .5f * statBarWidth, statBarHeight);
+            g.scale(GameCore.scale, GameCore.scale);//doit être la première ligne de render
         }
     }
 
     private void drawAimingHelp(Graphics g, Input input, Spell activeSpell, Spellington spellington) {
         float spellingtonX = spellington.getCenterX();
         float spellingtonY = spellington.getCenterY();
-        float mouseX = input.getMouseX() / GameCore.SCALE;
-        float mouseY = input.getMouseY() / GameCore.SCALE;
+        float mouseX = input.getMouseX() / GameCore.scale;
+        float mouseY = input.getMouseY() / GameCore.scale;
 
         if (activeSpell instanceof ProjectileSpell) {
             g.setColor(new Color(255, 255, 255));

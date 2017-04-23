@@ -2,7 +2,6 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
-import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.IMG_MENU_CURSOR;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import ca.qc.bdeb.info204.spellington.textEntities.InfoItem;
 import org.newdawn.slick.GameContainer;
@@ -65,9 +64,9 @@ public class SpellBookState extends BasicGameState {
     private InfoItem infItemBar7;
     private InfoItem infItemBar8;
 
-    private float infoBarWidth = 550 * GameCore.SCALE;
-    private float infoBarHeight = 60 * GameCore.SCALE;
-    private float centerXInfoBar = (GameCore.SCREEN_SIZE.width / 4) - (infoBarWidth / 2) + 40 * GameCore.SCALE;
+    private float infoBarWidth = 550 * GameCore.scale;
+    private float infoBarHeight = 60 * GameCore.scale;
+    private float centerXInfoBar = (GameCore.SCREEN_SIZE.width / 4) - (infoBarWidth / 2) + 40 * GameCore.scale;
     private float topInfoBarY = (GameCore.SCREEN_SIZE.height / 4);
     private float textGap;
     private float topTitleY;
@@ -99,12 +98,12 @@ public class SpellBookState extends BasicGameState {
 
         background = new Image("src/res/image/spellbook/Grimoire.png");
 
-        fontSpellChant = new UnicodeFont(GameCore.getFontPaladin(Font.PLAIN, 30.0f * GameCore.SCALE));
+        fontSpellChant = new UnicodeFont(GameCore.getFontPaladin(Font.PLAIN, 30.0f * GameCore.scale));
         fontSpellChant.addAsciiGlyphs();
         fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
         fontSpellChant.loadGlyphs();
 
-        textGap = 10.0f * GameCore.SCALE;
+        textGap = 10.0f * GameCore.scale;
 
         mnuItemMainTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_MAINTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_MAINTITLE), fontMenu.getHeight(SB_MAINTITLE));
         mnuItemMainTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_MAINTITLE, false, false, 0, textGap + topTitleY, fontMenu.getWidth(SB_MAINTITLE), fontMenu.getHeight(SB_MAINTITLE));
@@ -130,16 +129,16 @@ public class SpellBookState extends BasicGameState {
         infItemBar7 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 6) + textGap, infoBarWidth, infoBarHeight);
         infItemBar8 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 7) + textGap, infoBarWidth, infoBarHeight);
 
-        float mnuItemMainTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemMainTitle.getWidth() / 2) + 35 * GameCore.SCALE;
-        float mnuItemSpellsX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemSpells.getWidth() / 2) + +35 * GameCore.SCALE;
-        float mnuItemPotionsX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemPotions.getWidth() / 2) + 35 * GameCore.SCALE;
-        float mnuItemEnnemiesX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemEnnemies.getWidth() / 2) + 35 * GameCore.SCALE;
-        float mnuItemMenuX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemRetour.getWidth() / 2) + 35 * GameCore.SCALE;
-        float mnuItemSpellsTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemSpellTitle.getWidth() / 2) + 35 * GameCore.SCALE;
-        float mnuItemPotionsTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemPotionsTitle.getWidth() / 2) + 35 * GameCore.SCALE;
-        float mnuItemEnnemiesTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemEnnemiesTitle.getWidth() / 2) + 35 * GameCore.SCALE;
-        float mnuItemBackX = mnuItemBack.getWidth() - 20 * GameCore.SCALE;
-        float mnuItemNextX = GameCore.SCREEN_SIZE.width - mnuItemNext.getWidth() - textGap - 85 * GameCore.SCALE;
+        float mnuItemMainTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemMainTitle.getWidth() / 2) + 35 * GameCore.scale;
+        float mnuItemSpellsX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemSpells.getWidth() / 2) + +35 * GameCore.scale;
+        float mnuItemPotionsX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemPotions.getWidth() / 2) + 35 * GameCore.scale;
+        float mnuItemEnnemiesX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemEnnemies.getWidth() / 2) + 35 * GameCore.scale;
+        float mnuItemMenuX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemRetour.getWidth() / 2) + 35 * GameCore.scale;
+        float mnuItemSpellsTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemSpellTitle.getWidth() / 2) + 35 * GameCore.scale;
+        float mnuItemPotionsTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemPotionsTitle.getWidth() / 2) + 35 * GameCore.scale;
+        float mnuItemEnnemiesTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemEnnemiesTitle.getWidth() / 2) + 35 * GameCore.scale;
+        float mnuItemBackX = mnuItemBack.getWidth() - 20 * GameCore.scale;
+        float mnuItemNextX = GameCore.SCREEN_SIZE.width - mnuItemNext.getWidth() - textGap - 85 * GameCore.scale;
         mnuItemMainTitle.setX(mnuItemMainTitleX);
         mnuItemSpells.setX(mnuItemSpellsX);
         mnuItemPotions.setX(mnuItemPotionsX);
@@ -190,9 +189,7 @@ public class SpellBookState extends BasicGameState {
                 break;
         }
 
-        float renderMouseX = gc.getInput().getMouseX();
-        float renderMouseY = gc.getInput().getMouseY();
-        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
+        MainMenuState.renderMouseCursor(gc);
     }
 
     @Override
@@ -634,10 +631,10 @@ public class SpellBookState extends BasicGameState {
         infItemBar8.renderTransparent(g, gc);
 
         //g.setFont(fontSpellChant);
-        float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
-        float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.SCALE;
-        float iconSize = 200 * GameCore.SCALE;
-        float gap = 30 * GameCore.SCALE;
+        float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.scale;
+        float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.scale;
+        float iconSize = 200 * GameCore.scale;
+        float gap = 30 * GameCore.scale;
         int i;
 
         switch (spellsSubPageState) { //Spell name title attributed in the information rectangles according to the page where the player stands
@@ -695,10 +692,10 @@ public class SpellBookState extends BasicGameState {
         infItemBar4.renderTransparent(g, gc);
 
         //g.setFont(fontSpellChant);
-        float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
-        float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.SCALE;
-        float iconSize = 200 * GameCore.SCALE;
-        float gap = 30 * GameCore.SCALE;
+        float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.scale;
+        float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.scale;
+        float iconSize = 200 * GameCore.scale;
+        float gap = 30 * GameCore.scale;
         int i;
 
 //        for (infoBarFill = 0, i = 0; i < 4; infoBarFill++, i++) {
@@ -732,10 +729,10 @@ public class SpellBookState extends BasicGameState {
         infItemBar8.renderTransparent(g, gc);
 
         //g.setFont(fontSpellChant);
-        float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
-        float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.SCALE;
-        float iconSize = 200 * GameCore.SCALE;
-        float gap = 30 * GameCore.SCALE;
+        float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.scale;
+        float iconY = ((GameCore.SCREEN_SIZE.height / 18) * 3) - 30 * GameCore.scale;
+        float iconSize = 200 * GameCore.scale;
+        float gap = 30 * GameCore.scale;
         int i;
 
         switch (ennemiesSubPageState) { //Spell name title attributed in the information rectangles according to the page where the player stands
@@ -765,7 +762,7 @@ public class SpellBookState extends BasicGameState {
 
     private void displaySpellsRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
         page = Integer.toString(pageNumber);
-        g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3) / 4) - 20 * GameCore.SCALE, GameCore.SCREEN_SIZE.height - gap * 2);
+        g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3) / 4) - 20 * GameCore.scale, GameCore.SCREEN_SIZE.height - gap * 2);
 
         if (showRightPage) {
             icon.draw(iconX, iconY, iconSize, iconSize);
@@ -853,7 +850,7 @@ public class SpellBookState extends BasicGameState {
                     element = "Élément: Neutre";
                     break;
             }
-            //iconImage.draw(iconX, iconY, iconSize - 10*GameCore.SCALE, iconSize - 10*GameCore.SCALE);
+            //iconImage.draw(iconX, iconY, iconSize - 10*GameCore.scale, iconSize - 10*GameCore.scale);
 
             g.drawString(name, iconX + iconSize + gap, iconY);
             g.drawString(type, iconX + iconSize + gap, iconY + 2 * gap);
@@ -865,7 +862,7 @@ public class SpellBookState extends BasicGameState {
 
     private void displayPotionsRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
         page = Integer.toString(pageNumber);
-        g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3) / 4) - 20 * GameCore.SCALE, GameCore.SCREEN_SIZE.height - gap * 2);
+        g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3) / 4) - 20 * GameCore.scale, GameCore.SCREEN_SIZE.height - gap * 2);
 
         if (showRightPage) {
             icon.draw(iconX, iconY, iconSize, iconSize);
@@ -900,7 +897,7 @@ public class SpellBookState extends BasicGameState {
 //                    g.drawString(effect, iconX + iconSize + gap, iconY + 4 * gap);
 //                    break;  
 //            }
-            //iconImage.draw(iconX, iconY, iconSize - 10*GameCore.SCALE, iconSize - 10*GameCore.SCALE);
+            //iconImage.draw(iconX, iconY, iconSize - 10*GameCore.scale, iconSize - 10*GameCore.scale);
             g.drawString(name, iconX + iconSize + gap, iconY);
             g.drawString(type, iconX + iconSize + gap, iconY + 2 * gap);
             g.drawString(element, iconX + iconSize + gap, iconY + 6 * gap);

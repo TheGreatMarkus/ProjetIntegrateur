@@ -12,6 +12,7 @@ import ca.qc.bdeb.info204.spellington.gamestates.PauseMenuState;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -32,10 +33,10 @@ public class GameCore extends StateBasedGame {
 
     //For testing and seeing the console text
     public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    //public static final Dimension SCREEN_SIZE = new Dimension(800, 450);
+    //public static final Dimension SCREEN_SIZE = new Dimension(1900, 200);
     //public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
     public static final Dimension RENDER_SIZE = new Dimension(1600, 900);
-    public static float SCALE;
+    public static float scale;
     public static final int MAIN_MENU_STATE_ID = 0;
     public static final int PLAY_STATE_ID = 1;
     public static final int OPTIONS_MENU_STATE_ID = 2;
@@ -69,11 +70,10 @@ public class GameCore extends StateBasedGame {
          scale.*/
 
         if (((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width) < ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height)) {
-            //gotta center according to y
-            SCALE = ((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width);
+            scale = ((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width);
         } else {
             //gotta center according to x
-            SCALE = ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height);
+            scale = ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height);
         }
 
         try {

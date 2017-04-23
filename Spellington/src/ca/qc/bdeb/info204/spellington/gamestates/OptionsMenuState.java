@@ -36,9 +36,7 @@ public class OptionsMenuState extends BasicGameState {
         mnuItemTitle.render(g, gc);
         mnuItemBack.render(g, gc);
 
-        float renderMouseX = gc.getInput().getMouseX();
-        float renderMouseY = gc.getInput().getMouseY();
-        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
+        MainMenuState.renderMouseCursor(gc);
     }
 
     @Override

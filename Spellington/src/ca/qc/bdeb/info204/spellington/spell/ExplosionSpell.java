@@ -29,8 +29,8 @@ public class ExplosionSpell extends Spell {
 
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
-        float renderMouseX = input.getMouseX() / GameCore.SCALE;
-        float renderMouseY = input.getMouseY() / GameCore.SCALE;
+        float renderMouseX = input.getMouseX() / GameCore.scale;
+        float renderMouseY = input.getMouseY() / GameCore.scale;
         if (this.id == SpellingSystem.ID_SPARK || this.id == SpellingSystem.ID_LIGHTNING_SWARM || this.id == SpellingSystem.ID_ICE_RUNE) {
             exposionSpellOnMouse(input, activeEnemy);
 
@@ -42,8 +42,8 @@ public class ExplosionSpell extends Spell {
     }
 
     private void exposionSpellOnMouse(Input input, ArrayList<Enemy> activeEnemy) {
-        float renderMouseX = input.getMouseX() / GameCore.SCALE;
-        float renderMouseY = input.getMouseY() / GameCore.SCALE;
+        float renderMouseX = input.getMouseX() / GameCore.scale;
+        float renderMouseY = input.getMouseY() / GameCore.scale;
 
         Circle explosion = new Circle(renderMouseX, renderMouseY, ray);
         for (int i = 0; i < activeEnemy.size(); i++) {

@@ -45,7 +45,7 @@ public class MainMenuState extends BasicGameState {
     private MenuItem mnuItemOptions;
     private MenuItem mnuItemExit;
 
-    public static final float TEXT_GAP = 10.0f * GameCore.SCALE;
+    public static final float TEXT_GAP = 10.0f * GameCore.scale;
 
     ;
 
@@ -55,7 +55,7 @@ public class MainMenuState extends BasicGameState {
         //Initialisation du font pour le menu.
         backGround = new Image("res/image/menu/mm_background.png");
 
-        fontMenu = new UnicodeFont(GameCore.getFontPaladin(Font.BOLD, 80.0f * GameCore.SCALE));
+        fontMenu = new UnicodeFont(GameCore.getFontPaladin(Font.BOLD, 80.0f * GameCore.scale));
         fontMenu.addAsciiGlyphs();
         fontMenu.getEffects().add(new ColorEffect(java.awt.Color.black));
         fontMenu.getEffects().add(new OutlineEffect(1, java.awt.Color.white));
@@ -89,10 +89,9 @@ public class MainMenuState extends BasicGameState {
         mnuItemLoadGame.render(g, gc);
         mnuItemOptions.render(g, gc);
         mnuItemExit.render(g, gc);
-
-        float renderMouseX = gc.getInput().getMouseX();
-        float renderMouseY = gc.getInput().getMouseY();
-        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
+        
+        renderMouseCursor(gc);
+        
 
     }
 
@@ -128,6 +127,12 @@ public class MainMenuState extends BasicGameState {
     @Override
     public int getID() {
         return GameCore.MAIN_MENU_STATE_ID;
+    }
+
+    public static void renderMouseCursor(GameContainer gc) {
+        float renderMouseX = gc.getInput().getMouseX();
+        float renderMouseY = gc.getInput().getMouseY();
+        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.scale, 25f * GameCore.scale);
     }
 
 }

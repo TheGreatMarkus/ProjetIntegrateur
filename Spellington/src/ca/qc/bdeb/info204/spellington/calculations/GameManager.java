@@ -77,6 +77,8 @@ public class GameManager {
 
     public static void levelSelected(int level) throws SlickException {
         activeLevel = level;
+        //Pour tester, à enlever après
+        activeMapIndex = 0;
         loadNextMap();
     }
 
@@ -272,7 +274,7 @@ public class GameManager {
 //                activeMap = DUNGEON_ROOMS.get(activeMapIndex);
                 if (activeMapIndex < DUNGEON_ROOM_NUMBER - 1) {
                     activeMapIndex += 1;
-                    activeMap = TUTORIAL_ROOMS.get(activeMapIndex);
+                    activeMap = DUNGEON_ROOMS.get(activeMapIndex);
                 } else {
                     endOfLevel = true;
                 }
