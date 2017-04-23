@@ -201,7 +201,7 @@ public class PlayState extends BasicGameState {
             map.render(0, 0, 1);
             g.setColor(Color.red);
 
-            int textY = 80;
+            int textY = (int) (80 * GameCore.scale);
 
             g.setColor(Color.lightGray);
             //int textY = 10;
@@ -219,9 +219,14 @@ public class PlayState extends BasicGameState {
             textY += textYIncrement;
             g.drawString("Spellington Speed : (" + spellington.getSpeedVector().getX() + "," + spellington.getSpeedVector().getY() + ")", textX, textY);
             textY += textYIncrement;
-            g.drawString("Collision :", textX, textY);
-            textY += textYIncrement;
             g.drawString("Current max air jumps : " + spellington.getAirJumps(), textX, textY);
+            textY += textYIncrement;
+            textY += textYIncrement;
+            g.drawString("Current level : " + GameManager.getActiveLevel(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Current map : " + GameManager.getActiveMapIndex(), textX, textY);
+            textY += textYIncrement;
+            g.drawString("Collision :", textX, textY);
             textY += textYIncrement;
 
             int startingX = 10;
@@ -265,7 +270,7 @@ public class PlayState extends BasicGameState {
             float alpha = 0.5f; //50% color transparency
             final Color healthColor = new Color(1, 0, 0, alpha), xpColor = new Color(0, 0, 1, alpha), textColor = new Color(1, 1, 1, alpha);
             String incantationText = SpellingSystem.getIncantationText();
-            
+
             float statsBarWidth = (float) statsBarHUD.getWidth() * GameCore.scale;
             float statsBarHeight = (float) statsBarHUD.getHeight() * GameCore.scale;
             float inputTextWidth = (float) inputTextHUD.getWidth() * GameCore.scale;

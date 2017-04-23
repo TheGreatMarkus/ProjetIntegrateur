@@ -51,7 +51,7 @@ public class GameManager {
     private static final ArrayList<TiledMap> BOSS_ROOMS = new ArrayList();
 
     private static final int TUTORIAL_ROOM_NUMBER = 3;
-    private static final int DUNGEON_ROOM_NUMBER = 9;
+    private static final int DUNGEON_ROOM_NUMBER = 20;
     private static final int PLAINS_ROOM_NUMBER = 10;
     private static final int CASTLE_ROOM_NUMBER = 10;
     private static final int BOSS_ROOM_NUMBER = 10;
@@ -252,7 +252,7 @@ public class GameManager {
     }
 
     public static void checkEndOfLevel(Spellington spellington) throws SlickException {
-        if (activeEnemies.isEmpty() && spellington.intersects(new Rectangle(exitPoint.x, exitPoint.y, Tile.DIM_TILE.width, Tile.DIM_TILE.height))) {
+        if (/*activeEnemies.isEmpty() && */spellington.intersects(new Rectangle(exitPoint.x, exitPoint.y, Tile.DIM_TILE.width, Tile.DIM_TILE.height))) {
             loadNextMap();
         }
     }
@@ -318,5 +318,39 @@ public class GameManager {
     public static StateBasedGame getStateBasedGame() {
         return stateBasedGame;
     }
+
+    public static int getActiveLevel() {
+        return activeLevel;
+    }
+
+    public static void setActiveLevel(int activeLevel) {
+        GameManager.activeLevel = activeLevel;
+    }
+
+    public static int getActiveMapIndex() {
+        return activeMapIndex;
+    }
+
+    public static void setActiveMapIndex(int activeMapIndex) {
+        GameManager.activeMapIndex = activeMapIndex;
+    }
+
+    public static GameSave getGameSave() {
+        return gameSave;
+    }
+
+    public static void setGameSave(GameSave gameSave) {
+        GameManager.gameSave = gameSave;
+    }
+
+    public static TiledMap getActiveMap() {
+        return activeMap;
+    }
+
+    public static void setActiveMap(TiledMap activeMap) {
+        GameManager.activeMap = activeMap;
+    }
+    
+    
 
 }

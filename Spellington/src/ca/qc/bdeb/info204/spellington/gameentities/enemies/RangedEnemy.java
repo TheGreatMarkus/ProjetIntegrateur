@@ -24,7 +24,6 @@ public class RangedEnemy extends Enemy {
         if (this.collisionRight || this.collisionLeft) {
             this.speedVector.setX(0);
         }
-        this.speedVector.setX(-0.02f);
         this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
         this.setX(this.getX() + this.getSpeedVector().getX() * time);
         this.setY(this.getY() + this.getSpeedVector().getY() * time);
