@@ -69,8 +69,10 @@ public class GameCore extends StateBasedGame {
          scale.*/
 
         if (((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width) < ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height)) {
+            //gotta center according to y
             SCALE = ((float) SCREEN_SIZE.width / (float) RENDER_SIZE.width);
         } else {
+            //gotta center according to x
             SCALE = ((float) SCREEN_SIZE.height / (float) RENDER_SIZE.height);
         }
 
