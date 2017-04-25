@@ -134,14 +134,16 @@ public class SpellingSystem {
     private static final String POTION_TIME_DESC = "";
     private static final String POTION_PAST_DESC = "";
 
+    static boolean cheatMode = true;
+
     public static void initSpellingSystem() {
         initAnimation();
 
         Spell fireBall;
-        boolean cheatMode = true;
 
         if (cheatMode) {
             fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 9999, animFireBall, 30, 30, 1, 1, 9999);
+
         } else {
             fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 5, animFireBall, 30, 30, 1, 1, 5);
         }
@@ -292,7 +294,9 @@ public class SpellingSystem {
             }
             if (!newSpell && activeSpell != null) {
                 activeSpell.spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
-                nbSpellUses--;
+                if (!cheatMode) {
+                    nbSpellUses--;
+                }
             }
             if (nbSpellUses <= 0) {
                 if (activeSpell != null) {
@@ -337,7 +341,7 @@ public class SpellingSystem {
         //potions end-----------
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = spellList.get(0).getIncantation();
+            incantationText = spellList.get(9).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F2)) {

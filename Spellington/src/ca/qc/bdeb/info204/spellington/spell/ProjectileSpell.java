@@ -23,6 +23,10 @@ public class ProjectileSpell extends Spell {
     private float gravModifier;
     private int damage;
 
+    private static final float INIT_SPEED_MOD = 0.002f;
+    private static final float INIT_SPEED_MIN = 0.2f;
+    private static final float INIT_SPEED_MAX = 1.2f;
+
     public ProjectileSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int width, int height, float initSpeed, float gravModifier, int damage) {
         super(id, element, name, "Projectile", shortDescription, uses, animation, width, height);
         this.initSpeed = initSpeed;
@@ -36,9 +40,16 @@ public class ProjectileSpell extends Spell {
         float originY = spellington.getCenterY();
         float mouseX = (float) input.getMouseX() / GameCore.scale;
         float mouseY = (float) input.getMouseY() / GameCore.scale;
+        float distance = Vector2D.distance(originX, originY, mouseX, mouseY);
+        float speedMult = distance * (INIT_SPEED_MOD * GameCore.scale);
+        if (speedMult < INIT_SPEED_MIN) {
+            speedMult = INIT_SPEED_MIN;
+        } else if (speedMult > INIT_SPEED_MAX) {
+            speedMult = INIT_SPEED_MAX;
+        }
         float angle = Calculations.detAngle(mouseX - originX, mouseY - originY);
-        Vector2D temp = new Vector2D(initSpeed, angle, true);
-        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation, this.damage, this.element);
+        Vector2D tempVector = new Vector2D(initSpeed * speedMult, angle, true);
+        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, tempVector, gravModifier, animation, this.damage, this.element);
 
         return tempProj;
     }

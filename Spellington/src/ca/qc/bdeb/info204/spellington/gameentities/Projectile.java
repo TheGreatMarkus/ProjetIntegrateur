@@ -50,8 +50,6 @@ public class Projectile extends DynamicEntity {
 
     public void setDamage(int damage) {
         this.damage = damage;
-        this.animation.draw(x, y, width, height);
-        //g.drawRect(x, y, width, height);
     }
 
     public ElementalType getDamageType() {

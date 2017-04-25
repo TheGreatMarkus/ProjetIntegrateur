@@ -63,10 +63,10 @@ public class Vector2D {
         return (float) Math.sqrt(x * x + y * y);
     }
 
-    public static float distance(float x1, float x2, float y1, float y2) {
-        x1 -= x2;
-        y1 -= y2;
-        return (float) Math.sqrt(x1 * x1 + y1 * y1);
+    public static float distance(float x1, float y1, float x2, float y2) {
+        float dx = x1 - x2;
+        float dy = y1 - y2;
+        return (float) Math.sqrt((dx * dx) + (dy * dy));
     }
 
     public static float distance(Vector2D v1, Vector2D v2) {

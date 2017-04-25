@@ -26,7 +26,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -328,38 +327,98 @@ public class PlayState extends BasicGameState {
         float spellingtonY = spellington.getCenterY();
         float mouseX = input.getMouseX() / GameCore.scale;
         float mouseY = input.getMouseY() / GameCore.scale;
-
+        float projectionPrecision = 20;
         if (activeSpell instanceof ProjectileSpell) {
             g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
-            float spellX = spellingtonX - activeSpell.getWidth() / 2;
-            float spellY = spellingtonY - activeSpell.getHeight() / 2;
-            float angle = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY);
-            float gravModifier = ((ProjectileSpell) activeSpell).getGravModifier();
-            Vector2D tempSpeedVector = new Vector2D(((ProjectileSpell) activeSpell).getInitSpeed(), angle, true);
-            float time = 16;
+            Projectile temp = ((ProjectileSpell) activeSpell).createSpellProjectile(spellington, input);
+            temp.setDamage(0);
+
             boolean endLoop = false;
-            boolean oob = false;
-            g.setColor(new Color(255, 255, 255, 50));
-            while (!endLoop && !oob) {
-                g.drawOval(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight());
-                tempSpeedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
-                spellX += tempSpeedVector.getX() * time;
-                spellY += tempSpeedVector.getY() * time;
-                Rectangle tempRect = new Rectangle(spellX, spellY, activeSpell.getWidth(), activeSpell.getHeight());
-                for (int i = 0; i < GameManager.getMapInformation().length; i++) {
-                    for (int j = 0; j < GameManager.getMapInformation()[i].length; j++) {
-                        if (tempRect.intersects(GameManager.getMapInformation()[i][j]) && GameManager.getMapInformation()[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
-                            endLoop = true;
-                        }
-                    }
+            g.setColor(new Color(255, 255, 255, 70));
+            while (!endLoop) {
+                float tempX = temp.getCenterX();
+                float tempY = temp.getCenterY();
+                temp.update(projectionPrecision);
+                g.drawLine(temp.getCenterX(), temp.getCenterY(), tempX, tempY);
+                if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, temp)) {
+                    endLoop = true;
+                    g.setColor(Color.red);
+                    g.drawOval(temp.getX(), temp.getY(), temp.getWidth(), temp.getHeight());
                 }
-                if (spellX < 0 || spellX > 1600 || spellY < 0 || spellY > 900) {
-                    oob = true;
+
+                if (temp.getX() < 0 || temp.getX() > 1600 || temp.getY() < 0 || temp.getY() > 900) {
+                    endLoop = true;
                 }
             }
 
         } else if (activeSpell instanceof BreathSpell) {
+            g.setColor(new Color(255, 255, 255));
+            g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
+            Projectile temp1 = ((BreathSpell) activeSpell).createSpellProjectileBreath(spellington, input);
+            Projectile temp2 = ((BreathSpell) activeSpell).createSpellProjectileBreath(spellington, input);
+            Projectile temp3 = ((BreathSpell) activeSpell).createSpellProjectileBreath(spellington, input);
+            temp1.setDamage(0);
+            temp2.setDamage(0);
+            temp3.setDamage(0);
+            float tempAngle1 = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY) + ((BreathSpell) activeSpell).getAngleDeviation();
+            float tempAngle2 = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY) - ((BreathSpell) activeSpell).getAngleDeviation();
+            float tempAngle3 = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY);
+            temp1.setSpeedVector(new Vector2D(temp1.getSpeedVector().vectorLength(), tempAngle1, true));
+            temp2.setSpeedVector(new Vector2D(temp2.getSpeedVector().vectorLength(), tempAngle2, true));
+            temp3.setSpeedVector(new Vector2D(temp3.getSpeedVector().vectorLength(), tempAngle3, true));
+
+            boolean endLoop = false;
+            g.setColor(new Color(255, 255, 255, 70));
+            while (!endLoop) {
+                float tempX = temp1.getCenterX();
+                float tempY = temp1.getCenterY();
+                temp1.update(projectionPrecision);
+                g.drawLine(temp1.getCenterX(), temp1.getCenterY(), tempX, tempY);
+                if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, temp1)) {
+                    endLoop = true;
+                    g.setColor(Color.red);
+                    g.drawOval(temp1.getX(), temp1.getY(), temp1.getWidth(), temp1.getHeight());
+                }
+
+                if (temp1.getX() < 0 || temp1.getX() > 1600 || temp1.getY() < 0 || temp1.getY() > 900) {
+                    endLoop = true;
+                }
+            }
+            endLoop = false;
+            g.setColor(new Color(255, 255, 255, 70));
+            while (!endLoop) {
+                float tempX = temp2.getCenterX();
+                float tempY = temp2.getCenterY();
+                temp2.update(projectionPrecision);
+                g.drawLine(temp2.getCenterX(), temp2.getCenterY(), tempX, tempY);
+                if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, temp2)) {
+                    endLoop = true;
+                    g.setColor(Color.red);
+                    g.drawOval(temp2.getX(), temp2.getY(), temp2.getWidth(), temp2.getHeight());
+                }
+
+                if (temp2.getX() < 0 || temp2.getX() > 1600 || temp2.getY() < 0 || temp2.getY() > 900) {
+                    endLoop = true;
+                }
+            }
+            endLoop = false;
+            g.setColor(new Color(255, 255, 255, 70));
+            while (!endLoop) {
+                float tempX = temp3.getCenterX();
+                float tempY = temp3.getCenterY();
+                temp3.update(projectionPrecision);
+                g.drawLine(temp3.getCenterX(), temp3.getCenterY(), tempX, tempY);
+                if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, temp3)) {
+                    endLoop = true;
+                    g.setColor(Color.red);
+                    g.drawOval(temp3.getX(), temp3.getY(), temp3.getWidth(), temp3.getHeight());
+                }
+
+                if (temp3.getX() < 0 || temp3.getX() > 1600 || temp3.getY() < 0 || temp3.getY() > 900) {
+                    endLoop = true;
+                }
+            }
 
         } else if (activeSpell instanceof ExplosionSpell) {
             float ray = ((ExplosionSpell) activeSpell).getRay();
