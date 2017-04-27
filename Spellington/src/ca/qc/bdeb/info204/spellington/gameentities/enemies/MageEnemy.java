@@ -1,8 +1,10 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
-import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
-import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -17,26 +19,23 @@ public class MageEnemy extends Enemy {
     }
 
     @Override
-    public void update(float time) {
-        if (this.collisionBottom || this.collisionTop) {
-            this.speedVector.setY(0);
-        }
-        if (this.collisionRight || this.collisionLeft) {
-            this.speedVector.setX(0);
-        }
-        this.speedVector.setX(-0.01f);
-        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
-        this.setX(this.getX() + this.getSpeedVector().getX() * time);
-        this.setY(this.getY() + this.getSpeedVector().getY() * time);
-        this.resetCollisionState();
-    }
-
-    @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
         g.drawString("HP :" + this.lifePoint, x, y);
         g.setColor(Color.magenta);
         g.drawRect(x, y, width, height);
+    }
+
+    @Override
+    public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    }
+
+    @Override
+    public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    }
+
+    @Override
+    public void loadAnimations() {
     }
 
 }

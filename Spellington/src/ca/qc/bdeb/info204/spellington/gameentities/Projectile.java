@@ -14,16 +14,23 @@ import org.newdawn.slick.Graphics;
  */
 public class Projectile extends DynamicEntity {
 
-    protected int damage;
-    protected Animation animation;
-    protected ElementalType damageType;
+    public enum SourceType {
+        PLAYER,
+        ENEMY,
+        TEST
+    }
 
-    public Projectile(float x, float y, int width, int height, Vector2D speedVector, float GRAVITY_MODIFIER, Animation anim, int damage, ElementalType damageType) {
-        super(x, y, width, width, GRAVITY_MODIFIER);
+    private Animation animation;
+    private int damage;
+    private ElementalType damageType;
+    private SourceType source;
+
+    public Projectile(float x, float y, int width, int height, Vector2D speedVector, float gravMod, Animation anim, int damage, ElementalType damageType, SourceType source) {
+        super(x, y, width, height, gravMod, speedVector);
         this.animation = anim;
-        this.speedVector = speedVector;
         this.damage = damage;
         this.damageType = damageType;
+        this.source = source;
 
     }
 
@@ -59,5 +66,15 @@ public class Projectile extends DynamicEntity {
     public void setDamageType(ElementalType damageType) {
         this.damageType = damageType;
     }
+
+    public SourceType getSource() {
+        return source;
+    }
+
+    public void setSource(SourceType source) {
+        this.source = source;
+    }
+    
+    
 
 }

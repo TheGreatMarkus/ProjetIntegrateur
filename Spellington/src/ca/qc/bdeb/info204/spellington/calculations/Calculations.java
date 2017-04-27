@@ -2,6 +2,7 @@ package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile.SourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
@@ -105,21 +106,28 @@ public class Calculations {
      * list.
      * @author Cristian Aldea.
      */
-    public static boolean checkProjectileCollision(Tile[][] map, ArrayList<Enemy> activeEnemies, Spellington spellington, Projectile projectile) {
+    public static int checkProjectileCollision(Projectile projectile, Tile[][] map, ArrayList<Enemy> activeEnemies, Spellington spellington) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 if (projectile.intersects(map[i][j]) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
-                    return true;
+                    return 0;
                 }
             }
         }
+
+        if (projectile.intersects(spellington) && projectile.getSource() == SourceType.ENEMY) {
+            spellington.subLifePoint(projectile.getDamage(), projectile.getDamageType());
+            return 1;
+        }
+
         for (Enemy activeEnemy : activeEnemies) {
-            if (projectile.intersects(activeEnemy)) {
+            if (projectile.intersects(activeEnemy) && projectile.getSource() == SourceType.PLAYER) {
                 activeEnemy.subLifePoint(projectile.getDamage(), projectile.getDamageType());
-                return true;
+                return 2;
             }
         }
-        return false;
+
+        return -1;
     }
 
     /**

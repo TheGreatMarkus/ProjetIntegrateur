@@ -42,6 +42,8 @@ public class GameManager {
     private static Tile[][] mapInformation;
     private static Point entryPoint;
     private static Point exitPoint;
+    private static final int LEVEL_LENGTH = 20;
+    private static int remainingRooms = 0;
 
     //Chambers that will compose the 5 levels of the game.
     private static final ArrayList<TiledMap> TUTORIAL_ROOMS = new ArrayList();
@@ -54,9 +56,12 @@ public class GameManager {
     private static final int DUNGEON_ROOM_NUMBER = 20;
     private static final int PLAINS_ROOM_NUMBER = 10;
     private static final int CASTLE_ROOM_NUMBER = 10;
-    private static final int BOSS_ROOM_NUMBER = 10;
+    private static final int BOSS_ROOM_NUMBER = 3;
 
     private static ArrayList<Enemy> activeEnemies = new ArrayList<>();
+
+    private static final boolean ROOM_TESTING = false;
+    private static final int ROOM_TESTING_INDEX = 1;
 
     public static void initGameManager(StateBasedGame stateBasedGame) {
         GameManager.stateBasedGame = stateBasedGame;
@@ -77,8 +82,7 @@ public class GameManager {
 
     public static void levelSelected(int level) throws SlickException {
         activeLevel = level;
-        //Pour tester, à enlever après
-        activeMapIndex = 0;
+        remainingRooms = LEVEL_LENGTH;
         loadNextMap();
     }
 
@@ -259,37 +263,64 @@ public class GameManager {
 
     private static void loadNextMap() throws SlickException {
         boolean endOfLevel = false;
-        switch (activeLevel) {
-            case 1:
-                if (activeMapIndex < TUTORIAL_ROOM_NUMBER - 1) {
-                    activeMapIndex += 1;
-                    activeMap = TUTORIAL_ROOMS.get(activeMapIndex);
-                } else {
-                    endOfLevel = true;
-                }
-                break;
-            case 2:
-//                For testing all the maps, will be changed later
-//                activeMapIndex = GameCore.rand.nextInt(DUNGEON_ROOM_NUMBER);
-//                activeMap = DUNGEON_ROOMS.get(activeMapIndex);
-                if (activeMapIndex < DUNGEON_ROOM_NUMBER - 1) {
-                    activeMapIndex += 1;
-                    activeMap = DUNGEON_ROOMS.get(activeMapIndex);
-                } else {
-                    endOfLevel = true;
-                }
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            default:
-                System.out.println("SECRET LEVEL");
-                break;
-
+        if (ROOM_TESTING) {
+            switch (activeLevel) {
+                case 1:
+                    activeMap = TUTORIAL_ROOMS.get(ROOM_TESTING_INDEX);
+                    break;
+                case 2:
+                    activeMap = DUNGEON_ROOMS.get(ROOM_TESTING_INDEX);
+                    break;
+                case 3:
+                    activeMap = PLAINS_ROOMS.get(ROOM_TESTING_INDEX);
+                    break;
+                case 4:
+                    activeMap = CASTLE_ROOMS.get(ROOM_TESTING_INDEX);
+                    break;
+                case 5:
+                    activeMap = BOSS_ROOMS.get(activeMapIndex);
+                    break;
+                default:
+                    System.out.println("SECRET LEVEL");
+                    break;
+            }
+        } else {
+            switch (activeLevel) {
+                case 1:
+                    if (activeMapIndex < TUTORIAL_ROOM_NUMBER - 1) {
+                        activeMapIndex += 1;
+                        activeMap = TUTORIAL_ROOMS.get(activeMapIndex);
+                    } else {
+                        endOfLevel = true;
+                    }
+                    break;
+                case 2:
+                    if (remainingRooms > 0) {
+                        activeMapIndex = GameCore.rand.nextInt(DUNGEON_ROOM_NUMBER);
+                        activeMap = DUNGEON_ROOMS.get(activeMapIndex);
+                        remainingRooms--;
+                    } else {
+                        endOfLevel = true;
+                    }
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    if (activeMapIndex < TUTORIAL_ROOM_NUMBER - 1) {
+                        activeMapIndex += 1;
+                        activeMap = TUTORIAL_ROOMS.get(activeMapIndex);
+                    } else {
+                        endOfLevel = true;
+                    }
+                    break;
+                default:
+                    System.out.println("SECRET LEVEL");
+                    break;
+            }
         }
+        
         if (!endOfLevel) {
             extractMapInfo();
             ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
@@ -350,7 +381,5 @@ public class GameManager {
     public static void setActiveMap(TiledMap activeMap) {
         GameManager.activeMap = activeMap;
     }
-    
-    
 
 }

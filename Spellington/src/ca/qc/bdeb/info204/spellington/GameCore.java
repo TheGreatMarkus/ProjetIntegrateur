@@ -12,7 +12,6 @@ import ca.qc.bdeb.info204.spellington.gamestates.PauseMenuState;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class GameCore extends StateBasedGame {
 
     //For testing and seeing the console text
     public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    //public static final Dimension SCREEN_SIZE = new Dimension(1900, 200);
+    //public static final Dimension SCREEN_SIZE = new Dimension(1920, 1080);
     //public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
     public static final Dimension RENDER_SIZE = new Dimension(1600, 900);
     public static float scale;
@@ -86,7 +85,7 @@ public class GameCore extends StateBasedGame {
         }
 
         appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
-        appGameContainer.setMouseGrabbed(true);
+        appGameContainer.setMouseGrabbed(false);
         appGameContainer.setTargetFrameRate(TARGER_FPS);
         appGameContainer.setVSync(true);
         appGameContainer.setIcon("res/image/icon.png");

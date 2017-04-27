@@ -7,6 +7,7 @@ import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile.SourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class ProjectileSpell extends Spell {
         }
         float angle = Calculations.detAngle(mouseX - originX, mouseY - originY);
         Vector2D tempVector = new Vector2D(initSpeed * speedMult, angle, true);
-        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, tempVector, gravModifier, animation, this.damage, this.element);
+        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, tempVector, gravModifier, animation, this.damage, this.element, SourceType.PLAYER);
 
         return tempProj;
     }

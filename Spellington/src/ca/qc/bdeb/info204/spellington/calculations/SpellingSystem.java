@@ -155,7 +155,7 @@ public class SpellingSystem {
         Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, "Résistance glace", ICE_RES_DESC, animIceResistance, 100, 30, -40);
         Spell lightningResistance = new PassiveSpell(ID_LIGHTNING_RES, ElementalType.LIGHTNING, "Résistance electrique", LIGHTNING_RES_DESC, animLightningResistance, 100, 30, -40);
         Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", EXPLOSIVE_BALL_DESC, 2, animExplosiveBall, 100, 100, 1, 1, 10);
-        Spell fireBreath = new BreathSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", FIRE_BREATH_DESC, 3, animFireBreath, 40, 40, 1, 1, 1, 0.35f, 5);
+        Spell fireBreath = new BreathSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", FIRE_BREATH_DESC, 3, animFireBreath, 40, 40, 1, 1, 10, 0.15f, 5);
         Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", GIANT_FIRE_BALL_DESC, 2, animGiantFireBall, 200, 200, 1, 1, 20);
         Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", LIGHTNING_SWARM_DESC, 1, animLightningSwarm, 3, 5);
         Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", TELEPORTATION_DESC, 1, animTeleportation, 100, 100, 1, 1, 0);
@@ -341,7 +341,7 @@ public class SpellingSystem {
         //potions end-----------
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = spellList.get(9).getIncantation();
+            incantationText = spellList.get(0).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F2)) {
@@ -375,7 +375,7 @@ public class SpellingSystem {
 
             Image[] tempImgFireBall = new Image[31];
             for (int i = 0; i < tempImgFireBall.length; i++) {
-                tempImgFireBall[i] = new Image("res/image/animation/spells/tutoFireball/fireBall (" + (i + 1) + ").png");
+                tempImgFireBall[i] = new Image("res/image/animation/spells/fireBall/fireBall (" + (i + 1) + ").png");
             }
             animFireBall = new Animation(tempImgFireBall, 30);
 

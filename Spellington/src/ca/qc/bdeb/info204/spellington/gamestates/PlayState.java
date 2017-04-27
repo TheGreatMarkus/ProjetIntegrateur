@@ -92,8 +92,6 @@ public class PlayState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         //Must be the first in the PlayState renger method.
         g.scale(GameCore.scale, GameCore.scale);
-        //Currently broken, gonna look for a solution later.
-        //g.translate(GameCore.screenTranslateX, GameCore.screenTranslateY);
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
@@ -153,7 +151,7 @@ public class PlayState extends BasicGameState {
         ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) delta);
-            if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, activeProjectiles.get(i))) {
+            if (Calculations.checkProjectileCollision(activeProjectiles.get(i), GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) != -1) {
                 projectilesToBeRemoved.add(activeProjectiles.get(i));
             }
         }
@@ -162,7 +160,7 @@ public class PlayState extends BasicGameState {
         //Update of enemies
         ArrayList<Enemy> enemiesToBeRemoved = new ArrayList<>();
         for (Enemy enemy : GameManager.getActiveEnemies()) {
-            enemy.update(delta);
+            enemy.update(delta, spellington, activeProjectiles, GameManager.getMapInformation());
             Calculations.checkMapCollision(GameManager.getMapInformation(), enemy);
             if (enemy.getLifePoint() <= 0) {
                 enemiesToBeRemoved.add(enemy);
@@ -327,7 +325,7 @@ public class PlayState extends BasicGameState {
         float spellingtonY = spellington.getCenterY();
         float mouseX = input.getMouseX() / GameCore.scale;
         float mouseY = input.getMouseY() / GameCore.scale;
-        float projectionPrecision = 20;
+        float projectionPrecision = 15;
         if (activeSpell instanceof ProjectileSpell) {
             g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
@@ -341,7 +339,12 @@ public class PlayState extends BasicGameState {
                 float tempY = temp.getCenterY();
                 temp.update(projectionPrecision);
                 g.drawLine(temp.getCenterX(), temp.getCenterY(), tempX, tempY);
-                if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, temp)) {
+                if (Calculations.checkProjectileCollision(temp, GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) == 0) {
+                    endLoop = true;
+                    g.setColor(Color.cyan);
+                    g.drawOval(temp.getX(), temp.getY(), temp.getWidth(), temp.getHeight());
+                }
+                if (Calculations.checkProjectileCollision(temp, GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) == 2) {
                     endLoop = true;
                     g.setColor(Color.red);
                     g.drawOval(temp.getX(), temp.getY(), temp.getWidth(), temp.getHeight());
@@ -375,7 +378,12 @@ public class PlayState extends BasicGameState {
                 float tempY = temp1.getCenterY();
                 temp1.update(projectionPrecision);
                 g.drawLine(temp1.getCenterX(), temp1.getCenterY(), tempX, tempY);
-                if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, temp1)) {
+                if (Calculations.checkProjectileCollision(temp1, GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) == 0) {
+                    endLoop = true;
+                    g.setColor(Color.cyan);
+                    g.drawOval(temp1.getX(), temp1.getY(), temp1.getWidth(), temp1.getHeight());
+                }
+                if (Calculations.checkProjectileCollision(temp1, GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) == 2) {
                     endLoop = true;
                     g.setColor(Color.red);
                     g.drawOval(temp1.getX(), temp1.getY(), temp1.getWidth(), temp1.getHeight());
@@ -392,7 +400,12 @@ public class PlayState extends BasicGameState {
                 float tempY = temp2.getCenterY();
                 temp2.update(projectionPrecision);
                 g.drawLine(temp2.getCenterX(), temp2.getCenterY(), tempX, tempY);
-                if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, temp2)) {
+                if (Calculations.checkProjectileCollision(temp2, GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) == 0) {
+                    endLoop = true;
+                    g.setColor(Color.cyan);
+                    g.drawOval(temp2.getX(), temp2.getY(), temp2.getWidth(), temp2.getHeight());
+                }
+                if (Calculations.checkProjectileCollision(temp2, GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) == 2) {
                     endLoop = true;
                     g.setColor(Color.red);
                     g.drawOval(temp2.getX(), temp2.getY(), temp2.getWidth(), temp2.getHeight());
@@ -409,7 +422,12 @@ public class PlayState extends BasicGameState {
                 float tempY = temp3.getCenterY();
                 temp3.update(projectionPrecision);
                 g.drawLine(temp3.getCenterX(), temp3.getCenterY(), tempX, tempY);
-                if (Calculations.checkProjectileCollision(GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington, temp3)) {
+                if (Calculations.checkProjectileCollision(temp3, GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) == 0) {
+                    endLoop = true;
+                    g.setColor(Color.cyan);
+                    g.drawOval(temp3.getX(), temp3.getY(), temp3.getWidth(), temp3.getHeight());
+                }
+                if (Calculations.checkProjectileCollision(temp3, GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) == 2) {
                     endLoop = true;
                     g.setColor(Color.red);
                     g.drawOval(temp3.getX(), temp3.getY(), temp3.getWidth(), temp3.getHeight());

@@ -1,11 +1,14 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
+import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import ca.qc.bdeb.info204.spellington.gameentities.Tile;
+import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
 /**
  * A LivingEntity opposing the player.
@@ -34,13 +37,6 @@ public abstract class Enemy extends LivingEntity {
     public static Dimension MAGE_SIZE = new Dimension(50, 50);
     public static Dimension SLIME_SIZE = new Dimension(50, 50);
     public static Dimension BOSS_SIZE = new Dimension(50, 50);
-
-    protected static Image imgJumpL;
-    protected static Image imgJumpR;
-    protected static Image imgStandingL;
-    protected static Image imgStandingR;
-    protected static Animation animWalkL;
-    protected static Animation animWalkR;
 
     protected ArrayList<String> droppableSpells = new ArrayList<>();
     protected int xpOnKill;
@@ -140,8 +136,7 @@ public abstract class Enemy extends LivingEntity {
         }
         this.gravModifier = 2;
         this.lifePoint = this.maxLifePoint;
-        //loadAnimations(this.enemyType);
-
+        loadAnimations();
     }
 
     public ArrayList<String> getDroppableSpells() {
@@ -152,12 +147,28 @@ public abstract class Enemy extends LivingEntity {
         this.droppableSpells = droppableSpells;
     }
 
-    private void loadAnimations(String enemyType) {
+    public abstract void loadAnimations();
 
+    public void update(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+        if (this.collisionBottom || this.collisionTop) {
+            this.speedVector.setY(0);
+        }
+        if (this.collisionRight || this.collisionLeft) {
+            this.speedVector.setX(0);
+        }
+        move(time, spellington, activeProjectiles, mapinfo);
+        attack(time, spellington, activeProjectiles, mapinfo);
+
+        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
+        this.setX(this.getX() + this.getSpeedVector().getX() * time);
+        this.setY(this.getY() + this.getSpeedVector().getY() * time);
+        this.resetCollisionState();
     }
 
-    public abstract void update(float time);
-
     public abstract void render(Graphics g);
+
+    public abstract void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo);
+
+    public abstract void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo);
 
 }

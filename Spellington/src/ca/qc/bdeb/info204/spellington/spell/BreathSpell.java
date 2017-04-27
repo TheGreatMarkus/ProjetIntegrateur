@@ -3,10 +3,10 @@ package ca.qc.bdeb.info204.spellington.spell;
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
-import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile.SourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class BreathSpell extends Spell {
             speedMult = INIT_SPEED_MAX;
         }
         Vector2D temp = new Vector2D(initSpeed * speedMult, angle, true);
-        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation, this.damage, element);
+        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation, this.damage, element, SourceType.PLAYER);
 
         return tempProj;
 
