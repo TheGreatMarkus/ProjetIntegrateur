@@ -52,7 +52,6 @@ public abstract class Enemy extends LivingEntity {
         if (this instanceof MeleeEnemy) {
             switch (this.enemyType) {
                 case KEEPER:
-
                     this.maxLifePoint = 20;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.NEUTRAL;

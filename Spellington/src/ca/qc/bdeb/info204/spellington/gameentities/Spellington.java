@@ -1,6 +1,5 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
-import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Dimension;
@@ -37,12 +36,12 @@ public class Spellington extends LivingEntity {
     private static final float GRAVITY_MODIFIER = 2;
     private static final float MAX_X_SPEED = 0.5f;
     private static final Vector2D X_ACC = new Vector2D(0.003f, 0);
-    private static final Vector2D INIT_JUMP_SPEED = new Vector2D(0, -0.8f);
+    private static final float INIT_JUMP_SPEED = -0.8f;
     //WJ : WallJump
     private static final float WJ_ANGLE = (float) Math.toRadians(65);
     //WJ : WallJump
-    private static final Vector2D LEFT_WJ_INIT_SPEED = new Vector2D(INIT_JUMP_SPEED.getY() * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED.getY() * (float) Math.sin(WJ_ANGLE));
-    private static final Vector2D RIGHT_WJ_INIT_SPEED = new Vector2D(-INIT_JUMP_SPEED.getY() * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED.getY() * (float) Math.sin(WJ_ANGLE));
+    private static final Vector2D LEFT_WJ_INIT_SPEED = new Vector2D(INIT_JUMP_SPEED * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED * (float) Math.sin(WJ_ANGLE));
+    private static final Vector2D RIGHT_WJ_INIT_SPEED = new Vector2D(-INIT_JUMP_SPEED * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED * (float) Math.sin(WJ_ANGLE));
 
     private static final Dimension SPELLINGTON_SIZE = new Dimension(45, 90);
 
@@ -159,7 +158,7 @@ public class Spellington extends LivingEntity {
             airJumps = maxAirJumps;
         }
         if (triedToJump && collisionBottom) {
-            this.speedVector.setY(INIT_JUMP_SPEED.getY());
+            this.speedVector.setY(INIT_JUMP_SPEED);
         } else if (triedToJump && collisionLeft && !collisionBottom) {
             this.speedVector.set(RIGHT_WJ_INIT_SPEED);
         } else if (triedToJump && collisionRight && !collisionBottom) {
@@ -167,7 +166,7 @@ public class Spellington extends LivingEntity {
         } else if (triedToJump && !collisionBottom && !collisionLeft
                 && !collisionLeft && airJumps
                 > 0) {
-            this.speedVector.setY(INIT_JUMP_SPEED.getY() * AIR_JUMP_POWER);
+            this.speedVector.setY(INIT_JUMP_SPEED * AIR_JUMP_POWER);
             airJumps--;
         }
 
