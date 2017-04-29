@@ -7,6 +7,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileEvent;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileState;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.MageEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.MeleeEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.RangedEnemy;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
@@ -59,9 +60,9 @@ public class GameManager {
     private static final int BOSS_ROOM_NUMBER = 3;
 
     private static ArrayList<Enemy> activeEnemies = new ArrayList<>();
-
+    //for testing
     private static final boolean ROOM_TESTING = false;
-    private static final int ROOM_TESTING_INDEX = 1;
+    private static final int ROOM_TESTING_INDEX = 3;
 
     public static void initGameManager(StateBasedGame stateBasedGame) {
         GameManager.stateBasedGame = stateBasedGame;
@@ -221,7 +222,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.CROSSBOWMAN;
                             break;
                     }
-                    activeEnemies.add(new RangedEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new RangedEnemy((float) (50 * j), (float) (50 * i), Enemy.RANGED_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == tresureID) {
                     tempEvent = TileEvent.TREASURE_SPAWN;
                 } else if (activeMap.getTileId(j, i, 2) == mageSpawnID) {
@@ -238,7 +239,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.ELECTROMANCER;
                             break;
                     }
-                    activeEnemies.add(new RangedEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new MageEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == whatIsThis) {
                     tempEvent = TileEvent.WHAT_IS_THIS;
                 } else if (activeMap.getTileId(j, i, 2) == message1ID) {

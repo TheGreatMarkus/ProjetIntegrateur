@@ -78,10 +78,10 @@ public class Spellington extends LivingEntity {
         //To slowdown time for testing purposes
         //time *= 0.5;
         //On divize par scale pour match la position de la souris avec le scale du render
-        float mouseX = (float) input.getMouseX() / GameCore.scale;
-        float mouseY = (float) input.getMouseY() / GameCore.scale;
-        //Using equation d = (vf^2 - vi^2)/2a. Distance from where Spellington should stop when approching the mouse
-        float SLOWDOWN_DISTANCE = (this.speedVector.getX() * this.speedVector.getX()) / (2.0f * X_ACC.getX());
+//        float mouseX = (float) input.getMouseX() / GameCore.scale;
+//        float mouseY = (float) input.getMouseY() / GameCore.scale;
+//        //Using equation d = (vf^2 - vi^2)/2a. Distance from where Spellington should stop when approching the mouse
+//        float SLOWDOWN_DISTANCE = (this.speedVector.getX() * this.speedVector.getX()) / (2.0f * X_ACC.getX());
 
         //Correction of speed according to collision state
         if (this.collisionBottom || this.collisionTop) {
@@ -92,32 +92,55 @@ public class Spellington extends LivingEntity {
         }
 
         //General handling of mouvement in x for spellington
-        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && Math.abs(mouseX - this.getCenterX()) <= Math.abs(this.speedVector.getX() * time)) {
-            this.setCenterX(mouseX);
-            this.speedVector.setX(0);
-        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && Math.abs(mouseX - this.getCenterX()) <= SLOWDOWN_DISTANCE) {
-            if (mouseX > this.getCenterX() && this.speedVector.getX() > 0) {
-                this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
-
-            } else if (mouseX < this.getCenterX() && this.speedVector.getX() < 0) {
-                this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
-            }
-        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX > this.getCenterX()) {
+//        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && Math.abs(mouseX - this.getCenterX()) <= Math.abs(this.speedVector.getX() * time)) {
+//            this.setCenterX(mouseX);
+//            this.speedVector.setX(0);
+//        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && Math.abs(mouseX - this.getCenterX()) <= SLOWDOWN_DISTANCE) {
+//            if (mouseX > this.getCenterX() && this.speedVector.getX() > 0) {
+//                this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
+//
+//            } else if (mouseX < this.getCenterX() && this.speedVector.getX() < 0) {
+//                this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+//            }
+//        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX > this.getCenterX()) {
+//            this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+//            if (this.speedVector.getX() > MAX_X_SPEED) {
+//                this.speedVector.setX(MAX_X_SPEED);
+//            }
+//        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX < this.getCenterX()) {
+//            this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
+//            if (this.speedVector.getX() < -MAX_X_SPEED) {
+//                this.speedVector.setX(-MAX_X_SPEED);
+//            }
+//        } else if (!input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && this.speedVector.getX() > 0) {
+//            this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
+//            if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
+//                this.speedVector.setX(0);
+//            }
+//        } else if (!input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && this.speedVector.getX() < 0) {
+//            this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+//            if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
+//                this.speedVector.setX(0);
+//            }
+//        }
+        if (input.isKeyDown(Input.KEY_RIGHT) && input.isKeyDown(Input.KEY_LEFT)) {
+            //do nothing
+        } else if (input.isKeyDown(Input.KEY_RIGHT)) {
             this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() > MAX_X_SPEED) {
                 this.speedVector.setX(MAX_X_SPEED);
             }
-        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX < this.getCenterX()) {
+        } else if (input.isKeyDown(Input.KEY_LEFT)) {
             this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() < -MAX_X_SPEED) {
                 this.speedVector.setX(-MAX_X_SPEED);
             }
-        } else if (!input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && this.speedVector.getX() > 0) {
+        } else if (!input.isKeyDown(Input.KEY_RIGHT) && !input.isKeyDown(Input.KEY_LEFT) && this.speedVector.getX() > 0) {
             this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
                 this.speedVector.setX(0);
             }
-        } else if (!input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && this.speedVector.getX() < 0) {
+        } else if (!input.isKeyDown(Input.KEY_RIGHT) && !input.isKeyDown(Input.KEY_LEFT) && this.speedVector.getX() < 0) {
             this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
                 this.speedVector.setX(0);
@@ -126,7 +149,8 @@ public class Spellington extends LivingEntity {
 
         //Temporary boolean because of a problem with isMousePressed.
         boolean triedToJump = false;
-        if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+
+        if (input.isKeyPressed(Input.KEY_UP)) {
             triedToJump = true;
         }
         //Jumping
@@ -141,15 +165,18 @@ public class Spellington extends LivingEntity {
         } else if (triedToJump && collisionRight && !collisionBottom) {
             this.speedVector.set(LEFT_WJ_INIT_SPEED);
         } else if (triedToJump && !collisionBottom && !collisionLeft
-                && !collisionLeft && airJumps > 0) {
+                && !collisionLeft && airJumps
+                > 0) {
             this.speedVector.setY(INIT_JUMP_SPEED.getY() * AIR_JUMP_POWER);
             airJumps--;
         }
-        this.setMouvementState(detMouvementState(input, mouseX));
+
+        //this.setMouvementState(detMouvementState(input, mouseX));
         this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * GRAVITY_MODIFIER));
         this.setX(this.getX() + this.speedVector.getX() * time);
         this.setY(this.getY() + this.speedVector.getY() * time);
         //Reset collision for the next frame
+
         this.resetCollisionState();
     }
 
@@ -212,8 +239,10 @@ public class Spellington extends LivingEntity {
 
             animWalkL = new Animation(tempImgWalkL, 15);
             animWalkR = new Animation(tempImgWalkR, 15);
+
         } catch (SlickException ex) {
-            Logger.getLogger(Spellington.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Spellington.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

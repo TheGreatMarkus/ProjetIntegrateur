@@ -18,7 +18,9 @@ public abstract class LivingEntity extends DynamicEntity {
         JUMP_R,
         JUMP_L,
         WALL_R,
-        WALL_L
+        WALL_L,
+        ATTACK_R,
+        ATTACK_L
     }
 
     protected boolean collisionTop;

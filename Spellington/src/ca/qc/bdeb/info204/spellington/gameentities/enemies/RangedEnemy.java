@@ -1,5 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
+import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -26,8 +28,8 @@ public class RangedEnemy extends Enemy {
     private Animation animProjectile;
     private Image imgStandingLeft;
     private Image imgStandingRight;
-    private Animation animshootL;
-    private Animation animshootR;
+    private Animation animShootingL;
+    private Animation animShootingR;
 
     public RangedEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
         super(x, y, dim, mouvementState, GRAVITY_MODIFIER, enemyType);
@@ -37,51 +39,136 @@ public class RangedEnemy extends Enemy {
     @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
-        g.drawString("HP :" + this.lifePoint, x, y);
+        g.drawString(this.lifePoint + "", x, y);
         g.setColor(Color.yellow);
-        imgStandingLeft.draw(x - 68, y - 10);
+        g.drawRect(x, y, width, height);
+        switch (this.mouvementState) {
+            case STANDING_L:
+                imgStandingLeft.draw(x - 58, y - 30, 178, 100);
+                break;
+            case STANDING_R:
+                imgStandingRight.draw(x - 70, y - 30, 178, 100);
+                break;
+            case ATTACK_L:
+                animShootingL.draw(x - 58, y - 30, 178, 100);
+                if (animShootingL.isStopped()) {
+                    this.mouvementState = MouvementState.STANDING_L;
+                }
+                break;
+            case ATTACK_R:
+                animShootingR.draw(x - 70, y - 30, 178, 100);
+                if (animShootingR.isStopped()) {
+                    this.mouvementState = MouvementState.STANDING_R;
+                }
+                break;
+
+        }
 
     }
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        //No moving
+        if (this.mouvementState != MouvementState.ATTACK_L && this.mouvementState != MouvementState.ATTACK_R) {
+            if (spellington.getCenterX() <= this.getCenterX()) {
+                this.setMouvementState(MouvementState.STANDING_L);
+            } else if (spellington.getCenterX() > this.getCenterX()) {
+                this.setMouvementState(MouvementState.STANDING_R);
+            }
+        }
     }
 
     @Override
     public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (i % 100 == 0) {
+        if (i > 100) {
             tryToAttack(spellington, activeProjectiles, mapinfo);
         }
-        i++;
+        if (i < 10000) {
+            i++;
+        }
     }
 
     public void tryToAttack(Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        Float angle1 = 0f;
-        Float angle2 = 0f;
-        float v = 1f;
-        float deltaX = this.getCenterX() - spellington.getCenterX();
-        float deltaY = this.getCenterY() - spellington.getCenterY();
-        float g = PlayState.GRAV_ACC.getY();
-        //Formule provenant de https://en.wikipedia.org/wiki/Trajectory_of_a_projectile
-        Float sqrt = (float) Math.sqrt((v * v * v * v) - (g * (g * deltaX * deltaX + (2 * deltaY * v * v))));
-        if (!sqrt.isNaN()) {
-            try {
-                angle1 = (float) Math.atan((v * v + sqrt) / (g * deltaX));
-                angle2 = (float) Math.atan((v * v - sqrt) / (g * deltaX));
-            } catch (Exception e) {
-                System.out.println("exception");
+        if (this.enemyType == EnemyType.ARCHER) {
+            Float angle1 = 0f;
+            Float angle2 = 0f;
+            float deltaX = this.getCenterX() - spellington.getCenterX();
+            float deltaY = this.getCenterY() - spellington.getCenterY();
+            float v = 0.7f;
+            float g = PlayState.GRAV_ACC.getY();
+            //Formule provenant de https://en.wikipedia.org/wiki/Trajectory_of_a_projectile
+            Float sqrt = (float) Math.sqrt((v * v * v * v) - (g * (g * deltaX * deltaX + (2 * deltaY * v * v))));
+            if (!sqrt.isNaN()) {
+                try {
+                    angle1 = (float) Math.atan((v * v + sqrt) / (g * deltaX));
+                    angle2 = (float) Math.atan((v * v - sqrt) / (g * deltaX));
+                } catch (Exception e) {
+                    System.out.println("exception");
 
-            }
-            if (deltaX > 0) {
-                angle1 = angle1 + (float) Math.PI;
-                angle2 = angle2 + (float) Math.PI;
-            }
-            Vector2D tempVect1 = new Vector2D(v, angle1, true);
-            Vector2D tempVect2 = new Vector2D(v, angle2, true);
+                }
+                if (deltaX > 0) {
+                    angle1 = angle1 + (float) Math.PI;
+                    angle2 = angle2 + (float) Math.PI;
+                }
+                Vector2D tempVect1 = new Vector2D(v, angle1, true);
+                Vector2D tempVect2 = new Vector2D(v, angle2, true);
+                Projectile test1 = new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, new Vector2D(v, angle1, true), 1, animProjectile, 0, ElementalType.FIRE, Projectile.SourceType.ENEMY);
+                Projectile test2 = new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, new Vector2D(v, angle2, true), 1, animProjectile, 0, ElementalType.FIRE, Projectile.SourceType.ENEMY);
+                int test1Result = -1;
+                int test2Result = -1;
+                while (test1Result == -1) {
+                    test1Result = Calculations.checkProjectileCollision(test1, mapinfo, new ArrayList<Enemy>(), spellington);
+                    test1.update(10);
 
-            activeProjectiles.add(new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, tempVect1, 1, animProjectile, 5, ElementalType.FIRE, Projectile.SourceType.ENEMY));
-            activeProjectiles.add(new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, tempVect2, 1, animProjectile, 5, ElementalType.FIRE, Projectile.SourceType.ENEMY));
+                }
+                while (test2Result == -1) {
+                    test2Result = Calculations.checkProjectileCollision(test2, mapinfo, new ArrayList<Enemy>(), spellington);
+                    test2.update(10);
+
+                }
+                if (test1Result == 1 || test2Result == 1) {
+                    if (test2Result == 1) {
+                        activeProjectiles.add(new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, tempVect2, 1, animProjectile, 5, ElementalType.FIRE, Projectile.SourceType.ENEMY));
+                    } else if (test1Result == 1) {
+                        activeProjectiles.add(new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, tempVect1, 1, animProjectile, 5, ElementalType.FIRE, Projectile.SourceType.ENEMY));
+
+                    }
+                    i = 0;
+                    if (this.mouvementState == MouvementState.STANDING_L) {
+                        this.mouvementState = MouvementState.ATTACK_L;
+                        animShootingL.restart();
+                    } else if (this.mouvementState == MouvementState.STANDING_R) {
+                        this.mouvementState = MouvementState.ATTACK_R;
+                        animShootingR.restart();
+                    }
+                }
+            }
+        } else if (this.enemyType == EnemyType.CROSSBOWMAN) {
+            float v = 0.5f;
+            float angle = 1f;
+            float deltaX = spellington.getCenterX() - this.getCenterX();
+            float deltaY = spellington.getCenterY() - this.getCenterY();
+            if (Math.abs(deltaX) < 800f * GameCore.scale) {
+                angle = Calculations.detAngle(deltaX, deltaY);
+
+                Projectile test1 = new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, new Vector2D(v, angle, true), 0, animProjectile, 0, ElementalType.FIRE, Projectile.SourceType.ENEMY);
+                int test1Result = -1;
+                while (test1Result == -1) {
+                    test1Result = Calculations.checkProjectileCollision(test1, mapinfo, new ArrayList<Enemy>(), spellington);
+                    test1.update(10);
+
+                }
+                if (test1Result == 1) {
+                    i = 0;
+                    activeProjectiles.add(new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, new Vector2D(v, angle, true), 0, animProjectile, 5, ElementalType.FIRE, Projectile.SourceType.ENEMY));
+                    if (this.mouvementState == MouvementState.STANDING_L) {
+                        this.mouvementState = MouvementState.ATTACK_L;
+                        animShootingL.restart();
+                    } else if (this.mouvementState == MouvementState.STANDING_R) {
+                        this.mouvementState = MouvementState.ATTACK_R;
+                        animShootingR.restart();
+                    }
+                }
+            }
         }
     }
 
@@ -91,10 +178,24 @@ public class RangedEnemy extends Enemy {
             try {
                 imgStandingRight = new Image("res/image/animation/enemies/archer/standingR.png");
                 imgStandingLeft = new Image("res/image/animation/enemies/archer/standingL.png");
+
                 Image[] temp = new Image[1];
                 temp[0] = new Image("res/image/animation/enemies/archer/arrow.png");
+                animProjectile = new Animation(temp, 30);
 
-                animProjectile = new Animation(temp, 10);
+                temp = new Image[17];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/archer/shootingL/shootingL (" + (j + 1) + ").png");
+                }
+                animShootingL = new Animation(temp, 20);
+                animShootingL.setLooping(false);
+
+                temp = new Image[17];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/archer/shootingR/shootingR (" + (j + 1) + ").png");
+                }
+                animShootingR = new Animation(temp, 20);
+                animShootingR.setLooping(false);
             } catch (SlickException ex) {
                 Logger.getLogger(RangedEnemy.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -103,9 +204,23 @@ public class RangedEnemy extends Enemy {
                 imgStandingRight = new Image("res/image/animation/enemies/crossbowman/standingR.png");
                 imgStandingLeft = new Image("res/image/animation/enemies/crossbowman/standingL.png");
                 Image[] temp = new Image[1];
-                temp[0] = new Image("res/image/animation/enemies/archer/arrow.png");
 
-                animProjectile = new Animation(temp, 10);
+                temp[0] = new Image("res/image/animation/enemies/archer/arrow.png");
+                animProjectile = new Animation(temp, 30);
+
+                temp = new Image[20];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/crossbowman/shootingL/shootingL (" + (j + 1) + ").png");
+                }
+                animShootingL = new Animation(temp, 30);
+                animShootingL.setLooping(false);
+
+                temp = new Image[20];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/crossbowman/shootingR/shootingR (" + (j + 1) + ").png");
+                }
+                animShootingR = new Animation(temp, 30);
+                animShootingR.setLooping(false);
             } catch (SlickException ex) {
                 Logger.getLogger(RangedEnemy.class.getName()).log(Level.SEVERE, null, ex);
             }

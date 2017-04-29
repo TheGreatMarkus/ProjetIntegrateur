@@ -266,12 +266,12 @@ public class SpellingSystem {
 
     public static void update(Input input, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, ArrayList<Enemy> activeEnemy) {
 
-        boolean tabUsed = false;
-        if (input.isKeyPressed(Input.KEY_TAB)) {
-            tabUsed = true;
+        boolean clickedLeftMouse = false;
+        if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+            clickedLeftMouse = true;
         }
 
-        if (tabUsed) {
+        if (clickedLeftMouse) {
             boolean newSpell = false;
 
             for (int i = 0; i < knownSpell.size(); i++) {

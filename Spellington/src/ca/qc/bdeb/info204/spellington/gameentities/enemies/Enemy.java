@@ -34,6 +34,7 @@ public abstract class Enemy extends LivingEntity {
     }
 
     public static Dimension HUMANOID_SIZE = new Dimension(50, 100);
+    public static Dimension RANGED_SIZE = new Dimension(50, 70);
     public static Dimension MAGE_SIZE = new Dimension(50, 50);
     public static Dimension SLIME_SIZE = new Dimension(50, 50);
     public static Dimension BOSS_SIZE = new Dimension(50, 50);
