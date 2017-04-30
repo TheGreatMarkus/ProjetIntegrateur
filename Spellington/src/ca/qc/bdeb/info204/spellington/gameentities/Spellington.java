@@ -1,6 +1,5 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
-import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Dimension;
@@ -31,23 +30,23 @@ public class Spellington extends LivingEntity {
     private static Animation animWalkR;
 
     //Temporairy code fo air jumps
-    private int airJumps;
-    private int MAX_AIR_JUMPS = 1;
-    private static final float AIR_JUMP_POWER = 0.6f;
+    private static final float AIR_JUMP_POWER = 0.8f;
 
     public static final int INIT_MAX_LIFE = 100;
     private static final float GRAVITY_MODIFIER = 2;
-
-    private static final float MAX_X_SPEED = 0.7f;
+    private static final float MAX_X_SPEED = 0.5f;
     private static final Vector2D X_ACC = new Vector2D(0.003f, 0);
-    private static final Vector2D INIT_JUMP_SPEED = new Vector2D(0, -0.8f);
+    private static final float INIT_JUMP_SPEED = -0.8f;
     //WJ : WallJump
-    private static final float WJ_ANGLE = (float) Math.toRadians(60);
+    private static final float WJ_ANGLE = (float) Math.toRadians(65);
     //WJ : WallJump
-    private static final Vector2D LEFT_WJ_INIT_SPEED = new Vector2D(INIT_JUMP_SPEED.getY() * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED.getY() * (float) Math.sin(WJ_ANGLE));
-    private static final Vector2D RIGHT_WJ_INIT_SPEED = new Vector2D(-INIT_JUMP_SPEED.getY() * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED.getY() * (float) Math.sin(WJ_ANGLE));
+    private static final Vector2D LEFT_WJ_INIT_SPEED = new Vector2D(INIT_JUMP_SPEED * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED * (float) Math.sin(WJ_ANGLE));
+    private static final Vector2D RIGHT_WJ_INIT_SPEED = new Vector2D(-INIT_JUMP_SPEED * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED * (float) Math.sin(WJ_ANGLE));
 
     private static final Dimension SPELLINGTON_SIZE = new Dimension(45, 90);
+
+    private int airJumps;
+    private int maxAirJumps = 1;
 
     /**
      *
@@ -64,7 +63,7 @@ public class Spellington extends LivingEntity {
         resIce = 0;
         resFire = 0;
 
-        airJumps = MAX_AIR_JUMPS;
+        airJumps = maxAirJumps;
 
     }
 
@@ -75,13 +74,12 @@ public class Spellington extends LivingEntity {
      * length.
      */
     public void update(Input input, float time) {
-        //To slowdown time for testing purposes
-        //time *= 0.5;
-        //On divize par SCALE pour match la position de la souris avec le scale du render
-        float mouseX = (float) input.getMouseX() / GameCore.SCALE;
-        float mouseY = (float) input.getMouseY() / GameCore.SCALE;
-        //Using equation d = (vf^2 - vi^2)/2a. Distance from where Spellington should stop when approching the mouse
-        float SLOWDOWN_DISTANCE = (this.speedVector.getX() * this.speedVector.getX()) / (2.0f * X_ACC.getX());
+
+        //On divize par scale pour match la position de la souris avec le scale du render
+//        float mouseX = (float) input.getMouseX() / GameCore.scale;
+//        float mouseY = (float) input.getMouseY() / GameCore.scale;
+//        //Using equation d = (vf^2 - vi^2)/2a. Distance from where Spellington should stop when approching the mouse
+//        float SLOWDOWN_DISTANCE = (this.speedVector.getX() * this.speedVector.getX()) / (2.0f * X_ACC.getX());
 
         //Correction of speed according to collision state
         if (this.collisionBottom || this.collisionTop) {
@@ -92,32 +90,65 @@ public class Spellington extends LivingEntity {
         }
 
         //General handling of mouvement in x for spellington
-        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && Math.abs(mouseX - this.getCenterX()) <= Math.abs(this.speedVector.getX() * time)) {
-            this.setCenterX(mouseX);
-            this.speedVector.setX(0);
-        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && Math.abs(mouseX - this.getCenterX()) <= SLOWDOWN_DISTANCE) {
-            if (mouseX > this.getCenterX() && this.speedVector.getX() > 0) {
+//        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && Math.abs(mouseX - this.getCenterX()) <= Math.abs(this.speedVector.getX() * time)) {
+//            this.setCenterX(mouseX);
+//            this.speedVector.setX(0);
+//        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && Math.abs(mouseX - this.getCenterX()) <= SLOWDOWN_DISTANCE) {
+//            if (mouseX > this.getCenterX() && this.speedVector.getX() > 0) {
+//                this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
+//
+//            } else if (mouseX < this.getCenterX() && this.speedVector.getX() < 0) {
+//                this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+//            }
+//        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX > this.getCenterX()) {
+//            this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+//            if (this.speedVector.getX() > MAX_X_SPEED) {
+//                this.speedVector.setX(MAX_X_SPEED);
+//            }
+//        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX < this.getCenterX()) {
+//            this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
+//            if (this.speedVector.getX() < -MAX_X_SPEED) {
+//                this.speedVector.setX(-MAX_X_SPEED);
+//            }
+//        } else if (!input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && this.speedVector.getX() > 0) {
+//            this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
+//            if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
+//                this.speedVector.setX(0);
+//            }
+//        } else if (!input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && this.speedVector.getX() < 0) {
+//            this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+//            if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
+//                this.speedVector.setX(0);
+//            }
+//        }
+        if (input.isKeyDown(Input.KEY_RIGHT) && input.isKeyDown(Input.KEY_LEFT)) {
+            if (this.speedVector.getX() > 0) {
                 this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
-
-            } else if (mouseX < this.getCenterX() && this.speedVector.getX() < 0) {
+                if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
+                    this.speedVector.setX(0);
+                }
+            } else if (this.speedVector.getX() < 0) {
                 this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+                if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
+                    this.speedVector.setX(0);
+                }
             }
-        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX > this.getCenterX()) {
+        } else if (input.isKeyDown(Input.KEY_RIGHT)) {
             this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() > MAX_X_SPEED) {
                 this.speedVector.setX(MAX_X_SPEED);
             }
-        } else if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && mouseX < this.getCenterX()) {
+        } else if (input.isKeyDown(Input.KEY_LEFT)) {
             this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() < -MAX_X_SPEED) {
                 this.speedVector.setX(-MAX_X_SPEED);
             }
-        } else if (!input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && this.speedVector.getX() > 0) {
+        } else if (!input.isKeyDown(Input.KEY_RIGHT) && !input.isKeyDown(Input.KEY_LEFT) && this.speedVector.getX() > 0) {
             this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
                 this.speedVector.setX(0);
             }
-        } else if (!input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && this.speedVector.getX() < 0) {
+        } else if (!input.isKeyDown(Input.KEY_RIGHT) && !input.isKeyDown(Input.KEY_LEFT) && this.speedVector.getX() < 0) {
             this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
                 this.speedVector.setX(0);
@@ -126,30 +157,34 @@ public class Spellington extends LivingEntity {
 
         //Temporary boolean because of a problem with isMousePressed.
         boolean triedToJump = false;
-        if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+
+        if (input.isKeyPressed(Input.KEY_UP)) {
             triedToJump = true;
         }
         //Jumping
 
         if (collisionBottom) {
-            airJumps = MAX_AIR_JUMPS;
+            airJumps = maxAirJumps;
         }
         if (triedToJump && collisionBottom) {
-            this.speedVector.setY(INIT_JUMP_SPEED.getY());
+            this.speedVector.setY(INIT_JUMP_SPEED);
         } else if (triedToJump && collisionLeft && !collisionBottom) {
             this.speedVector.set(RIGHT_WJ_INIT_SPEED);
         } else if (triedToJump && collisionRight && !collisionBottom) {
             this.speedVector.set(LEFT_WJ_INIT_SPEED);
         } else if (triedToJump && !collisionBottom && !collisionLeft
-                && !collisionLeft && airJumps > 0) {
-            this.speedVector.setY(INIT_JUMP_SPEED.getY() * AIR_JUMP_POWER);
+                && !collisionLeft && airJumps
+                > 0) {
+            this.speedVector.setY(INIT_JUMP_SPEED * AIR_JUMP_POWER);
             airJumps--;
         }
-        this.setMouvementState(detMouvementState(input, mouseX));
+
+        this.setMouvementState(detMouvementState(input));
         this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * GRAVITY_MODIFIER));
         this.setX(this.getX() + this.speedVector.getX() * time);
         this.setY(this.getY() + this.speedVector.getY() * time);
         //Reset collision for the next frame
+
         this.resetCollisionState();
     }
 
@@ -193,109 +228,166 @@ public class Spellington extends LivingEntity {
 
     private void initAnimation() {
         try {
-            imgJumpL = new Image("res/image/animation/spellington/jump_l.png");
-            imgJumpR = new Image("res/image/animation/spellington/jump_r.png");
-            imgStandingL = new Image("res/image/animation/spellington/standing_l.png");
-            imgStandingR = new Image("res/image/animation/spellington/standing_r.png");
-            imgWallL = new Image("res/image/animation/spellington/wall_l.png");
-            imgWallR = new Image("res/image/animation/spellington/wall_r.png");
+            imgJumpL = new Image("res/image/animation/spellington/jumpL.png");
+            imgJumpR = new Image("res/image/animation/spellington/jumpR.png");
+            imgStandingL = new Image("res/image/animation/spellington/standingL.png");
+            imgStandingR = new Image("res/image/animation/spellington/standingR.png");
+            imgWallL = new Image("res/image/animation/spellington/wallL.png");
+            imgWallR = new Image("res/image/animation/spellington/wallR.png");
 
             Image[] tempImgWalkL = new Image[40];
             for (int i = 0; i < tempImgWalkL.length; i++) {
-                tempImgWalkL[i] = new Image("res/image/animation/spellington/walk_l/" + "walk_l (" + (i + 1) + ")" + ".png");
+                tempImgWalkL[i] = new Image("res/image/animation/spellington/walkL/" + " (" + (i + 1) + ")" + ".png");
             }
 
             Image[] tempImgWalkR = new Image[40];
             for (int i = 0; i < tempImgWalkR.length; i++) {
-                tempImgWalkR[i] = new Image("res/image/animation/spellington/walk_r/" + "walk_r (" + (i + 1) + ")" + ".png");
+                tempImgWalkR[i] = new Image("res/image/animation/spellington/walkR/" + " (" + (i + 1) + ")" + ".png");
             }
 
             animWalkL = new Animation(tempImgWalkL, 15);
             animWalkR = new Animation(tempImgWalkR, 15);
+
         } catch (SlickException ex) {
             Logger.getLogger(Spellington.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private MouvementState detMouvementState(Input input, float mouseX) {
+    private MouvementState detMouvementState(Input input) {
+//        if (!collisionBottom && collisionLeft) {
+//            return MouvementState.WALL_L;
+//        } else if (!collisionBottom && collisionRight) {
+//            return MouvementState.WALL_R;
+//        }
+//
+//        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+//            if (mouseX < this.getCenterX()) {
+//                if (collisionBottom) {
+//                    return MouvementState.WALKING_L;
+//                } else {
+//                    return MouvementState.JUMP_L;
+//                }
+//
+//            } else if (mouseX > this.getCenterX()) {
+//                if (collisionBottom) {
+//                    return MouvementState.WALKING_R;
+//                } else {
+//                    return MouvementState.JUMP_R;
+//                }
+//            } else if (collisionBottom && mouvementState == MouvementState.WALKING_L) {
+//                return MouvementState.STANDING_L;
+//            } else if (collisionBottom && mouvementState == MouvementState.WALKING_R) {
+//                return MouvementState.STANDING_R;
+//            } else if (!collisionBottom && mouvementState == MouvementState.JUMP_L) {
+//                return MouvementState.JUMP_L;
+//            } else if (!collisionBottom && mouvementState == MouvementState.JUMP_R) {
+//                return MouvementState.JUMP_R;
+//            } else if (!collisionBottom && mouvementState == MouvementState.STANDING_L) {
+//                return MouvementState.JUMP_L;
+//            } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
+//                return MouvementState.JUMP_R;
+//            } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
+//                return MouvementState.STANDING_L;
+//            } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
+//                return MouvementState.STANDING_R;
+//            }
+//        } else if (collisionBottom && mouvementState == MouvementState.WALKING_L) {
+//            return MouvementState.STANDING_L;
+//        } else if (collisionBottom && mouvementState == MouvementState.WALKING_R) {
+//            return MouvementState.STANDING_R;
+//        } else if (!collisionBottom && mouvementState == MouvementState.JUMP_L) {
+//            return MouvementState.JUMP_L;
+//        } else if (!collisionBottom && mouvementState == MouvementState.JUMP_R) {
+//            return MouvementState.JUMP_R;
+//        } else if (!collisionBottom && mouvementState == MouvementState.STANDING_L) {
+//            return MouvementState.JUMP_L;
+//        } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
+//            return MouvementState.JUMP_R;
+//        } else if (!collisionBottom && mouvementState == MouvementState.WALL_L) {
+//            return MouvementState.JUMP_L;
+//        } else if (!collisionBottom && mouvementState == MouvementState.WALL_R) {
+//            return MouvementState.JUMP_R;
+//        } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
+//            return MouvementState.STANDING_L;
+//        } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
+//            return MouvementState.STANDING_R;
+//        } else if (collisionBottom && mouvementState == MouvementState.WALL_L) {
+//            return MouvementState.STANDING_L;
+//        } else if (collisionBottom && mouvementState == MouvementState.WALL_R) {
+//            return MouvementState.STANDING_R;
+//        }
+//        if (mouvementState == MouvementState.STANDING_L) {
+//            return MouvementState.STANDING_L;
+//        }
+//        if (mouvementState == MouvementState.STANDING_R) {
+//            return MouvementState.STANDING_R;
+//        }
         if (!collisionBottom && collisionLeft) {
             return MouvementState.WALL_L;
         } else if (!collisionBottom && collisionRight) {
             return MouvementState.WALL_R;
         }
-
-        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-            if (mouseX < this.getCenterX()) {
-                if (collisionBottom) {
-                    return MouvementState.WALKING_L;
-                } else {
-                    return MouvementState.JUMP_L;
-                }
-
-            } else if (mouseX > this.getCenterX()) {
-                if (collisionBottom) {
-                    return MouvementState.WALKING_R;
-                } else {
-                    return MouvementState.JUMP_R;
-                }
-            } else if (collisionBottom && mouvementState == MouvementState.WALKING_L) {
+        if (input.isKeyDown(Input.KEY_LEFT) && input.isKeyDown(Input.KEY_RIGHT)) {
+            if (mouvementState == MouvementState.WALKING_L) {
                 return MouvementState.STANDING_L;
-            } else if (collisionBottom && mouvementState == MouvementState.WALKING_R) {
+            } else if (mouvementState == MouvementState.WALKING_R) {
                 return MouvementState.STANDING_R;
-            } else if (!collisionBottom && mouvementState == MouvementState.JUMP_L) {
+            }
+        } else if (input.isKeyDown(Input.KEY_LEFT)) {
+            if (collisionBottom) {
+                return MouvementState.WALKING_L;
+            } else {
                 return MouvementState.JUMP_L;
-            } else if (!collisionBottom && mouvementState == MouvementState.JUMP_R) {
+            }
+
+        } else if (input.isKeyDown(Input.KEY_RIGHT)) {
+            if (collisionBottom) {
+                return MouvementState.WALKING_R;
+            } else {
                 return MouvementState.JUMP_R;
-            } else if (!collisionBottom && mouvementState == MouvementState.STANDING_L) {
-                return MouvementState.JUMP_L;
-            } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
-                return MouvementState.JUMP_R;
-            } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
-                return MouvementState.STANDING_L;
-            } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
-                return MouvementState.STANDING_R;
             }
         } else if (collisionBottom && mouvementState == MouvementState.WALKING_L) {
             return MouvementState.STANDING_L;
         } else if (collisionBottom && mouvementState == MouvementState.WALKING_R) {
             return MouvementState.STANDING_R;
-        } else if (!collisionBottom && mouvementState == MouvementState.JUMP_L) {
-            return MouvementState.JUMP_L;
-        } else if (!collisionBottom && mouvementState == MouvementState.JUMP_R) {
-            return MouvementState.JUMP_R;
         } else if (!collisionBottom && mouvementState == MouvementState.STANDING_L) {
             return MouvementState.JUMP_L;
         } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
-            return MouvementState.JUMP_R;
-        } else if (!collisionBottom && mouvementState == MouvementState.WALL_L) {
-            return MouvementState.JUMP_L;
-        } else if (!collisionBottom && mouvementState == MouvementState.WALL_R) {
             return MouvementState.JUMP_R;
         } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
             return MouvementState.STANDING_L;
         } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
             return MouvementState.STANDING_R;
+        } else if (!collisionBottom && mouvementState == MouvementState.WALL_L) {
+            return MouvementState.JUMP_L;
+        } else if (!collisionBottom && mouvementState == MouvementState.WALL_R) {
+            return MouvementState.JUMP_R;
         } else if (collisionBottom && mouvementState == MouvementState.WALL_L) {
             return MouvementState.STANDING_L;
         } else if (collisionBottom && mouvementState == MouvementState.WALL_R) {
             return MouvementState.STANDING_R;
         }
-        if (mouvementState == MouvementState.STANDING_L) {
-            return MouvementState.STANDING_L;
-        }
-        if (mouvementState == MouvementState.STANDING_R) {
-            return MouvementState.STANDING_R;
-        }
 
-        return MouvementState.WALL_L;
+        
+        
+
+        return this.mouvementState;
     }
 
-    public int getMAX_AIR_JUMPS() {
-        return MAX_AIR_JUMPS;
+    public int getMaxAirJumps() {
+        return maxAirJumps;
     }
 
-    public void setMAX_AIR_JUMPS(int MAX_AIR_JUMPS) {
-        this.MAX_AIR_JUMPS = MAX_AIR_JUMPS;
+    public void setMaxAirJumps(int maxAirJumps) {
+        this.maxAirJumps = maxAirJumps;
+    }
+
+    public int getAirJumps() {
+        return airJumps;
+    }
+
+    public void setAirJumps(int airJumps) {
+        this.airJumps = airJumps;
     }
 
 }

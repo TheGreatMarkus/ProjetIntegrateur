@@ -2,7 +2,6 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
-import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.IMG_MENU_CURSOR;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import ca.qc.bdeb.info204.spellington.textEntities.InfoItem;
 import org.newdawn.slick.GameContainer;
@@ -190,9 +189,7 @@ public class SpellBookState extends BasicGameState {
                 break;
         }
 
-        float renderMouseX = gc.getInput().getMouseX();
-        float renderMouseY = gc.getInput().getMouseY();
-        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
+        MainMenuState.renderMouseCursor(gc);
     }
 
     @Override

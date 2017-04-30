@@ -27,7 +27,7 @@ public class PassiveSpell extends Spell {
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         if (this.id == SpellingSystem.ID_ASCENDING_CURRENT) {
-            spellington.setMAX_AIR_JUMPS(5);
+            spellington.setMaxAirJumps(5);
         } else if (this.id == SpellingSystem.ID_FIRE_RES) {
             spellington.setResFire(spellington.getResFire() + 5);
         } else if (this.id == SpellingSystem.ID_ICE_RES) {
@@ -49,7 +49,7 @@ public class PassiveSpell extends Spell {
     @Override
     public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
         if (this.id == SpellingSystem.ID_ASCENDING_CURRENT) {
-            spellington.setMAX_AIR_JUMPS(1);
+            spellington.setMaxAirJumps(1);
         } else if (this.id == SpellingSystem.ID_FIRE_RES) {
             spellington.setResFire(spellington.getResFire() - 5);
         } else if (this.id == SpellingSystem.ID_ICE_RES) {

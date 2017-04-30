@@ -1,5 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
+import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+
 /**
  * A DynamicEntity that can be affected by damage among other things.
  *
@@ -16,13 +18,11 @@ public abstract class LivingEntity extends DynamicEntity {
         JUMP_R,
         JUMP_L,
         WALL_R,
-        WALL_L
+        WALL_L,
+        ATTACK_R,
+        ATTACK_L
     }
 
-    protected boolean collisionTop;
-    protected boolean collisionBottom;
-    protected boolean collisionRight;
-    protected boolean collisionLeft;
     protected MouvementState mouvementState;
     protected int lifePoint;
     protected int maxLifePoint;
@@ -30,14 +30,14 @@ public abstract class LivingEntity extends DynamicEntity {
     protected int resIce;
     protected int resFire;
 
-    public LivingEntity(float x, float y, float width, float height, MouvementState mouvementState, float GRAVITY_MODIFIER, int maxLifePoint) {
-        super(x, y, width, height, GRAVITY_MODIFIER);
+    public LivingEntity(float x, float y, float width, float height, MouvementState mouvementState, float gravMod, int maxLifePoint) {
+        super(x, y, width, height, gravMod, new Vector2D(0, 0));
         this.mouvementState = mouvementState;
         collisionTop = false;
         collisionBottom = false;
         collisionRight = false;
         collisionLeft = false;
-        this.gravModifier = GRAVITY_MODIFIER;
+        this.gravModifier = gravMod;
         this.maxLifePoint = maxLifePoint;
         this.lifePoint = maxLifePoint;
     }

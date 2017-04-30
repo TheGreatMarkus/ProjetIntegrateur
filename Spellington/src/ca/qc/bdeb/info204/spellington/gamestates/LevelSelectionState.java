@@ -20,6 +20,7 @@ public class LevelSelectionState extends BasicGameState {
 
     //Text for the button in this menu. LS stands for "Level selection"
     private static final String LS_TITLE = "Le réveil de Spellington";
+    private static final String LS_RETURN = "Retour";
     private static final String LS_LEVEL1 = "Niveau 1";
     private static final String LS_LEVEL2 = "Niveau 2";
     private static final String LS_LEVEL3 = "Niveau 3";
@@ -27,6 +28,7 @@ public class LevelSelectionState extends BasicGameState {
     private static final String LS_LEVEL5 = "Niveau 5";
 
     private MenuItem mnuItemTitle;
+    private MenuItem mnuItemReturn;
     private MenuItem mnuItemLevel1;
     private MenuItem mnuItemLevel2;
     private MenuItem mnuItemLevel3;
@@ -36,6 +38,7 @@ public class LevelSelectionState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, LS_TITLE, true, false, 0, MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_TITLE), fontMenu.getHeight(LS_TITLE));
+        mnuItemReturn = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_RETURN, false, false, MainMenuState.TEXT_GAP, MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_RETURN), fontMenu.getHeight(LS_RETURN));
         mnuItemLevel1 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL1, false, false, MainMenuState.TEXT_GAP, mnuItemTitle.getY() + mnuItemTitle.getHeight() * 1.5f, fontMenu.getWidth(LS_LEVEL1), fontMenu.getHeight(LS_LEVEL1));
         mnuItemLevel2 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL2, false, false, MainMenuState.TEXT_GAP, mnuItemLevel1.getY() + mnuItemLevel1.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL2), fontMenu.getHeight(LS_LEVEL2));
         mnuItemLevel3 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL3, false, false, MainMenuState.TEXT_GAP, mnuItemLevel2.getY() + mnuItemLevel2.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL3), fontMenu.getHeight(LS_LEVEL3));
@@ -51,17 +54,20 @@ public class LevelSelectionState extends BasicGameState {
         g.setColor(Color.white);
         g.setFont(fontMenu);
         mnuItemTitle.render(g, gc);
+        mnuItemReturn.render(g, gc);
         mnuItemLevel1.render(g, gc);
         mnuItemLevel2.render(g, gc);
         mnuItemLevel3.render(g, gc);
         mnuItemLevel4.render(g, gc);
         mnuItemLevel5.render(g, gc);
+        MainMenuState.renderMouseCursor(gc);
     }
 
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         int mouseX = gc.getInput().getMouseX();
         int mouseY = gc.getInput().getMouseY();
+        mnuItemReturn.detHoveredOver(mouseX, mouseY);
         mnuItemLevel1.detHoveredOver(mouseX, mouseY);
         mnuItemLevel2.detHoveredOver(mouseX, mouseY);
         mnuItemLevel3.detHoveredOver(mouseX, mouseY);
@@ -70,23 +76,28 @@ public class LevelSelectionState extends BasicGameState {
 
         boolean triedToClick = gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
 
-        if (mnuItemLevel1.getHoveredOver() && triedToClick) {
+        if (mnuItemReturn.getHoveredOver() && triedToClick && mnuItemReturn.getClickable()) {
+            GameManager.levelSelected(1);
+            game.enterState(GameCore.MAIN_MENU_STATE_ID);
+        }
+
+        if (mnuItemLevel1.getHoveredOver() && triedToClick && mnuItemLevel1.getClickable()) {
             GameManager.levelSelected(1);
             game.enterState(GameCore.PLAY_STATE_ID);
         }
-        if (mnuItemLevel2.getHoveredOver() && triedToClick) {
+        if (mnuItemLevel2.getHoveredOver() && triedToClick && mnuItemLevel2.getClickable()) {
             GameManager.levelSelected(2);
             game.enterState(GameCore.PLAY_STATE_ID);
         }
-        if (mnuItemLevel3.getHoveredOver() && triedToClick) {
+        if (mnuItemLevel3.getHoveredOver() && triedToClick && mnuItemLevel3.getClickable()) {
             GameManager.levelSelected(3);
             game.enterState(GameCore.PLAY_STATE_ID);
         }
-        if (mnuItemLevel4.getHoveredOver() && triedToClick) {
+        if (mnuItemLevel4.getHoveredOver() && triedToClick && mnuItemLevel4.getClickable()) {
             GameManager.levelSelected(4);
             game.enterState(GameCore.PLAY_STATE_ID);
         }
-        if (mnuItemLevel5.getHoveredOver() && triedToClick) {
+        if (mnuItemLevel5.getHoveredOver() && triedToClick && mnuItemLevel5.getClickable()) {
             GameManager.levelSelected(5);
             game.enterState(GameCore.PLAY_STATE_ID);
         }

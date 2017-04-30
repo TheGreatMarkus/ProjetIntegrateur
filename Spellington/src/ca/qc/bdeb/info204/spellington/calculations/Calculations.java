@@ -1,12 +1,18 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
+import ca.qc.bdeb.info204.spellington.GameCore;
+import static ca.qc.bdeb.info204.spellington.GameCore.DIM_MAP;
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile.SourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.RangedEnemy;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.util.ArrayList;
+import org.newdawn.slick.geom.Line;
 
 /**
  * Class dedicated to performing long or complex calculations for the game.
@@ -28,7 +34,7 @@ public class Calculations {
     public static void checkMapCollision(Tile[][] map, LivingEntity creature) {
         TargetI = (int) (creature.getCenterY() / (float) Tile.DIM_TILE.width);
         TargetJ = (int) (creature.getCenterX() / (float) Tile.DIM_TILE.height);
-        if (TargetI >= PlayState.DIM_MAP.height || TargetJ >= PlayState.DIM_MAP.width) {
+        if (TargetI >= DIM_MAP.height || TargetJ >= DIM_MAP.width) {
             TargetI = 0;
             TargetJ = 0;
         }
@@ -105,21 +111,28 @@ public class Calculations {
      * list.
      * @author Cristian Aldea.
      */
-    public static boolean checkProjectileCollision(Tile[][] map, ArrayList<Enemy> activeEnemies, Spellington spellington, Projectile projectile) {
+    public static int checkProjectileCollision(Projectile projectile, Tile[][] map, ArrayList<Enemy> activeEnemies, Spellington spellington) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 if (projectile.intersects(map[i][j]) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
-                    return true;
+                    return 0;
                 }
             }
         }
+
+        if (projectile.intersects(spellington) && projectile.getSource() == SourceType.ENEMY) {
+            spellington.subLifePoint(projectile.getDamage(), projectile.getDamageType());
+            return 1;
+        }
+
         for (Enemy activeEnemy : activeEnemies) {
-            if (projectile.intersects(activeEnemy)) {
+            if (projectile.intersects(activeEnemy) && projectile.getSource() == SourceType.PLAYER) {
                 activeEnemy.subLifePoint(projectile.getDamage(), projectile.getDamageType());
-                return true;
+                return 2;
             }
         }
-        return false;
+
+        return -1;
     }
 
     /**
@@ -157,6 +170,102 @@ public class Calculations {
             }
         }
         return tempAngle;
+    }
+
+    public static boolean detEnemyCanSeeSpellington(Enemy enemy, Spellington spellington, Tile[][] mapinfo) {
+        Line line = new Line(spellington.getCenterX(), spellington.getCenterY(), enemy.getX(), enemy.getCenterY());
+        for (int i = 0; i < mapinfo.length; i++) {
+            for (int j = 0; j < mapinfo[i].length; j++) {
+                if (line.intersects(mapinfo[i][j]) && mapinfo[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void EnemyTryToShootCurvedProjectile(RangedEnemy enemy, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+        Float angle1;
+        Float angle2;
+        float deltaX = -enemy.getDeltaX();
+        float deltaY = -enemy.getDeltaY();
+        float v = 0.7f;
+        float g = PlayState.GRAV_ACC.getY();
+        //Formule from https://en.wikipedia.org/wiki/Trajectory_of_a_projectile
+        Float sqrt = (float) Math.sqrt((v * v * v * v) - (g * (g * deltaX * deltaX + (2 * deltaY * v * v))));
+        if (!sqrt.isNaN()) {
+            angle1 = (float) Math.atan((v * v + sqrt) / (g * deltaX));
+            angle2 = (float) Math.atan((v * v - sqrt) / (g * deltaX));
+            if (deltaX > 0) {
+                angle1 = angle1 + (float) Math.PI;
+                angle2 = angle2 + (float) Math.PI;
+            }
+            Projectile test1 = new Projectile(enemy.getCenterX() - enemy.getDimProjectile().width / 2, enemy.getCenterY() - enemy.getDimProjectile().height / 2, enemy.getDimProjectile().width, enemy.getDimProjectile().height, new Vector2D(v, angle1, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.SourceType.ENEMY);
+            Projectile test2 = new Projectile(enemy.getCenterX() - enemy.getDimProjectile().width / 2, enemy.getCenterY() - enemy.getDimProjectile().height / 2, enemy.getDimProjectile().width, enemy.getDimProjectile().height, new Vector2D(v, angle2, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.SourceType.ENEMY);
+            int test1Result = -1;
+            int test2Result = -1;
+            while (test1Result == -1) {
+                test1Result = Calculations.checkProjectileCollision(test1, mapinfo, new ArrayList<Enemy>(), spellington);
+                test1.update(10);
+
+            }
+            while (test2Result == -1) {
+                test2Result = Calculations.checkProjectileCollision(test2, mapinfo, new ArrayList<Enemy>(), spellington);
+                test2.update(10);
+
+            }
+            if (test1Result == 1 || test2Result == 1) {
+                float x = enemy.getCenterX() - enemy.getDimProjectile().width / 2;
+                float y = enemy.getCenterY() - enemy.getDimProjectile().height / 2;
+                int width = enemy.getDimProjectile().width;
+                int height = enemy.getDimProjectile().height;
+                if (test2Result == 1) {
+                    //A changer
+                    activeProjectiles.add(new Projectile(x, y, width, height, new Vector2D(v, angle2, true), 1, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE, Projectile.SourceType.ENEMY));
+                } else if (test1Result == 1) {
+                    activeProjectiles.add(new Projectile(x, y, width, height, new Vector2D(v, angle1, true), 1, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE, Projectile.SourceType.ENEMY));
+
+                }
+                enemy.setAttackCooldown(enemy.getTotalAttackCooldown());
+                if (enemy.getMouvementState() == LivingEntity.MouvementState.STANDING_L) {
+                    enemy.setMouvementState(LivingEntity.MouvementState.ATTACK_L);
+                } else if (enemy.getMouvementState() == LivingEntity.MouvementState.STANDING_R) {
+                    enemy.setMouvementState(LivingEntity.MouvementState.ATTACK_R);
+                }
+            }
+        }
+    }
+
+    public static void EnemyTryToShootStraightProjectile(RangedEnemy enemy, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+        float v = 0.5f;
+        float angle = 1f;
+        float deltaX = enemy.getDeltaX();
+        float deltaY = enemy.getDeltaY();
+
+        angle = Calculations.detAngle(deltaX, deltaY);
+
+        Projectile test1 = new Projectile(enemy.getCenterX() - enemy.getDimProjectile().width / 2, enemy.getCenterY() - enemy.getDimProjectile().height / 2, enemy.getDimProjectile().width, enemy.getDimProjectile().height, new Vector2D(v, angle, true), 0, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.SourceType.ENEMY);
+
+        int test1Result = -1;
+        while (test1Result == -1) {
+            test1Result = Calculations.checkProjectileCollision(test1, mapinfo, new ArrayList<Enemy>(), spellington);
+            test1.update(10);
+
+        }
+        if (test1Result == 1) {
+            enemy.setAttackCooldown(enemy.getTotalAttackCooldown());
+            float x = enemy.getCenterX() - enemy.getDimProjectile().width / 2;
+            float y = enemy.getCenterY() - enemy.getDimProjectile().height / 2;
+            int width = enemy.getDimProjectile().width;
+            int height = enemy.getDimProjectile().height;
+            activeProjectiles.add(new Projectile(x, y, width, height, new Vector2D(v, angle, true), 0, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE, Projectile.SourceType.ENEMY));
+            if (enemy.getMouvementState() == LivingEntity.MouvementState.STANDING_L) {
+                enemy.setMouvementState(LivingEntity.MouvementState.ATTACK_L);
+            } else if (enemy.getMouvementState() == LivingEntity.MouvementState.STANDING_R) {
+                enemy.setMouvementState(LivingEntity.MouvementState.ATTACK_R);
+            }
+        }
+
     }
 
 }

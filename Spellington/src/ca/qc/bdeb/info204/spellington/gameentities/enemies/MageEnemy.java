@@ -1,8 +1,10 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
-import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
-import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
+import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -10,25 +12,10 @@ import org.newdawn.slick.Graphics;
  *
  * @author 1522888
  */
-public class MageEnemy extends Enemy {
+public class MageEnemy extends RangedEnemy {
 
     public MageEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
         super(x, y, dim, mouvementState, GRAVITY_MODIFIER, enemyType);
-    }
-
-    @Override
-    public void update(float time) {
-        if (this.collisionBottom || this.collisionTop) {
-            this.speedVector.setY(0);
-        }
-        if (this.collisionRight || this.collisionLeft) {
-            this.speedVector.setX(0);
-        }
-        this.speedVector.setX(-0.01f);
-        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
-        this.setX(this.getX() + this.getSpeedVector().getX() * time);
-        this.setY(this.getY() + this.getSpeedVector().getY() * time);
-        this.resetCollisionState();
     }
 
     @Override
@@ -37,6 +24,18 @@ public class MageEnemy extends Enemy {
         g.drawString("HP :" + this.lifePoint, x, y);
         g.setColor(Color.magenta);
         g.drawRect(x, y, width, height);
+    }
+
+    @Override
+    public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    }
+
+    @Override
+    public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    }
+
+    @Override
+    public void loadAnimations() {
     }
 
 }

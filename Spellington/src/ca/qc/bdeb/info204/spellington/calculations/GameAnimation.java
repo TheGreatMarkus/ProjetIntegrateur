@@ -22,6 +22,7 @@ public class GameAnimation extends GameEntity {
         this.vie = vie;
         this.yModifier = yModifier;
         this.animation.restart();
+        
     }
 
     public void update() {

@@ -45,9 +45,7 @@ public class PauseMenuState extends BasicGameState {
         mnuSpellingBook.render(g, gc);
         mnuItemMainMenu.render(g, gc);
 
-        float renderMouseX = gc.getInput().getMouseX();
-        float renderMouseY = gc.getInput().getMouseY();
-        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
+        MainMenuState.renderMouseCursor(gc);
     }
 
     @Override

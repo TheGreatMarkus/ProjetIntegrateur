@@ -89,10 +89,9 @@ public class MainMenuState extends BasicGameState {
         mnuItemLoadGame.render(g, gc);
         mnuItemOptions.render(g, gc);
         mnuItemExit.render(g, gc);
-
-        float renderMouseX = gc.getInput().getMouseX();
-        float renderMouseY = gc.getInput().getMouseY();
-        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
+        
+        renderMouseCursor(gc);
+        
 
     }
 
@@ -128,6 +127,12 @@ public class MainMenuState extends BasicGameState {
     @Override
     public int getID() {
         return GameCore.MAIN_MENU_STATE_ID;
+    }
+
+    public static void renderMouseCursor(GameContainer gc) {
+        float renderMouseX = gc.getInput().getMouseX();
+        float renderMouseY = gc.getInput().getMouseY();
+        IMG_MENU_CURSOR.draw(renderMouseX, renderMouseY, 25f * GameCore.SCALE, 25f * GameCore.SCALE);
     }
 
 }
