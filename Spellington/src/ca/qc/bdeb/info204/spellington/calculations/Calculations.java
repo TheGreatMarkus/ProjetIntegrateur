@@ -173,7 +173,7 @@ public class Calculations {
     }
 
     public static boolean detEnemyCanSeeSpellington(Enemy enemy, Spellington spellington, Tile[][] mapinfo) {
-        Line line = new Line(spellington.getCenterX(), spellington.getCenterY(), enemy.getX(), enemy.getCenterY());
+        Line line = new Line(spellington.getCenterX(), spellington.getCenterY(), enemy.getCenterX(), enemy.getCenterY());
         for (int i = 0; i < mapinfo.length; i++) {
             for (int j = 0; j < mapinfo[i].length; j++) {
                 if (line.intersects(mapinfo[i][j]) && mapinfo[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
