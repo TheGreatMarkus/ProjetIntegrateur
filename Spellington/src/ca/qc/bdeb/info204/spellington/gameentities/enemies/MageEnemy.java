@@ -12,7 +12,7 @@ import org.newdawn.slick.Graphics;
  *
  * @author 1522888
  */
-public class MageEnemy extends Enemy {
+public class MageEnemy extends RangedEnemy {
 
     public MageEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
         super(x, y, dim, mouvementState, GRAVITY_MODIFIER, enemyType);

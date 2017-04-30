@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -22,9 +23,7 @@ import org.newdawn.slick.geom.Line;
  */
 public class MeleeEnemy extends Enemy {
 
-    private static final float MAX_X_SPEED = 0.2f;
-    private static final Vector2D X_ACC = new Vector2D(0.001f, 0);
-    private static final float INIT_JUMP_SPEED = -0.5f;
+
 
     private Image imgStandingLeft;
     private Image imgStandingRight;
@@ -32,7 +31,6 @@ public class MeleeEnemy extends Enemy {
     private Animation animAttackR;
     private Animation animWalkL;
     private Animation animWalkR;
-    private boolean canSee;
 
     public MeleeEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
         super(x, y, dim, mouvementState, GRAVITY_MODIFIER, enemyType);
@@ -41,10 +39,12 @@ public class MeleeEnemy extends Enemy {
     @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
-        g.drawString("HP :" + this.lifePoint, x, y);
-        if (canSee) {
-            g.setColor(Color.red);
+        g.drawString("HP = " + this.lifePoint, x, y - 20);
+        if (willDoAction) {
+            g.setColor(new Color(255, 0, 0, 100));
+            g.fillRect(x, y, width, height);
         }
+        g.setColor(Color.cyan);
         g.drawRect(x, y, width, height);
         float tempX = x - 75;
         float tempY = y - 15;
@@ -81,53 +81,27 @@ public class MeleeEnemy extends Enemy {
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        float deltaX = spellington.getCenterX() - this.getCenterX();
-        float deltaY = spellington.getCenterY() - this.getCenterY();
-        float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        Line line = new Line(spellington.getCenterX(), spellington.getCenterY() - 20, this.getCenterX(), this.getCenterY() - 20);
-        canSee = true;
-        for (int i = 0; i < mapinfo.length; i++) {
-            for (int j = 0; j < mapinfo[i].length; j++) {
-                if (line.intersects(mapinfo[i][j]) && mapinfo[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
-                    canSee = false;
-                }
+        if (deltaX < 0) {
+            this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
+            if (this.speedVector.getX() < -MAX_X_SPEED) {
+                this.speedVector.setX(-MAX_X_SPEED);
             }
+            this.setMouvementState(MouvementState.WALKING_L);
+        } else if (deltaX > 0) {
+            this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+            if (this.speedVector.getX() > MAX_X_SPEED) {
+                this.speedVector.setX(MAX_X_SPEED);
+            }
+            this.setMouvementState(MouvementState.WALKING_R);
         }
-        boolean canMove = Math.abs(distance) < (500 * GameCore.scale) && canSee;
-        if (canMove) {
-            if (deltaX < 0) {
-                this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
-                if (this.speedVector.getX() < -MAX_X_SPEED) {
-                    this.speedVector.setX(-MAX_X_SPEED);
-                }
-                this.setMouvementState(MouvementState.WALKING_L);
-            } else if (deltaX > 0) {
-                this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
-                if (this.speedVector.getX() > MAX_X_SPEED) {
-                    this.speedVector.setX(MAX_X_SPEED);
-                }
-                this.setMouvementState(MouvementState.WALKING_R);
-            }
-            if (collisionBottom && deltaY < 0) {
-                this.speedVector.setY(INIT_JUMP_SPEED);
-                System.out.println("jumped");
-            }
-        } else if (!canMove && this.mouvementState == MouvementState.WALKING_L) {
+        if (collisionBottom && deltaY < -40) {
+            this.speedVector.setY(INIT_JUMP_SPEED);
+        } else if (!willDoAction && this.mouvementState == MouvementState.WALKING_L) {
             this.mouvementState = MouvementState.STANDING_L;
-        } else if (!canMove && this.mouvementState == MouvementState.WALKING_R) {
+        } else if (!willDoAction && this.mouvementState == MouvementState.WALKING_R) {
             this.mouvementState = MouvementState.STANDING_R;
         }
-        if (!canMove && this.speedVector.getX() > 0) {
-            this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
-            if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
-                this.speedVector.setX(0);
-            }
-        } else if (!canMove && this.speedVector.getX() < 0) {
-            this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
-            if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
-                this.speedVector.setX(0);
-            }
-        }
+        
 
     }
 

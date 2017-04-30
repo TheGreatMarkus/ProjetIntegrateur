@@ -23,44 +23,57 @@ import org.newdawn.slick.SlickException;
  */
 public class RangedEnemy extends Enemy {
 
-    int i = 0;
-
     private Animation animProjectile;
     private Image imgStandingLeft;
     private Image imgStandingRight;
     private Animation animAttackL;
     private Animation animAttackR;
 
-    public RangedEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
-        super(x, y, dim, mouvementState, GRAVITY_MODIFIER, enemyType);
+    private Dimension dimProjectile;
+
+    public RangedEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float gravMod, EnemyType enemyType) {
+        super(x, y, dim, mouvementState, gravMod, enemyType);
+        if (this.enemyType == EnemyType.ARCHER) {
+            dimProjectile = new Dimension(30, 30);
+        } else if (this.enemyType == EnemyType.CROSSBOWMAN) {
+            dimProjectile = new Dimension(30, 30);
+        }
 
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
-        g.drawString(this.lifePoint + "", x, y);
-        g.setColor(Color.yellow);
+        g.drawString("HP = " + this.lifePoint, x, y - 20);
+        if (willDoAction) {
+            g.setColor(new Color(255, 0, 0, 100));
+            g.fillRect(x, y, width, height);
+        }
+        g.setColor(Color.orange);
         g.drawRect(x, y, width, height);
         float tempY = y - 30;
         float tempXLeft = x - 58;
         float tempXRight = x - 70;
+        float tempWidth = 178;
+        float tempHeight = 100;
         switch (this.mouvementState) {
             case STANDING_L:
-                imgStandingLeft.draw(tempXLeft, tempY, 178, 100);
+                imgStandingLeft.draw(tempXLeft, tempY, tempWidth, tempHeight);
                 break;
             case STANDING_R:
-                imgStandingRight.draw(tempXRight, tempY, 178, 100);
+                imgStandingRight.draw(tempXRight, tempY, tempWidth, tempHeight);
                 break;
             case ATTACK_L:
-                animAttackL.draw(tempXLeft, tempY, 178, 100);
+                animAttackL.draw(tempXLeft, tempY, tempWidth, tempHeight);
                 if (animAttackL.isStopped()) {
+                    animAttackL.restart();
                     this.mouvementState = MouvementState.STANDING_L;
                 }
                 break;
             case ATTACK_R:
-                animAttackR.draw(tempXRight, tempY, 178, 100);
+                animAttackR.draw(tempXRight, tempY, tempWidth, tempHeight);
                 if (animAttackR.isStopped()) {
+                    animAttackR.restart();
                     this.mouvementState = MouvementState.STANDING_R;
                 }
                 break;
@@ -71,108 +84,24 @@ public class RangedEnemy extends Enemy {
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (this.mouvementState != MouvementState.ATTACK_L && this.mouvementState != MouvementState.ATTACK_R) {
-            if (spellington.getCenterX() <= this.getCenterX()) {
-                this.setMouvementState(MouvementState.STANDING_L);
-            } else if (spellington.getCenterX() > this.getCenterX()) {
-                this.setMouvementState(MouvementState.STANDING_R);
-            }
+        if (spellington.getCenterX() <= this.getCenterX()) {
+            this.setMouvementState(MouvementState.STANDING_L);
+        } else if (spellington.getCenterX() > this.getCenterX()) {
+            this.setMouvementState(MouvementState.STANDING_R);
         }
+
     }
 
     @Override
     public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (i > 100) {
-            tryToAttack(spellington, activeProjectiles, mapinfo);
-        }
-        if (i < 10000) {
-            i++;
-        }
-    }
-
-    public void tryToAttack(Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (this.enemyType == EnemyType.ARCHER) {
-            Float angle1 = 0f;
-            Float angle2 = 0f;
-            float deltaX = this.getCenterX() - spellington.getCenterX();
-            float deltaY = this.getCenterY() - spellington.getCenterY();
-            float v = 0.7f;
-            float g = PlayState.GRAV_ACC.getY();
-            //Formule provenant de https://en.wikipedia.org/wiki/Trajectory_of_a_projectile
-            Float sqrt = (float) Math.sqrt((v * v * v * v) - (g * (g * deltaX * deltaX + (2 * deltaY * v * v))));
-            if (!sqrt.isNaN()) {
-                try {
-                    angle1 = (float) Math.atan((v * v + sqrt) / (g * deltaX));
-                    angle2 = (float) Math.atan((v * v - sqrt) / (g * deltaX));
-                } catch (Exception e) {
-                    System.out.println("exception");
-
-                }
-                if (deltaX > 0) {
-                    angle1 = angle1 + (float) Math.PI;
-                    angle2 = angle2 + (float) Math.PI;
-                }
-                Vector2D tempVect1 = new Vector2D(v, angle1, true);
-                Vector2D tempVect2 = new Vector2D(v, angle2, true);
-                Projectile test1 = new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, new Vector2D(v, angle1, true), 1, animProjectile, 0, ElementalType.FIRE, Projectile.SourceType.ENEMY);
-                Projectile test2 = new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, new Vector2D(v, angle2, true), 1, animProjectile, 0, ElementalType.FIRE, Projectile.SourceType.ENEMY);
-                int test1Result = -1;
-                int test2Result = -1;
-                while (test1Result == -1) {
-                    test1Result = Calculations.checkProjectileCollision(test1, mapinfo, new ArrayList<Enemy>(), spellington);
-                    test1.update(10);
-
-                }
-                while (test2Result == -1) {
-                    test2Result = Calculations.checkProjectileCollision(test2, mapinfo, new ArrayList<Enemy>(), spellington);
-                    test2.update(10);
-
-                }
-                if (test1Result == 1 || test2Result == 1) {
-                    if (test2Result == 1) {
-                        activeProjectiles.add(new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, tempVect2, 1, animProjectile, 5, ElementalType.FIRE, Projectile.SourceType.ENEMY));
-                    } else if (test1Result == 1) {
-                        activeProjectiles.add(new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, tempVect1, 1, animProjectile, 5, ElementalType.FIRE, Projectile.SourceType.ENEMY));
-
-                    }
-                    i = 0;
-                    if (this.mouvementState == MouvementState.STANDING_L) {
-                        this.mouvementState = MouvementState.ATTACK_L;
-                        animAttackL.restart();
-                    } else if (this.mouvementState == MouvementState.STANDING_R) {
-                        this.mouvementState = MouvementState.ATTACK_R;
-                        animAttackR.restart();
-                    }
-                }
-            }
-        } else if (this.enemyType == EnemyType.CROSSBOWMAN) {
-            float v = 0.5f;
-            float angle = 1f;
-            float deltaX = spellington.getCenterX() - this.getCenterX();
-            float deltaY = spellington.getCenterY() - this.getCenterY();
-            if (Math.abs(deltaX) < 800f * GameCore.scale) {
-                angle = Calculations.detAngle(deltaX, deltaY);
-
-                Projectile test1 = new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, new Vector2D(v, angle, true), 0, animProjectile, 0, ElementalType.FIRE, Projectile.SourceType.ENEMY);
-                int test1Result = -1;
-                while (test1Result == -1) {
-                    test1Result = Calculations.checkProjectileCollision(test1, mapinfo, new ArrayList<Enemy>(), spellington);
-                    test1.update(10);
-
-                }
-                if (test1Result == 1) {
-                    i = 0;
-                    activeProjectiles.add(new Projectile(this.getCenterX() - 15, this.getCenterY() - 15, 30, 30, new Vector2D(v, angle, true), 0, animProjectile, 5, ElementalType.FIRE, Projectile.SourceType.ENEMY));
-                    if (this.mouvementState == MouvementState.STANDING_L) {
-                        this.mouvementState = MouvementState.ATTACK_L;
-                        animAttackL.restart();
-                    } else if (this.mouvementState == MouvementState.STANDING_R) {
-                        this.mouvementState = MouvementState.ATTACK_R;
-                        animAttackR.restart();
-                    }
-                }
+        if (attackCooldown == 0) {
+            if (this.enemyType == EnemyType.ARCHER) {
+                Calculations.EnemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
+            } else if (this.enemyType == EnemyType.CROSSBOWMAN) {
+                Calculations.EnemyTryToShootStraightProjectile(this, spellington, activeProjectiles, mapinfo);
             }
         }
+
     }
 
     @Override
@@ -210,6 +139,14 @@ public class RangedEnemy extends Enemy {
             Logger.getLogger(RangedEnemy.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public Dimension getDimProjectile() {
+        return dimProjectile;
+    }
+
+    public Animation getAnimProjectile() {
+        return animProjectile;
     }
 
 }

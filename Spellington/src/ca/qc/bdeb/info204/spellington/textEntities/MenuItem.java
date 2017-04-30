@@ -16,7 +16,7 @@ public class MenuItem {
         TEXT
     }
 
-    private static final float TEXT_GAP = 10f * GameCore.scale;
+    private static final float TEXT_GAP = 10f * GameCore.SCALE;
 
     private MenuItemType menuItemType;
     private String text;

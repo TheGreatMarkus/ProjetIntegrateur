@@ -23,10 +23,6 @@ public abstract class LivingEntity extends DynamicEntity {
         ATTACK_L
     }
 
-    protected boolean collisionTop;
-    protected boolean collisionBottom;
-    protected boolean collisionRight;
-    protected boolean collisionLeft;
     protected MouvementState mouvementState;
     protected int lifePoint;
     protected int maxLifePoint;

@@ -74,8 +74,7 @@ public class Spellington extends LivingEntity {
      * length.
      */
     public void update(Input input, float time) {
-        //To slowdown time for testing purposes
-        //time *= 0.5;
+
         //On divize par scale pour match la position de la souris avec le scale du render
 //        float mouseX = (float) input.getMouseX() / GameCore.scale;
 //        float mouseY = (float) input.getMouseY() / GameCore.scale;
@@ -123,7 +122,17 @@ public class Spellington extends LivingEntity {
 //            }
 //        }
         if (input.isKeyDown(Input.KEY_RIGHT) && input.isKeyDown(Input.KEY_LEFT)) {
-            //do nothing
+            if (this.speedVector.getX() > 0) {
+                this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
+                if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
+                    this.speedVector.setX(0);
+                }
+            } else if (this.speedVector.getX() < 0) {
+                this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+                if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
+                    this.speedVector.setX(0);
+                }
+            }
         } else if (input.isKeyDown(Input.KEY_RIGHT)) {
             this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() > MAX_X_SPEED) {
@@ -170,7 +179,7 @@ public class Spellington extends LivingEntity {
             airJumps--;
         }
 
-        //this.setMouvementState(detMouvementState(input, mouseX));
+        this.setMouvementState(detMouvementState(input));
         this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * GRAVITY_MODIFIER));
         this.setX(this.getX() + this.speedVector.getX() * time);
         this.setY(this.getY() + this.speedVector.getY() * time);
@@ -219,103 +228,150 @@ public class Spellington extends LivingEntity {
 
     private void initAnimation() {
         try {
-            imgJumpL = new Image("res/image/animation/spellington/jump_l.png");
-            imgJumpR = new Image("res/image/animation/spellington/jump_r.png");
-            imgStandingL = new Image("res/image/animation/spellington/standing_l.png");
-            imgStandingR = new Image("res/image/animation/spellington/standing_r.png");
-            imgWallL = new Image("res/image/animation/spellington/wall_l.png");
-            imgWallR = new Image("res/image/animation/spellington/wall_r.png");
+            imgJumpL = new Image("res/image/animation/spellington/jumpL.png");
+            imgJumpR = new Image("res/image/animation/spellington/jumpR.png");
+            imgStandingL = new Image("res/image/animation/spellington/standingL.png");
+            imgStandingR = new Image("res/image/animation/spellington/standingR.png");
+            imgWallL = new Image("res/image/animation/spellington/wallL.png");
+            imgWallR = new Image("res/image/animation/spellington/wallR.png");
 
             Image[] tempImgWalkL = new Image[40];
             for (int i = 0; i < tempImgWalkL.length; i++) {
-                tempImgWalkL[i] = new Image("res/image/animation/spellington/walk_l/" + "walk_l (" + (i + 1) + ")" + ".png");
+                tempImgWalkL[i] = new Image("res/image/animation/spellington/walkL/" + " (" + (i + 1) + ")" + ".png");
             }
 
             Image[] tempImgWalkR = new Image[40];
             for (int i = 0; i < tempImgWalkR.length; i++) {
-                tempImgWalkR[i] = new Image("res/image/animation/spellington/walk_r/" + "walk_r (" + (i + 1) + ")" + ".png");
+                tempImgWalkR[i] = new Image("res/image/animation/spellington/walkR/" + " (" + (i + 1) + ")" + ".png");
             }
 
             animWalkL = new Animation(tempImgWalkL, 15);
             animWalkR = new Animation(tempImgWalkR, 15);
 
         } catch (SlickException ex) {
-            Logger.getLogger(Spellington.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Spellington.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private MouvementState detMouvementState(Input input, float mouseX) {
+    private MouvementState detMouvementState(Input input) {
+//        if (!collisionBottom && collisionLeft) {
+//            return MouvementState.WALL_L;
+//        } else if (!collisionBottom && collisionRight) {
+//            return MouvementState.WALL_R;
+//        }
+//
+//        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+//            if (mouseX < this.getCenterX()) {
+//                if (collisionBottom) {
+//                    return MouvementState.WALKING_L;
+//                } else {
+//                    return MouvementState.JUMP_L;
+//                }
+//
+//            } else if (mouseX > this.getCenterX()) {
+//                if (collisionBottom) {
+//                    return MouvementState.WALKING_R;
+//                } else {
+//                    return MouvementState.JUMP_R;
+//                }
+//            } else if (collisionBottom && mouvementState == MouvementState.WALKING_L) {
+//                return MouvementState.STANDING_L;
+//            } else if (collisionBottom && mouvementState == MouvementState.WALKING_R) {
+//                return MouvementState.STANDING_R;
+//            } else if (!collisionBottom && mouvementState == MouvementState.JUMP_L) {
+//                return MouvementState.JUMP_L;
+//            } else if (!collisionBottom && mouvementState == MouvementState.JUMP_R) {
+//                return MouvementState.JUMP_R;
+//            } else if (!collisionBottom && mouvementState == MouvementState.STANDING_L) {
+//                return MouvementState.JUMP_L;
+//            } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
+//                return MouvementState.JUMP_R;
+//            } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
+//                return MouvementState.STANDING_L;
+//            } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
+//                return MouvementState.STANDING_R;
+//            }
+//        } else if (collisionBottom && mouvementState == MouvementState.WALKING_L) {
+//            return MouvementState.STANDING_L;
+//        } else if (collisionBottom && mouvementState == MouvementState.WALKING_R) {
+//            return MouvementState.STANDING_R;
+//        } else if (!collisionBottom && mouvementState == MouvementState.JUMP_L) {
+//            return MouvementState.JUMP_L;
+//        } else if (!collisionBottom && mouvementState == MouvementState.JUMP_R) {
+//            return MouvementState.JUMP_R;
+//        } else if (!collisionBottom && mouvementState == MouvementState.STANDING_L) {
+//            return MouvementState.JUMP_L;
+//        } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
+//            return MouvementState.JUMP_R;
+//        } else if (!collisionBottom && mouvementState == MouvementState.WALL_L) {
+//            return MouvementState.JUMP_L;
+//        } else if (!collisionBottom && mouvementState == MouvementState.WALL_R) {
+//            return MouvementState.JUMP_R;
+//        } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
+//            return MouvementState.STANDING_L;
+//        } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
+//            return MouvementState.STANDING_R;
+//        } else if (collisionBottom && mouvementState == MouvementState.WALL_L) {
+//            return MouvementState.STANDING_L;
+//        } else if (collisionBottom && mouvementState == MouvementState.WALL_R) {
+//            return MouvementState.STANDING_R;
+//        }
+//        if (mouvementState == MouvementState.STANDING_L) {
+//            return MouvementState.STANDING_L;
+//        }
+//        if (mouvementState == MouvementState.STANDING_R) {
+//            return MouvementState.STANDING_R;
+//        }
         if (!collisionBottom && collisionLeft) {
             return MouvementState.WALL_L;
         } else if (!collisionBottom && collisionRight) {
             return MouvementState.WALL_R;
         }
-
-        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-            if (mouseX < this.getCenterX()) {
-                if (collisionBottom) {
-                    return MouvementState.WALKING_L;
-                } else {
-                    return MouvementState.JUMP_L;
-                }
-
-            } else if (mouseX > this.getCenterX()) {
-                if (collisionBottom) {
-                    return MouvementState.WALKING_R;
-                } else {
-                    return MouvementState.JUMP_R;
-                }
-            } else if (collisionBottom && mouvementState == MouvementState.WALKING_L) {
+        if (input.isKeyDown(Input.KEY_LEFT) && input.isKeyDown(Input.KEY_RIGHT)) {
+            if (mouvementState == MouvementState.WALKING_L) {
                 return MouvementState.STANDING_L;
-            } else if (collisionBottom && mouvementState == MouvementState.WALKING_R) {
+            } else if (mouvementState == MouvementState.WALKING_R) {
                 return MouvementState.STANDING_R;
-            } else if (!collisionBottom && mouvementState == MouvementState.JUMP_L) {
+            }
+        } else if (input.isKeyDown(Input.KEY_LEFT)) {
+            if (collisionBottom) {
+                return MouvementState.WALKING_L;
+            } else {
                 return MouvementState.JUMP_L;
-            } else if (!collisionBottom && mouvementState == MouvementState.JUMP_R) {
+            }
+
+        } else if (input.isKeyDown(Input.KEY_RIGHT)) {
+            if (collisionBottom) {
+                return MouvementState.WALKING_R;
+            } else {
                 return MouvementState.JUMP_R;
-            } else if (!collisionBottom && mouvementState == MouvementState.STANDING_L) {
-                return MouvementState.JUMP_L;
-            } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
-                return MouvementState.JUMP_R;
-            } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
-                return MouvementState.STANDING_L;
-            } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
-                return MouvementState.STANDING_R;
             }
         } else if (collisionBottom && mouvementState == MouvementState.WALKING_L) {
             return MouvementState.STANDING_L;
         } else if (collisionBottom && mouvementState == MouvementState.WALKING_R) {
             return MouvementState.STANDING_R;
-        } else if (!collisionBottom && mouvementState == MouvementState.JUMP_L) {
-            return MouvementState.JUMP_L;
-        } else if (!collisionBottom && mouvementState == MouvementState.JUMP_R) {
-            return MouvementState.JUMP_R;
         } else if (!collisionBottom && mouvementState == MouvementState.STANDING_L) {
             return MouvementState.JUMP_L;
         } else if (!collisionBottom && mouvementState == MouvementState.STANDING_R) {
-            return MouvementState.JUMP_R;
-        } else if (!collisionBottom && mouvementState == MouvementState.WALL_L) {
-            return MouvementState.JUMP_L;
-        } else if (!collisionBottom && mouvementState == MouvementState.WALL_R) {
             return MouvementState.JUMP_R;
         } else if (collisionBottom && mouvementState == MouvementState.JUMP_L) {
             return MouvementState.STANDING_L;
         } else if (collisionBottom && mouvementState == MouvementState.JUMP_R) {
             return MouvementState.STANDING_R;
+        } else if (!collisionBottom && mouvementState == MouvementState.WALL_L) {
+            return MouvementState.JUMP_L;
+        } else if (!collisionBottom && mouvementState == MouvementState.WALL_R) {
+            return MouvementState.JUMP_R;
         } else if (collisionBottom && mouvementState == MouvementState.WALL_L) {
             return MouvementState.STANDING_L;
         } else if (collisionBottom && mouvementState == MouvementState.WALL_R) {
             return MouvementState.STANDING_R;
         }
-        if (mouvementState == MouvementState.STANDING_L) {
-            return MouvementState.STANDING_L;
-        }
-        if (mouvementState == MouvementState.STANDING_R) {
-            return MouvementState.STANDING_R;
-        }
 
-        return MouvementState.WALL_L;
+        
+        
+
+        return this.mouvementState;
     }
 
     public int getMaxAirJumps() {

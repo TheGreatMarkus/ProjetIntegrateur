@@ -37,6 +37,8 @@ public abstract class DynamicEntity extends GameEntity {
         this.speedVector = speedVector;
         this.gravModifier = gravMod;
     }
+    
+    
 
     public Vector2D getSpeedVector() {
         return speedVector;

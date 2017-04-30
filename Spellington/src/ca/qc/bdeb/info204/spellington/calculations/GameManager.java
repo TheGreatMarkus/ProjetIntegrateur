@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
+import static ca.qc.bdeb.info204.spellington.GameCore.DIM_MAP;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
@@ -11,7 +12,6 @@ import ca.qc.bdeb.info204.spellington.gameentities.enemies.MageEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.MeleeEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.RangedEnemy;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
-import static ca.qc.bdeb.info204.spellington.gamestates.PlayState.DIM_MAP;
 import java.awt.Point;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -61,8 +61,8 @@ public class GameManager {
 
     private static ArrayList<Enemy> activeEnemies = new ArrayList<>();
     //for testing
-    private static final boolean ROOM_TESTING = false;
-    private static final int ROOM_TESTING_INDEX = 3;
+    private static final boolean ROOM_TESTING = true;
+    private static final int ROOM_TESTING_INDEX = 1;
 
     public static void initGameManager(StateBasedGame stateBasedGame) {
         GameManager.stateBasedGame = stateBasedGame;
@@ -130,14 +130,14 @@ public class GameManager {
             for (int i = 0; i < DUNGEON_ROOM_NUMBER; i++) {
                 DUNGEON_ROOMS.add(new TiledMap("res/map/mapDungeon" + (i + 1) + ".tmx"));
             }
-//            for (int i = 0; i < PLAINS_ROOM_NUMBER; i++) {
-//                PLAINS_ROOMS.add(new TiledMap("res/map/level3/" + (i + 1) + ".tmx"));
+//            for (int attackCooldown = 0; attackCooldown < PLAINS_ROOM_NUMBER; attackCooldown++) {
+//                PLAINS_ROOMS.add(new TiledMap("res/map/level3/" + (attackCooldown + 1) + ".tmx"));
 //            }
-//            for (int i = 0; i < CASTLE_ROOM_NUMBER; i++) {
-//                CASTLE_ROOMS.add(new TiledMap("res/map/level4/" + (i + 1) + ".tmx"));
+//            for (int attackCooldown = 0; attackCooldown < CASTLE_ROOM_NUMBER; attackCooldown++) {
+//                CASTLE_ROOMS.add(new TiledMap("res/map/level4/" + (attackCooldown + 1) + ".tmx"));
 //            }
-//            for (int i = 0; i < BOSS_ROOM_NUMBER; i++) {
-//                BOSS_ROOMS.add(new TiledMap("res/map/level5/" + (i + 1) + ".tmx"));
+//            for (int attackCooldown = 0; attackCooldown < BOSS_ROOM_NUMBER; attackCooldown++) {
+//                BOSS_ROOMS.add(new TiledMap("res/map/level5/" + (attackCooldown + 1) + ".tmx"));
 //            }
         } catch (SlickException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
