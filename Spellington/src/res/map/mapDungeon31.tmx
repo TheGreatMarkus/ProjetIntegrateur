@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
- <tileset firstgid="1" name="dungeonTile" tilewidth="50" tileheight="50" tilecount="64" columns="8">
+ <tileset firstgid="1" name="dungeonTile.png" tilewidth="50" tileheight="50" tilecount="64" columns="8">
   <image source="tiles/dungeonTile.png" width="400" height="400"/>
  </tileset>
  <tileset firstgid="65" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
@@ -8,17 +8,17 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8WVva7DIAyFWW6TJQ1Lfpa2LOl4s11G8v5PdTnKh4KqNh1t6cjg2D4YGyU4O0kZ0ZD/yRmsxHMGK+kzJkP+JaMz5N/gVw+CAb9mz4MzWd1+V/MbX31TDf2L3eN/9r4iZ1D9P1/gT/ziB/v1ja2t+DV7TcaNHL8ZAzbV9cdaeUb2Cz4ruVr2uoM799BgU8yDvCOxa8Vf+KxE9W+G/Lp3y/en+udqv7m9Hxe3z4q0ehrcMUvyb6rvOv+DfUAntPJ5coyVLjPx2v+ZmAW+J/kTMSVfh2+HLbFeKpTervBKR3fM9QS/5f+vvBlL/tKLze13XqA+JXfMhHSs1mUOejCQa0J7/FryDMTP2AK2f0ucNmEACQAA
+   H4sIAAAAAAAAC8WWfUsDMQzGw5Q53XQq7u4cblfBCb6wQx07mMLu+38q89CnWOJ/x0ECP7imaZM2aXudiKyVayUoG3JUaurRP1da5Yo8k5rjOhJoDybKnuPSXGecu6EeeAliKh39Y+3B0T9yihx+KifKvemfKk/KndF/Kd9Ze0RdLo/KQfkx+jflXfmQWA/bnrEPIajjvaP/ytl/IfGcIvfIy63pR54eJOYqF+husvaMtrmgJi6Uc6PfSayLpcT6m/eMfQjB3gdH/7gDPesf68f+v0jM6dT0I6en8j+HyG1+V8BmaWxeJdbNzOjhK90BuHuPPWMfQnD+Gkf/WPvC0T/eZ7zHuAdWEu/DcQb2B+9Da/QY02TtkuNzmxX1hdFv6SftfUEqxtMpl/RZ0mZBfU2bCb/T+Q3sbxhvJX//KS1jgW36p0HNrznvL6e6f9UACQAA
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3NhYGDwGSDsAsWj9o/aP5D2D5Q7iLUbnztJFcelxpEAxqeOFHEXHPbTEw+29DdqPyofW7pzYcCeDtHl0Gly0sNApceBDv+Bsn8gMQAOKtPOAAkAAA==
+   H4sIAAAAAAAAC3NhYGBwGWDsM0B41H78cUFIHJ8/iDFzsPh/pNs/Gv8j2/7R+B/Z9iNjRyRMSBwXnxi9gwUDAM6R8FoACQAA
   </data>
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAUjHbgMtANGwSgYBQyuNDbficbmjwL6AUJx6YqDhgFH6jpnyAIARGr6WwAJAAA=
+   H4sIAAAAAAAAC2NgGAUg4IJD3IkCM70p0EtL4DHQDhiEAFc80yL+B2u6GMmAFvHvikPciwIzRwFtAD3j35ECM0cBdQEAggvohQAJAAA=
   </data>
  </layer>
 </map>
