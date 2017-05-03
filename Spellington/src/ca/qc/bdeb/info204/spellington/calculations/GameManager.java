@@ -61,7 +61,7 @@ public class GameManager {
 
     private static ArrayList<Enemy> activeEnemies = new ArrayList<>();
     //for testing
-    private static final boolean ROOM_TESTING = true;
+    private static final boolean ROOM_TESTING = false;
     private static final int ROOM_TESTING_INDEX = 1;
 
     public static void initGameManager(StateBasedGame stateBasedGame) {
