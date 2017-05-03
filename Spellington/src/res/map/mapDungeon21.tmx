@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
- <tileset firstgid="1" name="dungeonTile" tilewidth="50" tileheight="50" tilecount="64" columns="8">
+ <tileset firstgid="1" name="dungeonTile.png" tilewidth="50" tileheight="50" tilecount="64" columns="8">
   <image source="tiles/dungeonTile.png" width="400" height="400"/>
  </tileset>
  <tileset firstgid="65" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
@@ -8,17 +8,17 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8WVva7DIAyFWW6TJQ1Lfpa2LOl4s11G8v5PdTnKh4KqNh1t6cjg2D4YGyU4O0kZ0ZD/yRmsxHMGK+kzJkP+JaMz5N/gVw+CAb9mz4MzWd1+V/MbX31TDf2L3eN/9r4iZ1D9P1/gT/ziB/v1ja2t+DV7TcaNHL8ZAzbV9cdaeUb2Cz4ruVr2uoM799BgU8yDvCOxa8Vf+KxE9W+G/Lp3y/en+udqv7m9Hxe3z4q0ehrcMUvyb6rvOv+DfUAntPJ5coyVLjPx2v+ZmAW+J/kTMSVfh2+HLbFeKpTervBKR3fM9QS/5f+vvBlL/tKLze13XqA+JXfMhHSs1mUOejCQa0J7/FryDMTP2AK2f0ucNmEACQAA
+   H4sIAAAAAAAAC8VWuw6DMAy0KlVh4bHwWIqylBG2MpL//6r6lEOlFRXebOkEMnbOTmKbICJJ0SgGPmdFr3gqOsWmiERNG7y/DvpS0SoKxco1Fvq39BvpG+jT089LkF/tyI/9KRz5cTaNIz/2vnLkx31cHflx/wZHftTf5MiP++95/lFyD/MS9MXkyI++PjryI//45xt6w2JYIxhswIE5g1q7Sa47CPJPJ/YVbS21gThbg92ZnPEjTsSHvmw5myg5zt91LFLK9/6jFxbUPSTP8CtJ9AMsZ3GUjnxJPv8gE58bcb/APsPAj1oeGQf0+3xJ1M3MC/u70OcNOeX1UgAJAAA=
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3NhYGDwGSDsAsWj9o/aP5D2D5Q7iLUbnztJFcelxpEAxqeOFHEXHPbTEw+29DdqPyofW7pzYcCeDtHl0Gly0sNApceBDv+Bsn8gMQAOKtPOAAkAAA==
+   H4sIAAAAAAAAC3NhYGBwGWDsM0B41P5R+0ftH7V/1P7BZz+xbiNWDbY6B5cdpNRNlIQhNr2k1o2U1KPo+sipmympy4lpGzgSwJS2PQDm82HYAAkAAA==
   </data>
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAUjHbgMtANGwSgYBQyuNDbficbmjwL6AUJx6YqDhgFH6jpnyAIARGr6WwAJAAA=
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwEoDjQDtgFGAAFzrZ44RGjwIGBgAzGNfjAAkAAA==
   </data>
  </layer>
 </map>

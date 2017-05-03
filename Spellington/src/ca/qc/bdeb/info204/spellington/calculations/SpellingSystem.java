@@ -337,7 +337,7 @@ public class SpellingSystem {
         //potions end-----------
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = spellList.get(ID_FIRE_BREATH - 1).getIncantation();
+            incantationText = spellList.get(ID_LIGHTNING_SPEAR - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F2)) {

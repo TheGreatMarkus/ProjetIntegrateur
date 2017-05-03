@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
- <tileset firstgid="1" name="dungeonTile" tilewidth="50" tileheight="50" tilecount="64" columns="8">
+ <tileset firstgid="1" name="dungeonTile.png" tilewidth="50" tileheight="50" tilecount="64" columns="8">
   <image source="tiles/dungeonTile.png" width="400" height="400"/>
  </tileset>
  <tileset firstgid="65" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
@@ -8,17 +8,17 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8WVva7DIAyFWW6TJQ1Lfpa2LOl4s11G8v5PdTnKh4KqNh1t6cjg2D4YGyU4O0kZ0ZD/yRmsxHMGK+kzJkP+JaMz5N/gVw+CAb9mz4MzWd1+V/MbX31TDf2L3eN/9r4iZ1D9P1/gT/ziB/v1ja2t+DV7TcaNHL8ZAzbV9cdaeUb2Cz4ruVr2uoM799BgU8yDvCOxa8Vf+KxE9W+G/Lp3y/en+udqv7m9Hxe3z4q0ehrcMUvyb6rvOv+DfUAntPJ5coyVLjPx2v+ZmAW+J/kTMSVfh2+HLbFeKpTervBKR3fM9QS/5f+vvBlL/tKLze13XqA+JXfMhHSs1mUOejCQa0J7/FryDMTP2AK2f0ucNmEACQAA
+   H4sIAAAAAAAAC8WWfUvDMBjEgy9YNmerw813O6UD61SmrsMhrt//U3lHz/92gYKQB340XJLn0jQvbUMId6ACpbgHazABr6BVPZ+ZYHkEGnALCvAm7VzPHJyoTaYcjeq3YC7vVMHxton984T+F2Ca0J/rpu/3vwQL8AiGoAYP4rtnLq7ZifI9gRlYKtdxxN/FxujM9QUG4BS8a6yVcH12Rewdx0Y/Mzr3+JGpq40+i/j/GN2Ni2eAW397Rn+O+H8afWh0fv+Rqbsx+nXEf2H0pdG59ng+8p1qwXVyEPEfRPxfjL4fuv3C3Bv5fITubG8i+XbFFVhpjGN5ruThxuyC85/17POfUYZuDlIFzz/ehYeJ4N2zTujP+4f7r1KZY+F65J3AvcGzaSvt73+Ed+ZUffifMleZWqk+mdoVmuNcFMq9Vlv2+QWJSfpSAAkAAA==
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3NhYGDwGSDsAsWj9o/aP5D2D5Q7iLUbnztJFcelxpEAxqeOFHEXHPbTEw+29DdqPyofW7pzYcCeDtHl0Gly0sNApceBDv+Bsn8gMQAOKtPOAAkAAA==
+   H4sIAAAAAAAAC3NhYGBwGWDsM0B41P6hZ78Lml5K0hK6HmLMIie8cLmTHHvItZ/U8B+K9pNj1mCwn5S0TK791Cp/aWEWqemJWniw2O84QHiw2D+QGACxQJIfAAkAAA==
   </data>
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAUjHbgMtANGwSgYBQyuNDbficbmjwL6AUJx6YqDhgFH6jpnyAIARGr6WwAJAAA=
+   H4sIAAAAAAAAC2NgGAVDCbgOtAPIAEPRzaOA/sCFxuY7QWlHGpk7CkbBKBhaAAC2YRxFAAkAAA==
   </data>
  </layer>
 </map>
