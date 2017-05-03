@@ -42,12 +42,23 @@ public class Projectile extends DynamicEntity {
         }
     }
 
+    /**
+     * Updates the position of this projectile every frame.
+     *
+     * @param time the time passed this frame.
+     * @
+     */
     public void update(float time) {
         this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
         this.setX(this.x + this.getSpeedVector().getX() * time);
         this.setY(this.y + this.getSpeedVector().getY() * time);
     }
 
+    /**
+     * Draws the projectile on the screen.
+     *
+     * @param g The Graphics component.
+     */
     public void render(Graphics g) {
         float tempAngle = Calculations.detAngle(this.speedVector.getX(), this.speedVector.getY());
         g.rotate(x + width / 2, y + height / 2, (float) Math.toDegrees(tempAngle));

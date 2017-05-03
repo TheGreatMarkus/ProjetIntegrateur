@@ -4,8 +4,9 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
 /**
+ * An animations that can be displayed independently from other Entities
  *
- * @author 1544771
+ * @author Celtis
  */
 public class GameAnimation extends GameEntity {
 

@@ -28,6 +28,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
+ * Class that manages the state of the game, such as deciding the map to play
+ * and spawning enemies.
  *
  * @author Cristian Aldea
  */
@@ -64,10 +66,21 @@ public class GameManager {
     private static final boolean ROOM_TESTING = false;
     private static final int ROOM_TESTING_INDEX = 1;
 
+    /**
+     * Initialises the GameManager.
+     *
+     * @param stateBasedGame
+     */
     public static void initGameManager(StateBasedGame stateBasedGame) {
         GameManager.stateBasedGame = stateBasedGame;
+        loadMaps();
     }
 
+    /**
+     * Starts a new game and puts the player in the tutorial.
+     *
+     * @throws SlickException General Slick Exception.
+     */
     public static void newGame() throws SlickException {
         GameSave newSave = new GameSave("temp");
         gameSave = newSave;
@@ -81,12 +94,23 @@ public class GameManager {
 
     }
 
+    /**
+     * Starts the game at the selected level.
+     *
+     * @param level The selected level.
+     * @throws SlickException General Slick Exception.
+     */
     public static void levelSelected(int level) throws SlickException {
         activeLevel = level;
         remainingRooms = LEVEL_LENGTH;
         loadNextMap();
     }
 
+    /**
+     * Loads a savefile of the game if one exists.
+     *
+     * @return The loaded save file.
+     */
     public static boolean loadGameSave() {
         FileInputStream fos = null;
         try {
@@ -103,6 +127,9 @@ public class GameManager {
         }
     }
 
+    /**
+     * Saves the current savefile.
+     */
     public static void saveGameSave() {
         FileOutputStream fos = null;
         try {
@@ -122,6 +149,9 @@ public class GameManager {
         }
     }
 
+    /**
+     * Loads all the maps of the game.
+     */
     public static void loadMaps() {
         try {
             for (int i = 0; i < TUTORIAL_ROOM_NUMBER; i++) {
@@ -146,8 +176,10 @@ public class GameManager {
     }
 
     /**
+     * Extract the informations from a TiledMap and converts it into a 2D array
+     * of Tiles. Also, spawn the enemies of the game for that map.
      *
-     * @author Cristian Aldea
+     * @see Tile
      */
     private static void extractMapInfo() {
         mapInformation = new Tile[DIM_MAP.height][DIM_MAP.width];
@@ -256,12 +288,23 @@ public class GameManager {
         }
     }
 
+    /**
+     * Checks if the level has ended and the next should be loaded.
+     *
+     * @param spellington The protagonist of the game.
+     * @throws SlickException General Slick Exception.
+     */
     public static void checkEndOfLevel(Spellington spellington) throws SlickException {
-        if (/*activeEnemies.isEmpty() && */spellington.intersects(new Rectangle(exitPoint.x, exitPoint.y, Tile.DIM_TILE.width, Tile.DIM_TILE.height))) {
+        if (/*activeEnemies.isEmpty() && */spellington.getBounds().intersects(new Rectangle(exitPoint.x, exitPoint.y, Tile.DIM_TILE.width, Tile.DIM_TILE.height))) {
             loadNextMap();
         }
     }
 
+    /**
+     * Determines the next map to be played depending on the current map.
+     *
+     * @throws SlickException
+     */
     private static void loadNextMap() throws SlickException {
         boolean endOfLevel = false;
         if (ROOM_TESTING) {

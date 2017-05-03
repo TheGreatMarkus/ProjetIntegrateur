@@ -28,7 +28,6 @@ public class Calculations {
      *
      * @param map The map that will be checked for collision.
      * @param creature The LivingEntity that will be checked for collision.
-     * @author Cristian Aldea.
      */
     public static void checkMapCollision(Tile[][] map, LivingEntity creature) {
         TargetI = (int) (creature.getCenterY() / (float) Tile.DIM_TILE.width);
@@ -62,17 +61,16 @@ public class Calculations {
      *
      * @param tile The tile that will be checked for collision.
      * @param creature The LivingEntity that will be checked for collision.
-     * @author Cristian Aldea.
      */
     public static void checkTileAndLivingCollision(Tile tile, LivingEntity creature) {
-        if (creature.intersects(tile) && tile.getTileState() == Tile.TileState.IMPASSABLE) {
+        if (creature.getBounds().intersects(tile.getBounds()) && tile.getTileState() == Tile.TileState.IMPASSABLE) {
             //If a collision is found and the tile is impassable
 
             //To get the width and height of the intersaction
-            float left = Float.max(tile.getMinX(), creature.getMinX());
+            float left = Float.max(tile.getX(), creature.getX());
             float right = Float.min(tile.getMaxX(), creature.getMaxX());
             float bottom = Float.min(tile.getMaxY(), creature.getMaxY());
-            float top = Float.max(tile.getMinY(), creature.getMinY());
+            float top = Float.max(tile.getY(), creature.getY());
 
             float widthIntersection = Math.abs(right - left);
             float heightIntersection = Math.abs(bottom - top);
@@ -109,29 +107,27 @@ public class Calculations {
      * @param projectile The projectile that will be checked for collision.
      * @return If the projectile should be removed from the activeProjectile
      * list.
-     * @author Cristian Aldea.
      */
     public static int checkProjectileCollision(Projectile projectile, Tile[][] map, ArrayList<Enemy> activeEnemies, Spellington spellington) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                if (projectile.intersects(map[i][j]) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
-                    return 0;
+                if (projectile.getBounds().intersects(map[i][j].getBounds()) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
+                    return 0;//Collision with a tile.
                 }
             }
         }
 
-        if (projectile.intersects(spellington) && projectile.getSource() == SourceType.ENEMY) {
+        if (projectile.getBounds().intersects(spellington.getBounds()) && projectile.getSource() == SourceType.ENEMY) {
             spellington.subLifePoint(projectile.getDamage(), projectile.getDamageType());
-            return 1;
+            return 1;//Collision with Spellington.
         }
 
         for (Enemy activeEnemy : activeEnemies) {
-            if (projectile.intersects(activeEnemy) && projectile.getSource() == SourceType.PLAYER) {
+            if (projectile.getBounds().intersects(activeEnemy.getBounds()) && projectile.getSource() == SourceType.PLAYER) {
                 activeEnemy.subLifePoint(projectile.getDamage(), projectile.getDamageType());
-                return 2;
+                return 2;//Collision with an enemy.
             }
         }
-
         return -1;
     }
 
@@ -141,7 +137,6 @@ public class Calculations {
      * @param x The delta x.
      * @param y The delta y.
      * @return The calculated angle.
-     * @author Cristian Aldea.
      */
     public static float detAngle(float x, float y) {
         //Calculate the base angle assuming the deltaX and DeltaY are positive
@@ -172,11 +167,19 @@ public class Calculations {
         return tempAngle;
     }
 
-    public static boolean detEnemyCanSeeSpellington(Enemy enemy, Spellington spellington, Tile[][] mapinfo) {
+    /**
+     * Determines if an enemy has a line of sight to Spellington.
+     *
+     * @param enemy The enemy.
+     * @param spellington The protagonist.
+     * @param map The map.
+     * @return If the enemy can see Spellington.
+     */
+    public static boolean detEnemyCanSeeSpellington(Enemy enemy, Spellington spellington, Tile[][] map) {
         Line line = new Line(spellington.getCenterX(), spellington.getCenterY(), enemy.getCenterX(), enemy.getCenterY());
-        for (int i = 0; i < mapinfo.length; i++) {
-            for (int j = 0; j < mapinfo[i].length; j++) {
-                if (line.intersects(mapinfo[i][j]) && mapinfo[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (line.intersects(map[i][j].getBounds()) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
                     return false;
                 }
             }
@@ -184,7 +187,15 @@ public class Calculations {
         return true;
     }
 
-    public static void EnemyTryToShootCurvedProjectile(RangedEnemy enemy, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    /**
+     * Tries to shoot a projetile to hit Spellington.
+     *
+     * @param enemy The enemy.
+     * @param spellington The protagonist.
+     * @param activeProjectiles The list of active projectiles in the game.
+     * @param map The map.
+     */
+    public static void enemyTryToShootCurvedProjectile(RangedEnemy enemy, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
         Float angle1;
         Float angle2;
         float deltaX = -enemy.getDeltaXSpellington();
@@ -211,12 +222,12 @@ public class Calculations {
             int test1Result = -1;
             int test2Result = -1;
             while (test1Result == -1) {
-                test1Result = Calculations.checkProjectileCollision(test1, mapinfo, new ArrayList<Enemy>(), spellington);
+                test1Result = Calculations.checkProjectileCollision(test1, map, new ArrayList<Enemy>(), spellington);
                 test1.update(10);
 
             }
             while (test2Result == -1) {
-                test2Result = Calculations.checkProjectileCollision(test2, mapinfo, new ArrayList<Enemy>(), spellington);
+                test2Result = Calculations.checkProjectileCollision(test2, map, new ArrayList<Enemy>(), spellington);
                 test2.update(10);
 
             }
@@ -241,7 +252,14 @@ public class Calculations {
         }
     }
 
-    public static void EnemyTryToShootStraightProjectile(RangedEnemy enemy, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    /**
+     * Tries to shoot a projetile to hit Spellington.
+     *
+     * @param enemy The enemy.
+     * @param spellington The protagonist.
+     * @param activeProjectiles The list of active projectiles in the game.
+     */
+    public static void enemyTryToShootStraightProjectile(RangedEnemy enemy, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
         float v = 0.5f;
         float angle = 1f;
         float deltaX = enemy.getDeltaXSpellington();
@@ -253,10 +271,10 @@ public class Calculations {
 
         int test1Result = -1;
         while (test1Result == -1) {
-            test1Result = Calculations.checkProjectileCollision(test1, mapinfo, new ArrayList<Enemy>(), spellington);
+            test1Result = Calculations.checkProjectileCollision(test1, map, new ArrayList<Enemy>(), spellington);
             test1.update(10);
-
         }
+
         if (test1Result == 1) {
             enemy.setAttackCooldown(enemy.getTotalAttackCooldown());
             float x = enemy.getCenterX() - enemy.getProjectileSize() / 2;
@@ -268,7 +286,5 @@ public class Calculations {
                 enemy.setMouvementState(LivingEntity.MouvementState.ATTACK_R);
             }
         }
-
     }
-
 }

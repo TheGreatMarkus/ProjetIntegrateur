@@ -3,7 +3,7 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 import java.awt.Dimension;
 
 /**
- * A StaticEntity that will compose the map of the game.
+ * A StaticEntity that will be part of the map of the game.
  *
  * @author Cristian Aldea
  * @see StaticEntity
@@ -17,6 +17,7 @@ public class Tile extends StaticEntity {
         IMPASSABLE,
         DAMAGE
     }
+
     public static enum TileEvent {
         NONE,
         SPELLINGTON_EXIT,
@@ -33,9 +34,9 @@ public class Tile extends StaticEntity {
         MESSAGE_3
     }
     private TileState tileState;
-    
+
     private TileEvent tileEvent;
-    
+
     public Tile(float x, float y, float width, float height, TileState tileState, TileEvent tileEvent) {
         super(x, y, width, height);
         this.tileState = tileState;

@@ -25,6 +25,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 /**
+ * Class that manages the spell incantations and spell activation for the game.
  *
  * @author Celtis
  */
@@ -138,13 +139,15 @@ public class SpellingSystem {
 
     static boolean cheatMode = true;
 
+    /**
+     * Initiates the necessary components for the SpellingSystem.
+     *
+     * @author Celtis
+     */
     public static void initSpellingSystem() {
-        System.out.println("start");
         initAnimation();
-        System.out.println("end");
 
         Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 5, animFireBall, 30, 1, 1, 5);
-
         Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", ICE_SPIKE_DESC, 3, animIceSpike, 20, 1, 0, 5);
         Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", SPARK_DESC, 2, animSpark, 5, 100);
         Spell heal = new HealingSpell(ID_HEAL, "Soin", HEAL_DESC, 1, animHeal, 100, 100, 10);

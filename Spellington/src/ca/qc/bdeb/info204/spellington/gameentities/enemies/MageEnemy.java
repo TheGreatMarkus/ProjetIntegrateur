@@ -59,7 +59,7 @@ public class MageEnemy extends RangedEnemy {
             if (attackCooldown == 0) {
                 switch (this.enemyType) {
                     case PYROMANCER:
-                        Calculations.EnemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
+                        Calculations.enemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
                         break;
                     case CRYOMANCER:
                         break;

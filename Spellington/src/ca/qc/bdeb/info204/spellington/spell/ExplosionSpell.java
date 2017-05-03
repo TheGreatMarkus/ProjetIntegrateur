@@ -47,7 +47,7 @@ public class ExplosionSpell extends Spell {
 
         Circle explosion = new Circle(renderMouseX, renderMouseY, ray);
         for (int i = 0; i < activeEnemy.size(); i++) {
-            if (explosion.intersects(activeEnemy.get(i))) {
+            if (explosion.intersects(activeEnemy.get(i).getBounds())) {
                 activeEnemy.get(i).subLifePoint(this.damage, this.element);
             }
         }

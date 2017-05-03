@@ -1,7 +1,7 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
 /**
- * Custom Vector class for Physics calculations
+ * Custom Vector class for physics calculations
  *
  * @author Cristian Aldea
  */
@@ -15,7 +15,7 @@ public class Vector2D {
         this.y = y;
     }
 
-    public Vector2D(Vector2D v) {//calling a vector
+    public Vector2D(Vector2D v) {
         this.x = v.x;
         this.y = v.y;
     }

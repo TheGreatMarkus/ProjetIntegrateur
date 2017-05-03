@@ -47,13 +47,6 @@ public class Spellington extends LivingEntity {
     private int airJumps;
     private int maxAirJumps = 1;
 
-    /**
-     *
-     * @param x
-     * @param y
-     * @param mouvementState
-     * @throws SlickException
-     */
     public Spellington(float x, float y, MouvementState mouvementState) throws SlickException {
         super(x, y, SPELLINGTON_SIZE.width, SPELLINGTON_SIZE.height, mouvementState, GRAVITY_MODIFIER, INIT_MAX_LIFE);
         initAnimation();
@@ -67,10 +60,10 @@ public class Spellington extends LivingEntity {
     }
 
     /**
+     * Updates the position of Spellington
      *
-     * @param input
-     * @param time Delta of frame. To keep speed consistent regardless of frame
-     * length.
+     * @param input The input Class that manages the input for the program.
+     * @param time Duration of frame.
      */
     public void update(Input input, float time) {
         if (this.collisionBottom || this.collisionTop) {
@@ -185,6 +178,11 @@ public class Spellington extends LivingEntity {
         this.resetCollisionState();
     }
 
+    /**
+     * Draws Spellington on the screen.
+     *
+     * @param g The Graphics component.
+     */
     public void render(Graphics g) {
         float tempX = x - 68;
         float tempY = y - 10;
@@ -223,6 +221,9 @@ public class Spellington extends LivingEntity {
         }
     }
 
+    /**
+     * Loads the animations for Spellington.
+     */
     private void initAnimation() {
         try {
             imgJumpL = new Image("res/image/animation/spellington/jumpL.png");
@@ -250,6 +251,12 @@ public class Spellington extends LivingEntity {
         }
     }
 
+    /**
+     * Determines the mouvement state of Spellington.
+     *
+     * @param input The input Class that manages the input for the program.
+     * @return the current mouvement state of Spellington.
+     */
     private MouvementState detMouvementState(Input input) {
 //        if (!collisionBottom && collisionLeft) {
 //            return MouvementState.WALL_L;

@@ -3,7 +3,8 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 
 /**
- * A DynamicEntity that can be affected by damage among other things.
+ * A DynamicEntity that can be affected by damage and has different animations
+ * for mouvement.
  *
  * @author Cristian Aldea
  * @see DynamicEntity
@@ -40,6 +41,49 @@ public abstract class LivingEntity extends DynamicEntity {
         this.gravModifier = gravMod;
         this.maxLifePoint = maxLifePoint;
         this.lifePoint = maxLifePoint;
+    }
+
+    /**
+     * Removes hp from this entity according to its resistances.
+     *
+     * @param damage The numerical value for the damage.
+     * @param element the ElementalType for the damage.
+     * @
+     */
+    public void subLifePoint(int damage, ElementalType element) {
+        switch (element) {
+            case FIRE:
+                damage = damage - this.resFire;
+                break;
+            case ICE:
+                damage = damage - this.resIce;
+                break;
+            case LIGHTNING:
+                damage = damage - this.resElectricity;
+                break;
+            case NEUTRAL:;
+                break;
+        }
+
+        if (damage < 0) {
+            damage = 0;
+        }
+
+        lifePoint = lifePoint - damage;
+
+        if (lifePoint < 0) {
+            lifePoint = 0;
+        }
+    }
+
+    /**
+     * Resets the collision state for this Entity
+     */
+    public void resetCollisionState() {
+        this.collisionTop = false;
+        this.collisionBottom = false;
+        this.collisionRight = false;
+        this.collisionLeft = false;
     }
 
     public void setLifePoint(int lifePoint) {
@@ -106,13 +150,6 @@ public abstract class LivingEntity extends DynamicEntity {
         this.collisionLeft = collisionLeft;
     }
 
-    public void resetCollisionState() {
-        this.collisionTop = false;
-        this.collisionBottom = false;
-        this.collisionRight = false;
-        this.collisionLeft = false;
-    }
-
     public MouvementState getMouvementState() {
         return mouvementState;
     }
@@ -125,32 +162,6 @@ public abstract class LivingEntity extends DynamicEntity {
         lifePoint = lifePoint + i;
         if (lifePoint > maxLifePoint) {
             lifePoint = maxLifePoint;
-        }
-    }
-
-    public void subLifePoint(int damage, ElementalType element) {
-        switch (element) {
-            case FIRE:
-                damage = damage - this.resFire;
-                break;
-            case ICE:
-                damage = damage - this.resIce;
-                break;
-            case LIGHTNING:
-                damage = damage - this.resElectricity;
-                break;
-            case NEUTRAL:;
-                break;
-        }
-
-        if (damage < 0) {
-            damage = 0;
-        }
-
-        lifePoint = lifePoint - damage;
-
-        if (lifePoint < 0) {
-            lifePoint = 0;
         }
     }
 

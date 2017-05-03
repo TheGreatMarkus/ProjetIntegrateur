@@ -29,7 +29,6 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class GameCore extends StateBasedGame {
 
-    //For testing and seeing the console text
     //public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     //public static final Dimension SCREEN_SIZE = new Dimension(1920, 1080);
     public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
@@ -58,7 +57,7 @@ public class GameCore extends StateBasedGame {
      * Main method of the program.
      *
      * @param args the command line arguments.
-     * @throws SlickException General Slick exception.
+     * @throws SlickException A General Slick exception.
      * @author Cristian Aldea.
      */
     public static void main(String[] args) throws SlickException {
@@ -102,11 +101,11 @@ public class GameCore extends StateBasedGame {
     }
 
     /**
-     * Initialises the different states that are going to be used in the game.
+     * Initialises the different states and Managers that are going to be used
+     * in the game.
      *
      * @param gc The GameContainer.
      * @throws SlickException General Slick exception.
-     * @author Cristian Aldea.
      */
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
@@ -125,10 +124,9 @@ public class GameCore extends StateBasedGame {
         this.getState(SPELLBOOK_STATE_ID).init(gc, this);
         this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
         this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
-        SpellingSystem.initSpellingSystem();
 
+        SpellingSystem.initSpellingSystem();
         GameManager.initGameManager(this);
-        GameManager.loadMaps();
 
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
@@ -146,10 +144,26 @@ public class GameCore extends StateBasedGame {
         gc.getInput().clearMousePressedRecord();
     }
 
+    /**
+     * Creates a new Paladin Font.
+     *
+     * @param style The style of the font.
+     * @param size The size of the font.
+     * @return A Paladin Font
+     * @author Cristian Aldea.
+     */
     public static Font getFontPaladin(int style, float size) {
         return fontPaladin.deriveFont(style, size);
     }
 
+    /**
+     * Creates a new Viking Font.
+     *
+     * @param style The style of the font.
+     * @param size The size of the font.
+     * @return A Paladin Font
+     * @author Cristian Aldea.
+     */
     public static Font getFontViking(int style, float size) {
         return fontViking.deriveFont(style, size);
     }
