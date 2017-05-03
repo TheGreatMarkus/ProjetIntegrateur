@@ -54,7 +54,7 @@ public class GameManager {
     private static final ArrayList<TiledMap> BOSS_ROOMS = new ArrayList();
 
     private static final int TUTORIAL_ROOM_NUMBER = 3;
-    private static final int DUNGEON_ROOM_NUMBER = 20;
+    private static final int DUNGEON_ROOM_NUMBER = 40;
     private static final int PLAINS_ROOM_NUMBER = 10;
     private static final int CASTLE_ROOM_NUMBER = 10;
     private static final int BOSS_ROOM_NUMBER = 3;
