@@ -1,6 +1,6 @@
 package ca.qc.bdeb.info204.spellington.spell;
 
-import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
+import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -19,21 +19,18 @@ public abstract class Spell {
     protected int id;
     protected ElementalType element;
     protected String name;
-    protected String type;
-    protected int damage;
     protected String shortDescription;
     protected String incantation;
     protected int uses;
     protected Animation animation;
-    protected int height;
-    protected int width;
+    protected float height;
+    protected float width;
     protected Image icon;
 
-    public Spell(int id, ElementalType element, String name, /**/String type, String shortDescription /**/, int uses, Animation animation, int width, int height) {
+    public Spell(int id, ElementalType element, String name, String shortDescription /**/, int uses, Animation animation, float width, float height) {
         this.id = id;
         this.element = element;
         this.name = name;
-        this.type = type;
         this.shortDescription = shortDescription;
         this.uses = uses;
         this.animation = animation;
@@ -68,14 +65,8 @@ public abstract class Spell {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public String getType() {
-        return type;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+
 
     public String getShortDescription() {
         return shortDescription;
@@ -109,19 +100,19 @@ public abstract class Spell {
         this.animation = animation;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(float height) {
         this.height = height;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(float width) {
         this.width = width;
     }
 

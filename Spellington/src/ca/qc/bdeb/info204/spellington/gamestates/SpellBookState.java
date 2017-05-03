@@ -14,6 +14,7 @@ import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.fontMenu;
 import ca.qc.bdeb.info204.spellington.spell.BreathSpell;
 import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
 import ca.qc.bdeb.info204.spellington.spell.HealingSpell;
+import ca.qc.bdeb.info204.spellington.spell.PassiveSpell;
 import ca.qc.bdeb.info204.spellington.spell.ProjectileSpell;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -765,15 +766,25 @@ public class SpellBookState extends BasicGameState {
         g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3) / 4) - 20 * GameCore.SCALE, GameCore.SCREEN_SIZE.height - gap * 2);
 
         if (showRightPage) {
-            icon.draw(iconX, iconY, iconSize, iconSize);
 
+            icon.draw(iconX, iconY, iconSize, iconSize);
+            if (SpellingSystem.knownSpell.get(spellKind) instanceof BreathSpell) {
+                type = "Sort de souffle";
+            } else if (SpellingSystem.knownSpell.get(spellKind) instanceof ExplosionSpell) {
+                type = "Explosion";
+            } else if (SpellingSystem.knownSpell.get(spellKind) instanceof ProjectileSpell) {
+                type = "Projectile";
+            } else if (SpellingSystem.knownSpell.get(spellKind) instanceof HealingSpell) {
+                type = "Guérison";
+            } else if (SpellingSystem.knownSpell.get(spellKind) instanceof PassiveSpell) {
+                type = "Passif";
+            }
             name = "Nom: " + SpellingSystem.knownSpell.get(spellKind).getName();
-            type = "Type: " + SpellingSystem.knownSpell.get(spellKind).getType();
             incantationText = "Mot déclencheur: " + SpellingSystem.knownSpell.get(spellKind).getIncantation();
             shortDescription = "Petite description: " + SpellingSystem.knownSpell.get(spellKind).getShortDescription();
             iconImage = SpellingSystem.knownSpell.get(spellKind).getIcon();
 
-            switch (SpellingSystem.knownSpell.get(spellKind).getType()) {//damage and effects relative to the spell's type
+            switch (type) {//damage and effects relative to the spell's type
                 case "Sort de souffle":
                     String damagePoints = Integer.toString(((BreathSpell) SpellingSystem.knownSpell.get(spellKind)).getDamage());
                     damage = "Dégâts: " + damagePoints;

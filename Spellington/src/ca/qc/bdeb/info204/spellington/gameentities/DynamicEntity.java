@@ -14,9 +14,7 @@ public abstract class DynamicEntity extends GameEntity {
     protected boolean collisionBottom;
     protected boolean collisionRight;
     protected boolean collisionLeft;
-
     protected Vector2D speedVector;
-
     protected float gravModifier;
 
     /**
@@ -28,7 +26,7 @@ public abstract class DynamicEntity extends GameEntity {
      * @param gravMod
      * @param speedVector
      */
-    public DynamicEntity(float x, float y, float width, float height, float gravMod,Vector2D speedVector) {
+    public DynamicEntity(float x, float y, float width, float height, float gravMod, Vector2D speedVector) {
         super(x, y, width, height);
         this.collisionTop = false;
         this.collisionBottom = false;
@@ -37,8 +35,6 @@ public abstract class DynamicEntity extends GameEntity {
         this.speedVector = speedVector;
         this.gravModifier = gravMod;
     }
-    
-    
 
     public Vector2D getSpeedVector() {
         return speedVector;
@@ -47,6 +43,5 @@ public abstract class DynamicEntity extends GameEntity {
     public void setSpeedVector(Vector2D speedVector) {
         this.speedVector = speedVector;
     }
-    
-    
+
 }

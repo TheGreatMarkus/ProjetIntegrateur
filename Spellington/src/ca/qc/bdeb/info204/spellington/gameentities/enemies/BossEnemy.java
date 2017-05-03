@@ -3,7 +3,6 @@ package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 
@@ -13,8 +12,8 @@ import org.newdawn.slick.Graphics;
  */
 public class BossEnemy extends Enemy {
 
-    public BossEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
-        super(x, y, dim, mouvementState, GRAVITY_MODIFIER, enemyType);
+    public BossEnemy(float x, float y, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
+        super(x, y, mouvementState, GRAVITY_MODIFIER, enemyType);
     }
 
     @Override

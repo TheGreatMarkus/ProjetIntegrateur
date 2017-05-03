@@ -1,18 +1,14 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
-import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
-import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
-import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -23,37 +19,43 @@ import org.newdawn.slick.SlickException;
  */
 public class RangedEnemy extends Enemy {
 
-    private Animation animProjectile;
-    private Image imgStandingLeft;
-    private Image imgStandingRight;
-    private Animation animAttackL;
-    private Animation animAttackR;
+    protected Animation animProjectile;
+    protected Image imgStandingLeft;
+    protected Image imgStandingRight;
+    protected Animation animAttackL;
+    protected Animation animAttackR;
 
-    private Dimension dimProjectile;
+    private float projectileSize;
 
-    public RangedEnemy(float x, float y, Dimension dim, MouvementState mouvementState, float gravMod, EnemyType enemyType) {
-        super(x, y, dim, mouvementState, gravMod, enemyType);
-        if (this.enemyType == EnemyType.ARCHER) {
-            dimProjectile = new Dimension(30, 30);
-        } else if (this.enemyType == EnemyType.CROSSBOWMAN) {
-            dimProjectile = new Dimension(30, 30);
+    public RangedEnemy(float x, float y, MouvementState mouvementState, float gravMod, EnemyType enemyType) {
+        super(x, y, mouvementState, gravMod, enemyType);
+        switch (this.enemyType) {
+            case ARCHER:
+                projectileSize = 20;
+                break;
+            case CROSSBOWMAN:
+                projectileSize = 20;
+                break;
+            case PYROMANCER:
+                projectileSize = 20;
+                break;
+            case CRYOMANCER:
+                projectileSize = 20;
+                break;
+            case ELECTROMANCER:
+                projectileSize = 20;
+                break;
+            default:
+                break;
         }
-
     }
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.white);
-        g.drawString("HP = " + this.lifePoint, x, y - 20);
-        if (willDoAction) {
-            g.setColor(new Color(255, 0, 0, 100));
-            g.fillRect(x, y, width, height);
-        }
-        g.setColor(Color.orange);
-        g.drawRect(x, y, width, height);
-        float tempY = y - 30;
-        float tempXLeft = x - 58;
-        float tempXRight = x - 70;
+        renderGeneral(g);
+        float tempY = getY() - 30;
+        float tempXLeft = getX() - 58;
+        float tempXRight = getX() - 70;
         float tempWidth = 178;
         float tempHeight = 100;
         switch (this.mouvementState) {
@@ -66,15 +68,15 @@ public class RangedEnemy extends Enemy {
             case ATTACK_L:
                 animAttackL.draw(tempXLeft, tempY, tempWidth, tempHeight);
                 if (animAttackL.isStopped()) {
-                    animAttackL.restart();
                     this.mouvementState = MouvementState.STANDING_L;
+                    animAttackL.restart();
                 }
                 break;
             case ATTACK_R:
                 animAttackR.draw(tempXRight, tempY, tempWidth, tempHeight);
                 if (animAttackR.isStopped()) {
-                    animAttackR.restart();
                     this.mouvementState = MouvementState.STANDING_R;
+                    animAttackR.restart();
                 }
                 break;
 
@@ -84,24 +86,29 @@ public class RangedEnemy extends Enemy {
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (spellington.getCenterX() <= this.getCenterX()) {
-            this.setMouvementState(MouvementState.STANDING_L);
-        } else if (spellington.getCenterX() > this.getCenterX()) {
-            this.setMouvementState(MouvementState.STANDING_R);
+        if (spellingtonInRange) {
+            if (this.mouvementState != MouvementState.ATTACK_R && this.mouvementState != MouvementState.ATTACK_L) {
+                if (spellington.getCenterX() <= this.getCenterX()) {
+                    this.setMouvementState(MouvementState.STANDING_L);
+                } else if (spellington.getCenterX() > this.getCenterX()) {
+                    this.setMouvementState(MouvementState.STANDING_R);
+                }
+            }
         }
 
     }
 
     @Override
     public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (attackCooldown == 0) {
-            if (this.enemyType == EnemyType.ARCHER) {
-                Calculations.EnemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
-            } else if (this.enemyType == EnemyType.CROSSBOWMAN) {
-                Calculations.EnemyTryToShootStraightProjectile(this, spellington, activeProjectiles, mapinfo);
+        if (spellingtonInRange) {
+            if (attackCooldown == 0) {
+                if (this.enemyType == EnemyType.ARCHER) {
+                    Calculations.EnemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
+                } else if (this.enemyType == EnemyType.CROSSBOWMAN) {
+                    Calculations.EnemyTryToShootStraightProjectile(this, spellington, activeProjectiles, mapinfo);
+                }
             }
         }
-
     }
 
     @Override
@@ -141,8 +148,8 @@ public class RangedEnemy extends Enemy {
 
     }
 
-    public Dimension getDimProjectile() {
-        return dimProjectile;
+    public float getProjectileSize() {
+        return projectileSize;
     }
 
     public Animation getAnimProjectile() {

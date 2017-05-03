@@ -8,17 +8,17 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8WWO5OCQBCE95QEJVFIFBLRRMTAxwXo4f//WbddflNs7XHZ1TFVXfuc7dnpWYrMObfz+KQtPDqQeNw9Go+9R+lx8Zh7zDxSj6XHi/6JM9bMLfA/ehxAjf/NY8PaVLYmpqlMuUx/WZv9IY/O+hiZ1/2zkXlptnJvfSr3ro3cvfWUbi/mzPZu0FN107O+4HzV0dg9zyA01VOB/4N+y7iAJ6U1U90daeXzJBbF/EU8Wm8irhn7zXo31LnVdsu45PwV3LvA78bZ5lNxrx7+K3Nqw3o7uZ86b+A8E3PHvavoHl3gk5CfBmi85f59wJ1HXOYzlVl+pjLpVkVz0kPvUnWrHCpHilHfLWmn3CruNvDJWFfdFbR6Q2vmpaXqItRMpvexCsaKRW9rTwz2noxfe+3bG8atPQ2cNf2acUccJeeFetfwhGY13+J3cUO9PRjn5Cb2Sdij2FJydwviqiOuhLhiO3PnDX35neC5sxbm376j9r52btCj4h7LEZ4r501livU1Ib/yNpaX/zLpJN0y+vYvobo50Er/OXsWwL6v0k71k+Nb4ifd7b3YOxBPD8+WM7X3GwTt04MACQAA
+   H4sIAAAAAAAAC8VWa0vDQBBc8NEIGgva5lDTBqSBWm3xlXwotfn/v8odbpY7YrA1BTswJHe529nXXetEpFaWykw5Vg45nnBs32Yc5yTWpZy7Vg7IEecapeP7lXJJmyNqNpw/FuBXcUR95CyLxsjFyT/qV+JrYkBNb5QPe+6fiq/jgHbQJyPaKcTHh5is/gXXVtyPeRfZa6h9Rz92wfKX0D6eZy1an55HHHO/YwwG9Pdc+Sm+DvMd+og17Zg37TZMP+G4bukjni/lh/JZeal857qqFQPYRLb+Aot/xRgMNccV7eLp+G5nu4zeCwnxw9+XDq1H+dlPy+iZ9/DfgNpb/m6Va9KAPCKHG+VTx37ke3uAfiEhFugu6Meb8l587Bt+Qx3beUAux9Ifdh8D6HHUy+qC84DYHH3E2O5t1CyTcBZhB/1kfVtLODM21+XnQML93SePCbWgP418SWgvJUv600YezWcd3/fRn+5c1Y21hN9IwO66nDbhv92vK87h+yyyMWyN98Wp+P5qxNegLybSndff8Kq8EH+ukPPyQH3kBz2APt3SZkNmkQb8tP8VKfesuK+ScC/l/GZ1GHLdlnou2gNb31VmbIYACQAA
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3NhYGBwGWDsM0B4MNtPTXfhswObHKnxRm48YxMnJ91Qahc5dpNrPzZ9tPQ/PncN5vQ/UPZTK/yJyQO0TH+k6Bss/h8M5c9Ap7+RaP9AYgCcbfeFAAkAAA==
+   H4sIAAAAAAAAC82UOw7AMAhDuVqljL3/eTp1qfgYE0IHFpTkGUxYIrKG4x6Kv/FP67H4qIaq5x4f0aC9e31Cy6P8SIN15uVY+QwfqY3xneFnvPR6FN1h5lfzLPKyi4/uugk+Mlven/H4rH6mdzv5ld4z/a/yMztqd/2IL13+d8QDyFy3GgAJAAA=
   </data>
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGJrAiUZqR8HwAx4D7YAhArDlE0YoxqfWFYu8Nw47sKkdBaNgpAMXEtVTUv85kmjXcAYAO7BuKAAJAAA=
+   H4sIAAAAAAAAC2NgGAXkAlcC8k5k6hsFo2AU0A+M5kfqAEcg9hpoRwxB4EJHu5zQ6JEOAHMyFmgACQAA
   </data>
  </layer>
 </map>

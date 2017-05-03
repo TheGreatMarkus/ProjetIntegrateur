@@ -1,7 +1,7 @@
 package ca.qc.bdeb.info204.spellington.spell;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
-import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
+import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
@@ -22,7 +22,7 @@ public class ExplosionSpell extends Spell {
     private float ray;
 
     public ExplosionSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int damage, float ray) {
-        super(id, element, name, "Explosion", shortDescription, uses, animation, (int) (ray * 2), (int) (ray * 2));
+        super(id, element, name, shortDescription, uses, animation, (int) (ray * 2), (int) (ray * 2));
         this.damage = damage;
         this.ray = ray;
     }
@@ -38,7 +38,7 @@ public class ExplosionSpell extends Spell {
             explosionSpellGeneral(activeEnemy);
         }
 
-        activeAnimations.add(new GameAnimation(renderMouseX - (width / 2), renderMouseY - (height / 2), width, height, animation, 30, 0));
+        activeAnimations.add(new GameAnimation(renderMouseX - (width / 2), renderMouseY - (height / 2), width, height, animation.copy(), false, 0));
     }
 
     private void exposionSpellOnMouse(Input input, ArrayList<Enemy> activeEnemy) {

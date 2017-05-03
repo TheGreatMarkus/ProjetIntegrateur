@@ -12,14 +12,6 @@ public abstract class StaticEntity extends GameEntity {
         super(x, y, width, height);
     }
 
-    @Override
-    public void setX(float x) {
-        //Do nothing
-    }
 
-    @Override
-    public void setY(float y) {
-        //Do nothing
-    }
 
 }
