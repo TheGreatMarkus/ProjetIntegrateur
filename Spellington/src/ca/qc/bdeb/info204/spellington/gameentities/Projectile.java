@@ -54,7 +54,7 @@ public class Projectile extends DynamicEntity {
         if (this.animation != null) {
             this.animation.draw(x + getWidth() - renderW, getY(), renderW, getHeight());
         }
-        //g.drawRect(x, y, width, height);
+        g.drawRect(x, y, width, height);
         g.rotate(x + width / 2, y + width / 2, -(float) Math.toDegrees(tempAngle));
     }
 
