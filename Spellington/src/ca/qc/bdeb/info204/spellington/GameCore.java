@@ -94,7 +94,6 @@ public class GameCore extends StateBasedGame {
 
         //Start of the game.
         appGameContainer.start();
-        System.out.println("asdfasdf");
 
     }
 

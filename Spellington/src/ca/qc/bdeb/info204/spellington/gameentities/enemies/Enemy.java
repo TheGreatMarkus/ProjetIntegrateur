@@ -10,6 +10,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -49,17 +50,20 @@ public abstract class Enemy extends LivingEntity {
     protected ElementalType damageType;
     protected EnemyType enemyType;
     protected int damage;
-    protected boolean canSeeSpellington;
-    protected float distanceFromSpellington;
-    protected float deltaX;
-    protected float deltaY;
-    protected boolean willDoAction;
-    protected float aggroRange;
+    protected float deltaXSpellington;
+    protected float deltaYSpellington;
+
     protected int attackCooldown;
     protected int totalAttackCooldown;
 
-    public Enemy(float x, float y, Dimension dim, MouvementState mouvementState, float gravModifier, EnemyType enemyType) {
-        super(x, y, dim.width, dim.height, mouvementState, gravModifier, 0);
+    protected float aggroRange;
+    protected boolean spellingtonInRange;
+    protected boolean willDoAction;
+    protected float distanceFromSpellington;
+    protected boolean canSeeSpellington;
+
+    public Enemy(float x, float y, MouvementState mouvementState, float gravModifier, EnemyType enemyType) {
+        super(x, y, 0, 0, mouvementState, gravModifier, 0);
         this.enemyType = enemyType;
 
         //Missing resistances
@@ -67,43 +71,58 @@ public abstract class Enemy extends LivingEntity {
             this.aggroRange = 500;
             switch (this.enemyType) {
                 case KEEPER:
+                    this.setHeight(HUMANOID_SIZE.height);
+                    this.setWidth(HUMANOID_SIZE.width);
                     this.maxLifePoint = 20;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.NEUTRAL;
                     this.damage = 12;
                     break;
                 case GUARD:
+                    this.setHeight(HUMANOID_SIZE.height);
+                    this.setWidth(HUMANOID_SIZE.width);
                     this.maxLifePoint = 50;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.LIGHTNING;
                     this.damage = 12;
                     break;
                 case FIRE_SLIME:
+                    this.setHeight(SLIME_SIZE.height);
+                    this.setWidth(SLIME_SIZE.width);
                     this.maxLifePoint = 60;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.FIRE;
                     this.damage = 10;
                     break;
                 case ICE_SLIME:
+                    this.setHeight(SLIME_SIZE.height);
+                    this.setWidth(SLIME_SIZE.width);
                     this.maxLifePoint = 60;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.ICE;
                     this.damage = 10;
                     break;
                 case LIGHTNING_SLIME:
+                    this.setHeight(SLIME_SIZE.height);
+                    this.setWidth(SLIME_SIZE.width);
                     this.maxLifePoint = 60;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.LIGHTNING;
                     this.damage = 10;
                     break;
                 case DUMMY:
+                    this.setHeight(HUMANOID_SIZE.height);
+                    this.setWidth(HUMANOID_SIZE.width);
                     this.maxLifePoint = 60;
                     this.xpOnKill = 0;
                     this.damageType = ElementalType.LIGHTNING;
                     this.damage = 10;
                     break;
             }
-        } else if (this instanceof RangedEnemy) {
+        }
+        if (this instanceof RangedEnemy) {
+            this.setHeight(RANGED_SIZE.height);
+            this.setWidth(RANGED_SIZE.width);
             this.aggroRange = 1000;
             switch (this.enemyType) {
                 case ARCHER:
@@ -119,7 +138,10 @@ public abstract class Enemy extends LivingEntity {
                     this.damage = 20;
                     break;
             }
-        } else if (this instanceof MageEnemy) {
+        }
+        if (this instanceof MageEnemy) {
+            this.setHeight(HUMANOID_SIZE.height);
+            this.setWidth(HUMANOID_SIZE.width);
             this.aggroRange = 1000;
             switch (this.enemyType) {
                 case PYROMANCER:
@@ -141,7 +163,10 @@ public abstract class Enemy extends LivingEntity {
                     this.damage = 50;
                     break;
             }
-        } else if (this instanceof BossEnemy) {
+        }
+        if (this instanceof BossEnemy) {
+            this.setHeight(HUMANOID_SIZE.height);
+            this.setWidth(HUMANOID_SIZE.width);
             this.aggroRange = 9999;
             switch (this.enemyType) {
                 case BOSS:
@@ -178,15 +203,16 @@ public abstract class Enemy extends LivingEntity {
             this.speedVector.setX(0);
         }
         canSeeSpellington = Calculations.detEnemyCanSeeSpellington(this, spellington, mapinfo);
-        deltaX = spellington.getCenterX() - this.getCenterX();
-        deltaY = spellington.getCenterY() - this.getCenterY();
-        distanceFromSpellington = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        deltaXSpellington = spellington.getCenterX() - this.getCenterX();
+        deltaYSpellington = spellington.getCenterY() - this.getCenterY();
+        distanceFromSpellington = (float) Math.sqrt(deltaXSpellington * deltaXSpellington + deltaYSpellington * deltaYSpellington);
+        spellingtonInRange = Math.abs(distanceFromSpellington) < aggroRange;
 
-        willDoAction = Math.abs(distanceFromSpellington) < aggroRange && canSeeSpellington;
-        if (willDoAction) {
-            move(time, spellington, activeProjectiles, mapinfo);
-            attack(time, spellington, activeProjectiles, mapinfo);
-        }
+        willDoAction = spellingtonInRange && canSeeSpellington;
+
+        move(time, spellington, activeProjectiles, mapinfo);
+        attack(time, spellington, activeProjectiles, mapinfo);
+
         if (!willDoAction && this.speedVector.getX() > 0) {
             this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
             if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
@@ -212,18 +238,30 @@ public abstract class Enemy extends LivingEntity {
         this.resetCollisionState();
     }
 
+    public void renderGeneral(Graphics g) {
+        g.setColor(Color.white);
+        g.drawString("EnemyType : " + this.enemyType, getX(), getY() - 40);
+        g.drawString("HP = " + this.lifePoint, getX(), getY() - 20);
+        if (willDoAction) {
+            g.setColor(new Color(255, 0, 0, 100));
+            g.fillRect(getX(), getY(), getWidth(), getHeight());
+        }
+        g.drawRect(getX(), getY(), getWidth(), getHeight());
+
+    }
+
     public abstract void render(Graphics g);
 
     public abstract void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo);
 
     public abstract void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo);
 
-    public float getDeltaX() {
-        return deltaX;
+    public float getDeltaXSpellington() {
+        return deltaXSpellington;
     }
 
-    public float getDeltaY() {
-        return deltaY;
+    public float getDeltaYSpellington() {
+        return deltaYSpellington;
     }
 
     public int getAttackCooldown() {
@@ -236,6 +274,10 @@ public abstract class Enemy extends LivingEntity {
 
     public int getTotalAttackCooldown() {
         return totalAttackCooldown;
+    }
+
+    public float getDistanceFromSpellington() {
+        return distanceFromSpellington;
     }
 
 }

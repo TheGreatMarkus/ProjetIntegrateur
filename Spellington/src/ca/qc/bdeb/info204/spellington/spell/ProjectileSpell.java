@@ -2,7 +2,7 @@ package ca.qc.bdeb.info204.spellington.spell;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
-import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
+import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
@@ -20,19 +20,23 @@ import org.newdawn.slick.Input;
  */
 public class ProjectileSpell extends Spell {
 
-    private float initSpeed;
-    private float gravModifier;
-    private int damage;
+    protected float initSpeed;
+    protected float gravModifier;
+    protected int damage;
 
-    private static final float INIT_SPEED_MOD = 0.002f;
-    private static final float INIT_SPEED_MIN = 0.2f;
-    private static final float INIT_SPEED_MAX = 1.2f;
+    protected static final float INIT_SPEED_MOD = 0.002f;
+    protected static final float INIT_SPEED_MIN = 0.2f;
+    protected static final float INIT_SPEED_MAX = 1.2f;
 
-    public ProjectileSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int width, int height, float initSpeed, float gravModifier, int damage) {
-        super(id, element, name, "Projectile", shortDescription, uses, animation, width, height);
+    public ProjectileSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, float size, float initSpeed, float gravModifier, int damage) {
+        super(id, element, name, shortDescription, uses, animation, size, size);
         this.initSpeed = initSpeed;
         this.gravModifier = gravModifier;
         this.damage = damage;
+    }
+
+    public float detAngle(Spellington spellington, Input input) {
+        return Calculations.detAngle((float) input.getMouseX() / GameCore.SCALE - spellington.getCenterX(), (float) input.getMouseY() / GameCore.SCALE - spellington.getCenterY());
     }
 
     public Projectile createSpellProjectile(Spellington spellington, Input input) {
@@ -48,10 +52,10 @@ public class ProjectileSpell extends Spell {
         } else if (speedMult > INIT_SPEED_MAX) {
             speedMult = INIT_SPEED_MAX;
         }
-        float angle = Calculations.detAngle(mouseX - originX, mouseY - originY);
+        float angle = this.detAngle(spellington, input);
         Vector2D tempVector = new Vector2D(initSpeed * speedMult, angle, true);
-        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, tempVector, gravModifier, animation, this.damage, this.element, SourceType.PLAYER);
 
+        tempProj = new Projectile(originX - getWidth() / 2, originY - getHeight() / 2, getHeight(), tempVector, gravModifier, animation, this.damage, this.element, SourceType.PLAYER);
         return tempProj;
     }
 

@@ -2,11 +2,9 @@ package ca.qc.bdeb.info204.spellington.spell;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
-import ca.qc.bdeb.info204.spellington.calculations.GameAnimation;
-import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
-import ca.qc.bdeb.info204.spellington.gameentities.Projectile.SourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.util.ArrayList;
@@ -17,23 +15,13 @@ import org.newdawn.slick.Input;
  *
  * @author Fallen Angel
  */
-public class BreathSpell extends Spell {
+public class BreathSpell extends ProjectileSpell {
 
-    private float initSpeed;
-    private float gravModifier;
-    private int damage;
     private float angleDeviation;
     private int projectileNumber;
 
-    private static final float INIT_SPEED_MOD = 0.002f;
-    private static final float INIT_SPEED_MIN = 0.2f;
-    private static final float INIT_SPEED_MAX = 1.2f;
-
-    public BreathSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, int width, int height, float initSpeed, float gravModifier, int damage, float angle, int projectileNumber) {
-        super(id, element, name, "Sort de souffle", shortDescription, uses, animation, width, height);
-        this.initSpeed = initSpeed;
-        this.gravModifier = gravModifier;
-        this.damage = damage;
+    public BreathSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, float size, float initSpeed, float gravModifier, int c, float angle, int projectileNumber) {
+        super(id, element, name, shortDescription, uses, animation, size, initSpeed, gravModifier, projectileNumber);
         this.angleDeviation = angle;
         this.projectileNumber = projectileNumber;
     }
@@ -41,7 +29,7 @@ public class BreathSpell extends Spell {
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         for (int j = 0; j < projectileNumber; j++) {
-            Projectile tempProjectile = this.createSpellProjectileBreath(spellington, input);
+            Projectile tempProjectile = this.createSpellProjectile(spellington, input);
             activeProjectiles.add(tempProjectile);
         }
     }
@@ -50,25 +38,11 @@ public class BreathSpell extends Spell {
     public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
     }
 
-    public Projectile createSpellProjectileBreath(Spellington spellington, Input input) {
-        Projectile tempProj;
-        float originX = spellington.getCenterX();
-        float originY = spellington.getCenterY();
-        float mouseX = (float) input.getMouseX() / GameCore.SCALE;
-        float mouseY = (float) input.getMouseY() / GameCore.SCALE;
-        float angle = Calculations.detAngle(mouseX - originX, mouseY - originY) + (this.angleDeviation * ((float) (Math.random() * 2.0) - 1.0f));
-        float distance = Vector2D.distance(originX, originY, mouseX, mouseY);
-        float speedMult = distance * (INIT_SPEED_MOD * GameCore.SCALE);
-        if (speedMult < INIT_SPEED_MIN) {
-            speedMult = INIT_SPEED_MIN;
-        } else if (speedMult > INIT_SPEED_MAX) {
-            speedMult = INIT_SPEED_MAX;
-        }
-        Vector2D temp = new Vector2D(initSpeed * speedMult, angle, true);
-        tempProj = new Projectile(originX - width / 2, originY - height / 2, width, height, temp, gravModifier, animation, this.damage, element, SourceType.PLAYER);
-
-        return tempProj;
-
+    @Override
+    public float detAngle(Spellington spellington, Input input) {
+        return Calculations.detAngle((float) input.getMouseX() / GameCore.SCALE - spellington.getCenterX(),
+                (float) input.getMouseY() / GameCore.SCALE - spellington.getCenterY())
+                + (this.angleDeviation * ((float) (Math.random() * 2.0) - 1.0f));
     }
 
     public int getDamage() {

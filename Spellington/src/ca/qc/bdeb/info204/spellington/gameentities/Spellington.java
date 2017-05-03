@@ -29,7 +29,6 @@ public class Spellington extends LivingEntity {
     private static Animation animWalkL;
     private static Animation animWalkR;
 
-    //Temporairy code fo air jumps
     private static final float AIR_JUMP_POWER = 0.8f;
 
     public static final int INIT_MAX_LIFE = 100;
@@ -37,9 +36,9 @@ public class Spellington extends LivingEntity {
     private static final float MAX_X_SPEED = 0.5f;
     private static final Vector2D X_ACC = new Vector2D(0.003f, 0);
     private static final float INIT_JUMP_SPEED = -0.8f;
+
     //WJ : WallJump
     private static final float WJ_ANGLE = (float) Math.toRadians(65);
-    //WJ : WallJump
     private static final Vector2D LEFT_WJ_INIT_SPEED = new Vector2D(INIT_JUMP_SPEED * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED * (float) Math.sin(WJ_ANGLE));
     private static final Vector2D RIGHT_WJ_INIT_SPEED = new Vector2D(-INIT_JUMP_SPEED * (float) Math.cos(WJ_ANGLE), INIT_JUMP_SPEED * (float) Math.sin(WJ_ANGLE));
 
@@ -74,14 +73,6 @@ public class Spellington extends LivingEntity {
      * length.
      */
     public void update(Input input, float time) {
-
-        //On divize par scale pour match la position de la souris avec le scale du render
-//        float mouseX = (float) input.getMouseX() / GameCore.scale;
-//        float mouseY = (float) input.getMouseY() / GameCore.scale;
-//        //Using equation d = (vf^2 - vi^2)/2a. Distance from where Spellington should stop when approching the mouse
-//        float SLOWDOWN_DISTANCE = (this.speedVector.getX() * this.speedVector.getX()) / (2.0f * X_ACC.getX());
-
-        //Correction of speed according to collision state
         if (this.collisionBottom || this.collisionTop) {
             this.speedVector.setY(0);
         }
@@ -89,7 +80,13 @@ public class Spellington extends LivingEntity {
             this.speedVector.setX(0);
         }
 
-        //General handling of mouvement in x for spellington
+//        On divise par scale pour match la position de la souris avec le scale du render
+//        float mouseX = (float) input.getMouseX() / GameCore.scale;
+//        float mouseY = (float) input.getMouseY() / GameCore.scale;
+//        //Using equation d = (vf^2 - vi^2)/2a. Distance from where Spellington should stop when approching the mouse
+//        float SLOWDOWN_DISTANCE = (this.speedVector.getX() * this.speedVector.getX()) / (2.0f * X_ACC.getX());
+//        Correction of speed according to collision state
+//        General handling of mouvement in x for spellington
 //        if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && Math.abs(mouseX - this.getCenterX()) <= Math.abs(this.speedVector.getX() * time)) {
 //            this.setCenterX(mouseX);
 //            this.speedVector.setX(0);
@@ -181,8 +178,8 @@ public class Spellington extends LivingEntity {
 
         this.setMouvementState(detMouvementState(input));
         this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * GRAVITY_MODIFIER));
-        this.setX(this.getX() + this.speedVector.getX() * time);
-        this.setY(this.getY() + this.speedVector.getY() * time);
+        this.setX(this.x + this.speedVector.getX() * time);
+        this.setY(this.y + this.speedVector.getY() * time);
         //Reset collision for the next frame
 
         this.resetCollisionState();
@@ -207,10 +204,10 @@ public class Spellington extends LivingEntity {
                 imgJumpR.draw(tempX, tempY, tempWidth, tempHeight);
                 break;
             case WALL_L:
-                imgWallL.draw(tempX, tempY, tempWidth, tempHeight);
+                imgWallL.draw(tempX - 2, tempY, tempWidth, tempHeight);
                 break;
             case WALL_R:
-                imgWallR.draw(tempX, tempY, tempWidth, tempHeight);
+                imgWallR.draw(tempX + 3, tempY, tempWidth, tempHeight);
                 break;
             case WALKING_L:
                 animWalkL.draw(tempX, tempY, tempWidth, tempHeight);
@@ -322,6 +319,7 @@ public class Spellington extends LivingEntity {
 //        if (mouvementState == MouvementState.STANDING_R) {
 //            return MouvementState.STANDING_R;
 //        }
+
         if (!collisionBottom && collisionLeft) {
             return MouvementState.WALL_L;
         } else if (!collisionBottom && collisionRight) {
@@ -367,9 +365,6 @@ public class Spellington extends LivingEntity {
         } else if (collisionBottom && mouvementState == MouvementState.WALL_R) {
             return MouvementState.STANDING_R;
         }
-
-        
-        
 
         return this.mouvementState;
     }

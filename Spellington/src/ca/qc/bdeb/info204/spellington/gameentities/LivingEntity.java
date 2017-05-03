@@ -128,26 +128,26 @@ public abstract class LivingEntity extends DynamicEntity {
         }
     }
 
-    public void subLifePoint(int i, ElementalType element) {
+    public void subLifePoint(int damage, ElementalType element) {
         switch (element) {
             case FIRE:
-                i = i - this.resFire;
+                damage = damage - this.resFire;
                 break;
             case ICE:
-                i = i - this.resIce;
+                damage = damage - this.resIce;
                 break;
             case LIGHTNING:
-                i = i - this.resElectricity;
+                damage = damage - this.resElectricity;
                 break;
             case NEUTRAL:;
                 break;
         }
 
-        if (i < 0) {
-            i = 0;
+        if (damage < 0) {
+            damage = 0;
         }
 
-        lifePoint = lifePoint - i;
+        lifePoint = lifePoint - damage;
 
         if (lifePoint < 0) {
             lifePoint = 0;

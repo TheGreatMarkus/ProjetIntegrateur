@@ -183,7 +183,7 @@ public class GameManager {
                     entryPoint = new Point(50 * j, 50 * i);
                 } else if (activeMap.getTileId(j, i, 2) == dummyID) {
                     tempEvent = TileEvent.DUMMY_SPAWN;
-                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), Enemy.SLIME_SIZE, LivingEntity.MouvementState.STANDING_L, 1, Enemy.EnemyType.DUMMY));
+                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), LivingEntity.MouvementState.STANDING_L, 1, Enemy.EnemyType.DUMMY));
                 } else if (activeMap.getTileId(j, i, 2) == randomSlimeID) {
                     tempEvent = TileEvent.RANDOM_SLIME_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -198,7 +198,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.LIGHTNING_SLIME;
                             break;
                     }
-                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), Enemy.SLIME_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == meleeEnemyID) {
                     tempEvent = TileEvent.MELEE_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -210,7 +210,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.GUARD;
                             break;
                     }
-                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == rangedEnemyID) {
                     tempEvent = TileEvent.RANGED_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -222,7 +222,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.CROSSBOWMAN;
                             break;
                     }
-                    activeEnemies.add(new RangedEnemy((float) (50 * j), (float) (50 * i), Enemy.RANGED_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new RangedEnemy((float) (50 * j), (float) (50 * i), LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == tresureID) {
                     tempEvent = TileEvent.TREASURE_SPAWN;
                 } else if (activeMap.getTileId(j, i, 2) == mageSpawnID) {
@@ -239,7 +239,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.ELECTROMANCER;
                             break;
                     }
-                    activeEnemies.add(new MageEnemy((float) (50 * j), (float) (50 * i), Enemy.HUMANOID_SIZE, LivingEntity.MouvementState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new MageEnemy((float) (50 * j), (float) (50 * i), LivingEntity.MouvementState.STANDING_L, 1, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == whatIsThis) {
                     tempEvent = TileEvent.WHAT_IS_THIS;
                 } else if (activeMap.getTileId(j, i, 2) == message1ID) {
@@ -321,7 +321,7 @@ public class GameManager {
                     break;
             }
         }
-        
+
         if (!endOfLevel) {
             extractMapInfo();
             ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);

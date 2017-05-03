@@ -20,35 +20,42 @@ public class Projectile extends DynamicEntity {
         TEST
     }
 
-    private Animation animation;
+    private final Animation animation;
     private int damage;
     private ElementalType damageType;
     private SourceType source;
+    private float renderW;
 
-    public Projectile(float x, float y, int width, int height, Vector2D speedVector, float gravMod, Animation anim, int damage, ElementalType damageType, SourceType source) {
-        super(x, y, width, height, gravMod, speedVector);
+    public Projectile(float x, float y, float size, Vector2D speedVector, float gravMod, Animation anim, int damage, ElementalType damageType, SourceType source) {
+        super(x, y, size, size, gravMod, speedVector);
         this.animation = anim;
         this.damage = damage;
         this.damageType = damageType;
         this.source = source;
+        if (animation != null) {
+            float heightRatio = this.height / (float) animation.getHeight();
+            renderW = animation.getWidth() * heightRatio;
+            if (renderW / this.height > 4) {
+                renderW = this.height * 4;
+            }
 
+        }
     }
 
     public void update(float time) {
         this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
-        this.setX(this.getX() + this.getSpeedVector().getX() * time);
-        this.setY(this.getY() + this.getSpeedVector().getY() * time);
+        this.setX(this.x + this.getSpeedVector().getX() * time);
+        this.setY(this.y + this.getSpeedVector().getY() * time);
     }
 
     public void render(Graphics g) {
-
         float tempAngle = Calculations.detAngle(this.speedVector.getX(), this.speedVector.getY());
         g.rotate(x + width / 2, y + height / 2, (float) Math.toDegrees(tempAngle));
         if (this.animation != null) {
-            this.animation.draw(x, y, width, width);
+            this.animation.draw(x + getWidth() - renderW, getY(), renderW, getHeight());
         }
         g.drawRect(x, y, width, height);
-        g.rotate(x + width / 2, y + height / 2, -(float) Math.toDegrees(tempAngle));
+        g.rotate(x + width / 2, y + width / 2, -(float) Math.toDegrees(tempAngle));
     }
 
     public int getDamage() {
@@ -74,7 +81,5 @@ public class Projectile extends DynamicEntity {
     public void setSource(SourceType source) {
         this.source = source;
     }
-    
-    
 
 }
