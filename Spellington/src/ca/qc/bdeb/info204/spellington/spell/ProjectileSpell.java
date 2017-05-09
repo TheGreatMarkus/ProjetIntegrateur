@@ -15,8 +15,10 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 
 /**
+ * A spell that creates projectiles.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
+ * @see Spell
  */
 public class ProjectileSpell extends Spell {
 
@@ -35,10 +37,25 @@ public class ProjectileSpell extends Spell {
         this.damage = damage;
     }
 
+    /**
+     * Determines the angle that will correspond to the projectiles initial
+     * speed angle.
+     *
+     * @param spellington The playable protagonist.
+     * @param input The Slick class that handles input.
+     * @return The angle with which to create the projectile.
+     */
     public float detAngle(Spellington spellington, Input input) {
         return Calculations.detAngle((float) input.getMouseX() / GameCore.SCALE - spellington.getCenterX(), (float) input.getMouseY() / GameCore.SCALE - spellington.getCenterY());
     }
 
+    /**
+     * Creates a projectile.
+     *
+     * @param spellington The playable protagonist.
+     * @param input The Slick class that handles input.
+     * @return The created projectile.
+     */
     public Projectile createSpellProjectile(Spellington spellington, Input input) {
         Projectile tempProj;
         float originX = spellington.getCenterX();

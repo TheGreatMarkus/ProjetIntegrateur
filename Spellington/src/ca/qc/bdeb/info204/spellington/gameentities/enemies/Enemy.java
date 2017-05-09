@@ -10,11 +10,15 @@ import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 /**
- * A LivingEntity opposing the player.
+ * A LivingEntity opposing the player. Will be spawned in the game in
+ * GameManager
+ *
  *
  * @author Celtis, Cristian
  * @see LivingEntity
@@ -35,6 +39,11 @@ public abstract class Enemy extends LivingEntity {
         DUMMY,
         BOSS
     }
+
+    protected Image imgStandingLeft;
+    protected Image imgStandingRight;
+    protected Animation animAttackL;
+    protected Animation animAttackR;
 
     public static Dimension HUMANOID_SIZE = new Dimension(50, 100);
     public static Dimension RANGED_SIZE = new Dimension(50, 70);
@@ -185,16 +194,20 @@ public abstract class Enemy extends LivingEntity {
         loadAnimations();
     }
 
-    public ArrayList<String> getDroppableSpells() {
-        return droppableSpells;
-    }
-
-    public void setDroppableSpells(ArrayList<String> droppableSpells) {
-        this.droppableSpells = droppableSpells;
-    }
-
+    /**
+     * Loads the animations for this enemy.
+     */
     public abstract void loadAnimations();
 
+    /**
+     * General update function for all enemies that will update movement and
+     * decisions.
+     *
+     * @param time The delta of the frame
+     * @param spellington
+     * @param activeProjectiles
+     * @param mapinfo
+     */
     public void update(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
         if (this.collisionBottom || this.collisionTop) {
             this.speedVector.setY(0);
@@ -238,7 +251,12 @@ public abstract class Enemy extends LivingEntity {
         this.resetCollisionState();
     }
 
-    public void renderGeneral(Graphics g) {
+    /**
+     * Renders general information about the enemy for testing purposes.
+     *
+     * @param g The Graphics component.
+     */
+    public void renderGeneralInfo(Graphics g) {
         g.setColor(Color.white);
         g.drawString("EnemyType : " + this.enemyType, getX(), getY() - 40);
         g.drawString("HP = " + this.lifePoint, getX(), getY() - 20);
@@ -250,11 +268,32 @@ public abstract class Enemy extends LivingEntity {
 
     }
 
+    /**
+     * Renders the enemy on the screen.
+     *
+     * @param g The Graphics component.
+     */
     public abstract void render(Graphics g);
 
-    public abstract void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo);
+    /**
+     * Determines what mouvement the enemy should be doing.
+     *
+     * @param time The delta of the frame.
+     * @param spellington The playable protagonist.
+     * @param activeProjectiles The list of active projectile in the game.
+     * @param map The collision and event information for the current map.
+     */
+    public abstract void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map);
 
-    public abstract void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo);
+    /**
+     * Determines when and if the enemy should be attacking.
+     *
+     * @param time The delta of the frame.
+     * @param spellington The playable protagonist.
+     * @param activeProjectiles The list of active projectile in the game.
+     * @param map The collision and event information for the current map.
+     */
+    public abstract void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map);
 
     public float getDeltaXSpellington() {
         return deltaXSpellington;
@@ -278,6 +317,14 @@ public abstract class Enemy extends LivingEntity {
 
     public float getDistanceFromSpellington() {
         return distanceFromSpellington;
+    }
+
+    public ArrayList<String> getDroppableSpells() {
+        return droppableSpells;
+    }
+
+    public void setDroppableSpells(ArrayList<String> droppableSpells) {
+        this.droppableSpells = droppableSpells;
     }
 
 }

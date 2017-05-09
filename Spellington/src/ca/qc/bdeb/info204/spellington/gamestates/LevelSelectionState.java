@@ -13,8 +13,9 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
+ * A BasicGameState that will allow the player to select a level to play.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class LevelSelectionState extends BasicGameState {
 
@@ -35,6 +36,13 @@ public class LevelSelectionState extends BasicGameState {
     private MenuItem mnuItemLevel4;
     private MenuItem mnuItemLevel5;
 
+    /**
+     * Initialises the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, LS_TITLE, true, false, 0, MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_TITLE), fontMenu.getHeight(LS_TITLE));
@@ -44,25 +52,39 @@ public class LevelSelectionState extends BasicGameState {
         mnuItemLevel3 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL3, false, false, MainMenuState.TEXT_GAP, mnuItemLevel2.getY() + mnuItemLevel2.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL3), fontMenu.getHeight(LS_LEVEL3));
         mnuItemLevel4 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL4, false, false, MainMenuState.TEXT_GAP, mnuItemLevel3.getY() + mnuItemLevel3.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL4), fontMenu.getHeight(LS_LEVEL4));
         mnuItemLevel5 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL5, false, false, MainMenuState.TEXT_GAP, mnuItemLevel4.getY() + mnuItemLevel4.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL5), fontMenu.getHeight(LS_LEVEL5));
-        mnuItemLevel3.setClickable(false);
-        mnuItemLevel4.setClickable(false);
-        mnuItemLevel5.setClickable(false);
+
     }
 
+    /**
+     * Renders the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param g The Graphics component
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         g.setColor(Color.white);
         g.setFont(fontMenu);
-        mnuItemTitle.render(g, gc);
-        mnuItemReturn.render(g, gc);
-        mnuItemLevel1.render(g, gc);
-        mnuItemLevel2.render(g, gc);
-        mnuItemLevel3.render(g, gc);
-        mnuItemLevel4.render(g, gc);
-        mnuItemLevel5.render(g, gc);
+        mnuItemTitle.render(g);
+        mnuItemReturn.render(g);
+        mnuItemLevel1.render(g);
+        mnuItemLevel2.render(g);
+        mnuItemLevel3.render(g);
+        mnuItemLevel4.render(g);
+        mnuItemLevel5.render(g);
         MainMenuState.renderMouseCursor(gc);
     }
 
+    /**
+     * Updates the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param delta the delta of the frame
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         int mouseX = gc.getInput().getMouseX();
@@ -105,6 +127,9 @@ public class LevelSelectionState extends BasicGameState {
         GameCore.clearInputRecord(gc);
     }
 
+    /**
+     * @return The ID of this BasicGameState.
+     */
     @Override
     public int getID() {
         return GameCore.LEVEL_SELECTION_STATE_ID;

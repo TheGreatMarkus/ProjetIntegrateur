@@ -14,15 +14,12 @@ import org.newdawn.slick.SlickException;
 
 /**
  *
- * @author 1522888
+ * @author Cristian Aldea
+ * @see Enemy
  */
 public class RangedEnemy extends Enemy {
 
     protected Animation animProjectile;
-    protected Image imgStandingLeft;
-    protected Image imgStandingRight;
-    protected Animation animAttackL;
-    protected Animation animAttackR;
 
     private float projectileSize;
 
@@ -51,7 +48,7 @@ public class RangedEnemy extends Enemy {
 
     @Override
     public void render(Graphics g) {
-        renderGeneral(g);
+        renderGeneralInfo(g);
         float tempY = getY() - 30;
         float tempXLeft = getX() - 58;
         float tempXRight = getX() - 70;

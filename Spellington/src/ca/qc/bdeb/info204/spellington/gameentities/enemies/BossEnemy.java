@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 
 /**
+ * A enemy that will be fought at the end of the game.
  *
- * @author 1522888
+ * @author Cristian Aldea
+ * @see RangedEnemy
  */
 public class BossEnemy extends Enemy {
 

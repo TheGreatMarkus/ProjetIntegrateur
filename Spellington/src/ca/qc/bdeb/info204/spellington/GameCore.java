@@ -109,6 +109,8 @@ public class GameCore extends StateBasedGame {
      */
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
+        double initTime = System.nanoTime();
+
         gc.getInput().addKeyListener(new IncantationTextManager());
         //It is important to keep the state addition order.
         this.addState(new MainMenuState());
@@ -127,7 +129,8 @@ public class GameCore extends StateBasedGame {
 
         SpellingSystem.initSpellingSystem();
         GameManager.initGameManager(this);
-
+        double finalTime = System.nanoTime();
+        System.out.println("Time spent loading game :" + (finalTime - initTime) / 1000000000.0 + " seconds");
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
 

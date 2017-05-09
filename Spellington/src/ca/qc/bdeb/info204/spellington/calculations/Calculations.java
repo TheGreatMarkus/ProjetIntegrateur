@@ -26,7 +26,7 @@ public class Calculations {
     /**
      * Checks collision between the map and a LivingEntity.
      *
-     * @param map The map that will be checked for collision.
+     * @param map The collision and event information for the current map.
      * @param creature The LivingEntity that will be checked for collision.
      */
     public static void checkMapCollision(Tile[][] map, LivingEntity creature) {
@@ -101,7 +101,7 @@ public class Calculations {
     /**
      * Checks the collisions for projectiles.
      *
-     * @param map The map that will be checked for collision.
+     * @param map The collision and event information for the current map.
      * @param activeEnemies The enemies that will be checked for collision.
      * @param spellington Spellington that will be checked for collision.
      * @param projectile The projectile that will be checked for collision.
@@ -172,7 +172,7 @@ public class Calculations {
      *
      * @param enemy The enemy.
      * @param spellington The protagonist.
-     * @param map The map.
+     * @param map The collision and event information for the current map.
      * @return If the enemy can see Spellington.
      */
     public static boolean detEnemyCanSeeSpellington(Enemy enemy, Spellington spellington, Tile[][] map) {
@@ -193,7 +193,7 @@ public class Calculations {
      * @param enemy The enemy.
      * @param spellington The protagonist.
      * @param activeProjectiles The list of active projectiles in the game.
-     * @param map The map.
+     * @param map The collision and event information for the current map.
      */
     public static void enemyTryToShootCurvedProjectile(RangedEnemy enemy, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
         Float angle1;

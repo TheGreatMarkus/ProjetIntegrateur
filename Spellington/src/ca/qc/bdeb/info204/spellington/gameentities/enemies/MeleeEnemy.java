@@ -13,15 +13,13 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
+ * An Enemy that will attack the player in melee range.
  *
- * @author 1522888
+ * @author Cristian Aldea
+ * @see Enemy
  */
 public class MeleeEnemy extends Enemy {
 
-    private Image imgStandingLeft;
-    private Image imgStandingRight;
-    private Animation animAttackL;
-    private Animation animAttackR;
     private Animation animWalkL;
     private Animation animWalkR;
 
@@ -31,7 +29,7 @@ public class MeleeEnemy extends Enemy {
 
     @Override
     public void render(Graphics g) {
-        renderGeneral(g);
+        renderGeneralInfo(g);
         float tempX = getX() - 75;
         float tempY = getY() - 15;
         float tempWidth = 200;

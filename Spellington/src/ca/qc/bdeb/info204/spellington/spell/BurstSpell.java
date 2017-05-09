@@ -12,15 +12,17 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 
 /**
+ * A ProjectileSpell that shoots many projectiles per use.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
+ * @see ProjectileSpell
  */
-public class BreathSpell extends ProjectileSpell {
+public class BurstSpell extends ProjectileSpell {
 
     private float angleDeviation;
     private int projectileNumber;
 
-    public BreathSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, float size, float initSpeed, float gravModifier, int c, float angle, int projectileNumber) {
+    public BurstSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, float size, float initSpeed, float gravModifier, int c, float angle, int projectileNumber) {
         super(id, element, name, shortDescription, uses, animation, size, initSpeed, gravModifier, projectileNumber);
         this.angleDeviation = angle;
         this.projectileNumber = projectileNumber;
@@ -43,31 +45,6 @@ public class BreathSpell extends ProjectileSpell {
         return Calculations.detAngle((float) input.getMouseX() / GameCore.SCALE - spellington.getCenterX(),
                 (float) input.getMouseY() / GameCore.SCALE - spellington.getCenterY())
                 + (this.angleDeviation * ((float) (Math.random() * 2.0) - 1.0f));
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-
-    }
-
-    public float getInitSpeed() {
-        return initSpeed;
-    }
-
-    public void setInitSpeed(float initSpeed) {
-        this.initSpeed = initSpeed;
-    }
-
-    public float getGravModifier() {
-        return gravModifier;
-    }
-
-    public void setGravModifier(float gravModifier) {
-        this.gravModifier = gravModifier;
     }
 
     public float getAngleDeviation() {

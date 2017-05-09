@@ -11,6 +11,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 /**
+ * A class that corresponds to a spell that will be used by Spellington.
  *
  * @author Celtis
  */
@@ -38,8 +39,23 @@ public abstract class Spell {
         this.width = width;
     }
 
+    /**
+     * Activates the effect of the current spell.
+     *
+     * @param spellington The playable protagonist.
+     * @param input The Slick class where input is handled.
+     * @param activeAnimations The list of active animations in the game.
+     * @param activeProjectiles The list of active projectile in the game.
+     * @param activeEnemy The list of active enemies in the game.
+     */
     public abstract void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy);
 
+    /**
+     * End the effect of the current spell.
+     *
+     * @param spellington The playable protagonist.
+     * @param activeAnimations The list of active animations in the game.
+     */
     public abstract void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations);
 
     public int getId() {
@@ -65,8 +81,6 @@ public abstract class Spell {
     public void setName(String name) {
         this.name = name;
     }
-
-
 
     public String getShortDescription() {
         return shortDescription;
