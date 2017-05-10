@@ -419,15 +419,15 @@ public class SpellingSystem {
             }
             animGreatHeal = new Animation(tempImgeHealBig, 30);
 
-            Image[] tempImgeFireBreath = new Image[19];
+            Image[] tempImgeFireBreath = new Image[30];
             for (int i = 0; i < tempImgeFireBreath.length; i++) {
-                tempImgeFireBreath[i] = new Image("res/image/animation/spells/lightningBolt/ (" + (i + 1) + ").png");//animation temporaire
+                tempImgeFireBreath[i] = new Image("res/image/animation/spells/fireBall/ (" + (i + 1) + ").png");//animation temporaire
             }
             animFireBreath = new Animation(tempImgeFireBreath, 30);
 
             Image[] tempImgeIceBreath = new Image[19];
             for (int i = 0; i < tempImgeIceBreath.length; i++) {
-                tempImgeIceBreath[i] = new Image("res/image/animation/spells/lightningBolt/ (" + (i + 1) + ").png");//animation temporaire
+                tempImgeIceBreath[i] = new Image("res/image/animation/spells/iceSpike/ (" + (i + 1) + ").png");
             }
             animIceBreath = new Animation(tempImgeIceBreath, 30);
 
@@ -472,6 +472,36 @@ public class SpellingSystem {
                 tempImgeIceSpikeBall[i] = new Image("res/image/animation/spells/iceSpikeBall/ (" + (i + 1) + ").png");
             }
             animIceSpikeBall = new Animation(tempImgeIceSpikeBall, 30);
+            
+            Image[] tempImgeExplosiveBall = new Image[20];
+            for (int i = 0; i < tempImgeExplosiveBall.length; i++) {
+                tempImgeExplosiveBall[i] = new Image("res/image/animation/spells/explosiveBall/ (" + (i + 1) + ").png");
+            }
+            animExplosiveBall = new Animation(tempImgeExplosiveBall, 30);
+            
+            Image[] tempImgeIceSpike = new Image[19];
+            for (int i = 0; i < tempImgeIceSpike.length; i++) {
+                tempImgeIceSpike[i] = new Image("res/image/animation/spells/iceSpike/ (" + (i + 1) + ").png");
+            }
+            animIceSpike = new Animation(tempImgeIceSpike, 30);
+            
+            Image[] tempImgeIceStorm = new Image[40];
+            for (int i = 0; i < tempImgeIceStorm.length; i++) {
+                tempImgeIceStorm[i] = new Image("res/image/animation/spells/iceStorm/ (" + (i + 1) + ").png");
+            }
+            animIceStorm = new Animation(tempImgeIceStorm, 30);
+            
+            Image[] tempImgeMeteorSwarm = new Image[38];
+            for (int i = 0; i < tempImgeMeteorSwarm.length; i++) {
+                tempImgeMeteorSwarm[i] = new Image("res/image/animation/spells/meteorSwarm/ (" + (i + 1) + ").png");
+            }
+            animMeteorSwarm = new Animation(tempImgeMeteorSwarm, 30);
+            
+            Image[] tempImgeteleportBall = new Image[1];
+            for (int i = 0; i < tempImgeteleportBall.length; i++) {
+                tempImgeteleportBall[i] = new Image("res/image/animation/spells/teleportBall.png");
+            }
+            animTeleportation = new Animation(tempImgeteleportBall, 30);
 
         } catch (SlickException ex) {
         }
