@@ -235,12 +235,12 @@ public class Spellington extends LivingEntity {
 
             Image[] tempImgWalkL = new Image[40];
             for (int i = 0; i < tempImgWalkL.length; i++) {
-                tempImgWalkL[i] = new Image("res/image/animation/spellington/walkL/" + " (" + (i + 1) + ")" + ".png");
+                tempImgWalkL[i] = new Image("res/image/animation/spellington/walkL/" + "(" + (i + 1) + ")" + ".png");
             }
 
             Image[] tempImgWalkR = new Image[40];
             for (int i = 0; i < tempImgWalkR.length; i++) {
-                tempImgWalkR[i] = new Image("res/image/animation/spellington/walkR/" + " (" + (i + 1) + ")" + ".png");
+                tempImgWalkR[i] = new Image("res/image/animation/spellington/walkR/" + "(" + (i + 1) + ")" + ".png");
             }
 
             animWalkL = new Animation(tempImgWalkL, 15);

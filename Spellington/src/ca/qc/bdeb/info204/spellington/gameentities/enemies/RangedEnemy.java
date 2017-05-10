@@ -127,14 +127,14 @@ public class RangedEnemy extends Enemy {
 
             temp = new Image[17];
             for (int j = 0; j < temp.length; j++) {
-                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackL/ (" + (j + 1) + ").png");
+                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackL/(" + (j + 1) + ").png");
             }
             animAttackL = new Animation(temp, 20);
             animAttackL.setLooping(false);
 
             temp = new Image[17];
             for (int j = 0; j < temp.length; j++) {
-                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackR/ (" + (j + 1) + ").png");
+                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackR/(" + (j + 1) + ").png");
             }
             animAttackR = new Animation(temp, 20);
             animAttackR.setLooping(false);
