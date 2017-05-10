@@ -24,7 +24,7 @@ public class MageEnemy extends RangedEnemy {
 
     private Animation animTeleport;
 
-    public MageEnemy(float x, float y, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
+    public MageEnemy(float x, float y, AnimState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
         super(x, y, mouvementState, GRAVITY_MODIFIER, enemyType);
     }
 
@@ -35,7 +35,7 @@ public class MageEnemy extends RangedEnemy {
         float tempY = getY() - 15;
         float tempWidth = 200;
         float tempHeight = 113;
-        switch (this.mouvementState) {
+        switch (this.animState) {
             case STANDING_L:
                 imgStandingLeft.draw(tempX, tempY, tempWidth, tempHeight);
                 break;
@@ -49,9 +49,9 @@ public class MageEnemy extends RangedEnemy {
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
         if (willDoAction) {
             if (deltaXSpellington > 0) {
-                this.mouvementState = MouvementState.STANDING_R;
+                this.animState = AnimState.STANDING_R;
             } else if (deltaXSpellington < 0) {
-                this.mouvementState = MouvementState.STANDING_L;
+                this.animState = AnimState.STANDING_L;
             }
         }
     }
@@ -81,6 +81,7 @@ public class MageEnemy extends RangedEnemy {
         switch (this.enemyType) {
             case PYROMANCER:
                 tempString = "pyromancer";
+                animProjectile = SpellingSystem.getAnimFireBall();
                 break;
             case CRYOMANCER:
                 tempString = "cryomancer";
@@ -89,21 +90,19 @@ public class MageEnemy extends RangedEnemy {
                 tempString = "electromancer";
                 break;
         }
-
         try {
             imgStandingRight = new Image("res/image/animation/enemies/" + tempString + "/standingR.png");
             imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standingL.png");
 
-            Image[] temp = new Image[17];
+            Image[] temp = new Image[20];
             for (int j = 0; j < temp.length; j++) {
                 temp[j] = new Image("res/image/animation/enemies/teleport/(" + (j + 1) + ").png");
             }
-            animAttackL = new Animation(temp, 20);
-            animAttackL.setLooping(false);
+            animTeleport = new Animation(temp, 20);
+            animTeleport.setLooping(false);
         } catch (SlickException ex) {
             Logger.getLogger(MageEnemy.class.getName()).log(Level.SEVERE, null, ex);
         }
-        animProjectile = SpellingSystem.getAnimFireBall();
     }
 
 }

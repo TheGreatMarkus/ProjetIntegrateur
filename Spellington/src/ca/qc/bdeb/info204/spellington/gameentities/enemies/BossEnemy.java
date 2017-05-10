@@ -14,7 +14,7 @@ import org.newdawn.slick.Graphics;
  */
 public class BossEnemy extends Enemy {
 
-    public BossEnemy(float x, float y, MouvementState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
+    public BossEnemy(float x, float y, AnimState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
         super(x, y, mouvementState, GRAVITY_MODIFIER, enemyType);
     }
 

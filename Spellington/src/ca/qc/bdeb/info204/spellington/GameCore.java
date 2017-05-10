@@ -30,9 +30,9 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class GameCore extends StateBasedGame {
 
-    public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    //public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     //public static final Dimension SCREEN_SIZE = new Dimension(1920, 1080);
-    //public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
+    public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
     public static final Dimension PLAY_RENDER_SIZE = new Dimension(1600, 900);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
     public static float SCALE;
@@ -84,7 +84,7 @@ public class GameCore extends StateBasedGame {
             Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
+        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, false);
         appGameContainer.setMouseGrabbed(false);
         appGameContainer.setTargetFrameRate(TARGER_FPS);
         appGameContainer.setVSync(true);
@@ -129,8 +129,8 @@ public class GameCore extends StateBasedGame {
         this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
 
         GameManager.initGameManager(this);
-        double finalTime = System.nanoTime();
         SpellingSystem.initSpellingSystem();
+        double finalTime = System.nanoTime();
         System.out.println("Time spent loading game :" + (finalTime - initTime) / 1000000000.0 + " seconds");
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
