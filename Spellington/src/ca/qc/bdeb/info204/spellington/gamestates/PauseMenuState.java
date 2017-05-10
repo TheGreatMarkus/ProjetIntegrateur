@@ -11,8 +11,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.fontMenu;
 
 /**
+ * A BasicGameState taht corresponds to the pause menu.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class PauseMenuState extends BasicGameState {
 
@@ -26,6 +27,13 @@ public class PauseMenuState extends BasicGameState {
     private MenuItem mnuSpellingBook;
     private MenuItem mnuItemMainMenu;
 
+    /**
+     * Initialises the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
@@ -33,20 +41,35 @@ public class PauseMenuState extends BasicGameState {
         mnuItemResume = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_RESUME, true, true, 0, 0, fontMenu.getWidth(PM_RESUME), fontMenu.getHeight(PM_RESUME));
         mnuSpellingBook = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_SPELLINGBOOK, true, false, 0, mnuItemResume.getY() + mnuItemResume.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(PM_SPELLINGBOOK), fontMenu.getHeight(PM_SPELLINGBOOK));
         mnuItemMainMenu = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_MAIN_MENU, true, false, 0, mnuSpellingBook.getY() + mnuSpellingBook.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(PM_MAIN_MENU), fontMenu.getHeight(PM_MAIN_MENU));
-
     }
 
+    /**
+     * Renders the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param g The Graphics component
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         g.setFont(fontMenu);
-        mnuItemTitle.render(g, gc);
-        mnuItemResume.render(g, gc);
-        mnuSpellingBook.render(g, gc);
-        mnuItemMainMenu.render(g, gc);
+        mnuItemTitle.render(g);
+        mnuItemResume.render(g);
+        mnuSpellingBook.render(g);
+        mnuItemMainMenu.render(g);
 
         MainMenuState.renderMouseCursor(gc);
     }
 
+    /**
+     * Updates the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param delta the delta of the frame
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         int mouseX = gc.getInput().getMouseX();
@@ -72,6 +95,9 @@ public class PauseMenuState extends BasicGameState {
         GameCore.clearInputRecord(gc);
     }
 
+    /**
+     * @return The ID of this BasicGameState.
+     */
     @Override
     public int getID() {
         return GameCore.PAUSE_MENU_STATE_ID;

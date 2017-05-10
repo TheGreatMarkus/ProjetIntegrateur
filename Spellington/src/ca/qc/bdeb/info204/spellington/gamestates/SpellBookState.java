@@ -11,7 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.fontMenu;
-import ca.qc.bdeb.info204.spellington.spell.BreathSpell;
+import ca.qc.bdeb.info204.spellington.spell.BurstSpell;
 import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
 import ca.qc.bdeb.info204.spellington.spell.HealingSpell;
 import ca.qc.bdeb.info204.spellington.spell.PassiveSpell;
@@ -24,6 +24,8 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 
 /**
+ * A BasicGameState that corresponds to the Spellbook of the game, where
+ * information on spells and enemies are listed.
  *
  * @author Tarik
  */
@@ -94,6 +96,13 @@ public class SpellBookState extends BasicGameState {
     private int spellKind, potionKind;
     private boolean showRightPage = false;
 
+    /**
+     * Initialises the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
@@ -167,6 +176,14 @@ public class SpellBookState extends BasicGameState {
         this.iconImage = iconImage;
     }
 
+    /**
+     * Renders the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param g The Graphics component
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         background.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
@@ -193,6 +210,14 @@ public class SpellBookState extends BasicGameState {
         MainMenuState.renderMouseCursor(gc);
     }
 
+    /**
+     * Updates the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param delta the delta of the frame
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         int mouseX = gc.getInput().getMouseX();
@@ -610,18 +635,18 @@ public class SpellBookState extends BasicGameState {
     }
 
     private void displayMenu(Graphics g, GameContainer gc) throws SlickException {
-        mnuItemMainTitle.render(g, gc);
-        mnuItemSpells.render(g, gc);
-        mnuItemPotions.render(g, gc);
-        mnuItemEnnemies.render(g, gc);
-        mnuItemRetour.render(g, gc);
+        mnuItemMainTitle.render(g);
+        mnuItemSpells.render(g);
+        mnuItemPotions.render(g);
+        mnuItemEnnemies.render(g);
+        mnuItemRetour.render(g);
     }
 
     private void displaySpellsLeftPage(Graphics g, GameContainer gc) throws SlickException {
-        mnuItemSpellTitle.render(g, gc);
-        mnuItemBack.render(g, gc);
-        mnuItemNext.render(g, gc);
-        mnuItemChangeType.render(g, gc);
+        mnuItemSpellTitle.render(g);
+        mnuItemBack.render(g);
+        mnuItemNext.render(g);
+        mnuItemChangeType.render(g);
         infItemBar.renderTransparent(g, gc);
         infItemBar2.renderTransparent(g, gc);
         infItemBar3.renderTransparent(g, gc);
@@ -684,9 +709,9 @@ public class SpellBookState extends BasicGameState {
     }
 
     private void displayPotionsLeftPage(Graphics g, GameContainer gc) throws SlickException {
-        mnuItemPotionsTitle.render(g, gc);
-        mnuItemBack.render(g, gc);
-        mnuItemChangeType.render(g, gc);
+        mnuItemPotionsTitle.render(g);
+        mnuItemBack.render(g);
+        mnuItemChangeType.render(g);
         infItemBar.renderTransparent(g, gc);
         infItemBar2.renderTransparent(g, gc);
         infItemBar3.renderTransparent(g, gc);
@@ -716,10 +741,10 @@ public class SpellBookState extends BasicGameState {
     }
 
     private void displayEnnemiesLeftPage(Graphics g, GameContainer gc) throws SlickException {
-        mnuItemEnnemiesTitle.render(g, gc);
-        mnuItemBack.render(g, gc);
-        mnuItemNext.render(g, gc);
-        mnuItemChangeType.render(g, gc);
+        mnuItemEnnemiesTitle.render(g);
+        mnuItemBack.render(g);
+        mnuItemNext.render(g);
+        mnuItemChangeType.render(g);
         infItemBar.renderTransparent(g, gc);
         infItemBar2.renderTransparent(g, gc);
         infItemBar3.renderTransparent(g, gc);
@@ -768,7 +793,7 @@ public class SpellBookState extends BasicGameState {
         if (showRightPage) {
 
             icon.draw(iconX, iconY, iconSize, iconSize);
-            if (SpellingSystem.knownSpell.get(spellKind) instanceof BreathSpell) {
+            if (SpellingSystem.knownSpell.get(spellKind) instanceof BurstSpell) {
                 type = "Sort de souffle";
             } else if (SpellingSystem.knownSpell.get(spellKind) instanceof ExplosionSpell) {
                 type = "Explosion";
@@ -786,7 +811,7 @@ public class SpellBookState extends BasicGameState {
 
             switch (type) {//damage and effects relative to the spell's type
                 case "Sort de souffle":
-                    String damagePoints = Integer.toString(((BreathSpell) SpellingSystem.knownSpell.get(spellKind)).getDamage());
+                    String damagePoints = Integer.toString(((BurstSpell) SpellingSystem.knownSpell.get(spellKind)).getDamage());
                     damage = "Dégâts: " + damagePoints;
                     g.drawString(damage, iconX + iconSize + gap, iconY + 4 * gap);
                     break;

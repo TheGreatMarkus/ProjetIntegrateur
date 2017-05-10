@@ -14,8 +14,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
+ * A ranged ennemy that will be able to teleport and throw varied projectile
+ * depending on the level it spawns in.
  *
- * @author 1522888
+ * @author Cristian Aldea
+ * @see RangedEnemy
  */
 public class MageEnemy extends RangedEnemy {
 
@@ -27,7 +30,7 @@ public class MageEnemy extends RangedEnemy {
 
     @Override
     public void render(Graphics g) {
-        renderGeneral(g);
+        renderGeneralInfo(g);
         float tempX = getX() - 75;
         float tempY = getY() - 15;
         float tempWidth = 200;
@@ -59,7 +62,7 @@ public class MageEnemy extends RangedEnemy {
             if (attackCooldown == 0) {
                 switch (this.enemyType) {
                     case PYROMANCER:
-                        Calculations.EnemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
+                        Calculations.enemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
                         break;
                     case CRYOMANCER:
                         break;

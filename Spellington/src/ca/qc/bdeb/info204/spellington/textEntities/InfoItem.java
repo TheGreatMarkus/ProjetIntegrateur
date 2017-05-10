@@ -5,14 +5,15 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 /**
+ * To be removed
  *
  * @author 1553624
  */
 public class InfoItem {
-    
+
     public static enum InfoItemType {
         FULL,
-        TRANSPARENT   
+        TRANSPARENT
     }
 
     private InfoItemType infoItemType;
@@ -40,8 +41,8 @@ public class InfoItem {
         } else {
             g.setColor(new Color(128, 128, 128, 0f));
         }
-        
-        g.fillRect(x, y, width, height);  
+
+        g.fillRect(x, y, width, height);
     }
 
 //    public void renderFull(Graphics g, GameContainer gc) {
@@ -53,7 +54,6 @@ public class InfoItem {
 //        
 //        g.fillRect(x, y, width, height);  
 //    }
-    
     public boolean getHoveredOver() {
         return hoveredOver;
     }
@@ -95,4 +95,3 @@ public class InfoItem {
     }
 
 }
-

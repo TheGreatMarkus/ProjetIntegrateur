@@ -4,7 +4,6 @@ import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,15 +14,12 @@ import org.newdawn.slick.SlickException;
 
 /**
  *
- * @author 1522888
+ * @author Cristian Aldea
+ * @see Enemy
  */
 public class RangedEnemy extends Enemy {
 
     protected Animation animProjectile;
-    protected Image imgStandingLeft;
-    protected Image imgStandingRight;
-    protected Animation animAttackL;
-    protected Animation animAttackR;
 
     private float projectileSize;
 
@@ -52,7 +48,7 @@ public class RangedEnemy extends Enemy {
 
     @Override
     public void render(Graphics g) {
-        renderGeneral(g);
+        renderGeneralInfo(g);
         float tempY = getY() - 30;
         float tempXLeft = getX() - 58;
         float tempXRight = getX() - 70;
@@ -103,9 +99,9 @@ public class RangedEnemy extends Enemy {
         if (spellingtonInRange) {
             if (attackCooldown == 0) {
                 if (this.enemyType == EnemyType.ARCHER) {
-                    Calculations.EnemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
+                    Calculations.enemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
                 } else if (this.enemyType == EnemyType.CROSSBOWMAN) {
-                    Calculations.EnemyTryToShootStraightProjectile(this, spellington, activeProjectiles, mapinfo);
+                    Calculations.enemyTryToShootStraightProjectile(this, spellington, activeProjectiles, mapinfo);
                 }
             }
         }

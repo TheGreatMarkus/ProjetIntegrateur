@@ -12,6 +12,4 @@ public abstract class StaticEntity extends GameEntity {
         super(x, y, width, height);
     }
 
-
-
 }

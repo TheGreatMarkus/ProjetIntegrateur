@@ -47,8 +47,13 @@ public class MainMenuState extends BasicGameState {
 
     public static final float TEXT_GAP = 10.0f * GameCore.SCALE;
 
-    ;
-
+    /**
+     * Initialises the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         IMG_MENU_CURSOR = new Image("res/image/cursor/small_cursor.png");
@@ -78,23 +83,38 @@ public class MainMenuState extends BasicGameState {
         }
     }
 
+    /**
+     * Renders the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param g The Graphics component
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         backGround.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
         g.setColor(Color.white);
         g.setFont(fontMenu);
 
-        mnuItemTitle.render(g, gc);
-        mnuItemNewGame.render(g, gc);
-        mnuItemLoadGame.render(g, gc);
-        mnuItemOptions.render(g, gc);
-        mnuItemExit.render(g, gc);
-        
+        mnuItemTitle.render(g);
+        mnuItemNewGame.render(g);
+        mnuItemLoadGame.render(g);
+        mnuItemOptions.render(g);
+        mnuItemExit.render(g);
+
         renderMouseCursor(gc);
-        
 
     }
 
+    /**
+     * Updates the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param delta the delta of the frame
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         int mouseX = gc.getInput().getMouseX();
@@ -124,11 +144,19 @@ public class MainMenuState extends BasicGameState {
 
     }
 
+    /**
+     * @return The ID of this BasicGameState.
+     */
     @Override
     public int getID() {
         return GameCore.MAIN_MENU_STATE_ID;
     }
 
+    /**
+     * Renders the mouse in a menu state.
+     *
+     * @param gc
+     */
     public static void renderMouseCursor(GameContainer gc) {
         float renderMouseX = gc.getInput().getMouseX();
         float renderMouseY = gc.getInput().getMouseY();

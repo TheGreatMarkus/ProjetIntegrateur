@@ -13,8 +13,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Circle;
 
 /**
+ * A spell that creates explosions.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
+ * @see Spell
  */
 public class ExplosionSpell extends Spell {
 
@@ -41,18 +43,30 @@ public class ExplosionSpell extends Spell {
         activeAnimations.add(new GameAnimation(renderMouseX - (width / 2), renderMouseY - (height / 2), width, height, animation.copy(), false, 0));
     }
 
+    /**
+     * Creates an explosion at the position of the mouse that damages all nearby
+     * ennemies.
+     *
+     * @param input The Slick class that handles input.
+     * @param activeEnemy The list of active enemies.
+     */
     private void exposionSpellOnMouse(Input input, ArrayList<Enemy> activeEnemy) {
         float renderMouseX = input.getMouseX() / GameCore.SCALE;
         float renderMouseY = input.getMouseY() / GameCore.SCALE;
 
         Circle explosion = new Circle(renderMouseX, renderMouseY, ray);
         for (int i = 0; i < activeEnemy.size(); i++) {
-            if (explosion.intersects(activeEnemy.get(i))) {
+            if (explosion.intersects(activeEnemy.get(i).getBounds())) {
                 activeEnemy.get(i).subLifePoint(this.damage, this.element);
             }
         }
     }
 
+    /**
+     * Damages all enemies in the game.
+     *
+     * @param activeEnemy The list of active enemies.
+     */
     private void explosionSpellGeneral(ArrayList<Enemy> activeEnemy) {
         for (int i = 0; i < activeEnemy.size(); i++) {
             activeEnemy.get(i).subLifePoint(this.damage, this.element);

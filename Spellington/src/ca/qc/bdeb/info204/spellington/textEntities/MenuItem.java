@@ -6,8 +6,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 /**
+ * A item that can be placed in menus and interacted with.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class MenuItem {
 
@@ -51,11 +52,22 @@ public class MenuItem {
         }
     }
 
+    /**
+     * Determines if the button is being hovered over by the mouse.
+     *
+     * @param mouseX The X position of the mouse.
+     * @param mouseY The Y position of the mouse.
+     */
     public void detHoveredOver(float mouseX, float mouseY) {
         this.hoveredOver = (mouseX >= this.x && mouseX <= this.x + this.width) && (mouseY >= this.y && mouseY <= this.y + this.height);
     }
 
-    public void render(Graphics g, GameContainer gc) {
+    /**
+     * Renders the MenuItem
+     *
+     * @param g The Graphics component.
+     */
+    public void render(Graphics g) {
         if (hoveredOver && this.menuItemType == MenuItemType.BUTTON || !clickable && !(this.menuItemType == MenuItemType.TEXT)) {
             g.setColor(new Color(1, 1, 1, 0.5f));
         } else {

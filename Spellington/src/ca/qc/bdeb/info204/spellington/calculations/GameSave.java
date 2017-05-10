@@ -3,8 +3,9 @@ package ca.qc.bdeb.info204.spellington.calculations;
 import java.io.Serializable;
 
 /**
+ * The game save for the user.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
  */
 public class GameSave implements Serializable {
 

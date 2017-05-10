@@ -11,8 +11,10 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 
 /**
+ * A Spell that grants passive benefits to the player.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
+ * @see Spell
  */
 public class PassiveSpell extends Spell {
 

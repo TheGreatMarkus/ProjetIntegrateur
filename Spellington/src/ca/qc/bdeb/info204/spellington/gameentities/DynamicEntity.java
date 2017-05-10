@@ -17,15 +17,6 @@ public abstract class DynamicEntity extends GameEntity {
     protected Vector2D speedVector;
     protected float gravModifier;
 
-    /**
-     *
-     * @param x
-     * @param y
-     * @param width
-     * @param height
-     * @param gravMod
-     * @param speedVector
-     */
     public DynamicEntity(float x, float y, float width, float height, float gravMod, Vector2D speedVector) {
         super(x, y, width, height);
         this.collisionTop = false;

@@ -11,8 +11,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
-import ca.qc.bdeb.info204.spellington.gameentities.enemies.MageEnemy;
-import ca.qc.bdeb.info204.spellington.spell.BreathSpell;
+import ca.qc.bdeb.info204.spellington.spell.BurstSpell;
 import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
 import ca.qc.bdeb.info204.spellington.spell.ProjectileSpell;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
@@ -55,8 +54,14 @@ public class PlayState extends BasicGameState {
 
     //Variables and constants related to the rendering of the HUD
     private Image statsBarHUD, inputTextHUD, passiveSpellHUD, activeSpellHUD, redPotionHUD, greenPotionHUD, bluePotionHUD, icePotionHUD;
-    private boolean drawAimingHelp;
 
+    /**
+     * Initialises the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         spellington = new Spellington(0, 0, LivingEntity.MouvementState.JUMP_R);
@@ -80,13 +85,30 @@ public class PlayState extends BasicGameState {
         this.icePotionHUD = new Image("src/res/image/HUD/icePotion.png");
     }
 
+    /**
+     * Prepares the level by changing the map and the position of spellington.
+     *
+     * @param currentMap The map to be played.
+     * @param spellingtonX The X position where Spellington should appear
+     * @param spellingtonY The Y position where spellington sould appear.
+     * @throws SlickException A general Slick Exception.
+     */
     public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
         spellington.setMouvementState(LivingEntity.MouvementState.STANDING_R);
         spellington.setX(spellingtonX);
         spellington.setY(spellingtonY);
+        spellington.setMouvementState(LivingEntity.MouvementState.STANDING_R);
         map = currentMap;
     }
 
+    /**
+     * Renders the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param g The Graphics component
+     * @throws SlickException General Slick exception
+     */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         //Must be the first in the PlayState renger method.
@@ -132,14 +154,22 @@ public class PlayState extends BasicGameState {
 
     }
 
+    /**
+     * Updates the BasicGameState
+     *
+     * @param gc the GameContainer
+     * @param game the StateBasedGame
+     * @param delta the delta of the frame
+     * @throws SlickException General Slick exception
+     */
     @Override
-    public void update(GameContainer gc, StateBasedGame game, int deltaInt) throws SlickException {
-        float timePassed = deltaInt;
-        timePassed *= 1;
-        if (timePassed > 40) {
-            timePassed = 40;
+    public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+        float deltaFloat = delta;
+        deltaFloat *= 1;
+        if (deltaFloat > 40) {
+            deltaFloat = 40;
         }
-        System.out.println("time passed = " + timePassed);
+        //System.out.println("time passed = " + deltaFloat);
 
         if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
             game.enterState(GameCore.PAUSE_MENU_STATE_ID);
@@ -151,7 +181,7 @@ public class PlayState extends BasicGameState {
             displayHUD = !displayHUD;
         }
         //Update of Spellington
-        spellington.update(gc.getInput(), timePassed);
+        spellington.update(gc.getInput(), deltaFloat);
         Calculations.checkMapCollision(GameManager.getMapInformation(), spellington);
 
         SpellingSystem.update(gc.getInput(), spellington, activeProjectiles, activeAnimations, GameManager.getActiveEnemies());
@@ -159,7 +189,7 @@ public class PlayState extends BasicGameState {
         //Update of projectiles
         ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
         for (int i = 0; i < activeProjectiles.size(); i++) {
-            activeProjectiles.get(i).update((float) timePassed);
+            activeProjectiles.get(i).update((float) deltaFloat);
             if (Calculations.checkProjectileCollision(activeProjectiles.get(i), GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) != -1) {
                 projectilesToBeRemoved.add(activeProjectiles.get(i));
             }
@@ -169,7 +199,7 @@ public class PlayState extends BasicGameState {
         //Update of enemies
         ArrayList<Enemy> enemiesToBeRemoved = new ArrayList<>();
         for (Enemy enemy : GameManager.getActiveEnemies()) {
-            enemy.update(timePassed, spellington, activeProjectiles, GameManager.getMapInformation());
+            enemy.update(deltaFloat, spellington, activeProjectiles, GameManager.getMapInformation());
             Calculations.checkMapCollision(GameManager.getMapInformation(), enemy);
             if (enemy.getLifePoint() <= 0) {
                 enemiesToBeRemoved.add(enemy);
@@ -184,7 +214,7 @@ public class PlayState extends BasicGameState {
     /**
      * Displays information about spellington for debug purposes
      *
-     * @param g
+     * @param g The Graphics component.
      */
     private void debugInfo(Graphics g, GameContainer gc) {
         if (debugMode) {
@@ -252,6 +282,12 @@ public class PlayState extends BasicGameState {
 
     }
 
+    /**
+     * Displays the HUD.
+     *
+     * @param g The Graphics component.
+     * @throws SlickException A gneneral Slick Exception.
+     */
     private void displayHUD(Graphics g) throws SlickException {
         if (displayHUD) {
             g.scale(1f / GameCore.SCALE, 1f / GameCore.SCALE);
@@ -318,23 +354,31 @@ public class PlayState extends BasicGameState {
         }
     }
 
+    /**
+     * Draws the aiming assitance if the current active spell is offensive.
+     *
+     * @param g The Graphics component.
+     * @param input The input class where input to the program is handled.
+     * @param activeSpell The currently active spellé
+     * @param spellington The playable protagonist.
+     */
     private void drawAimingHelp(Graphics g, Input input, Spell activeSpell, Spellington spellington) {
         float spellingtonX = spellington.getCenterX();
         float spellingtonY = spellington.getCenterY();
         float mouseX = input.getMouseX() / GameCore.SCALE;
         float mouseY = input.getMouseY() / GameCore.SCALE;
         float projectionPrecision = 15;
-        if (activeSpell instanceof BreathSpell) {
+        if (activeSpell instanceof BurstSpell) {
             g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
-            Projectile temp1 = ((BreathSpell) activeSpell).createSpellProjectile(spellington, input);
-            Projectile temp2 = ((BreathSpell) activeSpell).createSpellProjectile(spellington, input);
-            Projectile temp3 = ((BreathSpell) activeSpell).createSpellProjectile(spellington, input);
+            Projectile temp1 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input);
+            Projectile temp2 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input);
+            Projectile temp3 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input);
             temp1.setDamage(0);
             temp2.setDamage(0);
             temp3.setDamage(0);
-            float tempAngle1 = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY) + ((BreathSpell) activeSpell).getAngleDeviation();
-            float tempAngle2 = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY) - ((BreathSpell) activeSpell).getAngleDeviation();
+            float tempAngle1 = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY) + ((BurstSpell) activeSpell).getAngleDeviation();
+            float tempAngle2 = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY) - ((BurstSpell) activeSpell).getAngleDeviation();
             float tempAngle3 = Calculations.detAngle(mouseX - spellingtonX, mouseY - spellingtonY);
             temp1.setSpeedVector(new Vector2D(temp1.getSpeedVector().vectorLength(), tempAngle1, true));
             temp2.setSpeedVector(new Vector2D(temp2.getSpeedVector().vectorLength(), tempAngle2, true));
@@ -445,6 +489,9 @@ public class PlayState extends BasicGameState {
         }
     }
 
+    /**
+     * @return The ID of this BasicGameState.
+     */
     @Override
     public int getID() {
         return GameCore.PLAY_STATE_ID;

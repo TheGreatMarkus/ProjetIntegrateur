@@ -10,8 +10,10 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 
 /**
+ * A Spell that heals the player.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
+ * @see Spell
  */
 public class HealingSpell extends Spell {
 
