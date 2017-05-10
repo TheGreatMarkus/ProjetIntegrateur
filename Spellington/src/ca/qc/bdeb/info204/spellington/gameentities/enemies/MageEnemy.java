@@ -96,7 +96,7 @@ public class MageEnemy extends RangedEnemy {
 
             Image[] temp = new Image[17];
             for (int j = 0; j < temp.length; j++) {
-                temp[j] = new Image("res/image/animation/enemies/teleport/ (" + (j + 1) + ").png");
+                temp[j] = new Image("res/image/animation/enemies/teleport/(" + (j + 1) + ").png");
             }
             animAttackL = new Animation(temp, 20);
             animAttackL.setLooping(false);

@@ -367,7 +367,7 @@ public class PlayState extends BasicGameState {
         float spellingtonY = spellington.getCenterY();
         float mouseX = input.getMouseX() / GameCore.SCALE;
         float mouseY = input.getMouseY() / GameCore.SCALE;
-        float projectionPrecision = 15;
+        float projectionPrecision = 30;
         if (activeSpell instanceof BurstSpell) {
             g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);

@@ -389,7 +389,7 @@ public class GameManager {
                     break;
             }
         }
-
+        System.out.println("the current active map index : " + activeMapIndex);
         if (!endOfLevel) {
             extractMapInfo();
             ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);

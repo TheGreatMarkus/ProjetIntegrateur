@@ -83,7 +83,7 @@ public class GameCore extends StateBasedGame {
             Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, false);
+        appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
         appGameContainer.setMouseGrabbed(false);
         appGameContainer.setTargetFrameRate(TARGER_FPS);
         appGameContainer.setVSync(true);
@@ -127,9 +127,9 @@ public class GameCore extends StateBasedGame {
         this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
         this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
 
-        SpellingSystem.initSpellingSystem();
         GameManager.initGameManager(this);
         double finalTime = System.nanoTime();
+        SpellingSystem.initSpellingSystem();
         System.out.println("Time spent loading game :" + (finalTime - initTime) / 1000000000.0 + " seconds");
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);

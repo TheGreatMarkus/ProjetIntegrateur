@@ -110,27 +110,27 @@ public class MeleeEnemy extends Enemy {
 
             Image[] temp = new Image[15];
             for (int j = 0; j < temp.length; j++) {
-                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackL/ (" + (j + 1) + ").png");
+                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackL/(" + (j + 1) + ").png");
             }
             animAttackL = new Animation(temp, 30);
             animAttackL.setLooping(false);
 
             temp = new Image[15];
             for (int j = 0; j < temp.length; j++) {
-                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackR/ (" + (j + 1) + ").png");
+                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackR/(" + (j + 1) + ").png");
             }
             animAttackR = new Animation(temp, 30);
             animAttackR.setLooping(false);
 
             temp = new Image[40];
             for (int j = 0; j < temp.length; j++) {
-                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkL/ (" + (j + 1) + ").png");
+                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkL/(" + (j + 1) + ").png");
             }
             animWalkL = new Animation(temp, 20);
 
             temp = new Image[40];
             for (int j = 0; j < temp.length; j++) {
-                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkR/ (" + (j + 1) + ").png");
+                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkR/(" + (j + 1) + ").png");
             }
             animWalkR = new Animation(temp, 20);
         } catch (SlickException ex) {

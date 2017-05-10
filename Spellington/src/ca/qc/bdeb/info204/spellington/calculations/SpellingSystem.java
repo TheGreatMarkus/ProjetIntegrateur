@@ -149,7 +149,7 @@ public class SpellingSystem {
 
         Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 5, animFireBall, 30, 1, 1, 5);
         Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", ICE_SPIKE_DESC, 3, animIceSpike, 20, 1, 0, 5);
-        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", SPARK_DESC, 2, animSpark, 5, 100);
+        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", SPARK_DESC, 2, animSpark, 5, 10);
         Spell heal = new HealingSpell(ID_HEAL, "Soin", HEAL_DESC, 1, animHeal, 100, 100, 10);
         Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", ASCENDING_CURRENT_DESC, animAscendingCurrent, 100, 100, 0);
         Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, "Résistance feu", FIRE_RES_DESC, animFireResistance, 100, 30, -40);
@@ -158,7 +158,7 @@ public class SpellingSystem {
         Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", EXPLOSIVE_BALL_DESC, 2, animExplosiveBall, 100, 1, 1, 10);
         Spell fireBreath = new BurstSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", FIRE_BREATH_DESC, 3, animFireBreath, 40, 1, 1, 10, 0.15f, 5);
         Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", GIANT_FIRE_BALL_DESC, 2, animGiantFireBall, 200, 1, 1, 20);
-        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", LIGHTNING_SWARM_DESC, 1, animLightningSwarm, 3, 5);
+        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", LIGHTNING_SWARM_DESC, 1, animLightningSwarm, 3, 100);
         Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", TELEPORTATION_DESC, 1, animTeleportation, 100, 1, 1, 0);
 
         Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", LIGHTNING_BALL_DESC, 2, animLightningBouncingBall, 30, 1, 1, 10);
@@ -340,7 +340,7 @@ public class SpellingSystem {
         //potions end-----------
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = spellList.get(ID_FIRE_BALL - 1).getIncantation();
+            incantationText = spellList.get(ID_FIRE_BREATH - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F2)) {
@@ -373,103 +373,103 @@ public class SpellingSystem {
         try {
             Image[] tempImgFireBall = new Image[31];
             for (int i = 0; i < tempImgFireBall.length; i++) {
-                tempImgFireBall[i] = new Image("res/image/animation/spells/fireBall/ (" + (i + 1) + ").png");
+                tempImgFireBall[i] = new Image("res/image/animation/spells/fireBall/(" + (i + 1) + ").png");
             }
             animFireBall = new Animation(tempImgFireBall, 30);
 
             Image[] tempImgUpStream = new Image[19];
             for (int i = 18; i >= 0; i--) {
-                tempImgUpStream[18 - i] = new Image("res/image/animation/spells/upStream/ (" + (i + 1) + ").png");
+                tempImgUpStream[18 - i] = new Image("res/image/animation/spells/upStream/(" + (i + 1) + ").png");
             }
             animAscendingCurrent = new Animation(tempImgUpStream, 40);
 
             Image[] tempImgFireRes = new Image[19];
             for (int i = 0; i < tempImgFireRes.length; i++) {
-                tempImgFireRes[i] = new Image("res/image/animation/spells/fireRes/ (" + (i + 1) + ").png");
+                tempImgFireRes[i] = new Image("res/image/animation/spells/fireRes/(" + (i + 1) + ").png");
             }
             animFireResistance = new Animation(tempImgFireRes, 30);
 
             Image[] tempImgIceRes = new Image[19];
             for (int i = 0; i < tempImgIceRes.length; i++) {
-                tempImgIceRes[i] = new Image("res/image/animation/spells/iceRes/ (" + (i + 1) + ").png");
+                tempImgIceRes[i] = new Image("res/image/animation/spells/iceRes/(" + (i + 1) + ").png");
             }
             animIceResistance = new Animation(tempImgIceRes, 30);
 
             Image[] tempImgeElectricRes = new Image[19];
             for (int i = 0; i < tempImgeElectricRes.length; i++) {
-                tempImgeElectricRes[i] = new Image("res/image/animation/spells/electricRes/ (" + (i + 1) + ").png");
+                tempImgeElectricRes[i] = new Image("res/image/animation/spells/electricRes/(" + (i + 1) + ").png");
             }
             animLightningResistance = new Animation(tempImgeElectricRes, 30);
 
             Image[] tempImgeElectricBolt = new Image[19];
             for (int i = 0; i < tempImgeElectricBolt.length; i++) {
-                tempImgeElectricBolt[i] = new Image("res/image/animation/spells/lightningBolt/ (" + (i + 1) + ").png");
+                tempImgeElectricBolt[i] = new Image("res/image/animation/spells/lightningBolt/(" + (i + 1) + ").png");
             }
             animLightningBouncingBall = new Animation(tempImgeElectricBolt, 15);
 
             Image[] tempImgeHealSmall = new Image[19];
             for (int i = 0; i < tempImgeHealSmall.length; i++) {
-                tempImgeHealSmall[i] = new Image("res/image/animation/spells/healSmall/ (" + (i + 1) + ").png");
+                tempImgeHealSmall[i] = new Image("res/image/animation/spells/healSmall/(" + (i + 1) + ").png");
             }
             animHeal = new Animation(tempImgeHealSmall, 30);
 
             Image[] tempImgeHealBig = new Image[19];
             for (int i = 0; i < tempImgeHealBig.length; i++) {
-                tempImgeHealBig[i] = new Image("res/image/animation/spells/healBig/ (" + (i + 1) + ").png");
+                tempImgeHealBig[i] = new Image("res/image/animation/spells/healBig/(" + (i + 1) + ").png");
             }
             animGreatHeal = new Animation(tempImgeHealBig, 30);
 
             Image[] tempImgeFireBreath = new Image[19];
             for (int i = 0; i < tempImgeFireBreath.length; i++) {
-                tempImgeFireBreath[i] = new Image("res/image/animation/spells/lightningBolt/ (" + (i + 1) + ").png");//animation temporaire
+                tempImgeFireBreath[i] = new Image("res/image/animation/spells/lightningBolt/(" + (i + 1) + ").png");//animation temporaire
             }
             animFireBreath = new Animation(tempImgeFireBreath, 30);
 
             Image[] tempImgeIceBreath = new Image[19];
             for (int i = 0; i < tempImgeIceBreath.length; i++) {
-                tempImgeIceBreath[i] = new Image("res/image/animation/spells/lightningBolt/ (" + (i + 1) + ").png");//animation temporaire
+                tempImgeIceBreath[i] = new Image("res/image/animation/spells/lightningBolt/(" + (i + 1) + ").png");//animation temporaire
             }
             animIceBreath = new Animation(tempImgeIceBreath, 30);
 
             Image[] tempImgFireImmu = new Image[19];
             for (int i = 0; i < tempImgFireImmu.length; i++) {
-                tempImgFireImmu[i] = new Image("res/image/animation/spells/fireImmu/ (" + (i + 1) + ").png");
+                tempImgFireImmu[i] = new Image("res/image/animation/spells/fireImmu/(" + (i + 1) + ").png");
             }
             animFireImmunity = new Animation(tempImgFireImmu, 30);
 
             Image[] tempImgIceImmu = new Image[19];
             for (int i = 0; i < tempImgIceImmu.length; i++) {
-                tempImgIceImmu[i] = new Image("res/image/animation/spells/iceImmu/ (" + (i + 1) + ").png");
+                tempImgIceImmu[i] = new Image("res/image/animation/spells/iceImmu/(" + (i + 1) + ").png");
             }
             animIceImmunity = new Animation(tempImgIceImmu, 30);
 
             Image[] tempImgeElectricImmu = new Image[19];
             for (int i = 0; i < tempImgeElectricImmu.length; i++) {
-                tempImgeElectricImmu[i] = new Image("res/image/animation/spells/electricImmu/ (" + (i + 1) + ").png");
+                tempImgeElectricImmu[i] = new Image("res/image/animation/spells/electricImmu/(" + (i + 1) + ").png");
             }
             animLightningImmunity = new Animation(tempImgeElectricImmu, 30);
 
             Image[] tempImgeElectricSpark = new Image[19];
             for (int i = 0; i < tempImgeElectricSpark.length; i++) {
-                tempImgeElectricSpark[i] = new Image("res/image/animation/spells/lightningSpark/ (" + (i + 1) + ").png");
+                tempImgeElectricSpark[i] = new Image("res/image/animation/spells/lightningSpark/(" + (i + 1) + ").png");
             }
             animSpark = new Animation(tempImgeElectricSpark, 30);
 
             Image[] tempImgeElectricSwarm = new Image[19];
             for (int i = 0; i < tempImgeElectricSwarm.length; i++) {
-                tempImgeElectricSwarm[i] = new Image("res/image/animation/spells/lightningSwarm/ (" + (i + 1) + ").png");
+                tempImgeElectricSwarm[i] = new Image("res/image/animation/spells/lightningSwarm/(" + (i + 1) + ").png");
             }
             animLightningSwarm = new Animation(tempImgeElectricSwarm, 30);
 
             Image[] tempImgeElectricSpear = new Image[19];
             for (int i = 0; i < tempImgeElectricSpear.length; i++) {
-                tempImgeElectricSpear[i] = new Image("res/image/animation/spells/lightningSpear/ (" + (i + 1) + ").png");
+                tempImgeElectricSpear[i] = new Image("res/image/animation/spells/lightningSpear/(" + (i + 1) + ").png");
             }
             animLightningSpear = new Animation(tempImgeElectricSpear, 30);
 
             Image[] tempImgeIceSpikeBall = new Image[19];
             for (int i = 0; i < tempImgeIceSpikeBall.length; i++) {
-                tempImgeIceSpikeBall[i] = new Image("res/image/animation/spells/iceSpikeBall/ (" + (i + 1) + ").png");
+                tempImgeIceSpikeBall[i] = new Image("res/image/animation/spells/iceSpikeBall/(" + (i + 1) + ").png");
             }
             animIceSpikeBall = new Animation(tempImgeIceSpikeBall, 30);
 
