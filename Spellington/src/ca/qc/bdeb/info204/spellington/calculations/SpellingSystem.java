@@ -430,7 +430,7 @@ public class SpellingSystem {
             Image[] tempImgeIceBreath = new Image[19];
             for (int i = 0; i < tempImgeIceBreath.length; i++) {
 
-                tempImgeIceBreath[i] = new Image("res/image/animation/spells/iceSpike/ (" + (i + 1) + ").png");
+                tempImgeIceBreath[i] = new Image("res/image/animation/spells/iceSpike/(" + (i + 1) + ").png");
 
             }
             animIceBreath = new Animation(tempImgeIceBreath, 30);
@@ -479,25 +479,25 @@ public class SpellingSystem {
 
             Image[] tempImgeExplosiveBall = new Image[20];
             for (int i = 0; i < tempImgeExplosiveBall.length; i++) {
-                tempImgeExplosiveBall[i] = new Image("res/image/animation/spells/explosiveBall/ (" + (i + 1) + ").png");
+                tempImgeExplosiveBall[i] = new Image("res/image/animation/spells/explosiveBall/(" + (i + 1) + ").png");
             }
             animExplosiveBall = new Animation(tempImgeExplosiveBall, 30);
 
             Image[] tempImgeIceSpike = new Image[19];
             for (int i = 0; i < tempImgeIceSpike.length; i++) {
-                tempImgeIceSpike[i] = new Image("res/image/animation/spells/iceSpike/ (" + (i + 1) + ").png");
+                tempImgeIceSpike[i] = new Image("res/image/animation/spells/iceSpike/(" + (i + 1) + ").png");
             }
             animIceSpike = new Animation(tempImgeIceSpike, 30);
 
             Image[] tempImgeIceStorm = new Image[40];
             for (int i = 0; i < tempImgeIceStorm.length; i++) {
-                tempImgeIceStorm[i] = new Image("res/image/animation/spells/iceStorm/  (" + (i + 1) + ").png");
+                tempImgeIceStorm[i] = new Image("res/image/animation/spells/iceStorm/(" + (i + 1) + ").png");
             }
             animIceStorm = new Animation(tempImgeIceStorm, 30);
 
             Image[] tempImgeMeteorSwarm = new Image[38];
             for (int i = 0; i < tempImgeMeteorSwarm.length; i++) {
-                tempImgeMeteorSwarm[i] = new Image("res/image/animation/spells/meteorSwarm/ (" + (i + 1) + ").png");
+                tempImgeMeteorSwarm[i] = new Image("res/image/animation/spells/meteorSwarm/(" + (i + 1) + ").png");
             }
             animMeteorSwarm = new Animation(tempImgeMeteorSwarm, 30);
 
