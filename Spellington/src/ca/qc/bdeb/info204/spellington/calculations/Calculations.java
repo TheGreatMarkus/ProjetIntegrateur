@@ -2,9 +2,10 @@ package ca.qc.bdeb.info204.spellington.calculations;
 
 import static ca.qc.bdeb.info204.spellington.GameCore.DIM_MAP;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
-import ca.qc.bdeb.info204.spellington.gameentities.Projectile.SourceType;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile.ProjectileSourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
@@ -117,13 +118,13 @@ public class Calculations {
             }
         }
 
-        if (projectile.getBounds().intersects(spellington.getBounds()) && projectile.getSource() == SourceType.ENEMY) {
+        if (projectile.getBounds().intersects(spellington.getBounds()) && projectile.getSource() == ProjectileSourceType.ENEMY) {
             spellington.subLifePoint(projectile.getDamage(), projectile.getDamageType());
             return 1;//Collision with Spellington.
         }
 
         for (Enemy activeEnemy : activeEnemies) {
-            if (projectile.getBounds().intersects(activeEnemy.getBounds()) && projectile.getSource() == SourceType.PLAYER) {
+            if (projectile.getBounds().intersects(activeEnemy.getBounds()) && projectile.getSource() == ProjectileSourceType.PLAYER) {
                 activeEnemy.subLifePoint(projectile.getDamage(), projectile.getDamageType());
                 return 2;//Collision with an enemy.
             }
@@ -217,8 +218,8 @@ public class Calculations {
                 angle1 = angle1 + (float) Math.PI;
                 angle2 = angle2 + (float) Math.PI;
             }
-            Projectile test1 = new Projectile(enemy.getCenterX() - enemy.getProjectileSize() / 2, enemy.getCenterY() - enemy.getProjectileSize() / 2, enemy.getProjectileSize(), new Vector2D(v, angle1, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.SourceType.ENEMY);
-            Projectile test2 = new Projectile(enemy.getCenterX() - enemy.getProjectileSize() / 2, enemy.getCenterY() - enemy.getProjectileSize() / 2, enemy.getProjectileSize(), new Vector2D(v, angle2, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.SourceType.ENEMY);
+            Projectile test1 = new Projectile(enemy.getCenterX() - enemy.getProjectileSize() / 2, enemy.getCenterY() - enemy.getProjectileSize() / 2, enemy.getProjectileSize(), new Vector2D(v, angle1, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.ProjectileSourceType.ENEMY);
+            Projectile test2 = new Projectile(enemy.getCenterX() - enemy.getProjectileSize() / 2, enemy.getCenterY() - enemy.getProjectileSize() / 2, enemy.getProjectileSize(), new Vector2D(v, angle2, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.ProjectileSourceType.ENEMY);
             int test1Result = -1;
             int test2Result = -1;
             while (test1Result == -1) {
@@ -236,17 +237,19 @@ public class Calculations {
                 float y = enemy.getCenterY() - enemy.getProjectileSize() / 2;
 
                 if (test1Result == 1) {
-                    activeProjectiles.add(new Projectile(x, y, enemy.getProjectileSize(), new Vector2D(v, angle1, true), 1, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE, Projectile.SourceType.ENEMY));
+                    activeProjectiles.add(new Projectile(x, y, enemy.getProjectileSize(), new Vector2D(v, angle1, true),
+                            1, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE, Projectile.ProjectileSourceType.ENEMY));
 
                 } else if (test2Result == 1) {
                     //A changer
-                    activeProjectiles.add(new Projectile(x, y, enemy.getProjectileSize(), new Vector2D(v, angle2, true), 1, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE, Projectile.SourceType.ENEMY));
+                    activeProjectiles.add(new Projectile(x, y, enemy.getProjectileSize(), new Vector2D(v, angle2, true),
+                            1, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE, Projectile.ProjectileSourceType.ENEMY));
                 }
                 enemy.setAttackCooldown(enemy.getTotalAttackCooldown());
-                if (enemy.getMouvementState() == LivingEntity.MouvementState.STANDING_L) {
-                    enemy.setMouvementState(LivingEntity.MouvementState.ATTACK_L);
-                } else if (enemy.getMouvementState() == LivingEntity.MouvementState.STANDING_R) {
-                    enemy.setMouvementState(LivingEntity.MouvementState.ATTACK_R);
+                if (enemy.getAnimState() == LivingEntity.AnimState.STANDING_L) {
+                    enemy.setAnimState(LivingEntity.AnimState.ATTACK_L);
+                } else if (enemy.getAnimState() == LivingEntity.AnimState.STANDING_R) {
+                    enemy.setAnimState(LivingEntity.AnimState.ATTACK_R);
                 }
             }
         }
@@ -266,8 +269,11 @@ public class Calculations {
         float deltaY = enemy.getDeltaYSpellington();
 
         angle = Calculations.detAngle(deltaX, deltaY);
+        float x = enemy.getCenterX() - enemy.getProjectileSize() / 2;
+        float y = enemy.getCenterY() - enemy.getProjectileSize() / 2;
 
-        Projectile test1 = new Projectile(enemy.getCenterX() - enemy.getProjectileSize() / 2, enemy.getCenterY() - enemy.getProjectileSize() / 2, enemy.getProjectileSize(), new Vector2D(v, angle, true), 0, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.SourceType.ENEMY);
+        Projectile test1 = new Projectile(x, y, enemy.getProjectileSize(),
+                new Vector2D(v, angle, true), 0, null, 0, ElementalType.NEUTRAL, ProjectileSourceType.ENEMY);
 
         int test1Result = -1;
         while (test1Result == -1) {
@@ -277,13 +283,14 @@ public class Calculations {
 
         if (test1Result == 1) {
             enemy.setAttackCooldown(enemy.getTotalAttackCooldown());
-            float x = enemy.getCenterX() - enemy.getProjectileSize() / 2;
-            float y = enemy.getCenterY() - enemy.getProjectileSize() / 2;
-            activeProjectiles.add(new Projectile(x, y, enemy.getProjectileSize(), new Vector2D(v, angle, true), 0, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE, Projectile.SourceType.ENEMY));
-            if (enemy.getMouvementState() == LivingEntity.MouvementState.STANDING_L) {
-                enemy.setMouvementState(LivingEntity.MouvementState.ATTACK_L);
-            } else if (enemy.getMouvementState() == LivingEntity.MouvementState.STANDING_R) {
-                enemy.setMouvementState(LivingEntity.MouvementState.ATTACK_R);
+
+            activeProjectiles.add(new Projectile(x, y, enemy.getProjectileSize(),
+                    new Vector2D(v, angle, true), 0, enemy.getAnimProjectile(),
+                    enemy.getDamage(), enemy.getDamageType(), ProjectileSourceType.ENEMY));
+            if (enemy.getAnimState() == LivingEntity.AnimState.STANDING_L) {
+                enemy.setAnimState(LivingEntity.AnimState.ATTACK_L);
+            } else if (enemy.getAnimState() == LivingEntity.AnimState.STANDING_R) {
+                enemy.setAnimState(LivingEntity.AnimState.ATTACK_R);
             }
         }
     }

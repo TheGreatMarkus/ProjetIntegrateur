@@ -23,7 +23,7 @@ public class RangedEnemy extends Enemy {
 
     private float projectileSize;
 
-    public RangedEnemy(float x, float y, MouvementState mouvementState, float gravMod, EnemyType enemyType) {
+    public RangedEnemy(float x, float y, AnimState mouvementState, float gravMod, EnemyType enemyType) {
         super(x, y, mouvementState, gravMod, enemyType);
         switch (this.enemyType) {
             case ARCHER:
@@ -54,7 +54,7 @@ public class RangedEnemy extends Enemy {
         float tempXRight = getX() - 70;
         float tempWidth = 178;
         float tempHeight = 100;
-        switch (this.mouvementState) {
+        switch (this.animState) {
             case STANDING_L:
                 imgStandingLeft.draw(tempXLeft, tempY, tempWidth, tempHeight);
                 break;
@@ -64,14 +64,14 @@ public class RangedEnemy extends Enemy {
             case ATTACK_L:
                 animAttackL.draw(tempXLeft, tempY, tempWidth, tempHeight);
                 if (animAttackL.isStopped()) {
-                    this.mouvementState = MouvementState.STANDING_L;
+                    this.animState = AnimState.STANDING_L;
                     animAttackL.restart();
                 }
                 break;
             case ATTACK_R:
                 animAttackR.draw(tempXRight, tempY, tempWidth, tempHeight);
                 if (animAttackR.isStopped()) {
-                    this.mouvementState = MouvementState.STANDING_R;
+                    this.animState = AnimState.STANDING_R;
                     animAttackR.restart();
                 }
                 break;
@@ -83,11 +83,11 @@ public class RangedEnemy extends Enemy {
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
         if (spellingtonInRange) {
-            if (this.mouvementState != MouvementState.ATTACK_R && this.mouvementState != MouvementState.ATTACK_L) {
+            if (this.animState != AnimState.ATTACK_R && this.animState != AnimState.ATTACK_L) {
                 if (spellington.getCenterX() <= this.getCenterX()) {
-                    this.setMouvementState(MouvementState.STANDING_L);
+                    this.setAnimState(AnimState.STANDING_L);
                 } else if (spellington.getCenterX() > this.getCenterX()) {
-                    this.setMouvementState(MouvementState.STANDING_R);
+                    this.setAnimState(AnimState.STANDING_R);
                 }
             }
         }

@@ -64,7 +64,7 @@ public class PlayState extends BasicGameState {
      */
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        spellington = new Spellington(0, 0, LivingEntity.MouvementState.JUMP_R);
+        spellington = new Spellington(0, 0, LivingEntity.AnimState.JUMP_R);
         fontSpellChant = new UnicodeFont(GameCore.getFontViking(Font.BOLD, 25 * GameCore.SCALE));
         fontSpellChant.addAsciiGlyphs();
         fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
@@ -94,10 +94,10 @@ public class PlayState extends BasicGameState {
      * @throws SlickException A general Slick Exception.
      */
     public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
-        spellington.setMouvementState(LivingEntity.MouvementState.STANDING_R);
+        spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
         spellington.setX(spellingtonX);
         spellington.setY(spellingtonY);
-        spellington.setMouvementState(LivingEntity.MouvementState.STANDING_R);
+        spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
         map = currentMap;
     }
 
@@ -367,7 +367,7 @@ public class PlayState extends BasicGameState {
         float spellingtonY = spellington.getCenterY();
         float mouseX = input.getMouseX() / GameCore.SCALE;
         float mouseY = input.getMouseY() / GameCore.SCALE;
-        float projectionPrecision = 30;
+        float projectionPrecision = 50;
         if (activeSpell instanceof BurstSpell) {
             g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);

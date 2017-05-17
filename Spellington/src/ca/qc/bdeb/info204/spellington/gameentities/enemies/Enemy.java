@@ -71,7 +71,7 @@ public abstract class Enemy extends LivingEntity {
     protected float distanceFromSpellington;
     protected boolean canSeeSpellington;
 
-    public Enemy(float x, float y, MouvementState mouvementState, float gravModifier, EnemyType enemyType) {
+    public Enemy(float x, float y, AnimState mouvementState, float gravModifier, EnemyType enemyType) {
         super(x, y, 0, 0, mouvementState, gravModifier, 0);
         this.enemyType = enemyType;
 
@@ -226,18 +226,6 @@ public abstract class Enemy extends LivingEntity {
         move(time, spellington, activeProjectiles, mapinfo);
         attack(time, spellington, activeProjectiles, mapinfo);
 
-        if (!willDoAction && this.speedVector.getX() > 0) {
-            this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
-            if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
-                this.speedVector.setX(0);
-            }
-        } else if (!willDoAction && this.speedVector.getX() < 0) {
-            this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
-            if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
-                this.speedVector.setX(0);
-            }
-        }
-
         if (attackCooldown > 0) {
             attackCooldown--;
         }
@@ -295,6 +283,21 @@ public abstract class Enemy extends LivingEntity {
      */
     public abstract void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map);
 
+    public void slowDown(float time) {
+        if (this.speedVector.getX() > 0) {
+            this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
+            if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
+                this.speedVector.setX(0);
+            }
+        } else if (this.speedVector.getX() < 0) {
+            this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
+            if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
+                this.speedVector.setX(0);
+            }
+        }
+
+    }
+
     public float getDeltaXSpellington() {
         return deltaXSpellington;
     }
@@ -325,6 +328,14 @@ public abstract class Enemy extends LivingEntity {
 
     public void setDroppableSpells(ArrayList<String> droppableSpells) {
         this.droppableSpells = droppableSpells;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public ElementalType getDamageType() {
+        return damageType;
     }
 
 }

@@ -11,7 +11,7 @@ import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
  */
 public abstract class LivingEntity extends DynamicEntity {
 
-    public static enum MouvementState {
+    public static enum AnimState {
         STANDING_R,
         STANDING_L,
         WALKING_R,
@@ -24,16 +24,16 @@ public abstract class LivingEntity extends DynamicEntity {
         ATTACK_L
     }
 
-    protected MouvementState mouvementState;
+    protected AnimState animState;
     protected int lifePoint;
     protected int maxLifePoint;
     protected int resElectricity;
     protected int resIce;
     protected int resFire;
 
-    public LivingEntity(float x, float y, float width, float height, MouvementState mouvementState, float gravMod, int maxLifePoint) {
+    public LivingEntity(float x, float y, float width, float height, AnimState animState, float gravMod, int maxLifePoint) {
         super(x, y, width, height, gravMod, new Vector2D(0, 0));
-        this.mouvementState = mouvementState;
+        this.animState = animState;
         collisionTop = false;
         collisionBottom = false;
         collisionRight = false;
@@ -150,12 +150,12 @@ public abstract class LivingEntity extends DynamicEntity {
         this.collisionLeft = collisionLeft;
     }
 
-    public MouvementState getMouvementState() {
-        return mouvementState;
+    public AnimState getAnimState() {
+        return animState;
     }
 
-    public void setMouvementState(MouvementState mouvementState) {
-        this.mouvementState = mouvementState;
+    public void setAnimState(AnimState animState) {
+        this.animState = animState;
     }
 
     public void addLifePoint(int i) {
