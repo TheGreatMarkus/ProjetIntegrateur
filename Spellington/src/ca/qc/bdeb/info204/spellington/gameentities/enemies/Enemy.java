@@ -71,8 +71,8 @@ public abstract class Enemy extends LivingEntity {
     protected float distanceFromSpellington;
     protected boolean canSeeSpellington;
 
-    public Enemy(float x, float y, AnimState mouvementState, float gravModifier, EnemyType enemyType) {
-        super(x, y, 0, 0, mouvementState, gravModifier, 0);
+    public Enemy(float x, float y, EnemyType enemyType) {
+        super(x, y, 0, 0, AnimState.STANDING_L, 1, 0);
         this.enemyType = enemyType;
 
         //Missing resistances
@@ -119,15 +119,16 @@ public abstract class Enemy extends LivingEntity {
                     this.damageType = ElementalType.LIGHTNING;
                     this.damage = 10;
                     break;
-                case DUMMY:
-                    this.setHeight(HUMANOID_SIZE.height);
-                    this.setWidth(HUMANOID_SIZE.width);
-                    this.maxLifePoint = 60;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.LIGHTNING;
-                    this.damage = 10;
-                    break;
             }
+        }
+        if (this instanceof DummyEnemy) {
+            this.setHeight(HUMANOID_SIZE.height);
+            this.setWidth(HUMANOID_SIZE.width);
+            this.maxLifePoint = 9999;
+            this.xpOnKill = 0;
+            this.damageType = ElementalType.LIGHTNING;
+            this.damage = 10;
+
         }
         if (this instanceof RangedEnemy) {
             this.setHeight(RANGED_SIZE.height);

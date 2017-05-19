@@ -24,8 +24,8 @@ public class MageEnemy extends RangedEnemy {
 
     private Animation animTeleport;
 
-    public MageEnemy(float x, float y, AnimState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
-        super(x, y, mouvementState, GRAVITY_MODIFIER, enemyType);
+    public MageEnemy(float x, float y, EnemyType enemyType) {
+        super(x, y, enemyType);
     }
 
     @Override

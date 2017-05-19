@@ -2,11 +2,11 @@ package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import static ca.qc.bdeb.info204.spellington.GameCore.DIM_MAP;
-import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileEvent;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileState;
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.DummyEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.MageEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.MeleeEnemy;
@@ -46,7 +46,6 @@ public class GameManager {
     private static Point entryPoint;
     private static Point exitPoint;
     private static final int LEVEL_LENGTH = 20;
-    private static int remainingRooms = 0;
 
     //Chambers that will compose the 5 levels of the game.
     private static final ArrayList<TiledMap> TUTORIAL_ROOMS = new ArrayList();
@@ -55,10 +54,12 @@ public class GameManager {
     private static final ArrayList<TiledMap> CASTLE_ROOMS = new ArrayList();
     private static final ArrayList<TiledMap> BOSS_ROOMS = new ArrayList();
 
+    private static ArrayList<TiledMap> currentRooms = new ArrayList();
+
     private static ArrayList<Enemy> activeEnemies = new ArrayList<>();
     //for testing
     private static final boolean ROOM_TESTING = false;
-    private static final int ROOM_TESTING_INDEX = 1;
+    private static final int ROOM_TESTING_INDEX = 7;
 
     /**
      * Initialises the GameManager.
@@ -78,10 +79,12 @@ public class GameManager {
     public static void newGame() throws SlickException {
         GameSave newSave = new GameSave("temp");
         gameSave = newSave;
-        saveGameSave();
+        saveGameSave(gameSave);
+
         activeLevel = 1;
         activeMapIndex = 0;
-        activeMap = TUTORIAL_ROOMS.get(activeMapIndex);
+        currentRooms = generateRooms(activeLevel);
+        activeMap = currentRooms.get(activeMapIndex);
         extractMapInfo();
         ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
         stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
@@ -96,7 +99,8 @@ public class GameManager {
      */
     public static void levelSelected(int level) throws SlickException {
         activeLevel = level;
-        remainingRooms = LEVEL_LENGTH;
+        activeMapIndex = 0;
+        currentRooms = generateRooms(activeLevel);
         loadNextMap();
     }
 
@@ -123,8 +127,10 @@ public class GameManager {
 
     /**
      * Saves the current savefile.
+     *
+     * @param gameSave The game save to save.
      */
-    public static void saveGameSave() {
+    public static void saveGameSave(GameSave gameSave) {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(GAME_SAVE_PATH);
@@ -226,7 +232,7 @@ public class GameManager {
                     entryPoint = new Point(50 * j, 50 * i);
                 } else if (activeMap.getTileId(j, i, 2) == dummyID) {
                     tempEvent = TileEvent.DUMMY_SPAWN;
-                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), LivingEntity.AnimState.STANDING_L, 1, Enemy.EnemyType.DUMMY));
+                    activeEnemies.add(new DummyEnemy((float) (50 * j), (float) (50 * i), Enemy.EnemyType.DUMMY));
                 } else if (activeMap.getTileId(j, i, 2) == randomSlimeID) {
                     tempEvent = TileEvent.RANDOM_SLIME_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -241,7 +247,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.LIGHTNING_SLIME;
                             break;
                     }
-                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), LivingEntity.AnimState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), tempType));
                 } else if (activeMap.getTileId(j, i, 2) == meleeEnemyID) {
                     tempEvent = TileEvent.MELEE_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -253,7 +259,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.GUARD;
                             break;
                     }
-                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), LivingEntity.AnimState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new MeleeEnemy((float) (50 * j), (float) (50 * i), tempType));
                 } else if (activeMap.getTileId(j, i, 2) == rangedEnemyID) {
                     tempEvent = TileEvent.RANGED_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -265,7 +271,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.CROSSBOWMAN;
                             break;
                     }
-                    activeEnemies.add(new RangedEnemy((float) (50 * j), (float) (50 * i), LivingEntity.AnimState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new RangedEnemy((float) (50 * j), (float) (50 * i), tempType));
                 } else if (activeMap.getTileId(j, i, 2) == tresureID) {
                     tempEvent = TileEvent.TREASURE_SPAWN;
                 } else if (activeMap.getTileId(j, i, 2) == mageSpawnID) {
@@ -282,7 +288,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.ELECTROMANCER;
                             break;
                     }
-                    activeEnemies.add(new MageEnemy((float) (50 * j), (float) (50 * i), LivingEntity.AnimState.STANDING_L, 1, tempType));
+                    activeEnemies.add(new MageEnemy((float) (50 * j), (float) (50 * i), tempType));
                 } else if (activeMap.getTileId(j, i, 2) == whatIsThis) {
                     tempEvent = TileEvent.WHAT_IS_THIS;
                 } else if (activeMap.getTileId(j, i, 2) == message1ID) {
@@ -297,6 +303,7 @@ public class GameManager {
                 mapInformation[i][j] = new Tile(50 * j, 50 * i, 50, 50, tempState, tempEvent);
             }
         }
+                System.out.println(activeEnemies.size());
     }
 
     /**
@@ -318,7 +325,15 @@ public class GameManager {
      */
     private static void loadNextMap() throws SlickException {
         boolean endOfLevel = false;
-        if (ROOM_TESTING) {
+        System.out.println("Current level map index : " + activeMapIndex);
+        if (!ROOM_TESTING) {
+            if (activeMapIndex < currentRooms.size()) {
+                activeMap = currentRooms.get(activeMapIndex);
+                activeMapIndex += 1;
+            } else {
+                endOfLevel = true;
+            }
+        } else if (ROOM_TESTING) {
             switch (activeLevel) {
                 case 1:
                     activeMap = TUTORIAL_ROOMS.get(ROOM_TESTING_INDEX);
@@ -339,57 +354,7 @@ public class GameManager {
                     System.out.println("SECRET LEVEL");
                     break;
             }
-        } else {
-            switch (activeLevel) {
-                case 1:
-                    if (activeMapIndex < TUTORIAL_ROOMS.size() - 1) {
-                        activeMapIndex += 1;
-                        activeMap = TUTORIAL_ROOMS.get(activeMapIndex);
-                    } else {
-                        endOfLevel = true;
-                    }
-                    break;
-                case 2:
-                    if (remainingRooms > 0) {
-                        activeMapIndex = GameCore.rand.nextInt(DUNGEON_ROOMS.size());
-                        activeMap = DUNGEON_ROOMS.get(activeMapIndex);
-                        remainingRooms--;
-                    } else {
-                        endOfLevel = true;
-                    }
-                    break;
-                case 3:
-                    if (remainingRooms > 0) {
-                        activeMapIndex = GameCore.rand.nextInt(PLAINS_ROOMS.size());
-                        activeMap = PLAINS_ROOMS.get(activeMapIndex);
-                        remainingRooms--;
-                    } else {
-                        endOfLevel = true;
-                    }
-                    break;
-                case 4:
-                    if (remainingRooms > 0) {
-                        activeMapIndex = GameCore.rand.nextInt(CASTLE_ROOMS.size());
-                        activeMap = CASTLE_ROOMS.get(activeMapIndex);
-                        remainingRooms--;
-                    } else {
-                        endOfLevel = true;
-                    }
-                    break;
-                case 5:
-                    if (activeMapIndex < BOSS_ROOMS.size() - 1) {
-                        activeMapIndex += 1;
-                        activeMap = TUTORIAL_ROOMS.get(activeMapIndex);
-                    } else {
-                        endOfLevel = true;
-                    }
-                    break;
-                default:
-                    System.out.println("SECRET LEVEL");
-                    break;
-            }
         }
-        System.out.println("the current active map index : " + activeMapIndex);
         if (!endOfLevel) {
             extractMapInfo();
             ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
@@ -397,6 +362,38 @@ public class GameManager {
         } else {
             stateBasedGame.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
         }
+    }
+
+    private static ArrayList<TiledMap> generateRooms(int activeLevel) {
+        if (activeLevel == 1) {
+            return TUTORIAL_ROOMS;
+        } else if (activeLevel == 5) {
+            return BOSS_ROOMS;
+        }
+        ArrayList allRooms = new ArrayList();
+        ArrayList generatedRooms = new ArrayList();
+        switch (activeLevel) {
+            case 2:
+                allRooms = (ArrayList<TiledMap>)DUNGEON_ROOMS.clone();
+                break;
+            case 3:
+                allRooms = (ArrayList<TiledMap>)PLAINS_ROOMS.clone();
+                break;
+            case 4:
+                allRooms = (ArrayList<TiledMap>)CASTLE_ROOMS.clone();
+                break;
+            default:
+                System.out.println("Invalid level number");
+                break;
+        }
+
+        for (int i = 0; i < LEVEL_LENGTH; i++) {
+            int index = GameCore.rand.nextInt(allRooms.size());
+            generatedRooms.add(allRooms.get(index));
+            allRooms.remove(index);
+        }
+
+        return generatedRooms;
     }
 
     public static Tile[][] getMapInformation() {

@@ -23,8 +23,8 @@ public class RangedEnemy extends Enemy {
 
     private float projectileSize;
 
-    public RangedEnemy(float x, float y, AnimState mouvementState, float gravMod, EnemyType enemyType) {
-        super(x, y, mouvementState, gravMod, enemyType);
+    public RangedEnemy(float x, float y, EnemyType enemyType) {
+        super(x, y, enemyType);
         switch (this.enemyType) {
             case ARCHER:
                 projectileSize = 20;

@@ -26,8 +26,8 @@ public class MeleeEnemy extends Enemy {
 
     int attackRange;
 
-    public MeleeEnemy(float x, float y, AnimState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
-        super(x, y, mouvementState, GRAVITY_MODIFIER, enemyType);
+    public MeleeEnemy(float x, float y, EnemyType enemyType) {
+        super(x, y, enemyType);
         switch (this.enemyType) {
             case FIRE_SLIME:
             case ICE_SLIME:
@@ -86,6 +86,7 @@ public class MeleeEnemy extends Enemy {
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+
         if (willDoAction && !(this.animState == AnimState.ATTACK_L || this.animState == AnimState.ATTACK_R)) {
             if (deltaXSpellington < 0) {
                 this.animState = AnimState.STANDING_L;
@@ -123,7 +124,6 @@ public class MeleeEnemy extends Enemy {
             }
             slowDown(time);
         }
-
     }
 
     @Override

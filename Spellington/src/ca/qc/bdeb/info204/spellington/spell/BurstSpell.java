@@ -3,7 +3,7 @@ package ca.qc.bdeb.info204.spellington.spell;
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
-import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
@@ -22,8 +22,8 @@ public class BurstSpell extends ProjectileSpell {
     private float angleDeviation;
     private int projectileNumber;
 
-    public BurstSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, float size, float initSpeed, float gravModifier, int c, float angle, int projectileNumber) {
-        super(id, element, name, shortDescription, uses, animation, size, initSpeed, gravModifier, projectileNumber);
+    public BurstSpell(int id, ElementalType element, String name, String shortDescription, int uses, Animation animation, float size, float initSpeed, float gravModifier, int damage, float angle, int projectileNumber) {
+        super(id, element, name, shortDescription, uses, animation, size, initSpeed, gravModifier, damage);
         this.angleDeviation = angle;
         this.projectileNumber = projectileNumber;
     }
