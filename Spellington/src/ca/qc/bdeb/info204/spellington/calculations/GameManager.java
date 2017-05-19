@@ -303,7 +303,6 @@ public class GameManager {
                 mapInformation[i][j] = new Tile(50 * j, 50 * i, 50, 50, tempState, tempEvent);
             }
         }
-                System.out.println(activeEnemies.size());
     }
 
     /**

@@ -67,7 +67,7 @@ public abstract class Enemy extends LivingEntity {
 
     protected float aggroRange;
     protected boolean spellingtonInRange;
-    protected boolean willDoAction;
+    protected boolean canAttackSpellington;
     protected float distanceFromSpellington;
     protected boolean canSeeSpellington;
 
@@ -222,7 +222,7 @@ public abstract class Enemy extends LivingEntity {
         distanceFromSpellington = (float) Math.sqrt(deltaXSpellington * deltaXSpellington + deltaYSpellington * deltaYSpellington);
         spellingtonInRange = Math.abs(distanceFromSpellington) < aggroRange;
 
-        willDoAction = spellingtonInRange && canSeeSpellington;
+        canAttackSpellington = spellingtonInRange && canSeeSpellington;
 
         move(time, spellington, activeProjectiles, mapinfo);
         attack(time, spellington, activeProjectiles, mapinfo);
@@ -249,7 +249,7 @@ public abstract class Enemy extends LivingEntity {
         g.setColor(Color.white);
         g.drawString("EnemyType : " + this.enemyType, getX(), getY() - 40);
         g.drawString("HP = " + this.lifePoint, getX(), getY() - 20);
-        if (willDoAction) {
+        if (canAttackSpellington) {
             g.setColor(new Color(255, 0, 0, 100));
             g.fillRect(getX(), getY(), getWidth(), getHeight());
         }

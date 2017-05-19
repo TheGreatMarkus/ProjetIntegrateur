@@ -87,7 +87,7 @@ public class MeleeEnemy extends Enemy {
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
 
-        if (willDoAction && !(this.animState == AnimState.ATTACK_L || this.animState == AnimState.ATTACK_R)) {
+        if (canAttackSpellington && !(this.animState == AnimState.ATTACK_L || this.animState == AnimState.ATTACK_R)) {
             if (deltaXSpellington < 0) {
                 this.animState = AnimState.STANDING_L;
             } else if (deltaXSpellington > 0) {
@@ -111,9 +111,9 @@ public class MeleeEnemy extends Enemy {
             }
             if (collisionBottom && deltaYSpellington < -40) {
                 this.speedVector.setY(INIT_JUMP_SPEED);
-            } else if (!willDoAction && this.animState == AnimState.WALKING_L) {
+            } else if (!canAttackSpellington && this.animState == AnimState.WALKING_L) {
                 this.animState = AnimState.STANDING_L;
-            } else if (!willDoAction && this.animState == AnimState.WALKING_R) {
+            } else if (!canAttackSpellington && this.animState == AnimState.WALKING_R) {
                 this.animState = AnimState.STANDING_R;
             }
         } else {

@@ -29,7 +29,6 @@ public class DummyEnemy extends Enemy {
 
     @Override
     public void render(Graphics g) {
-        System.out.println("howwwww");
         renderGeneralInfo(g);
         
 
@@ -38,13 +37,11 @@ public class DummyEnemy extends Enemy {
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
         //No mouvement
-        System.out.println("afdsaa");
     }
 
     @Override
     public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
         //No attacking
-        System.out.println("asdfasdf");
     }
 
 }
