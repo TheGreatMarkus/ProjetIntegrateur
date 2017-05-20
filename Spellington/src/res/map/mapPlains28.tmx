@@ -8,7 +8,7 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8VW7WoDIRD0d6Gk+dMkDameyRXuy1+Bvs49Wh+lj5bdMEsGkeZaaBSG1d3R0dXzHJxzk6ATjIDWB/h7iieKT6gnipl/IMuxjnwTkADv3LciCBpYgyfrC/6IPpHazGuIb3Wbu65P+F/uwUXmMHfQDxX0Zc2z7UsN/QB9PQ9Npv8seBfs74xxAO8e51XwlPl1/Xb+au2/nT9f0P9cOM75j/qiOau27n+e/0cU1de9V3D+V4Kd4IVsqVj87QfOFuNtwFlTrMH3V/P82124NP9pAaf/hb6tv3T+/rvw/tc6f/aPCtD/EBxhW8GJ2lyM1xJyzgk+sy36HBEP+P5r3j/6D6Q74AqZi+bmWveESJxA3ECcUv9I/khtzbu9J/idYG8Qy02POL8pRuqXKMZ9x0wjudt7hvtcABnH9TIACQAA
+   H4sIAAAAAAAAC8VWW07DMBD0NxKi/EApAjtug5SXz5SjcRSOxm41o46siJaf2tJo7d3ZTGxvHE8hhMUwGGbA+xP8o8SLxBf0i8Ton8RqbBDfAhQghvDjSIYOlohi44Y/IyfLWHmd8Nnnu/v8jP8d7tzsHdYB+qmBvs155b600E/Q93roKv1Hw6fh/cozPsC7xnkxPFR+nz/rr9X+s/5iA33TXF3b979e/3vp+947dP2fDG+GnditxvjhD84ez3sF51liHb6/lvXPs/DW9S83cMZ/6HP+reqP+9+q/viPStD/Mhxhe8NJxtrI6wU15wQfbY+cI+IJ33/L88f/gXIGnGHv4mtz7kdBFk4SbhLOVn4Wf5axrzvvE3pP4B2EazMirneKWfKKxDR3rjRKuNxnNOcX8N2DBwAJAAA=
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
@@ -18,7 +18,7 @@
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWDEZgTocaGSLNsKXEIlYDVQDtgBANi08koGAVmaHxjAupNSJAnpHYUjAJ6AwB84JBIAAkAAA==
+   H4sIAAAAAAAAC2NgGAWDEZhT0SxbKppFLrAaaAcMU0DNdDIKRoEZGt+YgHoTEswmRe0oGAX0AAAfLw/4AAkAAA==
   </data>
  </layer>
 </map>
