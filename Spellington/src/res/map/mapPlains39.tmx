@@ -18,7 +18,7 @@
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjYBSMgqEBTAbaAYMEDJZwsBloByABczS+5YC4AtMdgw3YDrQDBhEAAA8SG5QACQAA
+   H4sIAAAAAAAAC2NgGBzAeKAdAAVmA+2AUTAKRgFOYDLQDhgFKMBmoB0wCIH5QDuAALAdaAcMIgAAoGrPGAAJAAA=
   </data>
  </layer>
 </map>

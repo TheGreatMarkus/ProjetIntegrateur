@@ -13,12 +13,12 @@
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACzNjYGAwG2BsN0B41H5M+y2RsDEUD5T/Ye6wI8Md6OotybAfn3nUUE9q/BPrBmLV4bMfW3gNtP3EmE1IHjlNwexHTuswjMt+fHaQmkaQ7ceGKbUfnxmkpj90s9DtIqecoKT8Gyr244sDQumf2HRAbhlNjXqYknBHx+h5kFYY2U4APBYvBAAJAAA=
+   H4sIAAAAAAAAC+2TwQ7AIAhD+ScTEy/7/8/aZSaNM0BFww479KThUShVRGqyriT9/De/gcqjFlDEP9YopLfx/6wXZv5R/o79e3vw/tP4s3ll8z21rXfMVOdj1jHzLIPNCPKZ2/Hyo/en1RpZrHeWb3n9Kl/bgZV/bw5WvCN/5xxWuF3jDZ4SMm/pMqaVAAkAAA==
   </data>
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAXEAhMsYjZEqhsFo2CwAPOBdsAQBKNhNryBMR3tMqOjXaMAPwAAXfFyfAAJAAA=
+   H4sIAAAAAAAAC2NgGAXEAhMsYjZ0d8UoGAWUAfOBdsAQBKNhNryBMR3tMqOjXaMAPwAAv5WuqQAJAAA=
   </data>
  </layer>
 </map>
