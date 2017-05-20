@@ -187,15 +187,24 @@ public class Calculations {
      * @return If the enemy can see Spellington.
      */
     public static boolean detEnemyCanSeeSpellington(Enemy enemy, Spellington spellington, Tile[][] map) {
-        Line line = new Line(spellington.getCenterX(), spellington.getCenterY(), enemy.getCenterX(), enemy.getY() + 10);
+        Line line1 = new Line(spellington.getCenterX(), spellington.getY() + 10, enemy.getCenterX(), enemy.getY() + 10);
+        Line line2 = new Line(spellington.getCenterX(), spellington.getMaxY() - 10, enemy.getCenterX(), enemy.getY() + 10);
+        boolean test1 = true, test2 = true;
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                if (line.intersects(map[i][j].getBounds()) && map[i][j].getTileState() != Tile.TileState.PASSABLE) {
-                    return false;
+                if (line1.intersects(map[i][j].getBounds()) && map[i][j].getTileState() != Tile.TileState.PASSABLE) {
+                    test1 = false;
                 }
             }
         }
-        return true;
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (line2.intersects(map[i][j].getBounds()) && map[i][j].getTileState() != Tile.TileState.PASSABLE) {
+                    test2 = false;
+                }
+            }
+        }
+        return (test1 || test2);
     }
 
     /**

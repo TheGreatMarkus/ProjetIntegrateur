@@ -175,13 +175,13 @@ public class GameManager {
         }
         try {
             for (int i = 0; i == i; i++) {
-                CASTLE_ROOMS.add(new TiledMap("res/map/level4" + (i + 1) + ".tmx"));
+                CASTLE_ROOMS.add(new TiledMap("res/map/mapCastle" + (i + 1) + ".tmx"));
             }
         } catch (Exception ex) {
         }
         try {
             for (int i = 0; i == i; i++) {
-                BOSS_ROOMS.add(new TiledMap("res/map/level5" + (i + 1) + ".tmx"));
+                BOSS_ROOMS.add(new TiledMap("res/map/mapBoss" + (i + 1) + ".tmx"));
             }
         } catch (Exception ex) {
         }
@@ -214,6 +214,8 @@ public class GameManager {
                     tempState = TileState.IMPASSABLE;
                 } else if (activeMap.getTileId(j, i, 1) == activeMap.getTileSet(1).firstGID) {
                     tempState = TileState.LAVA;
+                } else if (activeMap.getTileId(j, i, 1) == activeMap.getTileSet(1).firstGID + 6) {
+                    tempState = TileState.SLIPPERY;
                 }
                 int spellingtonExitID = activeMap.getTileSet(1).firstGID + 0;
                 int spellingtonEntryID = activeMap.getTileSet(1).firstGID + 3;
@@ -372,8 +374,8 @@ public class GameManager {
         } else if (activeLevel == 5) {
             return BOSS_ROOMS;
         }
-        ArrayList allRooms = new ArrayList();
-        ArrayList generatedRooms = new ArrayList();
+        ArrayList<TiledMap> allRooms = new ArrayList();
+        ArrayList<TiledMap> generatedRooms = new ArrayList();
         switch (activeLevel) {
             case 2:
                 allRooms = (ArrayList<TiledMap>) DUNGEON_ROOMS.clone();
@@ -388,11 +390,19 @@ public class GameManager {
                 System.out.println("Invalid level number");
                 break;
         }
-
+        ArrayList<TiledMap> usedRooms = (ArrayList<TiledMap>) (allRooms.clone());
         for (int i = 0; i < LEVEL_LENGTH; i++) {
-            int index = GameCore.rand.nextInt(allRooms.size());
-            generatedRooms.add(allRooms.get(index));
-            allRooms.remove(index);
+            int index = GameCore.rand.nextInt(usedRooms.size());
+            generatedRooms.add(usedRooms.get(index));
+            usedRooms.remove(index);
+        }
+        System.out.println("Level " + activeLevel + " : ");
+        for (int i = 0; i < generatedRooms.size(); i++) {
+            for (int j = 0; j < allRooms.size(); j++) {
+                if (allRooms.get(j).equals(generatedRooms.get(i))) {
+                    System.out.println("Room " + (i + 1) + " index  : " + j);
+                }
+            }
         }
 
         return generatedRooms;

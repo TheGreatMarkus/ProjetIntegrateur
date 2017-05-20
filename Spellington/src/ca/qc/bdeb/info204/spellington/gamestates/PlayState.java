@@ -118,6 +118,14 @@ public class PlayState extends BasicGameState {
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
+        g.setColor(new Color(10, 10, 10, 80));
+        for (Tile[] tile1 : GameManager.getMapInformation()) {
+            for (Tile tile : tile1) {
+                if (tile.getTileState() == Tile.TileState.PASSABLE) {
+                    g.fillRect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+                }
+            }
+        }
 
         spellington.render(g);
 
@@ -251,7 +259,7 @@ public class PlayState extends BasicGameState {
             textY += textYIncrement;
             g.drawString("Current level : " + GameManager.getActiveLevel(), textX, textY);
             textY += textYIncrement;
-            g.drawString("Current map : " + GameManager.getActiveMapIndex(), textX, textY);
+            g.drawString("Current room : " + GameManager.getActiveMapIndex(), textX, textY);
             textY += textYIncrement;
             g.drawString("Collision :", textX, textY);
             textY += textYIncrement;

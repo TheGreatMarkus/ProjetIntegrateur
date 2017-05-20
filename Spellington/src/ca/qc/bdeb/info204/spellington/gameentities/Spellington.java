@@ -38,7 +38,7 @@ public class Spellington extends LivingEntity {
     private static final float WJ_ANGLE = (float) Math.toRadians(65);
     private static final Vector2D LEFT_WJ_VECTOR = new Vector2D(WJ_POWER * (float) Math.cos(WJ_ANGLE), WJ_POWER * (float) Math.sin(WJ_ANGLE));
     private static final Vector2D RIGHT_WJ_VECTOR = new Vector2D(-WJ_POWER * (float) Math.cos(WJ_ANGLE), WJ_POWER * (float) Math.sin(WJ_ANGLE));
-    private static final Dimension PLAYER_SIZE = new Dimension(50, 100);
+    private static final Dimension PLAYER_SIZE = new Dimension(45, 100);
 
     private int airJumps;
     private int maxAirJumps;
@@ -217,7 +217,7 @@ public class Spellington extends LivingEntity {
             tempColor = new Color(255, 255, 255, 255);
         }
 
-        float tempX = x - 63;
+        float tempX = x - 65;
         float tempY = y;
         float tempWidth = 178;
         float tempHeight = 100;

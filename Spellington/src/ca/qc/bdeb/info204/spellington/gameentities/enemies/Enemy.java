@@ -79,6 +79,7 @@ public abstract class Enemy extends LivingEntity {
             case KEEPER:
             case GUARD:
                 this.setDim(HUMANOID_SIZE);
+                this.aggroRange = 400;
                 switch (this.enemyType) {
                     case KEEPER:
                         this.maxLifePoint = 20;
@@ -104,6 +105,7 @@ public abstract class Enemy extends LivingEntity {
             case ICE_SLIME:
             case LIGHTNING_SLIME:
                 this.setDim(SLIME_SIZE);
+                this.aggroRange = 400;
                 this.maxLifePoint = 60;
                 this.xpOnKill = 0;
                 this.damage = 10;
@@ -148,6 +150,7 @@ public abstract class Enemy extends LivingEntity {
                         this.damageType = ElementalType.LIGHTNING;
                         break;
                 }
+                break;
             case ARCHER:
             case CROSSBOWMAN:
                 this.setDim(RANGED_SIZE);
@@ -216,7 +219,7 @@ public abstract class Enemy extends LivingEntity {
         deltaXPlayer = spellington.getCenterX() - this.getCenterX();
         deltaYPlayer = spellington.getCenterY() - this.getCenterY();
         playerDistance = (float) Math.sqrt(deltaXPlayer * deltaXPlayer + deltaYPlayer * deltaYPlayer);
-        spellingtonInRange = Math.abs(playerDistance) < aggroRange;
+        spellingtonInRange = playerDistance < aggroRange;
 
         canSeePlayer = spellingtonInRange && playerInSight;
 
