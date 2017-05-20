@@ -8,6 +8,7 @@ import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile.ProjectileSourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
@@ -98,6 +99,7 @@ public class PlayState extends BasicGameState {
         spellington.setX(spellingtonX);
         spellington.setY(spellingtonY);
         spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
+        spellington.setSpeedVector(new Vector2D(0, 0));
         map = currentMap;
     }
 
@@ -347,7 +349,7 @@ public class PlayState extends BasicGameState {
                 }
             }
             g.setColor(healthColor);
-            g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) Spellington.INIT_MAX_LIFE) * (float) statBarWidth, statBarHeight);
+            g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) spellington.getMaxLifePoint()) * (float) statBarWidth, statBarHeight);
             g.setColor(xpColor);
             g.fillRect(statsBarOffSetX, xpBarY, .5f * statBarWidth, statBarHeight);
             g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la première ligne de render
@@ -371,9 +373,9 @@ public class PlayState extends BasicGameState {
         if (activeSpell instanceof BurstSpell) {
             g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
-            Projectile temp1 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input);
-            Projectile temp2 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input);
-            Projectile temp3 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input);
+            Projectile temp1 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input, ProjectileSourceType.TEST);
+            Projectile temp2 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input, ProjectileSourceType.TEST);
+            Projectile temp3 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input, ProjectileSourceType.TEST);
             temp1.setDamage(0);
             temp2.setDamage(0);
             temp3.setDamage(0);
@@ -454,7 +456,7 @@ public class PlayState extends BasicGameState {
         } else if (activeSpell instanceof ProjectileSpell) {
             g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
-            Projectile temp = ((ProjectileSpell) activeSpell).createSpellProjectile(spellington, input);
+            Projectile temp = ((ProjectileSpell) activeSpell).createSpellProjectile(spellington, input, ProjectileSourceType.TEST);
             temp.setDamage(0);
 
             boolean endLoop = false;

@@ -149,6 +149,7 @@ public class SpellBookState extends BasicGameState {
         float mnuItemEnnemiesTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemEnnemiesTitle.getWidth() / 2) + 35 * GameCore.SCALE;
         float mnuItemBackX = mnuItemBack.getWidth() - 20 * GameCore.SCALE;
         float mnuItemNextX = GameCore.SCREEN_SIZE.width - mnuItemNext.getWidth() - textGap - 85 * GameCore.SCALE;
+        
         mnuItemMainTitle.setX(mnuItemMainTitleX);
         mnuItemSpells.setX(mnuItemSpellsX);
         mnuItemPotions.setX(mnuItemPotionsX);
@@ -188,7 +189,6 @@ public class SpellBookState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         background.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
         //g.setFont(fontMenu);
-
         switch (pageState) {
             case 0:
                 displayMenu(g, gc);
@@ -206,7 +206,6 @@ public class SpellBookState extends BasicGameState {
                 displayEnnemiesLeftPage(g, gc);
                 break;
         }
-
         MainMenuState.renderMouseCursor(gc);
     }
 

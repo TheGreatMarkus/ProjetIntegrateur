@@ -1,9 +1,9 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
-import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -86,36 +86,14 @@ public class MeleeEnemy extends Enemy {
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-
-        if (canAttackSpellington && !(this.animState == AnimState.ATTACK_L || this.animState == AnimState.ATTACK_R)) {
-            if (deltaXSpellington < 0) {
+        if (canSeePlayer && !(this.animState == AnimState.ATTACK_L || this.animState == AnimState.ATTACK_R)) {
+            if (deltaXPlayer < 0) {
                 this.animState = AnimState.STANDING_L;
-            } else if (deltaXSpellington > 0) {
+            } else if (deltaXPlayer > 0) {
                 this.animState = AnimState.STANDING_R;
             }
-
-            if (deltaXSpellington < -attackRange) {
-                this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
-                if (this.speedVector.getX() < -MAX_X_SPEED) {
-                    this.speedVector.setX(-MAX_X_SPEED);
-                }
-                this.setAnimState(AnimState.WALKING_L);
-            } else if (deltaXSpellington > attackRange) {
-                this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
-                if (this.speedVector.getX() > MAX_X_SPEED) {
-                    this.speedVector.setX(MAX_X_SPEED);
-                }
-                this.setAnimState(AnimState.WALKING_R);
-            } else {
-                slowDown(time);
-            }
-            if (collisionBottom && deltaYSpellington < -40) {
-                this.speedVector.setY(INIT_JUMP_SPEED);
-            } else if (!canAttackSpellington && this.animState == AnimState.WALKING_L) {
-                this.animState = AnimState.STANDING_L;
-            } else if (!canAttackSpellington && this.animState == AnimState.WALKING_R) {
-                this.animState = AnimState.STANDING_R;
-            }
+            Point target = getTarget(spellington, mapinfo);
+            pathingToTarget(target, time);
         } else {
             if (this.animState == AnimState.WALKING_R) {
                 this.animState = AnimState.STANDING_R;
@@ -129,32 +107,61 @@ public class MeleeEnemy extends Enemy {
     @Override
     public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
         if (attackCooldown == 0) {
-            if (this.enemyType == EnemyType.FIRE_SLIME
-                    || this.enemyType == EnemyType.ICE_SLIME
-                    || this.enemyType == EnemyType.LIGHTNING_SLIME) {
+            if (this.enemyType == EnemyType.FIRE_SLIME || this.enemyType == EnemyType.ICE_SLIME || this.enemyType == EnemyType.LIGHTNING_SLIME) {
                 if (this.getBounds().intersects(spellington.getBounds())) {
                     this.attackCooldown = totalAttackCooldown;
                     spellington.subLifePoint(damage, damageType);
                 }
-            }
-            if (this.animState == AnimState.STANDING_L
-                    || this.animState == AnimState.WALKING_L) {
-                Rectangle hitBox = new Rectangle(getCenterX() - attackRange, y + 20, attackRange, 30);
-                if (hitBox.intersects(spellington.getBounds())) {
-                    this.animState = AnimState.ATTACK_L;
-                    this.attackCooldown = totalAttackCooldown;
-                    spellington.subLifePoint(damage, damageType);
-                }
+            } else if (this.enemyType == EnemyType.GUARD || this.enemyType == EnemyType.KEEPER) {
+                if (this.animState == AnimState.STANDING_L || this.animState == AnimState.WALKING_L) {
+                    Rectangle hitBox = new Rectangle(getCenterX() - attackRange, y + 20, attackRange, 30);
+                    if (hitBox.intersects(spellington.getBounds())) {
+                        this.animState = AnimState.ATTACK_L;
+                        this.attackCooldown = totalAttackCooldown;
+                        spellington.subLifePoint(damage, damageType);
+                    }
 
-            } else if (this.animState == AnimState.STANDING_R
-                    || this.animState == AnimState.WALKING_R) {
-                Rectangle hitBox = new Rectangle(getCenterX(), y + 20, attackRange, 30);
-                if (hitBox.intersects(spellington.getBounds())) {
-                    this.animState = AnimState.ATTACK_R;
-                    this.attackCooldown = totalAttackCooldown;
-                    spellington.subLifePoint(damage, damageType);
+                } else if (this.animState == AnimState.STANDING_R || this.animState == AnimState.WALKING_R) {
+                    Rectangle hitBox = new Rectangle(getCenterX(), y + 20, attackRange, 30);
+                    if (hitBox.intersects(spellington.getBounds())) {
+                        this.animState = AnimState.ATTACK_R;
+                        this.attackCooldown = totalAttackCooldown;
+                        spellington.subLifePoint(damage, damageType);
+                    }
                 }
             }
+        }
+    }
+
+    private Point getTarget(Spellington spellington, Tile[][] mapinfo) {
+        //Will always target the player for now.
+        return new Point((int) spellington.getX(), (int) spellington.getY());
+    }
+
+    private void pathingToTarget(Point target, float time) {
+        float deltaX = target.x - this.x;
+        float deltaY = target.y - this.y;
+        if (deltaX < -attackRange) {
+            this.speedVector.sub(xAcc.getMultScalar(time));
+            if (this.speedVector.getX() < -maxXSpeed) {
+                this.speedVector.setX(-maxXSpeed);
+            }
+            this.setAnimState(AnimState.WALKING_L);
+        } else if (deltaX > attackRange) {
+            this.speedVector.add(xAcc.getMultScalar(time));
+            if (this.speedVector.getX() > maxXSpeed) {
+                this.speedVector.setX(maxXSpeed);
+            }
+            this.setAnimState(AnimState.WALKING_R);
+        } else {
+            slowDown(time);
+        }
+        if (collisionBottom && deltaY < -40) {
+            this.speedVector.setY(jumpVector.getY());
+        } else if (!canSeePlayer && this.animState == AnimState.WALKING_L) {
+            this.animState = AnimState.STANDING_L;
+        } else if (!canSeePlayer && this.animState == AnimState.WALKING_R) {
+            this.animState = AnimState.STANDING_R;
         }
     }
 

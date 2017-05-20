@@ -132,6 +132,7 @@ public class GameCore extends StateBasedGame {
         SpellingSystem.initSpellingSystem();
         double finalTime = System.nanoTime();
         System.out.println("Time spent loading game :" + (finalTime - initTime) / 1000000000.0 + " seconds");
+        System.out.println("");
         //The game will being in the menu.
         this.enterState(MAIN_MENU_STATE_ID);
 

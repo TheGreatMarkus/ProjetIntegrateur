@@ -59,7 +59,7 @@ public class GameManager {
     private static ArrayList<Enemy> activeEnemies = new ArrayList<>();
     //for testing
     private static final boolean ROOM_TESTING = false;
-    private static final int ROOM_TESTING_INDEX = 7;
+    private static final int ROOM_TESTING_INDEX = 13;
 
     /**
      * Initialises the GameManager.
@@ -153,6 +153,7 @@ public class GameManager {
      * Loads all the maps of the game.
      */
     public static void loadMaps() {
+        System.out.println("");
         System.out.println("Loading maps");
         try {
             for (int i = 0; i == i; i++) {
@@ -168,19 +169,19 @@ public class GameManager {
         }
         try {
             for (int i = 0; i == i; i++) {
-                PLAINS_ROOMS.add(new TiledMap("res/map/mapPlains/" + (i + 1) + ".tmx"));
+                PLAINS_ROOMS.add(new TiledMap("res/map/mapPlains" + (i + 1) + ".tmx"));
             }
         } catch (Exception ex) {
         }
         try {
             for (int i = 0; i == i; i++) {
-                CASTLE_ROOMS.add(new TiledMap("res/map/level4/" + (i + 1) + ".tmx"));
+                CASTLE_ROOMS.add(new TiledMap("res/map/level4" + (i + 1) + ".tmx"));
             }
         } catch (Exception ex) {
         }
         try {
             for (int i = 0; i == i; i++) {
-                BOSS_ROOMS.add(new TiledMap("res/map/level5/" + (i + 1) + ".tmx"));
+                BOSS_ROOMS.add(new TiledMap("res/map/level5" + (i + 1) + ".tmx"));
             }
         } catch (Exception ex) {
         }
@@ -190,6 +191,7 @@ public class GameManager {
         System.out.println("Plains levels loaded : " + PLAINS_ROOMS.size());
         System.out.println("Castle levels loaded : " + CASTLE_ROOMS.size());
         System.out.println("Boos levels loaded : " + BOSS_ROOMS.size());
+        System.out.println("");
     }
 
     /**
@@ -203,13 +205,15 @@ public class GameManager {
         activeEnemies = new ArrayList<>();
         for (int i = 0; i < activeMap.getHeight(); i++) {
             for (int j = 0; j < activeMap.getWidth(); j++) {
-                TileState tempState;
+                TileState tempState = TileState.PASSABLE;
                 TileEvent tempEvent;
 
                 if (activeMap.getTileId(j, i, 1) == activeMap.getTileSet(1).firstGID + 11) {
                     tempState = TileState.PASSABLE;
-                } else {
+                } else if (activeMap.getTileId(j, i, 1) == activeMap.getTileSet(1).firstGID + 3) {
                     tempState = TileState.IMPASSABLE;
+                } else if (activeMap.getTileId(j, i, 1) == activeMap.getTileSet(1).firstGID) {
+                    tempState = TileState.LAVA;
                 }
                 int spellingtonExitID = activeMap.getTileSet(1).firstGID + 0;
                 int spellingtonEntryID = activeMap.getTileSet(1).firstGID + 3;
@@ -324,7 +328,6 @@ public class GameManager {
      */
     private static void loadNextMap() throws SlickException {
         boolean endOfLevel = false;
-        System.out.println("Current level map index : " + activeMapIndex);
         if (!ROOM_TESTING) {
             if (activeMapIndex < currentRooms.size()) {
                 activeMap = currentRooms.get(activeMapIndex);
@@ -373,13 +376,13 @@ public class GameManager {
         ArrayList generatedRooms = new ArrayList();
         switch (activeLevel) {
             case 2:
-                allRooms = (ArrayList<TiledMap>)DUNGEON_ROOMS.clone();
+                allRooms = (ArrayList<TiledMap>) DUNGEON_ROOMS.clone();
                 break;
             case 3:
-                allRooms = (ArrayList<TiledMap>)PLAINS_ROOMS.clone();
+                allRooms = (ArrayList<TiledMap>) PLAINS_ROOMS.clone();
                 break;
             case 4:
-                allRooms = (ArrayList<TiledMap>)CASTLE_ROOMS.clone();
+                allRooms = (ArrayList<TiledMap>) CASTLE_ROOMS.clone();
                 break;
             default:
                 System.out.println("Invalid level number");

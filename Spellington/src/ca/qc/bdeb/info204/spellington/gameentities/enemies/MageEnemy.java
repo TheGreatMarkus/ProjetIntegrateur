@@ -47,10 +47,10 @@ public class MageEnemy extends RangedEnemy {
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (canAttackSpellington) {
-            if (deltaXSpellington > 0) {
+        if (canSeePlayer) {
+            if (deltaXPlayer > 0) {
                 this.animState = AnimState.STANDING_R;
-            } else if (deltaXSpellington < 0) {
+            } else if (deltaXPlayer < 0) {
                 this.animState = AnimState.STANDING_L;
             }
         }

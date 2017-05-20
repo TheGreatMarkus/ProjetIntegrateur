@@ -82,7 +82,7 @@ public class RangedEnemy extends Enemy {
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (canAttackSpellington) {
+        if (canSeePlayer) {
             if (this.animState != AnimState.ATTACK_R && this.animState != AnimState.ATTACK_L) {
                 if (spellington.getCenterX() <= this.getCenterX()) {
                     this.setAnimState(AnimState.STANDING_L);

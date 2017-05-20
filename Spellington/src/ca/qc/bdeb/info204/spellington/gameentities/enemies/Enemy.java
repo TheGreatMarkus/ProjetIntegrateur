@@ -47,148 +47,138 @@ public abstract class Enemy extends LivingEntity {
 
     public static Dimension HUMANOID_SIZE = new Dimension(50, 100);
     public static Dimension RANGED_SIZE = new Dimension(50, 70);
-    public static Dimension MAGE_SIZE = new Dimension(50, 50);
     public static Dimension SLIME_SIZE = new Dimension(50, 50);
     public static Dimension BOSS_SIZE = new Dimension(50, 50);
-    protected static final float MAX_X_SPEED = 0.2f;
-    protected static final Vector2D X_ACC = new Vector2D(0.001f, 0);
-    protected static final float INIT_JUMP_SPEED = -0.5f;
 
     protected ArrayList<String> droppableSpells = new ArrayList<>();
     protected int xpOnKill;
     protected ElementalType damageType;
     protected EnemyType enemyType;
     protected int damage;
-    protected float deltaXSpellington;
-    protected float deltaYSpellington;
+    protected float deltaXPlayer;
+    protected float deltaYPlayer;
 
     protected int attackCooldown;
     protected int totalAttackCooldown;
 
     protected float aggroRange;
     protected boolean spellingtonInRange;
-    protected boolean canAttackSpellington;
-    protected float distanceFromSpellington;
-    protected boolean canSeeSpellington;
+    protected boolean canSeePlayer;
+    protected float playerDistance;
+    protected boolean playerInSight;
 
     public Enemy(float x, float y, EnemyType enemyType) {
         super(x, y, 0, 0, AnimState.STANDING_L, 1, 0);
         this.enemyType = enemyType;
+        this.maxXSpeed = 0f;
+        this.xAcc = new Vector2D(0, 0);
+        this.jumpVector = new Vector2D(0, 0);
 
-        //Missing resistances
-        if (this instanceof MeleeEnemy) {
-            this.aggroRange = 500;
-            switch (this.enemyType) {
-                case KEEPER:
-                    this.setHeight(HUMANOID_SIZE.height);
-                    this.setWidth(HUMANOID_SIZE.width);
-                    this.maxLifePoint = 20;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.NEUTRAL;
-                    this.damage = 12;
-                    break;
-                case GUARD:
-                    this.setHeight(HUMANOID_SIZE.height);
-                    this.setWidth(HUMANOID_SIZE.width);
-                    this.maxLifePoint = 50;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.LIGHTNING;
-                    this.damage = 12;
-                    break;
-                case FIRE_SLIME:
-                    this.setHeight(SLIME_SIZE.height);
-                    this.setWidth(SLIME_SIZE.width);
-                    this.maxLifePoint = 60;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.FIRE;
-                    this.damage = 10;
-                    break;
-                case ICE_SLIME:
-                    this.setHeight(SLIME_SIZE.height);
-                    this.setWidth(SLIME_SIZE.width);
-                    this.maxLifePoint = 60;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.ICE;
-                    this.damage = 10;
-                    break;
-                case LIGHTNING_SLIME:
-                    this.setHeight(SLIME_SIZE.height);
-                    this.setWidth(SLIME_SIZE.width);
-                    this.maxLifePoint = 60;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.LIGHTNING;
-                    this.damage = 10;
-                    break;
-            }
+//Missing resistances
+        switch (this.enemyType) {
+            case KEEPER:
+            case GUARD:
+                this.setDim(HUMANOID_SIZE);
+                switch (this.enemyType) {
+                    case KEEPER:
+                        this.maxLifePoint = 20;
+                        this.xpOnKill = 0;
+                        this.damageType = ElementalType.NEUTRAL;
+                        this.damage = 12;
+                        this.maxXSpeed = 0.2f;
+                        this.xAcc = new Vector2D(0.003f, 0);
+                        this.jumpVector = new Vector2D(0, -0.45f);
+                        break;
+                    case GUARD:
+                        this.maxLifePoint = 50;
+                        this.xpOnKill = 0;
+                        this.damageType = ElementalType.LIGHTNING;
+                        this.damage = 12;
+                        this.maxXSpeed = 0.1f;
+                        this.xAcc = new Vector2D(0.002f, 0);
+                        this.jumpVector = new Vector2D(0, -0.45f);
+                        break;
+                }
+                break;
+            case FIRE_SLIME:
+            case ICE_SLIME:
+            case LIGHTNING_SLIME:
+                this.setDim(SLIME_SIZE);
+                this.maxLifePoint = 60;
+                this.xpOnKill = 0;
+                this.damage = 10;
+                this.maxXSpeed = 0.1f;
+                this.xAcc = new Vector2D(0.002f, 0);
+                this.jumpVector = new Vector2D(0, -0.45f);
+                switch (this.enemyType) {
+                    case FIRE_SLIME:
+                        this.damageType = ElementalType.FIRE;
+                        break;
+                    case ICE_SLIME:
+                        this.damageType = ElementalType.ICE;
+                        break;
+                    case LIGHTNING_SLIME:
+                        this.damageType = ElementalType.LIGHTNING;
+                        break;
+                }
+                break;
+            case DUMMY:
+                this.setDim(HUMANOID_SIZE);
+                this.maxLifePoint = 25;
+                this.xpOnKill = 0;
+                this.damageType = ElementalType.NEUTRAL;
+                this.damage = 0;
+                break;
+            case PYROMANCER:
+            case CRYOMANCER:
+            case ELECTROMANCER:
+                this.setDim(HUMANOID_SIZE);
+                this.aggroRange = 1000;
+                this.maxLifePoint = 30;
+                this.xpOnKill = 0;
+                this.damage = 30;
+                switch (this.enemyType) {
+                    case PYROMANCER:
+                        this.damageType = ElementalType.FIRE;
+                        break;
+                    case CRYOMANCER:
+                        this.damageType = ElementalType.ICE;
+                        break;
+                    case ELECTROMANCER:
+                        this.damageType = ElementalType.LIGHTNING;
+                        break;
+                }
+            case ARCHER:
+            case CROSSBOWMAN:
+                this.setDim(RANGED_SIZE);
+                this.damageType = ElementalType.NEUTRAL;
+                switch (this.enemyType) {
+                    case ARCHER:
+                        this.maxLifePoint = 10;
+                        this.xpOnKill = 0;
+                        this.damage = 5;
+                        this.aggroRange = 9999;
+                        break;
+                    case CROSSBOWMAN:
+                        this.maxLifePoint = 20;
+                        this.xpOnKill = 0;
+                        this.damage = 10;
+                        this.aggroRange = 1000;
+                        break;
+                }
+                break;
+            case BOSS:
+                this.setDim(BOSS_SIZE);
+                this.aggroRange = 9999;
+                this.maxLifePoint = 9999;
+                this.xpOnKill = 0;
+                this.damageType = ElementalType.LIGHTNING;
+                this.damage = 50;
+                break;
         }
-        if (this instanceof DummyEnemy) {
-            this.setHeight(HUMANOID_SIZE.height);
-            this.setWidth(HUMANOID_SIZE.width);
-            this.maxLifePoint = 9999;
-            this.xpOnKill = 0;
-            this.damageType = ElementalType.LIGHTNING;
-            this.damage = 10;
 
-        }
-        if (this instanceof RangedEnemy) {
-            this.setHeight(RANGED_SIZE.height);
-            this.setWidth(RANGED_SIZE.width);
-            this.aggroRange = 1000;
-            switch (this.enemyType) {
-                case ARCHER:
-                    this.maxLifePoint = 10;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.NEUTRAL;
-                    this.damage = 5;
-                    break;
-                case CROSSBOWMAN:
-                    this.maxLifePoint = 20;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.LIGHTNING;
-                    this.damage = 20;
-                    break;
-            }
-        }
-        if (this instanceof MageEnemy) {
-            this.setHeight(HUMANOID_SIZE.height);
-            this.setWidth(HUMANOID_SIZE.width);
-            this.aggroRange = 1000;
-            switch (this.enemyType) {
-                case PYROMANCER:
-                    this.maxLifePoint = 30;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.FIRE;
-                    this.damage = 30;
-                    break;
-                case CRYOMANCER:
-                    this.maxLifePoint = 30;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.ICE;
-                    this.damage = 20;
-                    break;
-                case ELECTROMANCER:
-                    this.maxLifePoint = 30;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.LIGHTNING;
-                    this.damage = 50;
-                    break;
-            }
-        }
-        if (this instanceof BossEnemy) {
-            this.setHeight(HUMANOID_SIZE.height);
-            this.setWidth(HUMANOID_SIZE.width);
-            this.aggroRange = 9999;
-            switch (this.enemyType) {
-                case BOSS:
-                    this.maxLifePoint = 9999;
-                    this.xpOnKill = 0;
-                    this.damageType = ElementalType.LIGHTNING;
-                    this.damage = 50;
-                    break;
-            }
-        }
-        totalAttackCooldown = 100;
-        attackCooldown = 0;
+        totalAttackCooldown = 1500;
+        attackCooldown = 1500;
         this.aggroRange *= GameCore.SCALE;
         this.gravModifier = 2;
         this.lifePoint = this.maxLifePoint;
@@ -216,25 +206,31 @@ public abstract class Enemy extends LivingEntity {
         if (this.collisionRight || this.collisionLeft) {
             this.speedVector.setX(0);
         }
-        canSeeSpellington = Calculations.detEnemyCanSeeSpellington(this, spellington, mapinfo);
-        deltaXSpellington = spellington.getCenterX() - this.getCenterX();
-        deltaYSpellington = spellington.getCenterY() - this.getCenterY();
-        distanceFromSpellington = (float) Math.sqrt(deltaXSpellington * deltaXSpellington + deltaYSpellington * deltaYSpellington);
-        spellingtonInRange = Math.abs(distanceFromSpellington) < aggroRange;
+        if (this.invulnTime > 0) {
+            this.invulnTime -= time;
+            if (invulnTime < 0) {
+                invulnTime = 0;
+            }
+        }
+        playerInSight = Calculations.detEnemyCanSeeSpellington(this, spellington, mapinfo);
+        deltaXPlayer = spellington.getCenterX() - this.getCenterX();
+        deltaYPlayer = spellington.getCenterY() - this.getCenterY();
+        playerDistance = (float) Math.sqrt(deltaXPlayer * deltaXPlayer + deltaYPlayer * deltaYPlayer);
+        spellingtonInRange = Math.abs(playerDistance) < aggroRange;
 
-        canAttackSpellington = spellingtonInRange && canSeeSpellington;
+        canSeePlayer = spellingtonInRange && playerInSight;
 
         move(time, spellington, activeProjectiles, mapinfo);
         attack(time, spellington, activeProjectiles, mapinfo);
 
         if (attackCooldown > 0) {
-            attackCooldown--;
+            attackCooldown -= time;
         }
         if (attackCooldown < 0) {
             attackCooldown = 0;
         }
 
-        this.speedVector.add(Vector2D.multVectorScalar(PlayState.GRAV_ACC, time * gravModifier));
+        this.speedVector.add(PlayState.GRAV_ACC.getMultScalar(time * gravModifier));
         this.setX(this.getX() + this.getSpeedVector().getX() * time);
         this.setY(this.getY() + this.getSpeedVector().getY() * time);
         this.resetCollisionState();
@@ -249,11 +245,14 @@ public abstract class Enemy extends LivingEntity {
         g.setColor(Color.white);
         g.drawString("EnemyType : " + this.enemyType, getX(), getY() - 40);
         g.drawString("HP = " + this.lifePoint, getX(), getY() - 20);
-        if (canAttackSpellington) {
+        if (canSeePlayer) {
             g.setColor(new Color(255, 0, 0, 100));
             g.fillRect(getX(), getY(), getWidth(), getHeight());
         }
         g.drawRect(getX(), getY(), getWidth(), getHeight());
+        if (invulnTime > 0) {
+            g.fillRect(x, y, width, height);
+        }
 
     }
 
@@ -286,25 +285,25 @@ public abstract class Enemy extends LivingEntity {
 
     public void slowDown(float time) {
         if (this.speedVector.getX() > 0) {
-            this.speedVector.sub(Vector2D.multVectorScalar(X_ACC, time));
-            if (this.speedVector.getX() < Vector2D.multVectorScalar(X_ACC, time).getX()) {
+            this.speedVector.sub(xAcc.getMultScalar(time));
+            if (this.speedVector.getX() < xAcc.getMultScalar(time).getX()) {
                 this.speedVector.setX(0);
             }
         } else if (this.speedVector.getX() < 0) {
-            this.speedVector.add(Vector2D.multVectorScalar(X_ACC, time));
-            if (this.speedVector.getX() > -Vector2D.multVectorScalar(X_ACC, time).getX()) {
+            this.speedVector.add(xAcc.getMultScalar(time));
+            if (this.speedVector.getX() > -xAcc.getMultScalar(time).getX()) {
                 this.speedVector.setX(0);
             }
         }
 
     }
 
-    public float getDeltaXSpellington() {
-        return deltaXSpellington;
+    public float getDeltaXPlayer() {
+        return deltaXPlayer;
     }
 
-    public float getDeltaYSpellington() {
-        return deltaYSpellington;
+    public float getDeltaYPlayer() {
+        return deltaYPlayer;
     }
 
     public int getAttackCooldown() {
@@ -319,8 +318,8 @@ public abstract class Enemy extends LivingEntity {
         return totalAttackCooldown;
     }
 
-    public float getDistanceFromSpellington() {
-        return distanceFromSpellington;
+    public float getPlayerDistance() {
+        return playerDistance;
     }
 
     public ArrayList<String> getDroppableSpells() {
