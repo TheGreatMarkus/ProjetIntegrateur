@@ -7,6 +7,7 @@ import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.MessageSign;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile.ProjectileSourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -95,6 +96,8 @@ public class PlayState extends BasicGameState {
      * @throws SlickException A general Slick Exception.
      */
     public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
+        activeProjectiles = new ArrayList<>();
+        activeAnimations = new ArrayList<>();
         spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
         spellington.setX(spellingtonX);
         spellington.setY(spellingtonY);
@@ -127,6 +130,10 @@ public class PlayState extends BasicGameState {
             }
         }
 
+        for (MessageSign sign : GameManager.getActiveMessageSigns()) {
+            sign.render(g);
+        }
+
         spellington.render(g);
 
         g.setColor(Color.white);
@@ -149,7 +156,6 @@ public class PlayState extends BasicGameState {
                 animationsToBeRemoved.add(anim);
             }
         }
-
         activeAnimations.removeAll(animationsToBeRemoved);
 
         for (int i = 0; i < GameManager.getActiveEnemies().size(); i++) {
@@ -161,7 +167,6 @@ public class PlayState extends BasicGameState {
         displayHUD(g);
 
         drawAimingHelp(g, gc.getInput(), SpellingSystem.getActiveSpell(), spellington);
-
     }
 
     /**
@@ -175,20 +180,14 @@ public class PlayState extends BasicGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         float deltaFloat = delta;
+        //System.out.println("time passed = " + deltaFloat);
         deltaFloat *= 1;
         if (deltaFloat > 40) {
             deltaFloat = 40;
         }
-        //System.out.println("time passed = " + deltaFloat);
-
-        if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
-            game.enterState(GameCore.PAUSE_MENU_STATE_ID);
-        }
-        if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
-            debugMode = !debugMode;
-        }
-        if (gc.getInput().isKeyPressed(Input.KEY_F4)) {
-            displayHUD = !displayHUD;
+        //Update of the message signs if there are any
+        for (MessageSign sign : GameManager.getActiveMessageSigns()) {
+            sign.update(spellington);
         }
         //Update of Spellington
         spellington.update(gc.getInput(), deltaFloat);
@@ -218,6 +217,16 @@ public class PlayState extends BasicGameState {
         GameManager.getActiveEnemies().removeAll(enemiesToBeRemoved);
 
         GameManager.checkEndOfLevel(spellington);
+
+        if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+            game.enterState(GameCore.PAUSE_MENU_STATE_ID);
+        }
+        if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
+            debugMode = !debugMode;
+        }
+        if (gc.getInput().isKeyPressed(Input.KEY_F4)) {
+            displayHUD = !displayHUD;
+        }
         GameCore.clearInputRecord(gc);
     }
 

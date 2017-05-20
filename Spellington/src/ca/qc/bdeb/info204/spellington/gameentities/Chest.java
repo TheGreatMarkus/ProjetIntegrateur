@@ -8,38 +8,34 @@ import org.newdawn.slick.Graphics;
 
 /**
  *
- * @author Cristian Aldea
+ * @author Fallen Angel
  */
-public class PickUp extends Treasure {
+public class Chest extends Treasure {
 
-    private boolean pickedUp;
+    private boolean open;
 
-    public PickUp(float x, float y, float width, float height, ArrayList<Spell> droppableSpells) {
+    public Chest(float x, float y, float width, float height, ArrayList<Spell> droppableSpells) {
         super(x, y, width, height, droppableSpells);
-        pickedUp = false;
+        open = false;
     }
 
     @Override
     public void render(Graphics g) {
         g.drawRect(x, y, width, height);
-        g.drawString("This is a pickUp", x, y);
-
+        
     }
 
     @Override
     public void update(Spellington spellington) {
         if (spellington.getBounds().intersects(this.getBounds())) {
-            pickedUp = true;
+            open = true;
             //Exclude all droppable spells that the player already knows.
             droppableSpells.removeAll(SpellingSystem.getKnownSpells());
             if (!droppableSpells.isEmpty()) {
                 SpellingSystem.getKnownSpells().add(droppableSpells.get(GameCore.rand.nextInt(droppableSpells.size())));
             }
         }
-    }
 
-    public boolean isPickedUp() {
-        return pickedUp;
     }
 
 }

@@ -8,6 +8,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
+import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import org.newdawn.slick.Animation;
@@ -50,7 +51,7 @@ public abstract class Enemy extends LivingEntity {
     public static Dimension SLIME_SIZE = new Dimension(50, 50);
     public static Dimension BOSS_SIZE = new Dimension(50, 50);
 
-    protected ArrayList<String> droppableSpells = new ArrayList<>();
+    protected ArrayList<Spell> droppableSpells = new ArrayList<>();
     protected int xpOnKill;
     protected ElementalType damageType;
     protected EnemyType enemyType;
@@ -325,20 +326,16 @@ public abstract class Enemy extends LivingEntity {
         return playerDistance;
     }
 
-    public ArrayList<String> getDroppableSpells() {
-        return droppableSpells;
-    }
-
-    public void setDroppableSpells(ArrayList<String> droppableSpells) {
-        this.droppableSpells = droppableSpells;
-    }
-
     public int getDamage() {
         return damage;
     }
 
     public ElementalType getDamageType() {
         return damageType;
+    }
+
+    public ArrayList<Spell> getDroppableSpells() {
+        return droppableSpells;
     }
 
 }

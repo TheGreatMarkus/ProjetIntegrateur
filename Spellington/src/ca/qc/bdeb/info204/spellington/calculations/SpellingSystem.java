@@ -44,11 +44,11 @@ public class SpellingSystem {
     private static String incantationText = "";
 
     public static ArrayList<Spell> potionList = new ArrayList<>();
-    public static ArrayList<Spell> knownSpell = new ArrayList<>();
-    private static ArrayList<Spell> spellList = new ArrayList<>();
-    private static ArrayList<Spell> tutoSpell = new ArrayList<>();
-    private static ArrayList<Spell> adeptSpell = new ArrayList<>();
-    private static ArrayList<Spell> masterSpell = new ArrayList<>();
+    public static ArrayList<Spell> knownSpells = new ArrayList<>();
+    private static ArrayList<Spell> allSpells = new ArrayList<>();
+    private static ArrayList<Spell> noviceSpells = new ArrayList<>();
+    private static ArrayList<Spell> adeptSpells = new ArrayList<>();
+    private static ArrayList<Spell> masterSpells = new ArrayList<>();
 
     private static Animation animFireBall;
     private static Animation animIceSpike;
@@ -186,75 +186,75 @@ public class SpellingSystem {
         potionList.add(PotionTime);
         potionList.add(PotionPast);
 
-        spellList.add(fireBall);
-        spellList.add(iceSpike);
-        spellList.add(spark);
-        spellList.add(heal);
-        spellList.add(ascendingCurrent);
-        spellList.add(fireResistance);
-        spellList.add(iceResistance);
-        spellList.add(lightningResistance);
-        spellList.add(explosiveBall);
-        spellList.add(fireBreath);
-        spellList.add(giantFireBall);
-        spellList.add(lightningSwarm);
-        spellList.add(teleportation);
-        spellList.add(lightningBouncingBall);
-        spellList.add(iceBreath);
-        spellList.add(iceSpikeBall);
-        spellList.add(iceRune);
-        spellList.add(fireImmunity);
-        spellList.add(meteorSwarm);
-        spellList.add(lightningImmunity);
-        spellList.add(lightningSpear);
-        spellList.add(iceStorm);
-        spellList.add(iceImmunity);
-        spellList.add(greatHeal);
+        allSpells.add(fireBall);
+        allSpells.add(iceSpike);
+        allSpells.add(spark);
+        allSpells.add(heal);
+        allSpells.add(ascendingCurrent);
+        allSpells.add(fireResistance);
+        allSpells.add(iceResistance);
+        allSpells.add(lightningResistance);
+        allSpells.add(explosiveBall);
+        allSpells.add(fireBreath);
+        allSpells.add(giantFireBall);
+        allSpells.add(lightningSwarm);
+        allSpells.add(teleportation);
+        allSpells.add(lightningBouncingBall);
+        allSpells.add(iceBreath);
+        allSpells.add(iceSpikeBall);
+        allSpells.add(iceRune);
+        allSpells.add(fireImmunity);
+        allSpells.add(meteorSwarm);
+        allSpells.add(lightningImmunity);
+        allSpells.add(lightningSpear);
+        allSpells.add(iceStorm);
+        allSpells.add(iceImmunity);
+        allSpells.add(greatHeal);
 
-        tutoSpell.add(fireBall);
-        tutoSpell.add(iceSpike);
-        tutoSpell.add(spark);
-        tutoSpell.add(heal);
-        tutoSpell.add(ascendingCurrent);
-        tutoSpell.add(fireResistance);
-        tutoSpell.add(iceResistance);
-        tutoSpell.add(lightningResistance);
+        noviceSpells.add(fireBall);
+        noviceSpells.add(iceSpike);
+        noviceSpells.add(spark);
+        noviceSpells.add(heal);
+        noviceSpells.add(ascendingCurrent);
+        noviceSpells.add(fireResistance);
+        noviceSpells.add(iceResistance);
+        noviceSpells.add(lightningResistance);
 
-        adeptSpell.add(explosiveBall);
-        adeptSpell.add(fireBreath);
-        adeptSpell.add(giantFireBall);
-        adeptSpell.add(lightningSwarm);
-        adeptSpell.add(teleportation);
-        adeptSpell.add(lightningBouncingBall);
-        adeptSpell.add(iceBreath);
-        adeptSpell.add(iceSpikeBall);
-        adeptSpell.add(iceRune);
+        adeptSpells.add(explosiveBall);
+        adeptSpells.add(fireBreath);
+        adeptSpells.add(giantFireBall);
+        adeptSpells.add(lightningSwarm);
+        adeptSpells.add(teleportation);
+        adeptSpells.add(lightningBouncingBall);
+        adeptSpells.add(iceBreath);
+        adeptSpells.add(iceSpikeBall);
+        adeptSpells.add(iceRune);
 
-        masterSpell.add(fireImmunity);
-        masterSpell.add(meteorSwarm);
-        masterSpell.add(lightningImmunity);
-        masterSpell.add(lightningSpear);
-        masterSpell.add(iceStorm);
-        masterSpell.add(iceImmunity);
-        masterSpell.add(greatHeal);
+        masterSpells.add(fireImmunity);
+        masterSpells.add(meteorSwarm);
+        masterSpells.add(lightningImmunity);
+        masterSpells.add(lightningSpear);
+        masterSpells.add(iceStorm);
+        masterSpells.add(iceImmunity);
+        masterSpells.add(greatHeal);
 
-        knownSpell.add(fireBall);
-        knownSpell.add(iceSpike);
-        knownSpell.add(spark);
-        knownSpell.add(heal);
-        knownSpell.add(ascendingCurrent);
-        knownSpell.add(fireResistance);
-        knownSpell.add(iceResistance);
-        knownSpell.add(lightningResistance);
+        knownSpells.add(fireBall);
+        knownSpells.add(iceSpike);
+        knownSpells.add(spark);
+        knownSpells.add(heal);
+        knownSpells.add(ascendingCurrent);
+        knownSpells.add(fireResistance);
+        knownSpells.add(iceResistance);
+        knownSpells.add(lightningResistance);
 
-        //-- test, ajout de sorts à la liste knownSpell pour les tester -----
-        knownSpell.add(greatHeal);
-        knownSpell.add(fireBreath);
-        knownSpell.add(fireImmunity);
-        knownSpell.add(iceBreath);
-        knownSpell.add(iceSpikeBall);
-        knownSpell.add(lightningSpear);
-        knownSpell.add(lightningSwarm);
+        //-- test, ajout de sorts à la liste knownSpells pour les tester -----
+        knownSpells.add(greatHeal);
+        knownSpells.add(fireBreath);
+        knownSpells.add(fireImmunity);
+        knownSpells.add(iceBreath);
+        knownSpells.add(iceSpikeBall);
+        knownSpells.add(lightningSpear);
+        knownSpells.add(lightningSwarm);
 
         try {
             initSpellsIncantations();
@@ -263,7 +263,7 @@ public class SpellingSystem {
     }
 
     public static void newKnownSpell(Spell newSpell) {
-        knownSpell.add(newSpell);
+        knownSpells.add(newSpell);
     }
 
     public static void update(Input input, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, ArrayList<Enemy> activeEnemy) {
@@ -274,18 +274,18 @@ public class SpellingSystem {
 
         if (clickedLeftMouse) {
             boolean newSpell = false;
-            for (int i = 0; i < knownSpell.size(); i++) {
-                if (incantationText.equalsIgnoreCase(knownSpell.get(i).getIncantation())) {
-                    if (knownSpell.get(i) instanceof PassiveSpell) {
+            for (int i = 0; i < knownSpells.size(); i++) {
+                if (incantationText.equalsIgnoreCase(knownSpells.get(i).getIncantation())) {
+                    if (knownSpells.get(i) instanceof PassiveSpell) {
                         if (passiveSpell != null) {
                             passiveSpell.endOfActivation(spellington, activeAnimations);
                         }
-                        passiveSpell = knownSpell.get(i);
+                        passiveSpell = knownSpells.get(i);
                         passiveSpell.spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
                         newSpell = true;
                     } else {
-                        activeSpell = knownSpell.get(i);
-                        nbSpellUses = knownSpell.get(i).getUses();
+                        activeSpell = knownSpells.get(i);
+                        nbSpellUses = knownSpells.get(i).getUses();
                         newSpell = true;
                     }
                 }
@@ -340,27 +340,27 @@ public class SpellingSystem {
         //potions end-----------
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = spellList.get(ID_FIRE_BREATH - 1).getIncantation();
+            incantationText = allSpells.get(ID_FIRE_BREATH - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F2)) {
-            incantationText = spellList.get(ID_HEAL - 1).getIncantation();
+            incantationText = allSpells.get(ID_HEAL - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F9)) {
-            incantationText = spellList.get(ID_ASCENDING_CURRENT - 1).getIncantation();
+            incantationText = allSpells.get(ID_ASCENDING_CURRENT - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F8)) {
-            incantationText = spellList.get(ID_FIRE_RES - 1).getIncantation();
+            incantationText = allSpells.get(ID_FIRE_RES - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F7)) {
-            incantationText = spellList.get(ID_LIGHTNING_SWARM - 1).getIncantation();
+            incantationText = allSpells.get(ID_LIGHTNING_SWARM - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F6)) {
-            incantationText = spellList.get(ID_FIRE_IMMUNITY - 1).getIncantation();
+            incantationText = allSpells.get(ID_FIRE_IMMUNITY - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F1)) {
@@ -528,9 +528,9 @@ public class SpellingSystem {
         }
         readerBuffer.close();
 
-        for (int i = 0; i < tutoSpell.size(); i++) {
+        for (int i = 0; i < noviceSpells.size(); i++) {
             int tempdice = dice.nextInt(tempWord.size());
-            tutoSpell.get(i).setIncantation(tempWord.get(tempdice));
+            noviceSpells.get(i).setIncantation(tempWord.get(tempdice));
             if (tempWord.size() <= 1) {
                 System.out.print("Erreur: il n'y a pas assez de mots dans noviceWord.txt");
             }
@@ -551,9 +551,9 @@ public class SpellingSystem {
         }
         readerBuffer2.close();
 
-        for (int i = 0; i < adeptSpell.size(); i++) {
+        for (int i = 0; i < adeptSpells.size(); i++) {
             int tempdice = dice.nextInt(tempWord.size());
-            adeptSpell.get(i).setIncantation(tempWord.get(tempdice));
+            adeptSpells.get(i).setIncantation(tempWord.get(tempdice));
             if (tempWord.size() <= 1) {
                 System.out.print("Erreur: il n'y a pas assez de mots dans adepteWord.txt");
             }
@@ -574,9 +574,9 @@ public class SpellingSystem {
         }
         readerBuffer3.close();
 
-        for (int i = 0; i < masterSpell.size(); i++) {
+        for (int i = 0; i < masterSpells.size(); i++) {
             int tempdice = dice.nextInt(tempWord.size());
-            masterSpell.get(i).setIncantation(tempWord.get(tempdice));
+            masterSpells.get(i).setIncantation(tempWord.get(tempdice));
             if (tempWord.size() <= 1) {
                 System.out.print("Erreur: il n'y a pas assez de mots dans masterWord.txt");
             }
@@ -615,5 +615,11 @@ public class SpellingSystem {
     public static Animation getAnimFireBall() {
         return animFireBall;
     }
+
+    public static ArrayList<Spell> getKnownSpells() {
+        return knownSpells;
+    }
+    
+    
 
 }
