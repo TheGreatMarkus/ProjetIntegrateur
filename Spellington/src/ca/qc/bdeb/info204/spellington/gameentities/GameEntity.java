@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
+import java.awt.Dimension;
 import org.newdawn.slick.geom.Rectangle;
 
 /**
@@ -68,6 +69,11 @@ public abstract class GameEntity {
 
     public void setY(float y) {
         this.y = y;
+    }
+    
+    public void setDim(Dimension dim){
+        this.height = dim.height;
+        this.width = dim.width;
     }
 
     public float getWidth() {

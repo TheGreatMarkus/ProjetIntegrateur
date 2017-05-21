@@ -40,9 +40,10 @@ public class Vector2D {
         y *= scalar;
     }
 
-    public static Vector2D multVectorScalar(Vector2D v, float scalar) {
-        return new Vector2D(v.x * scalar, v.y * scalar);
+    public Vector2D getMultScalar(float scalar) {
+        return new Vector2D(x * scalar, y * scalar);
     }
+
 
     public void add(Vector2D v) {
         x += v.x;

@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 
 /**
  * A DynamicEntity that can be affected by damage and has different animations
@@ -31,6 +32,12 @@ public abstract class LivingEntity extends DynamicEntity {
     protected int resIce;
     protected int resFire;
 
+    protected int invulnTime;
+
+    protected float maxXSpeed;
+    protected Vector2D xAcc;
+    protected Vector2D jumpVector;
+
     public LivingEntity(float x, float y, float width, float height, AnimState animState, float gravMod, int maxLifePoint) {
         super(x, y, width, height, gravMod, new Vector2D(0, 0));
         this.animState = animState;
@@ -41,6 +48,7 @@ public abstract class LivingEntity extends DynamicEntity {
         this.gravModifier = gravMod;
         this.maxLifePoint = maxLifePoint;
         this.lifePoint = maxLifePoint;
+        this.invulnTime = 0;
     }
 
     /**
@@ -51,28 +59,38 @@ public abstract class LivingEntity extends DynamicEntity {
      * @
      */
     public void subLifePoint(int damage, ElementalType element) {
-        switch (element) {
-            case FIRE:
-                damage = damage - this.resFire;
-                break;
-            case ICE:
-                damage = damage - this.resIce;
-                break;
-            case LIGHTNING:
-                damage = damage - this.resElectricity;
-                break;
-            case NEUTRAL:;
-                break;
-        }
+        if (invulnTime == 0) {
+            switch (element) {
+                case FIRE:
+                    damage = damage - this.resFire;
+                    break;
+                case ICE:
+                    damage = damage - this.resIce;
+                    break;
+                case LIGHTNING:
+                    damage = damage - this.resElectricity;
+                    break;
+                case NEUTRAL:;
+                    break;
+            }
 
-        if (damage < 0) {
-            damage = 0;
-        }
+            if (damage < 0) {
+                damage = 0;
+            }
+            if (damage != 0) {
+                if (this instanceof Spellington) {
+                    invulnTime = 750;
+                } else if (this instanceof Enemy) {
+                    invulnTime = 50;
+                }
+            }
 
-        lifePoint = lifePoint - damage;
+            lifePoint = lifePoint - damage;
 
-        if (lifePoint < 0) {
-            lifePoint = 0;
+            if (lifePoint < 0) {
+                lifePoint = 0;
+            }
+
         }
     }
 

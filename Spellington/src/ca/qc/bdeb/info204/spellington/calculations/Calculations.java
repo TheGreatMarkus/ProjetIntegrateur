@@ -64,9 +64,11 @@ public class Calculations {
      * @param creature The LivingEntity that will be checked for collision.
      */
     public static void checkTileAndLivingCollision(Tile tile, LivingEntity creature) {
-        if (creature.getBounds().intersects(tile.getBounds()) && tile.getTileState() == Tile.TileState.IMPASSABLE) {
-            //If a collision is found and the tile is impassable
-
+        //If a collision is found and the tile is impassable
+        if (creature.getBounds().intersects(tile.getBounds()) && tile.getTileState() != Tile.TileState.PASSABLE) {
+            if (tile.getTileState() == Tile.TileState.LAVA) {
+                creature.subLifePoint(5, ElementalType.FIRE);
+            }
             //To get the width and height of the intersaction
             float left = Float.max(tile.getX(), creature.getX());
             float right = Float.min(tile.getMaxX(), creature.getMaxX());
@@ -112,21 +114,29 @@ public class Calculations {
     public static int checkProjectileCollision(Projectile projectile, Tile[][] map, ArrayList<Enemy> activeEnemies, Spellington spellington) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                if (projectile.getBounds().intersects(map[i][j].getBounds()) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
+                if (projectile.getBounds().intersects(map[i][j].getBounds()) && map[i][j].getTileState() != Tile.TileState.PASSABLE) {
                     return 0;//Collision with a tile.
                 }
             }
         }
 
-        if (projectile.getBounds().intersects(spellington.getBounds()) && projectile.getSource() == ProjectileSourceType.ENEMY) {
-            spellington.subLifePoint(projectile.getDamage(), projectile.getDamageType());
-            return 1;//Collision with Spellington.
+        if (projectile.getBounds().intersects(spellington.getBounds())) {
+            if (projectile.getSource() != ProjectileSourceType.PLAYER) {
+                if (projectile.getSource() == ProjectileSourceType.ENEMY) {
+                    spellington.subLifePoint(projectile.getDamage(), projectile.getDamageType());
+                }
+                return 1;//Collision with Spellington.
+            }
         }
 
         for (Enemy activeEnemy : activeEnemies) {
-            if (projectile.getBounds().intersects(activeEnemy.getBounds()) && projectile.getSource() == ProjectileSourceType.PLAYER) {
-                activeEnemy.subLifePoint(projectile.getDamage(), projectile.getDamageType());
-                return 2;//Collision with an enemy.
+            if (projectile.getBounds().intersects(activeEnemy.getBounds())) {
+                if (projectile.getSource() != ProjectileSourceType.ENEMY) {
+                    if (projectile.getSource() == ProjectileSourceType.PLAYER) {
+                        activeEnemy.subLifePoint(projectile.getDamage(), projectile.getDamageType());
+                    }
+                    return 2;//Collision with an enemy.
+                }
             }
         }
         return -1;
@@ -177,15 +187,24 @@ public class Calculations {
      * @return If the enemy can see Spellington.
      */
     public static boolean detEnemyCanSeeSpellington(Enemy enemy, Spellington spellington, Tile[][] map) {
-        Line line = new Line(spellington.getCenterX(), spellington.getCenterY(), enemy.getCenterX(), enemy.getCenterY());
+        Line line1 = new Line(spellington.getCenterX(), spellington.getY() + 10, enemy.getCenterX(), enemy.getY() + 10);
+        Line line2 = new Line(spellington.getCenterX(), spellington.getMaxY() - 10, enemy.getCenterX(), enemy.getY() + 10);
+        boolean test1 = true, test2 = true;
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                if (line.intersects(map[i][j].getBounds()) && map[i][j].getTileState() == Tile.TileState.IMPASSABLE) {
-                    return false;
+                if (line1.intersects(map[i][j].getBounds()) && map[i][j].getTileState() != Tile.TileState.PASSABLE) {
+                    test1 = false;
                 }
             }
         }
-        return true;
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (line2.intersects(map[i][j].getBounds()) && map[i][j].getTileState() != Tile.TileState.PASSABLE) {
+                    test2 = false;
+                }
+            }
+        }
+        return (test1 || test2);
     }
 
     /**
@@ -199,9 +218,9 @@ public class Calculations {
     public static void enemyTryToShootCurvedProjectile(RangedEnemy enemy, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
         Float angle1;
         Float angle2;
-        float deltaX = -enemy.getDeltaXSpellington();
-        float deltaY = -enemy.getDeltaYSpellington();
-        float v = 0.002f * enemy.getDistanceFromSpellington();
+        float deltaX = -enemy.getDeltaXPlayer();
+        float deltaY = -enemy.getDeltaYPlayer();
+        float v = 0.002f * enemy.getPlayerDistance();
         if (v < 0.5f) {
             v = 0.5f;
         }
@@ -218,8 +237,8 @@ public class Calculations {
                 angle1 = angle1 + (float) Math.PI;
                 angle2 = angle2 + (float) Math.PI;
             }
-            Projectile test1 = new Projectile(enemy.getCenterX() - enemy.getProjectileSize() / 2, enemy.getCenterY() - enemy.getProjectileSize() / 2, enemy.getProjectileSize(), new Vector2D(v, angle1, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.ProjectileSourceType.ENEMY);
-            Projectile test2 = new Projectile(enemy.getCenterX() - enemy.getProjectileSize() / 2, enemy.getCenterY() - enemy.getProjectileSize() / 2, enemy.getProjectileSize(), new Vector2D(v, angle2, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.ProjectileSourceType.ENEMY);
+            Projectile test1 = new Projectile(enemy.getCenterX() - enemy.getProjectileSize() / 2, enemy.getCenterY() - enemy.getProjectileSize() / 2, enemy.getProjectileSize(), new Vector2D(v, angle1, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.ProjectileSourceType.TEST);
+            Projectile test2 = new Projectile(enemy.getCenterX() - enemy.getProjectileSize() / 2, enemy.getCenterY() - enemy.getProjectileSize() / 2, enemy.getProjectileSize(), new Vector2D(v, angle2, true), 1, null, 0, GameEntity.ElementalType.NEUTRAL, Projectile.ProjectileSourceType.TEST);
             int test1Result = -1;
             int test2Result = -1;
             while (test1Result == -1) {
@@ -261,23 +280,22 @@ public class Calculations {
      * @param enemy The enemy.
      * @param spellington The protagonist.
      * @param activeProjectiles The list of active projectiles in the game.
+     * @param map The collision and event information for the current map.
      */
     public static void enemyTryToShootStraightProjectile(RangedEnemy enemy, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
         float v = 0.5f;
-        float angle = 1f;
-        float deltaX = enemy.getDeltaXSpellington();
-        float deltaY = enemy.getDeltaYSpellington();
-
-        angle = Calculations.detAngle(deltaX, deltaY);
+        float deltaX = enemy.getDeltaXPlayer();
+        float deltaY = enemy.getDeltaYPlayer();
+        float angle = Calculations.detAngle(deltaX, deltaY);
         float x = enemy.getCenterX() - enemy.getProjectileSize() / 2;
         float y = enemy.getCenterY() - enemy.getProjectileSize() / 2;
 
         Projectile test1 = new Projectile(x, y, enemy.getProjectileSize(),
-                new Vector2D(v, angle, true), 0, null, 0, ElementalType.NEUTRAL, ProjectileSourceType.ENEMY);
+                new Vector2D(v, angle, true), 0, null, 0, ElementalType.NEUTRAL, ProjectileSourceType.TEST);
 
         int test1Result = -1;
         while (test1Result == -1) {
-            test1Result = Calculations.checkProjectileCollision(test1, map, new ArrayList<Enemy>(), spellington);
+            test1Result = Calculations.checkProjectileCollision(test1, map, new ArrayList<>(), spellington);
             test1.update(10);
         }
 

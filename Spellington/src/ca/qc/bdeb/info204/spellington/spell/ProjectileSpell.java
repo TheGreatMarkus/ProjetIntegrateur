@@ -54,9 +54,10 @@ public class ProjectileSpell extends Spell {
      *
      * @param spellington The playable protagonist.
      * @param input The Slick class that handles input.
+     * @param source The source of the projectile
      * @return The created projectile.
      */
-    public Projectile createSpellProjectile(Spellington spellington, Input input) {
+    public Projectile createSpellProjectile(Spellington spellington, Input input, ProjectileSourceType source) {
         Projectile tempProj;
         float originX = spellington.getCenterX();
         float originY = spellington.getCenterY();
@@ -72,13 +73,13 @@ public class ProjectileSpell extends Spell {
         float angle = this.detAngle(spellington, input);
         Vector2D tempVector = new Vector2D(initSpeed * speedMult, angle, true);
 
-        tempProj = new Projectile(originX - getWidth() / 2, originY - getHeight() / 2, getHeight(), tempVector, gravModifier, animation, this.damage, this.element, ProjectileSourceType.PLAYER);
+        tempProj = new Projectile(originX - getWidth() / 2, originY - getHeight() / 2, getHeight(), tempVector, gravModifier, animation, this.damage, this.element, source);
         return tempProj;
     }
 
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
-        Projectile tempProjectile = this.createSpellProjectile(spellington, input);
+        Projectile tempProjectile = this.createSpellProjectile(spellington, input, ProjectileSourceType.PLAYER);
         activeProjectiles.add(tempProjectile);
     }
 

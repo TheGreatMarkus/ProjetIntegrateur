@@ -7,7 +7,9 @@ import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.MessageSign;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
+import ca.qc.bdeb.info204.spellington.gameentities.Projectile.ProjectileSourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
@@ -94,10 +96,13 @@ public class PlayState extends BasicGameState {
      * @throws SlickException A general Slick Exception.
      */
     public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
+        activeProjectiles = new ArrayList<>();
+        activeAnimations = new ArrayList<>();
         spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
         spellington.setX(spellingtonX);
         spellington.setY(spellingtonY);
         spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
+        spellington.setSpeedVector(new Vector2D(0, 0));
         map = currentMap;
     }
 
@@ -116,6 +121,18 @@ public class PlayState extends BasicGameState {
 
         g.setColor(Color.white);
         map.render(0, 0, 0);
+        g.setColor(new Color(10, 10, 10, 80));
+        for (Tile[] tile1 : GameManager.getMapInformation()) {
+            for (Tile tile : tile1) {
+                if (tile.getTileState() == Tile.TileState.PASSABLE) {
+                    g.fillRect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+                }
+            }
+        }
+
+        for (MessageSign sign : GameManager.getActiveMessageSigns()) {
+            sign.render(g);
+        }
 
         spellington.render(g);
 
@@ -139,7 +156,6 @@ public class PlayState extends BasicGameState {
                 animationsToBeRemoved.add(anim);
             }
         }
-
         activeAnimations.removeAll(animationsToBeRemoved);
 
         for (int i = 0; i < GameManager.getActiveEnemies().size(); i++) {
@@ -151,7 +167,6 @@ public class PlayState extends BasicGameState {
         displayHUD(g);
 
         drawAimingHelp(g, gc.getInput(), SpellingSystem.getActiveSpell(), spellington);
-
     }
 
     /**
@@ -165,20 +180,14 @@ public class PlayState extends BasicGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         float deltaFloat = delta;
+        //System.out.println("time passed = " + deltaFloat);
         deltaFloat *= 1;
         if (deltaFloat > 40) {
             deltaFloat = 40;
         }
-        //System.out.println("time passed = " + deltaFloat);
-
-        if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
-            game.enterState(GameCore.PAUSE_MENU_STATE_ID);
-        }
-        if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
-            debugMode = !debugMode;
-        }
-        if (gc.getInput().isKeyPressed(Input.KEY_F4)) {
-            displayHUD = !displayHUD;
+        //Update of the message signs if there are any
+        for (MessageSign sign : GameManager.getActiveMessageSigns()) {
+            sign.update(spellington);
         }
         //Update of Spellington
         spellington.update(gc.getInput(), deltaFloat);
@@ -208,6 +217,16 @@ public class PlayState extends BasicGameState {
         GameManager.getActiveEnemies().removeAll(enemiesToBeRemoved);
 
         GameManager.checkEndOfLevel(spellington);
+
+        if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+            game.enterState(GameCore.PAUSE_MENU_STATE_ID);
+        }
+        if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
+            debugMode = !debugMode;
+        }
+        if (gc.getInput().isKeyPressed(Input.KEY_F4)) {
+            displayHUD = !displayHUD;
+        }
         GameCore.clearInputRecord(gc);
     }
 
@@ -249,7 +268,7 @@ public class PlayState extends BasicGameState {
             textY += textYIncrement;
             g.drawString("Current level : " + GameManager.getActiveLevel(), textX, textY);
             textY += textYIncrement;
-            g.drawString("Current map : " + GameManager.getActiveMapIndex(), textX, textY);
+            g.drawString("Current room : " + GameManager.getActiveMapIndex(), textX, textY);
             textY += textYIncrement;
             g.drawString("Collision :", textX, textY);
             textY += textYIncrement;
@@ -347,7 +366,7 @@ public class PlayState extends BasicGameState {
                 }
             }
             g.setColor(healthColor);
-            g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) Spellington.INIT_MAX_LIFE) * (float) statBarWidth, statBarHeight);
+            g.fillRect(statsBarOffSetX, healthBarY, ((float) spellington.getLifePoint() / (float) spellington.getMaxLifePoint()) * (float) statBarWidth, statBarHeight);
             g.setColor(xpColor);
             g.fillRect(statsBarOffSetX, xpBarY, .5f * statBarWidth, statBarHeight);
             g.scale(GameCore.SCALE, GameCore.SCALE);//doit être la première ligne de render
@@ -371,9 +390,9 @@ public class PlayState extends BasicGameState {
         if (activeSpell instanceof BurstSpell) {
             g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
-            Projectile temp1 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input);
-            Projectile temp2 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input);
-            Projectile temp3 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input);
+            Projectile temp1 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input, ProjectileSourceType.TEST);
+            Projectile temp2 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input, ProjectileSourceType.TEST);
+            Projectile temp3 = ((BurstSpell) activeSpell).createSpellProjectile(spellington, input, ProjectileSourceType.TEST);
             temp1.setDamage(0);
             temp2.setDamage(0);
             temp3.setDamage(0);
@@ -454,7 +473,7 @@ public class PlayState extends BasicGameState {
         } else if (activeSpell instanceof ProjectileSpell) {
             g.setColor(new Color(255, 255, 255));
             g.drawLine(spellingtonX, spellingtonY, mouseX, mouseY);
-            Projectile temp = ((ProjectileSpell) activeSpell).createSpellProjectile(spellington, input);
+            Projectile temp = ((ProjectileSpell) activeSpell).createSpellProjectile(spellington, input, ProjectileSourceType.TEST);
             temp.setDamage(0);
 
             boolean endLoop = false;
