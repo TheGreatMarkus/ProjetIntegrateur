@@ -14,7 +14,8 @@ public class MenuItem {
 
     public static enum MenuItemType {
         BUTTON,
-        TEXT
+        TEXT,
+        INFO
     }
 
     private static final float TEXT_GAP = 10f * GameCore.SCALE;
@@ -27,28 +28,43 @@ public class MenuItem {
     private float height;
     private boolean hoveredOver;
     private boolean clickable;
+    private boolean transparent;
 
     public MenuItem(GameContainer gc, MenuItemType menuItemType, String text, boolean centerX, boolean centerY, float x, float y, float width, float height) {
         this.menuItemType = menuItemType;
         this.text = text;
-        if (centerX) {
-            this.x = gc.getWidth() / 2 - width / 2;
-        } else {
+        
+        if (this.menuItemType == MenuItemType.INFO) {
             this.x = x;
-        }
-        if (centerY) {
-            this.y = gc.getHeight() / 2 - height / 2;
-        } else {
             this.y = y;
+            this.width = width;
+            this.height = height;
+        } else {
+            if (centerX) {
+                this.x = gc.getWidth() / 2 - width / 2;
+            } else {
+                this.x = x;
+            }
+            if (centerY) {
+                this.y = gc.getHeight() / 2 - height / 2;
+            } else {
+                this.y = y;
+            }
+            this.width = width;
+            this.height = height;
+            this.width += TEXT_GAP * 2f;
+            this.height += TEXT_GAP * 2f;
         }
-        this.width = width;
-        this.height = height;
-        this.width += TEXT_GAP * 2f;
-        this.height += TEXT_GAP * 2f;
+           
         if (this.menuItemType == MenuItemType.BUTTON) {
             this.clickable = true;
         } else {
             this.clickable = false;
+        }
+        if (this.menuItemType == MenuItemType.INFO) {
+            this.transparent = true;
+        } else {
+            this.transparent = false;
         }
     }
 
@@ -67,7 +83,7 @@ public class MenuItem {
      *
      * @param g The Graphics component.
      */
-    public void render(Graphics g) {
+    public void renderButton(Graphics g) {
         if (hoveredOver && this.menuItemType == MenuItemType.BUTTON || !clickable && !(this.menuItemType == MenuItemType.TEXT)) {
             g.setColor(new Color(1, 1, 1, 0.5f));
         } else {
@@ -77,7 +93,15 @@ public class MenuItem {
             g.drawRoundRect(x, y, width, height, 12);
         }
         g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
-
+    }
+    
+    public void renderInfo(Graphics g, GameContainer gc) {
+        if (hoveredOver) {
+            g.setColor(new Color(128, 128, 128, 0.3f));
+        } else {
+            g.setColor(new Color(128, 128, 128, 0f));
+        }
+        g.fillRect(x, y, width, height);
     }
 
     public boolean getHoveredOver() {

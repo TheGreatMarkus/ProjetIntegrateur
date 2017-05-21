@@ -58,14 +58,14 @@ public class SpellBookState extends BasicGameState {
     private MenuItem mnuItemNext;
     private MenuItem mnuItemChangeType;
 
-    private InfoItem infItemBar;
-    private InfoItem infItemBar2;
-    private InfoItem infItemBar3;
-    private InfoItem infItemBar4;
-    private InfoItem infItemBar5;
-    private InfoItem infItemBar6;
-    private InfoItem infItemBar7;
-    private InfoItem infItemBar8;
+    private MenuItem mnuItemBar;
+    private MenuItem mnuItemBar2;
+    private MenuItem mnuItemBar3;
+    private MenuItem mnuItemBar4;
+    private MenuItem mnuItemBar5;
+    private MenuItem mnuItemBar6;
+    private MenuItem mnuItemBar7;
+    private MenuItem mnuItemBar8;
 
     private float infoBarWidth = 550 * GameCore.SCALE;
     private float infoBarHeight = 60 * GameCore.SCALE;
@@ -130,14 +130,26 @@ public class SpellBookState extends BasicGameState {
         mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_BACK, false, false, 0, bottomButtonY, fontMenu.getWidth(SB_BACK), fontMenu.getHeight(SB_BACK));
         mnuItemNext = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_NEXT, false, false, 0, bottomButtonY, fontMenu.getWidth(SB_NEXT), fontMenu.getHeight(SB_NEXT));
         mnuItemChangeType = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_BACK, false, false, 0, textGap, fontMenu.getWidth(SB_BACK), fontMenu.getHeight(SB_BACK));
-        infItemBar = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + textGap, infoBarWidth, infoBarHeight);
-        infItemBar2 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + infoBarHeight + textGap, infoBarWidth, infoBarHeight);
-        infItemBar3 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 2) + textGap, infoBarWidth, infoBarHeight);
-        infItemBar4 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 3) + textGap, infoBarWidth, infoBarHeight);
-        infItemBar5 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 4) + textGap, infoBarWidth, infoBarHeight);
-        infItemBar6 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 5) + textGap, infoBarWidth, infoBarHeight);
-        infItemBar7 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 6) + textGap, infoBarWidth, infoBarHeight);
-        infItemBar8 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 7) + textGap, infoBarWidth, infoBarHeight);
+        
+        
+        mnuItemBar = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + textGap, infoBarWidth, infoBarHeight);
+        mnuItemBar2 = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + (infoBarHeight * 1) + textGap, infoBarWidth, infoBarHeight);
+        mnuItemBar3 = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + (infoBarHeight * 2) + textGap, infoBarWidth, infoBarHeight);
+        mnuItemBar4 = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + (infoBarHeight * 3) + textGap, infoBarWidth, infoBarHeight);
+        mnuItemBar5 = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + (infoBarHeight * 4) + textGap, infoBarWidth, infoBarHeight);
+        mnuItemBar6 = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + (infoBarHeight * 5) + textGap, infoBarWidth, infoBarHeight);
+        mnuItemBar7 = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + (infoBarHeight * 6) + textGap, infoBarWidth, infoBarHeight);
+        mnuItemBar8 = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + (infoBarHeight * 7) + textGap, infoBarWidth, infoBarHeight);
+
+        
+//        infItemBar = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + textGap, infoBarWidth, infoBarHeight);
+//        infItemBar2 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + infoBarHeight + textGap, infoBarWidth, infoBarHeight);
+//        infItemBar3 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 2) + textGap, infoBarWidth, infoBarHeight);
+//        infItemBar4 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 3) + textGap, infoBarWidth, infoBarHeight);
+//        infItemBar5 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 4) + textGap, infoBarWidth, infoBarHeight);
+//        infItemBar6 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 5) + textGap, infoBarWidth, infoBarHeight);
+//        infItemBar7 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 6) + textGap, infoBarWidth, infoBarHeight);
+//        infItemBar8 = new InfoItem(gc, InfoItem.InfoItemType.TRANSPARENT, centerXInfoBar, topInfoBarY + (infoBarHeight * 7) + textGap, infoBarWidth, infoBarHeight);
 
         float mnuItemMainTitleX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemMainTitle.getWidth() / 2) + 35 * GameCore.SCALE;
         float mnuItemSpellsX = (GameCore.SCREEN_SIZE.width / 4) - (mnuItemSpells.getWidth() / 2) + +35 * GameCore.SCALE;
@@ -255,14 +267,14 @@ public class SpellBookState extends BasicGameState {
                 mnuItemBack.detHoveredOver(mouseX, mouseY);
                 mnuItemNext.detHoveredOver(mouseX, mouseY);
                 mnuItemChangeType.detHoveredOver(mouseX, mouseY);
-                infItemBar.detHoveredOver(mouseX, mouseY);
-                infItemBar2.detHoveredOver(mouseX, mouseY);
-                infItemBar3.detHoveredOver(mouseX, mouseY);
-                infItemBar4.detHoveredOver(mouseX, mouseY);
-                infItemBar5.detHoveredOver(mouseX, mouseY);
-                infItemBar6.detHoveredOver(mouseX, mouseY);
-                infItemBar7.detHoveredOver(mouseX, mouseY);
-                infItemBar8.detHoveredOver(mouseX, mouseY);
+                mnuItemBar.detHoveredOver(mouseX, mouseY);
+                mnuItemBar2.detHoveredOver(mouseX, mouseY);
+                mnuItemBar3.detHoveredOver(mouseX, mouseY);
+                mnuItemBar4.detHoveredOver(mouseX, mouseY);
+                mnuItemBar5.detHoveredOver(mouseX, mouseY);
+                mnuItemBar6.detHoveredOver(mouseX, mouseY);
+                mnuItemBar7.detHoveredOver(mouseX, mouseY);
+                mnuItemBar8.detHoveredOver(mouseX, mouseY);
 
                 if (mnuItemBack.getHoveredOver() && triedToClick && spellsSubPageState == 0) {
                     spellsSubPageState = 0;
@@ -288,7 +300,7 @@ public class SpellBookState extends BasicGameState {
                     showRightPage = false;
                 }
 
-                if (infItemBar.getHoveredOver() && triedToClick) {
+                if (mnuItemBar.getHoveredOver() && triedToClick) {
                     switch (spellsSubPageState) {
                         case 0:
                             spellKind = 0;
@@ -315,7 +327,7 @@ public class SpellBookState extends BasicGameState {
                     }
                 }
 
-                if (infItemBar2.getHoveredOver() && triedToClick) {
+                if (mnuItemBar2.getHoveredOver() && triedToClick) {
                     switch (spellsSubPageState) {
                         case 0:
                             spellKind = 1;
@@ -342,7 +354,7 @@ public class SpellBookState extends BasicGameState {
                     }
                 }
 
-                if (infItemBar3.getHoveredOver() && triedToClick) {
+                if (mnuItemBar3.getHoveredOver() && triedToClick) {
                     switch (spellsSubPageState) {
                         case 0:
                             spellKind = 2;
@@ -368,7 +380,7 @@ public class SpellBookState extends BasicGameState {
                     }
                 }
 
-                if (infItemBar4.getHoveredOver() && triedToClick) {
+                if (mnuItemBar4.getHoveredOver() && triedToClick) {
                     switch (spellsSubPageState) {
                         case 0:
                             spellKind = 3;
@@ -395,7 +407,7 @@ public class SpellBookState extends BasicGameState {
                     }
                 }
 
-                if (infItemBar5.getHoveredOver() && triedToClick) {
+                if (mnuItemBar5.getHoveredOver() && triedToClick) {
                     switch (spellsSubPageState) {
                         case 0:
                             spellKind = 4;
@@ -422,7 +434,7 @@ public class SpellBookState extends BasicGameState {
                     }
                 }
 
-                if (infItemBar6.getHoveredOver() && triedToClick) {
+                if (mnuItemBar6.getHoveredOver() && triedToClick) {
                     switch (spellsSubPageState) {
                         case 0:
                             spellKind = 5;
@@ -449,7 +461,7 @@ public class SpellBookState extends BasicGameState {
                     }
                 }
 
-                if (infItemBar7.getHoveredOver() && triedToClick) {
+                if (mnuItemBar7.getHoveredOver() && triedToClick) {
                     switch (spellsSubPageState) {
                         case 0:
                             spellKind = 6;
@@ -476,7 +488,7 @@ public class SpellBookState extends BasicGameState {
                     }
                 }
 
-                if (infItemBar8.getHoveredOver() && triedToClick) {
+                if (mnuItemBar8.getHoveredOver() && triedToClick) {
                     switch (spellsSubPageState) {
                         case 0:
                             spellKind = 7;
@@ -508,10 +520,10 @@ public class SpellBookState extends BasicGameState {
                 mnuItemBack.detHoveredOver(mouseX, mouseY);
                 mnuItemNext.detHoveredOver(mouseX, mouseY);
                 mnuItemChangeType.detHoveredOver(mouseX, mouseY);
-                infItemBar.detHoveredOver(mouseX, mouseY);
-                infItemBar2.detHoveredOver(mouseX, mouseY);
-                infItemBar3.detHoveredOver(mouseX, mouseY);
-                infItemBar4.detHoveredOver(mouseX, mouseY);
+                mnuItemBar.detHoveredOver(mouseX, mouseY);
+                mnuItemBar2.detHoveredOver(mouseX, mouseY);
+                mnuItemBar3.detHoveredOver(mouseX, mouseY);
+                mnuItemBar4.detHoveredOver(mouseX, mouseY);
 
                 if (mnuItemBack.getHoveredOver() && triedToClick && spellsSubPageState == 0) {
                     potionsSubPageState = 0;
@@ -568,14 +580,14 @@ public class SpellBookState extends BasicGameState {
                 mnuItemBack.detHoveredOver(mouseX, mouseY);
                 mnuItemNext.detHoveredOver(mouseX, mouseY);
                 mnuItemChangeType.detHoveredOver(mouseX, mouseY);
-                infItemBar.detHoveredOver(mouseX, mouseY);
-                infItemBar2.detHoveredOver(mouseX, mouseY);
-                infItemBar3.detHoveredOver(mouseX, mouseY);
-                infItemBar4.detHoveredOver(mouseX, mouseY);
-                infItemBar5.detHoveredOver(mouseX, mouseY);
-                infItemBar6.detHoveredOver(mouseX, mouseY);
-                infItemBar7.detHoveredOver(mouseX, mouseY);
-                infItemBar8.detHoveredOver(mouseX, mouseY);
+                mnuItemBar.detHoveredOver(mouseX, mouseY);
+                mnuItemBar2.detHoveredOver(mouseX, mouseY);
+                mnuItemBar3.detHoveredOver(mouseX, mouseY);
+                mnuItemBar4.detHoveredOver(mouseX, mouseY);
+                mnuItemBar5.detHoveredOver(mouseX, mouseY);
+                mnuItemBar6.detHoveredOver(mouseX, mouseY);
+                mnuItemBar7.detHoveredOver(mouseX, mouseY);
+                mnuItemBar8.detHoveredOver(mouseX, mouseY);
 
                 if (mnuItemBack.getHoveredOver() && triedToClick && spellsSubPageState == 0) {
                     ennemiesSubPageState = 0;
@@ -596,35 +608,35 @@ public class SpellBookState extends BasicGameState {
                     showRightPage = false;
                 }
 
-                if (infItemBar.getHoveredOver() && triedToClick) {
+                if (mnuItemBar.getHoveredOver() && triedToClick) {
 
                 }
 
-                if (infItemBar2.getHoveredOver() && triedToClick) {
+                if (mnuItemBar2.getHoveredOver() && triedToClick) {
 
                 }
 
-                if (infItemBar3.getHoveredOver() && triedToClick) {
+                if (mnuItemBar3.getHoveredOver() && triedToClick) {
 
                 }
 
-                if (infItemBar4.getHoveredOver() && triedToClick) {
+                if (mnuItemBar4.getHoveredOver() && triedToClick) {
 
                 }
 
-                if (infItemBar5.getHoveredOver() && triedToClick) {
+                if (mnuItemBar5.getHoveredOver() && triedToClick) {
 
                 }
 
-                if (infItemBar6.getHoveredOver() && triedToClick) {
+                if (mnuItemBar6.getHoveredOver() && triedToClick) {
 
                 }
 
-                if (infItemBar7.getHoveredOver() && triedToClick) {
+                if (mnuItemBar7.getHoveredOver() && triedToClick) {
 
                 }
 
-                if (infItemBar8.getHoveredOver() && triedToClick) {
+                if (mnuItemBar8.getHoveredOver() && triedToClick) {
 
                 }
                 break;
@@ -634,26 +646,26 @@ public class SpellBookState extends BasicGameState {
     }
 
     private void displayMenu(Graphics g, GameContainer gc) throws SlickException {
-        mnuItemMainTitle.render(g);
-        mnuItemSpells.render(g);
-        mnuItemPotions.render(g);
-        mnuItemEnnemies.render(g);
-        mnuItemRetour.render(g);
+        mnuItemMainTitle.renderButton(g);
+        mnuItemSpells.renderButton(g);
+        mnuItemPotions.renderButton(g);
+        mnuItemEnnemies.renderButton(g);
+        mnuItemRetour.renderButton(g);
     }
 
     private void displaySpellsLeftPage(Graphics g, GameContainer gc) throws SlickException {
-        mnuItemSpellTitle.render(g);
-        mnuItemBack.render(g);
-        mnuItemNext.render(g);
-        mnuItemChangeType.render(g);
-        infItemBar.renderTransparent(g, gc);
-        infItemBar2.renderTransparent(g, gc);
-        infItemBar3.renderTransparent(g, gc);
-        infItemBar4.renderTransparent(g, gc);
-        infItemBar5.renderTransparent(g, gc);
-        infItemBar6.renderTransparent(g, gc);
-        infItemBar7.renderTransparent(g, gc);
-        infItemBar8.renderTransparent(g, gc);
+        mnuItemSpellTitle.renderButton(g);
+        mnuItemBack.renderButton(g);
+        mnuItemNext.renderButton(g);
+        mnuItemChangeType.renderButton(g);
+        mnuItemBar.renderInfo(g, gc);
+        mnuItemBar2.renderInfo(g, gc);
+        mnuItemBar3.renderInfo(g, gc);
+        mnuItemBar4.renderInfo(g, gc);
+        mnuItemBar5.renderInfo(g, gc);
+        mnuItemBar6.renderInfo(g, gc);
+        mnuItemBar7.renderInfo(g, gc);
+        mnuItemBar8.renderInfo(g, gc);
 
         //g.setFont(fontSpellChant);
         float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
@@ -695,26 +707,26 @@ public class SpellBookState extends BasicGameState {
         }
 
         g.setColor(new Color(1, 1, 1, 1f));
-        g.drawString(infoList.get(0), infItemBar.getX() + (gap / 3), infItemBar.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(1), infItemBar.getX() + (gap / 3), infItemBar2.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(2), infItemBar.getX() + (gap / 3), infItemBar3.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(3), infItemBar.getX() + (gap / 3), infItemBar4.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(4), infItemBar.getX() + (gap / 3), infItemBar5.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(5), infItemBar.getX() + (gap / 3), infItemBar6.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(6), infItemBar.getX() + (gap / 3), infItemBar7.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(7), infItemBar.getX() + (gap / 3), infItemBar8.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(0), mnuItemBar.getX() + (gap / 3), mnuItemBar.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(1), mnuItemBar.getX() + (gap / 3), mnuItemBar2.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(2), mnuItemBar.getX() + (gap / 3), mnuItemBar3.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(3), mnuItemBar.getX() + (gap / 3), mnuItemBar4.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(4), mnuItemBar.getX() + (gap / 3), mnuItemBar5.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(5), mnuItemBar.getX() + (gap / 3), mnuItemBar6.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(6), mnuItemBar.getX() + (gap / 3), mnuItemBar7.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(7), mnuItemBar.getX() + (gap / 3), mnuItemBar8.getY() + (infoBarHeight / 12) + textGap);
 
         displaySpellsRightPage(g, iconX, iconY, iconSize, gap);
     }
 
     private void displayPotionsLeftPage(Graphics g, GameContainer gc) throws SlickException {
-        mnuItemPotionsTitle.render(g);
-        mnuItemBack.render(g);
-        mnuItemChangeType.render(g);
-        infItemBar.renderTransparent(g, gc);
-        infItemBar2.renderTransparent(g, gc);
-        infItemBar3.renderTransparent(g, gc);
-        infItemBar4.renderTransparent(g, gc);
+        mnuItemPotionsTitle.renderButton(g);
+        mnuItemBack.renderButton(g);
+        mnuItemChangeType.renderButton(g);
+        mnuItemBar.renderInfo(g, gc);
+        mnuItemBar2.renderInfo(g, gc);
+        mnuItemBar3.renderInfo(g, gc);
+        mnuItemBar4.renderInfo(g, gc);
 
         //g.setFont(fontSpellChant);
         float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
@@ -731,27 +743,27 @@ public class SpellBookState extends BasicGameState {
 //            }
 //        }
         g.setColor(new Color(1, 1, 1, 1f));
-        g.drawString(infoList.get(0), infItemBar.getX() + (gap / 3), infItemBar.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(1), infItemBar.getX() + (gap / 3), infItemBar2.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(2), infItemBar.getX() + (gap / 3), infItemBar3.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(3), infItemBar.getX() + (gap / 3), infItemBar4.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(0), mnuItemBar.getX() + (gap / 3), mnuItemBar.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(1), mnuItemBar.getX() + (gap / 3), mnuItemBar2.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(2), mnuItemBar.getX() + (gap / 3), mnuItemBar3.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(3), mnuItemBar.getX() + (gap / 3), mnuItemBar4.getY() + (infoBarHeight / 12) + textGap);
 
         displayPotionsRightPage(g, iconX, iconY, iconSize, gap);
     }
 
     private void displayEnnemiesLeftPage(Graphics g, GameContainer gc) throws SlickException {
-        mnuItemEnnemiesTitle.render(g);
-        mnuItemBack.render(g);
-        mnuItemNext.render(g);
-        mnuItemChangeType.render(g);
-        infItemBar.renderTransparent(g, gc);
-        infItemBar2.renderTransparent(g, gc);
-        infItemBar3.renderTransparent(g, gc);
-        infItemBar4.renderTransparent(g, gc);
-        infItemBar5.renderTransparent(g, gc);
-        infItemBar6.renderTransparent(g, gc);
-        infItemBar7.renderTransparent(g, gc);
-        infItemBar8.renderTransparent(g, gc);
+        mnuItemEnnemiesTitle.renderButton(g);
+        mnuItemBack.renderButton(g);
+        mnuItemNext.renderButton(g);
+        mnuItemChangeType.renderButton(g);
+        mnuItemBar.renderInfo(g, gc);
+        mnuItemBar2.renderInfo(g, gc);
+        mnuItemBar3.renderInfo(g, gc);
+        mnuItemBar4.renderInfo(g, gc);
+        mnuItemBar5.renderInfo(g, gc);
+        mnuItemBar6.renderInfo(g, gc);
+        mnuItemBar7.renderInfo(g, gc);
+        mnuItemBar8.renderInfo(g, gc);
 
         //g.setFont(fontSpellChant);
         float iconX = (GameCore.SCREEN_SIZE.width / 2) + (icon.getWidth() / 2) - 20 * GameCore.SCALE;
@@ -773,14 +785,14 @@ public class SpellBookState extends BasicGameState {
         }
 
         g.setColor(new Color(1, 1, 1, 1f));
-        g.drawString(infoList.get(0), infItemBar.getX() + (gap / 3), infItemBar.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(1), infItemBar.getX() + (gap / 3), infItemBar2.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(2), infItemBar.getX() + (gap / 3), infItemBar3.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(3), infItemBar.getX() + (gap / 3), infItemBar4.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(4), infItemBar.getX() + (gap / 3), infItemBar5.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(5), infItemBar.getX() + (gap / 3), infItemBar6.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(6), infItemBar.getX() + (gap / 3), infItemBar7.getY() + (infoBarHeight / 12) + textGap);
-        g.drawString(infoList.get(7), infItemBar.getX() + (gap / 3), infItemBar8.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(0), mnuItemBar.getX() + (gap / 3), mnuItemBar.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(1), mnuItemBar.getX() + (gap / 3), mnuItemBar2.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(2), mnuItemBar.getX() + (gap / 3), mnuItemBar3.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(3), mnuItemBar.getX() + (gap / 3), mnuItemBar4.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(4), mnuItemBar.getX() + (gap / 3), mnuItemBar5.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(5), mnuItemBar.getX() + (gap / 3), mnuItemBar6.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(6), mnuItemBar.getX() + (gap / 3), mnuItemBar7.getY() + (infoBarHeight / 12) + textGap);
+        g.drawString(infoList.get(7), mnuItemBar.getX() + (gap / 3), mnuItemBar8.getY() + (infoBarHeight / 12) + textGap);
 
         displayEnnemiesRightPage(g, iconX, iconY, iconSize, gap);
     }
