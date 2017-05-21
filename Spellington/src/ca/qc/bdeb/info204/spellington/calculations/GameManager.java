@@ -2,12 +2,14 @@ package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import static ca.qc.bdeb.info204.spellington.GameCore.DIM_MAP;
+import ca.qc.bdeb.info204.spellington.gameentities.Chest;
 import ca.qc.bdeb.info204.spellington.gameentities.MessageSign;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import static ca.qc.bdeb.info204.spellington.gameentities.Tile.DIM_TILE;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileEvent;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileState;
+import ca.qc.bdeb.info204.spellington.gameentities.Treasure;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.DummyEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.MageEnemy;
@@ -15,6 +17,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.enemies.MeleeEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.RangedEnemy;
 import ca.qc.bdeb.info204.spellington.gamestates.LevelSelectionState;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
+import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Point;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -61,9 +64,10 @@ public class GameManager {
 
     private static ArrayList<Enemy> activeEnemies = new ArrayList<>();
     private static ArrayList<MessageSign> activeMessageSigns = new ArrayList<>();
+    private static ArrayList<Treasure> activeTreasure = new ArrayList<>();
     //for testing
     private static final boolean ROOM_TESTING = false;
-    private static final int ROOM_TESTING_INDEX = 13;
+    private static final int ROOM_TESTING_INDEX = 4;
 
     /**
      * Initialises the GameManager.
@@ -257,7 +261,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.LIGHTNING_SLIME;
                             break;
                     }
-                    activeEnemies.add(new MeleeEnemy((DIM_TILE.width * j), (DIM_TILE.height * i), tempType));
+                    activeEnemies.add(new MeleeEnemy((DIM_TILE.width * j), (DIM_TILE.height * i) + 2 * Tile.DIM_TILE.height - Enemy.SLIME_SIZE.height, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == meleeEnemyID) {
                     tempEvent = TileEvent.MELEE_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -281,9 +285,25 @@ public class GameManager {
                             tempType = Enemy.EnemyType.CROSSBOWMAN;
                             break;
                     }
-                    activeEnemies.add(new RangedEnemy((DIM_TILE.width * j), (DIM_TILE.height * i), tempType));
+                    activeEnemies.add(new RangedEnemy((DIM_TILE.width * j), (DIM_TILE.height * i) + 2 * Tile.DIM_TILE.height - Enemy.RANGED_SIZE.height, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == tresureID) {
                     tempEvent = TileEvent.TREASURE_SPAWN;
+                    //for now, all chest can give any adept spell.
+                    activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getAdeptSpells()));
+//                    switch (activeLevel) {
+//                        case 1:
+//                            activeTreasure.add(new Chest(j, j, i, i, new ArrayList<>()));
+//                            break;
+//                        case 2:
+//                            break;
+//                        case 3:
+//                            break;
+//                        case 4:
+//
+//                            break;
+//                        case 5:
+//                            break;
+//                    }
                 } else if (activeMap.getTileId(j, i, 2) == mageSpawnID) {
                     tempEvent = TileEvent.MAGE_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -475,6 +495,10 @@ public class GameManager {
 
     public static ArrayList<MessageSign> getActiveMessageSigns() {
         return activeMessageSigns;
+    }
+
+    public static ArrayList<Treasure> getActiveTreasure() {
+        return activeTreasure;
     }
 
 }

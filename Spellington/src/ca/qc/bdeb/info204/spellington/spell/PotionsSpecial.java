@@ -18,8 +18,8 @@ import org.newdawn.slick.Input;
  */
 public class PotionsSpecial extends Spell {
 
-    public PotionsSpecial(int id, String name, String shortDescription, int uses, Animation animation, int width, int height) {
-        super(id, GameEntity.ElementalType.NEUTRAL, name, shortDescription, uses, animation, width, height);
+    public PotionsSpecial(int id, int uses, Animation animation, int width, int height) {
+        super(id, GameEntity.ElementalType.NEUTRAL, uses, animation, width, height);
     }
 
     @Override

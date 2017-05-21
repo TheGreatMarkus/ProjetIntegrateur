@@ -12,6 +12,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile.ProjectileSourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
+import ca.qc.bdeb.info204.spellington.gameentities.Treasure;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.spell.BurstSpell;
 import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
@@ -129,6 +130,18 @@ public class PlayState extends BasicGameState {
                 }
             }
         }
+//        g.setColor(Color.white);
+//        for (Tile[] tile1 : GameManager.getMapInformation()) {
+//            for (Tile tile : tile1) {
+//                if (tile.getTileState() == Tile.TileState.PASSABLE) {
+//                    g.drawString(tile.getTileEvent().toString(), tile.getX(), tile.getY());
+//                }
+//            }
+//        }
+
+        for (Treasure treasure : GameManager.getActiveTreasure()) {
+            treasure.render(g);
+        }
 
         for (MessageSign sign : GameManager.getActiveMessageSigns()) {
             sign.render(g);
@@ -188,6 +201,10 @@ public class PlayState extends BasicGameState {
         //Update of the message signs if there are any
         for (MessageSign sign : GameManager.getActiveMessageSigns()) {
             sign.update(spellington);
+        }
+
+        for (Treasure treasure : GameManager.getActiveTreasure()) {
+            treasure.update(spellington);
         }
         //Update of Spellington
         spellington.update(gc.getInput(), deltaFloat);

@@ -19,8 +19,8 @@ public class HealingSpell extends Spell {
 
     private int healing;
 
-    public HealingSpell(int id, String name, String shortDescription, int uses, Animation animation, int width, int height, int healing) {
-        super(id, GameEntity.ElementalType.NEUTRAL, name, shortDescription, uses, animation, width, height);
+    public HealingSpell(int id, int uses, Animation animation, int width, int height, int healing) {
+        super(id, GameEntity.ElementalType.NEUTRAL, uses, animation, width, height);
         this.healing = healing;
     }
 

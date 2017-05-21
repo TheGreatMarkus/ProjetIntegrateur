@@ -15,7 +15,7 @@ public class Tile extends StaticEntity {
     public static enum TileState {
         PASSABLE,
         IMPASSABLE,
-        LAVA, 
+        LAVA,
         SLIPPERY
     }
 
@@ -50,6 +50,10 @@ public class Tile extends StaticEntity {
 
     public void setTileState(TileState tileState) {
         this.tileState = tileState;
+    }
+
+    public TileEvent getTileEvent() {
+        return tileEvent;
     }
 
 }

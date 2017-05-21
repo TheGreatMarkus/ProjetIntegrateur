@@ -5,7 +5,7 @@ import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
-import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile.ProjectileSourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -30,8 +30,8 @@ public class ProjectileSpell extends Spell {
     protected static final float INIT_SPEED_MIN = 0.2f;
     protected static final float INIT_SPEED_MAX = 1.2f;
 
-    public ProjectileSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, int uses, Animation animation, float size, float initSpeed, float gravModifier, int damage) {
-        super(id, element, name, shortDescription, uses, animation, size, size);
+    public ProjectileSpell(int id, ElementalType element, int uses, Animation animation, float size, float initSpeed, float gravModifier, int damage) {
+        super(id, element, uses, animation, size, size);
         this.initSpeed = initSpeed;
         this.gravModifier = gravModifier;
         this.damage = damage;

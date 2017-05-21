@@ -23,8 +23,8 @@ public class PassiveSpell extends Spell {
     private static int resistance = 5;
     private static int immunity = 999;
 
-    public PassiveSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, Animation animation, int width, int height, int yModifier) {
-        super(id, element, name, shortDescription, 0, animation, width, height);
+    public PassiveSpell(int id, GameEntity.ElementalType element, Animation animation, int width, int height, int yModifier) {
+        super(id, element, 0, animation, width, height);
         PassiveSpellAnimation = new GameAnimation(-200, -200, width, height, animation.copy(), true, yModifier);
 
     }

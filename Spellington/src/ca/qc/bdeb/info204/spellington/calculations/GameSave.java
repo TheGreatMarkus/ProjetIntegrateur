@@ -1,6 +1,8 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
+import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * The game save for the user.
@@ -17,6 +19,7 @@ public class GameSave implements Serializable {
     private boolean lvl3Complete;
     private boolean lvl4Complete;
     private boolean lvl5Complete;
+    private ArrayList<Spell> knownSpells;
 
     public GameSave(String saveName) {
         this.saveName = saveName;
