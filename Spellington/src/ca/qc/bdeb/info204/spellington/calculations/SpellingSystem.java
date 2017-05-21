@@ -12,7 +12,7 @@ import ca.qc.bdeb.info204.spellington.spell.BurstSpell;
 import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
 import ca.qc.bdeb.info204.spellington.spell.HealingSpell;
 import ca.qc.bdeb.info204.spellington.spell.PassiveSpell;
-import ca.qc.bdeb.info204.spellington.spell.PotionsSpecial;
+import ca.qc.bdeb.info204.spellington.spell.Potion;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -107,6 +107,36 @@ public class SpellingSystem {
     public static final int ID_POTION_TIME = 27;
     public static final int ID_POTION_PAST = 28;
 
+    //À changer Tarik
+    private static final String FIRE_BALL_DESC = "Boule en feu traditionnelle " + '\n' + "déployée à l'aide d'une trajectoire parabolique.";
+    private static final String ICE_SPIKE_DESC = "Pic de glace suivant une " + '\n' + "trajectoire majoritairement linéaire.";
+    private static final String SPARK_DESC = "Explosion d'étincelles " + '\n' + "engendrée par le clic de la souris.";
+    private static final String HEAL_DESC = "Guérison de base.";
+    private static final String ASCENDING_CURRENT_DESC = "Accorde un saut " + '\n' + "supplémentaire à Spellington.";
+    private static final String FIRE_RES_DESC = "Réduit les dégats infligés " + '\n' + "par les attaques pyromanes.";
+    private static final String ICE_RES_DESC = "Réduit les dégats infligés " + '\n' + "par les attaques glaciales.";
+    private static final String LIGHTNING_RES_DESC = "Réduit les dégats infligés " + '\n' + "par les attaques électrocutantes.";
+    private static final String EXPLOSIVE_BALL_DESC = "";
+    private static final String FIRE_BREATH_DESC = "";
+    private static final String GIANT_FIRE_BALL_DESC = "";
+    private static final String LIGHTNING_SWARM_DESC = "";
+    private static final String TELEPORTATION_DESC = "";
+    private static final String LIGHTNING_BALL_DESC = "";
+    private static final String ICE_BREATH_DESC = "";
+    private static final String ICE_SPIKE_BALL_DESC = "";
+    private static final String ICE_RUNE_DESC = "";
+    private static final String FIRE_IMMUNITY_DESC = "";
+    private static final String METEOR_SWARM_DESC = "";
+    private static final String LIGHTNING_IMMUNITY_DESC = "";
+    private static final String LIGHTNING_SPEAR_DESC = "";
+    private static final String ICE_STORM_DESC = "";
+    private static final String ICE_IMMUNITY_DESC = "";
+    private static final String GREAT_HEAL_DESC = "";
+    private static final String POTION_ACID_DESC = "";
+    private static final String POTION_HEAL_DESC = "";
+    private static final String POTION_TIME_DESC = "";
+    private static final String POTION_PAST_DESC = "";
+
     static boolean cheatMode = true;
 
     /**
@@ -117,39 +147,39 @@ public class SpellingSystem {
     public static void initSpellingSystem() {
         initAnimation();
 
-        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, 5, animFireBall, 30, 1, 1, 5);
-        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, 3, animIceSpike, 20, 1, 0, 5);
-        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, 2, animSpark, 5, 10);
-        Spell heal = new HealingSpell(ID_HEAL, 1, animHeal, 100, 100, 10);
-        Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, animAscendingCurrent, 100, 100, 0);
-        Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, animFireResistance, 100, 30, -40);
-        Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, animIceResistance, 100, 30, -40);
-        Spell lightningResistance = new PassiveSpell(ID_LIGHTNING_RES, ElementalType.LIGHTNING, animLightningResistance, 100, 30, -40);
-        Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, 2, animExplosiveBall, 100, 1, 1, 10);
-        Spell fireBreath = new BurstSpell(ID_FIRE_BREATH, ElementalType.FIRE, 3, animFireBreath, 40, 1, 1, 10, 0.15f, 5);
-        Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, 2, animGiantFireBall, 200, 1, 1, 20);
-        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, 1, animLightningSwarm, 3, 100);
-        Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, 1, animTeleportation, 100, 1, 1, 0);
+        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 5, animFireBall, 30, 1, 1, 5);
+        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", ICE_SPIKE_DESC, 3, animIceSpike, 20, 1, 0, 5);
+        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", SPARK_DESC, 2, animSpark, 5, 10);
+        Spell heal = new HealingSpell(ID_HEAL, "Soin", HEAL_DESC, 1, animHeal, 100, 100, 10);
+        Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", ASCENDING_CURRENT_DESC, animAscendingCurrent, 100, 100, 0);
+        Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, "Résistance feu", FIRE_RES_DESC, animFireResistance, 100, 30, -40);
+        Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, "Résistance glace", ICE_RES_DESC, animIceResistance, 100, 30, -40);
+        Spell lightningResistance = new PassiveSpell(ID_LIGHTNING_RES, ElementalType.LIGHTNING, "Résistance electrique", LIGHTNING_RES_DESC, animLightningResistance, 100, 30, -40);
+        Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", EXPLOSIVE_BALL_DESC, 2, animExplosiveBall, 100, 1, 1, 10);
+        Spell fireBreath = new BurstSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", FIRE_BREATH_DESC, 3, animFireBreath, 40, 1, 1, 10, 0.15f, 5);
+        Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", GIANT_FIRE_BALL_DESC, 2, animGiantFireBall, 200, 1, 1, 20);
+        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", LIGHTNING_SWARM_DESC, 1, animLightningSwarm, 3, 100);
+        Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", TELEPORTATION_DESC, 1, animTeleportation, 100, 1, 1, 0);
 
-        Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, 2, animLightningBouncingBall, 30, 1, 1, 10);
-        Spell iceBreath = new BurstSpell(ID_ICE_BREATH, ElementalType.ICE, 2, animIceBreath, 100, 1, 0, 1, 0.35f, 15);
-        Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, 2, animIceSpikeBall, 50, 1, 1, 10);
-        Spell iceRune = new ExplosionSpell(ID_ICE_RUNE, ElementalType.ICE, 1, animIceRune, 20, 10);
+        Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", LIGHTNING_BALL_DESC, 2, animLightningBouncingBall, 30, 1, 1, 10);
+        Spell iceBreath = new BurstSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", ICE_BREATH_DESC, 2, animIceBreath, 100, 1, 0, 1, 0.35f, 15);
+        Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", ICE_SPIKE_BALL_DESC, 2, animIceSpikeBall, 50, 1, 1, 10);
+        Spell iceRune = new ExplosionSpell(ID_ICE_RUNE, ElementalType.ICE, "Rune de glace", ICE_RUNE_DESC, 1, animIceRune, 20, 10);
 
-        Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, animFireImmunity, 100, 100, 0);
-        Spell meteorSwarm = new ExplosionSpell(ID_METEOR_SWARM, ElementalType.FIRE, 1, animMeteorSwarm, 20, 9999);
-        Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, animLightningImmunity, 100, 100, 0);
+        Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", FIRE_IMMUNITY_DESC, animFireImmunity, 100, 100, 0);
+        Spell meteorSwarm = new ExplosionSpell(ID_METEOR_SWARM, ElementalType.FIRE, "Pluie de meteors", METEOR_SWARM_DESC, 1, animMeteorSwarm, 20, 9999);
+        Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", LIGHTNING_IMMUNITY_DESC, animLightningImmunity, 100, 100, 0);
 
-        Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, 1, animLightningSpear, 50, 1, 0, 60);
-        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, 1, animIceStorm, 20, 9999);
+        Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", LIGHTNING_SPEAR_DESC, 1, animLightningSpear, 50, 1, 0, 60);
+        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", ICE_STORM_DESC, 1, animIceStorm, 20, 9999);
 
-        Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, animIceImmunity, 100, 100, 0);
-        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, 1, animGreatHeal, 100, 200, 999);
+        Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", ICE_IMMUNITY_DESC, animIceImmunity, 100, 100, 0);
+        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 200, 999);
 
-        Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, 1, animAcid, 100, 1, 1, 20);
-        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, 1, animHeal, 100, 100, 20);
-        Spell PotionTime = new PotionsSpecial(ID_POTION_TIME, 1, animTemps, 100, 100);
-        Spell PotionPast = new PotionsSpecial(ID_POTION_PAST, 1, animPast, 100, 100);
+        Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Potion d'acide", POTION_ACID_DESC, 1, animAcid, 100, 1, 1, 20);
+        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion Soin", POTION_HEAL_DESC, 1, animHeal, 100, 100, 20);
+        Spell PotionTime = new Potion(ID_POTION_TIME, "Potion de ralentissement du temps", POTION_TIME_DESC, 1, animTemps, 100, 100);
+        Spell PotionPast = new Potion(ID_POTION_PAST, "Potion du Passé", POTION_PAST_DESC, 1, animPast, 100, 100);
 
         potionList.add(PotionAcid);
         potionList.add(PotionHeal);

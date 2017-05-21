@@ -30,8 +30,8 @@ public class ProjectileSpell extends Spell {
     protected static final float INIT_SPEED_MIN = 0.2f;
     protected static final float INIT_SPEED_MAX = 1.2f;
 
-    public ProjectileSpell(int id, ElementalType element, int uses, Animation animation, float size, float initSpeed, float gravModifier, int damage) {
-        super(id, element, uses, animation, size, size);
+    public ProjectileSpell(int id, ElementalType element, String name, String desc, int uses, Animation animation, float size, float initSpeed, float gravModifier, int damage) {
+        super(id, element, name, desc, uses, animation, size, size);
         this.initSpeed = initSpeed;
         this.gravModifier = gravModifier;
         this.damage = damage;

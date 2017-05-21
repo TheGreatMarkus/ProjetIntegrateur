@@ -23,8 +23,8 @@ public class ExplosionSpell extends Spell {
     private int damage;
     private float ray;
 
-    public ExplosionSpell(int id, GameEntity.ElementalType element, int uses, Animation animation, int damage, float ray) {
-        super(id, element, uses, animation, (int) (ray * 2), (int) (ray * 2));
+    public ExplosionSpell(int id, GameEntity.ElementalType element, String name, String desc, int uses, Animation animation, int damage, float ray) {
+        super(id, element, name, desc, uses, animation, (int) (ray * 2), (int) (ray * 2));
         this.damage = damage;
         this.ray = ray;
     }

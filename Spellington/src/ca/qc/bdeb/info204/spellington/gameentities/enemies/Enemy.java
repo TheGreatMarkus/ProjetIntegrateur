@@ -75,7 +75,7 @@ public abstract class Enemy extends LivingEntity {
         this.xAcc = new Vector2D(0, 0);
         this.jumpVector = new Vector2D(0, 0);
 
-//Missing resistances
+        //Missing resistances
         switch (this.enemyType) {
             case KEEPER:
             case GUARD:

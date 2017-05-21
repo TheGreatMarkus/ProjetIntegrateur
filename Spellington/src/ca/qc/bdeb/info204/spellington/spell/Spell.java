@@ -18,15 +18,19 @@ public abstract class Spell {
 
     protected int id;
     protected ElementalType element;
+    protected String name;
+    protected String desc;
     protected String incantation;
     protected int uses;
     protected Animation animation;
     protected float height;
     protected float width;
 
-    public Spell(int id, ElementalType element, int uses, Animation animation, float width, float height) {
+    public Spell(int id, ElementalType element, String name, String desc, int uses, Animation animation, float width, float height) {
         this.id = id;
         this.element = element;
+        this.name = name;
+        this.desc = desc;
         this.uses = uses;
         this.animation = animation;
         this.height = height;
@@ -108,5 +112,15 @@ public abstract class Spell {
     public void setWidth(float width) {
         this.width = width;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+    
+    
 
 }

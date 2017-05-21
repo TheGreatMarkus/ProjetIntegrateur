@@ -805,8 +805,7 @@ public class SpellBookState extends BasicGameState {
             }
             name = "Nom: " + SpellingSystem.knownSpells.get(spellKind).getName();
             incantationText = "Mot déclencheur: " + SpellingSystem.knownSpells.get(spellKind).getIncantation();
-            shortDescription = "Petite description: " + SpellingSystem.knownSpells.get(spellKind).getShortDescription();
-            iconImage = SpellingSystem.knownSpells.get(spellKind).getIcon();
+            shortDescription = "Petite description: " + SpellingSystem.knownSpells.get(spellKind).getDesc();
 
             switch (type) {//damage and effects relative to the spell's type
                 case "Sort de souffle":
