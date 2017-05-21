@@ -8,7 +8,7 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8WWi0rDQBBFB0XiqzY+UttKk2of0KqRQk1RqfFT/P+v8F72BhWaZiOVDByS7s5jZ3cm29DMBiADCViBKQhAG8TgTL859ySGmo80nouu9FvSKfzRf6i5RMSaa0oOza2xKeEe5Q3G5zlmDcZPQafB+ENrtv6KfrsDF2APLPR+BZ5L7HrgDczAWPp98Cq7dz378rHc4OPYvvu7joxr6m+SNTgx9y2Iatjd7yA292MOXszVn2/82Q5irxWbz1NztTfxsLv00OH6HsGDub1lnJ5gfTHfpeZYF0eKXdX/5x6xF/JZV5j/asu8T62NzNXF/A/x2X9l53/jYX8L9s2dZVmvbhPu/UT8vGM/Kuwi6dCOPTzUO7/n1xrjnZ7KL3VjjWeKEcgPbQ7+h88quNap4F0cKpdU6wu17iK/3H7/pwhk11HeA9l05YO5tpRjKtryk+j5Ba935wsACQAA
+   H4sIAAAAAAAAC8WWi2rCQBBFh0JJW6um1Vi1mISign2kCDaiYtP//6rey97QFnwkkLIDh407r53NbNbQzCYgBwlYgzkIQBfEoKPf1L2LVPpI84UYyr4tmzIe44fSJSKWzpdcmVujL+EeFR7z8z3mHvNnYOAxf2p++688b0/gHlyApZ774OOI3wjswAJMZT8GW/l9ahwrxupAjBv7Od91ZFrT/pDsQcvctyCq4ffSQG7uxzPYmOu/qvkXDeTeKzfHW3O9N6vg16tgw/W9gVdze8s8I8H+Yr0r6dgX18p97vzfVci9VMy6wvrXJ/RN9Nop4fk79v4f/zk3hXs/E7/v2K8zfpFs6McznOqZ3/MHzfFOzxSXtrHmc+UIFIc+l57gWueCd3GoWjKtL9S6y/oK+/ufIpDfQLEm8hkqBmttq8ZMdBUn0fgNm9IXSAAJAAA=
   </data>
  </layer>
  <layer name="collision" width="32" height="18">

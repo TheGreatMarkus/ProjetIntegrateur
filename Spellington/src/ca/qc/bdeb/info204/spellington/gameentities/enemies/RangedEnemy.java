@@ -23,8 +23,8 @@ public class RangedEnemy extends Enemy {
 
     private float projectileSize;
 
-    public RangedEnemy(float x, float y, AnimState mouvementState, float gravMod, EnemyType enemyType) {
-        super(x, y, mouvementState, gravMod, enemyType);
+    public RangedEnemy(float x, float y, EnemyType enemyType) {
+        super(x, y, enemyType);
         switch (this.enemyType) {
             case ARCHER:
                 projectileSize = 20;
@@ -82,7 +82,7 @@ public class RangedEnemy extends Enemy {
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (spellingtonInRange) {
+        if (canSeePlayer) {
             if (this.animState != AnimState.ATTACK_R && this.animState != AnimState.ATTACK_L) {
                 if (spellington.getCenterX() <= this.getCenterX()) {
                     this.setAnimState(AnimState.STANDING_L);

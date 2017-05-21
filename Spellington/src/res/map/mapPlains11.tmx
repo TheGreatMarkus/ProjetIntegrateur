@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
+ <tileset firstgid="1" name="frozenPlainsTile" tilewidth="50" tileheight="50" tilecount="50" columns="10">
+  <image source="tiles/iceTile.png" width="500" height="251"/>
+ </tileset>
+ <tileset firstgid="51" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
+  <image source="tiles/collisionTile.png" width="150" height="200"/>
+ </tileset>
+ <layer name="terrain" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC8WVW26EMAxFPUzprCWETPe/u4KUIw4upfQLSxYh8dvXSYuI98LzwtPCpfPU99az1tet79fOli9dxrrovPWt/cveKn8Xkd9dRD3votpjWOlxUee18Ljw1wE/Fx7+4X+tPfnPF+TH2HoGXpvW4O3RY/mLwDGxnOmMB/5qX1PHJpl2IQb7n+J3LDximxf8OpYin/zDZ3RFJmLLkbnFH7GwLrG/G86w/VQOZzTEcc7O17VhH/nPE5u5ZzV+4pcek5vvN3TAse+0WXqZajovspPngNoj07RH3FPscYg8vco06ZxYHPuYZG0Xv9adpcu559R3y6Bca+x7aQxB1NZ94C1xncEbPmvs7wjnk9+1t+SwaflcY+ObM88FNtwL50Me6Hhu8puEnznpgkNm0j23/JTsOd4cq3O0f9f0CDOeixL7ecz+PTv5HnVOK04+YsPeUU0z5l0Pasv61e2VdP4Npq8fewAJAAA=
+  </data>
+ </layer>
+ <layer name="collision" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACzNjYGAwG2BsN0B41H6E/cS6A6bHEgsmxRxy7CcmHZGSrrDpI9dubP4g5AZi7SclH5FrPyXhjssfxIYnNezGZT8280kpj2hRjg12+9HTEDUwOWlp1P6Raz+9MADT/TF3AAkAAA==
+  </data>
+ </layer>
+ <layer name="event" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWkAHMC8iZ0cQVtACG/jQLqAVqGtRWd7BkFo2AU0A6YUdk8YyqbNxwAAM2/YToACQAA
+  </data>
+ </layer>
+</map>

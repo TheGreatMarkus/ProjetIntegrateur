@@ -24,8 +24,8 @@ public class MageEnemy extends RangedEnemy {
 
     private Animation animTeleport;
 
-    public MageEnemy(float x, float y, AnimState mouvementState, float GRAVITY_MODIFIER, EnemyType enemyType) {
-        super(x, y, mouvementState, GRAVITY_MODIFIER, enemyType);
+    public MageEnemy(float x, float y, EnemyType enemyType) {
+        super(x, y, enemyType);
     }
 
     @Override
@@ -47,10 +47,10 @@ public class MageEnemy extends RangedEnemy {
 
     @Override
     public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
-        if (willDoAction) {
-            if (deltaXSpellington > 0) {
+        if (canSeePlayer) {
+            if (deltaXPlayer > 0) {
                 this.animState = AnimState.STANDING_R;
-            } else if (deltaXSpellington < 0) {
+            } else if (deltaXPlayer < 0) {
                 this.animState = AnimState.STANDING_L;
             }
         }
