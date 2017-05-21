@@ -13,6 +13,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.MageEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.MeleeEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.RangedEnemy;
+import ca.qc.bdeb.info204.spellington.gamestates.LevelSelectionState;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Point;
 import java.io.FileInputStream;
@@ -82,7 +83,7 @@ public class GameManager {
     public static void newGame() throws SlickException {
         GameSave newSave = new GameSave("temp");
         gameSave = newSave;
-        saveGameSave(gameSave);
+        saveGameSave();
 
         activeLevel = 1;
         activeMapIndex = 0;
@@ -131,9 +132,8 @@ public class GameManager {
     /**
      * Saves the current savefile.
      *
-     * @param gameSave The game save to save.
      */
-    public static void saveGameSave(GameSave gameSave) {
+    public static void saveGameSave() {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(GAME_SAVE_PATH);
@@ -374,6 +374,9 @@ public class GameManager {
             ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
             stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
         } else {
+            gameSave.completeLevel(activeLevel);
+            saveGameSave();
+            ((LevelSelectionState) (stateBasedGame.getState(GameCore.LEVEL_SELECTION_STATE_ID))).prepareLevel(gameSave);
             stateBasedGame.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
         }
     }

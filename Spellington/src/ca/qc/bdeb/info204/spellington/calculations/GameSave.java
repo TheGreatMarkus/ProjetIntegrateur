@@ -24,6 +24,34 @@ public class GameSave implements Serializable {
         sXP = 0;
     }
 
+    public void completeLevel(int level) {
+        switch (level) {
+            case 1:
+                lvl1Complete = true;
+                break;
+            case 2:
+                if (lvl1Complete) {
+                    lvl2Complete = true;
+                }
+                break;
+            case 3:
+                if (lvl1Complete && lvl2Complete) {
+                    lvl3Complete = true;
+                }
+                break;
+            case 4:
+                if (lvl1Complete && lvl2Complete && lvl3Complete) {
+                    lvl4Complete = true;
+                }
+                break;
+            case 5:
+                if (lvl1Complete && lvl2Complete && lvl3Complete && lvl4Complete) {
+                    lvl5Complete = true;
+                }
+                break;
+        }
+    }
+
     public String getSaveName() {
         return saveName;
     }
@@ -87,7 +115,5 @@ public class GameSave implements Serializable {
     public void setLvl5Complete(boolean lvl5Complete) {
         this.lvl5Complete = lvl5Complete;
     }
-    
-    
 
 }

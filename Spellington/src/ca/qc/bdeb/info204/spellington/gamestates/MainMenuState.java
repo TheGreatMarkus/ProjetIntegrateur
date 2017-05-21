@@ -130,6 +130,7 @@ public class MainMenuState extends BasicGameState {
             GameManager.newGame();
         }
         if (mnuItemLoadGame.getHoveredOver() && triedToClick && mnuItemLoadGame.getClickable()) {
+            ((LevelSelectionState) (game.getState(GameCore.LEVEL_SELECTION_STATE_ID))).prepareLevel(GameManager.getGameSave());
             game.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
         }
 
@@ -137,6 +138,7 @@ public class MainMenuState extends BasicGameState {
             game.enterState(GameCore.OPTIONS_MENU_STATE_ID);
         }
         if (mnuItemExit.getHoveredOver() && triedToClick) {
+            GameManager.saveGameSave();
             gc.exit();
         }
 

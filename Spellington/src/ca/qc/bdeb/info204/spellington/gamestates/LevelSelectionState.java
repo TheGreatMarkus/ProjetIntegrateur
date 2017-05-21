@@ -2,6 +2,7 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.GameManager;
+import ca.qc.bdeb.info204.spellington.calculations.GameSave;
 import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.fontMenu;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import org.newdawn.slick.Color;
@@ -53,6 +54,13 @@ public class LevelSelectionState extends BasicGameState {
         mnuItemLevel4 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL4, false, false, MainMenuState.TEXT_GAP, mnuItemLevel3.getY() + mnuItemLevel3.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL4), fontMenu.getHeight(LS_LEVEL4));
         mnuItemLevel5 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL5, false, false, MainMenuState.TEXT_GAP, mnuItemLevel4.getY() + mnuItemLevel4.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL5), fontMenu.getHeight(LS_LEVEL5));
 
+    }
+    
+    public void prepareLevel(GameSave gameSave) {
+        mnuItemLevel2.setClickable(gameSave.isLvl1Complete());
+        mnuItemLevel3.setClickable(gameSave.isLvl2Complete());
+        mnuItemLevel4.setClickable(gameSave.isLvl3Complete());
+        mnuItemLevel5.setClickable(gameSave.isLvl4Complete());
     }
 
     /**
@@ -134,4 +142,6 @@ public class LevelSelectionState extends BasicGameState {
     public int getID() {
         return GameCore.LEVEL_SELECTION_STATE_ID;
     }
+
+    
 }
