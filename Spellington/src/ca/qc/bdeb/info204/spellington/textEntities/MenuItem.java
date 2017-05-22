@@ -28,7 +28,6 @@ public class MenuItem {
     private float height;
     private boolean hoveredOver;
     private boolean clickable;
-    private boolean transparent;
 
     public MenuItem(GameContainer gc, MenuItemType menuItemType, String text, boolean centerX, boolean centerY, float x, float y, float width, float height) {
         this.menuItemType = menuItemType;
@@ -56,15 +55,10 @@ public class MenuItem {
             this.height += TEXT_GAP * 2f;
         }
            
-        if (this.menuItemType == MenuItemType.BUTTON) {
+        if (this.menuItemType == MenuItemType.BUTTON || this.menuItemType == MenuItemType.INFO) {
             this.clickable = true;
         } else {
             this.clickable = false;
-        }
-        if (this.menuItemType == MenuItemType.INFO) {
-            this.transparent = true;
-        } else {
-            this.transparent = false;
         }
     }
 
@@ -83,25 +77,28 @@ public class MenuItem {
      *
      * @param g The Graphics component.
      */
-    public void renderButton(Graphics g) {
-        if (hoveredOver && this.menuItemType == MenuItemType.BUTTON || !clickable && !(this.menuItemType == MenuItemType.TEXT)) {
-            g.setColor(new Color(1, 1, 1, 0.5f));
-        } else {
-            g.setColor(new Color(1, 1, 1, 1f));
+    public void render(Graphics g) {
+        
+        if (!(this.menuItemType == MenuItemType.INFO)){
+            if (hoveredOver && this.menuItemType == MenuItemType.BUTTON || !clickable && !(this.menuItemType == MenuItemType.TEXT)) {
+                g.setColor(new Color(1, 1, 1, 0.5f));
+            } else {
+                g.setColor(new Color(1, 1, 1, 1f));
+            }
+            if (this.menuItemType == MenuItemType.BUTTON) {
+                g.drawRoundRect(x, y, width, height, 12);
+            }
+            g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
         }
-        if (this.menuItemType == MenuItemType.BUTTON) {
-            g.drawRoundRect(x, y, width, height, 12);
-        }
-        g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
-    }
-    
-    public void renderInfo(Graphics g, GameContainer gc) {
-        if (hoveredOver) {
-            g.setColor(new Color(128, 128, 128, 0.3f));
-        } else {
-            g.setColor(new Color(128, 128, 128, 0f));
-        }
-        g.fillRect(x, y, width, height);
+        
+        if (this.menuItemType == MenuItemType.INFO){
+            if (hoveredOver) {
+                g.setColor(new Color(128, 128, 128, 0.3f));
+            } else {
+                g.setColor(new Color(128, 128, 128, 0f));
+            }
+            g.fillRect(x, y, width, height);
+        } 
     }
 
     public boolean getHoveredOver() {

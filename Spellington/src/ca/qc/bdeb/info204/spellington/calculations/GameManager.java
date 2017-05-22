@@ -193,7 +193,7 @@ public class GameManager {
         System.out.println("Dungeon levels loaded : " + DUNGEON_ROOMS.size());
         System.out.println("Plains levels loaded : " + PLAINS_ROOMS.size());
         System.out.println("Castle levels loaded : " + CASTLE_ROOMS.size());
-        System.out.println("Boos levels loaded : " + BOSS_ROOMS.size());
+        System.out.println("Boss levels loaded : " + BOSS_ROOMS.size());
         System.out.println("");
     }
 
