@@ -2,7 +2,7 @@ package ca.qc.bdeb.info204.spellington.spell;
 
 import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
-import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
@@ -16,10 +16,10 @@ import org.newdawn.slick.Input;
  * @author Tarik
  * @see Spell
  */
-public class PotionsSpecial extends Spell {
+public class Potion extends Spell {
 
-    public PotionsSpecial(int id, String name, String shortDescription, int uses, Animation animation, int width, int height) {
-        super(id, GameEntity.ElementalType.NEUTRAL, name, shortDescription, uses, animation, width, height);
+    public Potion(int id, String name, String desc, int uses, Animation animation, int width, int height) {
+        super(id, ElementalType.NEUTRAL, name, desc, uses, animation, width, height);
     }
 
     @Override

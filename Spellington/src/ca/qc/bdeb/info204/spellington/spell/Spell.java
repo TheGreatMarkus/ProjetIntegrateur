@@ -7,7 +7,6 @@ import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.util.ArrayList;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 /**
@@ -20,19 +19,18 @@ public abstract class Spell {
     protected int id;
     protected ElementalType element;
     protected String name;
-    protected String shortDescription;
+    protected String desc;
     protected String incantation;
     protected int uses;
     protected Animation animation;
     protected float height;
     protected float width;
-    protected Image icon;
 
-    public Spell(int id, ElementalType element, String name, String shortDescription /**/, int uses, Animation animation, float width, float height) {
+    public Spell(int id, ElementalType element, String name, String desc, int uses, Animation animation, float width, float height) {
         this.id = id;
         this.element = element;
         this.name = name;
-        this.shortDescription = shortDescription;
+        this.desc = desc;
         this.uses = uses;
         this.animation = animation;
         this.height = height;
@@ -74,21 +72,6 @@ public abstract class Spell {
         this.element = element;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
 
     public String getIncantation() {
         return incantation;
@@ -130,12 +113,14 @@ public abstract class Spell {
         this.width = width;
     }
 
-    public Image getIcon() {
-        return icon;
+    public String getName() {
+        return name;
     }
 
-    public void setIcon(Image icon) {
-        this.icon = icon;
+    public String getDesc() {
+        return desc;
     }
+    
+    
 
 }

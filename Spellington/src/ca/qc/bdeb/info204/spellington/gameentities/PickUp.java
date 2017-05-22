@@ -1,8 +1,10 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 
@@ -12,10 +14,11 @@ import org.newdawn.slick.Graphics;
  */
 public class PickUp extends Treasure {
 
+    private static final Dimension DIM_PICK_UP = new Dimension(50, 50);
     private boolean pickedUp;
 
-    public PickUp(float x, float y, float width, float height, ArrayList<Spell> droppableSpells) {
-        super(x, y, width, height, droppableSpells);
+    public PickUp(float x, float y, ArrayList<Spell> droppableSpells) {
+        super(x, y, DIM_PICK_UP.width, DIM_PICK_UP.height, droppableSpells);
         pickedUp = false;
     }
 
@@ -31,9 +34,9 @@ public class PickUp extends Treasure {
         if (spellington.getBounds().intersects(this.getBounds())) {
             pickedUp = true;
             //Exclude all droppable spells that the player already knows.
-            droppableSpells.removeAll(SpellingSystem.getKnownSpells());
+            droppableSpells.removeAll(GameManager.getGameSave().getKnownSpells());
             if (!droppableSpells.isEmpty()) {
-                SpellingSystem.getKnownSpells().add(droppableSpells.get(GameCore.rand.nextInt(droppableSpells.size())));
+                GameManager.getGameSave().getKnownSpells().add(droppableSpells.get(GameCore.rand.nextInt(droppableSpells.size())));
             }
         }
     }

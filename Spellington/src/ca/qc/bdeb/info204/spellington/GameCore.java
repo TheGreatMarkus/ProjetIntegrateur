@@ -128,8 +128,8 @@ public class GameCore extends StateBasedGame {
         this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
         this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
 
-        GameManager.initGameManager(this);
         SpellingSystem.initSpellingSystem();
+        GameManager.initGameManager(this);
         double finalTime = System.nanoTime();
         System.out.println("Time spent loading game :" + (finalTime - initTime) / 1000000000.0 + " seconds");
         System.out.println("");

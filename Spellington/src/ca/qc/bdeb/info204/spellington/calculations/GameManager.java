@@ -2,17 +2,20 @@ package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import static ca.qc.bdeb.info204.spellington.GameCore.DIM_MAP;
+import ca.qc.bdeb.info204.spellington.gameentities.Chest;
 import ca.qc.bdeb.info204.spellington.gameentities.MessageSign;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import static ca.qc.bdeb.info204.spellington.gameentities.Tile.DIM_TILE;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileEvent;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile.TileState;
+import ca.qc.bdeb.info204.spellington.gameentities.Treasure;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.DummyEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.MageEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.MeleeEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.RangedEnemy;
+import ca.qc.bdeb.info204.spellington.gamestates.LevelSelectionState;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.awt.Point;
 import java.io.FileInputStream;
@@ -60,9 +63,10 @@ public class GameManager {
 
     private static ArrayList<Enemy> activeEnemies = new ArrayList<>();
     private static ArrayList<MessageSign> activeMessageSigns = new ArrayList<>();
+    private static ArrayList<Treasure> activeTreasure = new ArrayList<>();
     //for testing
     private static final boolean ROOM_TESTING = false;
-    private static final int ROOM_TESTING_INDEX = 13;
+    private static final int ROOM_TESTING_INDEX = 4;
 
     /**
      * Initialises the GameManager.
@@ -80,9 +84,8 @@ public class GameManager {
      * @throws SlickException General Slick Exception.
      */
     public static void newGame() throws SlickException {
-        GameSave newSave = new GameSave("temp");
-        gameSave = newSave;
-        saveGameSave(gameSave);
+        gameSave = new GameSave(SpellingSystem.getAllSpells());
+        saveGameSave();
 
         activeLevel = 1;
         activeMapIndex = 0;
@@ -131,13 +134,13 @@ public class GameManager {
     /**
      * Saves the current savefile.
      *
-     * @param gameSave The game save to save.
      */
-    public static void saveGameSave(GameSave gameSave) {
+    public static void saveGameSave() {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(GAME_SAVE_PATH);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
+
             oos.writeObject(gameSave);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -193,7 +196,7 @@ public class GameManager {
         System.out.println("Dungeon levels loaded : " + DUNGEON_ROOMS.size());
         System.out.println("Plains levels loaded : " + PLAINS_ROOMS.size());
         System.out.println("Castle levels loaded : " + CASTLE_ROOMS.size());
-        System.out.println("Boos levels loaded : " + BOSS_ROOMS.size());
+        System.out.println("Boss levels loaded : " + BOSS_ROOMS.size());
         System.out.println("");
     }
 
@@ -257,7 +260,7 @@ public class GameManager {
                             tempType = Enemy.EnemyType.LIGHTNING_SLIME;
                             break;
                     }
-                    activeEnemies.add(new MeleeEnemy((DIM_TILE.width * j), (DIM_TILE.height * i), tempType));
+                    activeEnemies.add(new MeleeEnemy((DIM_TILE.width * j), (DIM_TILE.height * i) + 2 * Tile.DIM_TILE.height - Enemy.SLIME_SIZE.height, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == meleeEnemyID) {
                     tempEvent = TileEvent.MELEE_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -281,9 +284,25 @@ public class GameManager {
                             tempType = Enemy.EnemyType.CROSSBOWMAN;
                             break;
                     }
-                    activeEnemies.add(new RangedEnemy((DIM_TILE.width * j), (DIM_TILE.height * i), tempType));
+                    activeEnemies.add(new RangedEnemy((DIM_TILE.width * j), (DIM_TILE.height * i) + 2 * Tile.DIM_TILE.height - Enemy.RANGED_SIZE.height, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == tresureID) {
                     tempEvent = TileEvent.TREASURE_SPAWN;
+                    //for now, all chest can give any adept spell.
+                    activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getAdeptSpells()));
+//                    switch (activeLevel) {
+//                        case 1:
+//                            activeTreasure.add(new Chest(j, j, i, i, new ArrayList<>()));
+//                            break;
+//                        case 2:
+//                            break;
+//                        case 3:
+//                            break;
+//                        case 4:
+//
+//                            break;
+//                        case 5:
+//                            break;
+//                    }
                 } else if (activeMap.getTileId(j, i, 2) == mageSpawnID) {
                     tempEvent = TileEvent.MAGE_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;
@@ -365,7 +384,7 @@ public class GameManager {
                     activeMap = BOSS_ROOMS.get(ROOM_TESTING_INDEX);
                     break;
                 default:
-                    System.out.println("SECRET LEVEL");
+                    System.out.println("Invalid level number");
                     break;
             }
         }
@@ -374,6 +393,17 @@ public class GameManager {
             ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
             stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
         } else {
+            if (activeLevel == 1) {
+                if (gameSave == null) {
+                    gameSave = new GameSave(SpellingSystem.getAllSpells());
+                } else {
+                    saveGameSave();
+                }
+                gameSave.completeLevel(activeLevel);
+            }
+            gameSave.completeLevel(activeLevel);
+            saveGameSave();
+            ((LevelSelectionState) (stateBasedGame.getState(GameCore.LEVEL_SELECTION_STATE_ID))).prepareLevel(gameSave);
             stateBasedGame.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
         }
     }
@@ -472,6 +502,10 @@ public class GameManager {
 
     public static ArrayList<MessageSign> getActiveMessageSigns() {
         return activeMessageSigns;
+    }
+
+    public static ArrayList<Treasure> getActiveTreasure() {
+        return activeTreasure;
     }
 
 }

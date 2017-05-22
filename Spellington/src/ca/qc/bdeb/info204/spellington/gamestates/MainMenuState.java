@@ -2,6 +2,7 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.GameManager;
+import ca.qc.bdeb.info204.spellington.calculations.GameSave;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem.MenuItemType;
 import java.awt.Font;
@@ -71,15 +72,15 @@ public class MainMenuState extends BasicGameState {
         mnuItemLoadGame = new MenuItem(gc, MenuItemType.BUTTON, MM_LOAD_GAME, true, false, 0, mnuItemNewGame.getY() + mnuItemNewGame.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_LOAD_GAME), fontMenu.getHeight(MM_LOAD_GAME));
         mnuItemOptions = new MenuItem(gc, MenuItemType.BUTTON, MM_OPTIONS, true, false, 0, mnuItemLoadGame.getY() + mnuItemLoadGame.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_OPTIONS), fontMenu.getHeight(MM_OPTIONS));
         mnuItemExit = new MenuItem(gc, MenuItemType.BUTTON, MM_EXIT, true, false, 0, mnuItemOptions.getY() + mnuItemOptions.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_EXIT), fontMenu.getHeight(MM_EXIT));
-        prepareMainMenu();
+        prepareMainMenu(GameManager.getGameSave());
     }
 
-    public void prepareMainMenu() {
-        if (!GameManager.loadGameSave()) {
-            mnuItemLoadGame.setClickable(false);
-        } else {
-            mnuItemLoadGame.setClickable(true);
-
+    public void prepareMainMenu(GameSave gameSave) {
+        mnuItemLoadGame.setClickable(false);
+        if (GameManager.getGameSave() != null) {
+            if (GameManager.getGameSave().isLvl1Complete()) {
+                mnuItemLoadGame.setClickable(true);
+            }
         }
     }
 
@@ -130,6 +131,7 @@ public class MainMenuState extends BasicGameState {
             GameManager.newGame();
         }
         if (mnuItemLoadGame.getHoveredOver() && triedToClick && mnuItemLoadGame.getClickable()) {
+            ((LevelSelectionState) (game.getState(GameCore.LEVEL_SELECTION_STATE_ID))).prepareLevel(GameManager.getGameSave());
             game.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
         }
 
@@ -137,6 +139,7 @@ public class MainMenuState extends BasicGameState {
             game.enterState(GameCore.OPTIONS_MENU_STATE_ID);
         }
         if (mnuItemExit.getHoveredOver() && triedToClick) {
+            GameManager.saveGameSave();
             gc.exit();
         }
 

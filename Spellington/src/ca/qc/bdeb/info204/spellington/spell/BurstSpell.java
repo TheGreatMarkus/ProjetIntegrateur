@@ -23,8 +23,8 @@ public class BurstSpell extends ProjectileSpell {
     private float angleDeviation;
     private int projectileNumber;
 
-    public BurstSpell(int id, ElementalType element, String name, String shortDescription, int uses, Animation animation, float size, float initSpeed, float gravModifier, int damage, float angle, int projectileNumber) {
-        super(id, element, name, shortDescription, uses, animation, size, initSpeed, gravModifier, damage);
+    public BurstSpell(int id, ElementalType element, String name, String desc, int uses, Animation animation, float size, float initSpeed, float gravModifier, int damage, float angle, int projectileNumber) {
+        super(id, element, name, desc, uses, animation, size, initSpeed, gravModifier, damage);
         this.angleDeviation = angle;
         this.projectileNumber = projectileNumber;
     }

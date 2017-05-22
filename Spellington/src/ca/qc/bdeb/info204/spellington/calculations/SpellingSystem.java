@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
+import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.spell.ProjectileSpell;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
@@ -11,14 +12,13 @@ import ca.qc.bdeb.info204.spellington.spell.BurstSpell;
 import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
 import ca.qc.bdeb.info204.spellington.spell.HealingSpell;
 import ca.qc.bdeb.info204.spellington.spell.PassiveSpell;
-import ca.qc.bdeb.info204.spellington.spell.PotionsSpecial;
+import ca.qc.bdeb.info204.spellington.spell.Potion;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -43,8 +43,7 @@ public class SpellingSystem {
 
     private static String incantationText = "";
 
-    public static ArrayList<Spell> potionList = new ArrayList<>();
-    public static ArrayList<Spell> knownSpells = new ArrayList<>();
+    private static ArrayList<Spell> potionList = new ArrayList<>();
     private static ArrayList<Spell> allSpells = new ArrayList<>();
     private static ArrayList<Spell> noviceSpells = new ArrayList<>();
     private static ArrayList<Spell> adeptSpells = new ArrayList<>();
@@ -177,14 +176,14 @@ public class SpellingSystem {
         Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 200, 999);
 
         Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Potion d'acide", POTION_ACID_DESC, 1, animAcid, 100, 1, 1, 20);
-        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion Soin", POTION_HEAL_DESC, 1, animHeal, 100, 100, 20);
-        Spell PotionTime = new PotionsSpecial(ID_POTION_TIME, "Potion de ralentissement du temps", POTION_TIME_DESC, 1, animTemps, 100, 100);
-        Spell PotionPast = new PotionsSpecial(ID_POTION_PAST, "Potion du Passé", POTION_PAST_DESC, 1, animPast, 100, 100);
+        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion de soin", POTION_HEAL_DESC, 1, animHeal, 100, 100, 20);
+        Spell PotionTime = new Potion(ID_POTION_TIME, "Potion de ralentissement du temps", POTION_TIME_DESC, 1, animTemps, 100, 100);
+        Spell PotionPast = new Potion(ID_POTION_PAST, "Potion du passé", POTION_PAST_DESC, 1, animPast, 100, 100);
 
-        potionList.add(PotionAcid);
         potionList.add(PotionHeal);
-        potionList.add(PotionTime);
+        potionList.add(PotionAcid);
         potionList.add(PotionPast);
+        potionList.add(PotionTime);
 
         allSpells.add(fireBall);
         allSpells.add(iceSpike);
@@ -238,32 +237,11 @@ public class SpellingSystem {
         masterSpells.add(iceImmunity);
         masterSpells.add(greatHeal);
 
-        knownSpells.add(fireBall);
-        knownSpells.add(iceSpike);
-        knownSpells.add(spark);
-        knownSpells.add(heal);
-        knownSpells.add(ascendingCurrent);
-        knownSpells.add(fireResistance);
-        knownSpells.add(iceResistance);
-        knownSpells.add(lightningResistance);
-
         //-- test, ajout de sorts à la liste knownSpells pour les tester -----
-        knownSpells.add(greatHeal);
-        knownSpells.add(fireBreath);
-        knownSpells.add(fireImmunity);
-        knownSpells.add(iceBreath);
-        knownSpells.add(iceSpikeBall);
-        knownSpells.add(lightningSpear);
-        knownSpells.add(lightningSwarm);
-
         try {
             initSpellsIncantations();
         } catch (IOException ioe) {
         }
-    }
-
-    public static void newKnownSpell(Spell newSpell) {
-        knownSpells.add(newSpell);
     }
 
     public static void update(Input input, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, ArrayList<Enemy> activeEnemy) {
@@ -271,6 +249,7 @@ public class SpellingSystem {
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             clickedLeftMouse = true;
         }
+        ArrayList<Spell> knownSpells = GameManager.getGameSave().getKnownSpells();
 
         if (clickedLeftMouse) {
             boolean newSpell = false;
@@ -513,23 +492,22 @@ public class SpellingSystem {
 
     private static void initSpellsIncantations() throws IOException {
         ArrayList<String> tempWord = new ArrayList<>();
-        Random dice = new Random();
 
-        BufferedReader readerBuffer = null;
+        BufferedReader readerBuffer;
         String line;
         String filePath = new File("").getAbsolutePath();
         try {
             readerBuffer = new BufferedReader(new FileReader(filePath + "\\src\\res\\wordbank\\noviceWord.txt"));
+            while ((line = readerBuffer.readLine()) != null) {
+                tempWord.add(line);
+            }
+            readerBuffer.close();
         } catch (FileNotFoundException exc) {
             System.out.println("Erreur d'ouverture");
         }
-        while ((line = readerBuffer.readLine()) != null) {
-            tempWord.add(line);
-        }
-        readerBuffer.close();
 
         for (int i = 0; i < noviceSpells.size(); i++) {
-            int tempdice = dice.nextInt(tempWord.size());
+            int tempdice = GameCore.rand.nextInt(tempWord.size());
             noviceSpells.get(i).setIncantation(tempWord.get(tempdice));
             if (tempWord.size() <= 1) {
                 System.out.print("Erreur: il n'y a pas assez de mots dans noviceWord.txt");
@@ -538,21 +516,21 @@ public class SpellingSystem {
         }
         tempWord.clear();
 
-        BufferedReader readerBuffer2 = null;
+        BufferedReader readerBuffer2;
         String line2 = null;
         String filePath2 = new File("").getAbsolutePath();
         try {
             readerBuffer2 = new BufferedReader(new FileReader(filePath2 + "\\src\\res\\wordbank\\adepteWord.txt"));
+            while ((line2 = readerBuffer2.readLine()) != null) {
+                tempWord.add(line2);
+            }
+            readerBuffer2.close();
         } catch (FileNotFoundException exc) {
             System.out.println("Erreur d'ouverture");
         }
-        while ((line2 = readerBuffer2.readLine()) != null) {
-            tempWord.add(line2);
-        }
-        readerBuffer2.close();
 
         for (int i = 0; i < adeptSpells.size(); i++) {
-            int tempdice = dice.nextInt(tempWord.size());
+            int tempdice = GameCore.rand.nextInt(tempWord.size());
             adeptSpells.get(i).setIncantation(tempWord.get(tempdice));
             if (tempWord.size() <= 1) {
                 System.out.print("Erreur: il n'y a pas assez de mots dans adepteWord.txt");
@@ -566,16 +544,16 @@ public class SpellingSystem {
         String filePath3 = new File("").getAbsolutePath();
         try {
             readerBuffer3 = new BufferedReader(new FileReader(filePath3 + "\\src\\res\\wordbank\\masterWord.txt"));
+            while ((line3 = readerBuffer3.readLine()) != null) {
+                tempWord.add(line3);
+            }
+            readerBuffer3.close();
         } catch (FileNotFoundException exc) {
             System.out.println("Erreur d'ouverture");
         }
-        while ((line3 = readerBuffer3.readLine()) != null) {
-            tempWord.add(line3);
-        }
-        readerBuffer3.close();
 
         for (int i = 0; i < masterSpells.size(); i++) {
-            int tempdice = dice.nextInt(tempWord.size());
+            int tempdice = GameCore.rand.nextInt(tempWord.size());
             masterSpells.get(i).setIncantation(tempWord.get(tempdice));
             if (tempWord.size() <= 1) {
                 System.out.print("Erreur: il n'y a pas assez de mots dans masterWord.txt");
@@ -616,8 +594,20 @@ public class SpellingSystem {
         return animFireBall;
     }
 
-    public static ArrayList<Spell> getKnownSpells() {
-        return knownSpells;
+    public static ArrayList<Spell> getNoviceSpells() {
+        return noviceSpells;
+    }
+
+    public static ArrayList<Spell> getAdeptSpells() {
+        return adeptSpells;
+    }
+
+    public static ArrayList<Spell> getAllSpells() {
+        return allSpells;
+    }
+
+    public static ArrayList<Spell> getPotionList() {
+        return potionList;
     }
     
     

@@ -2,7 +2,7 @@ package ca.qc.bdeb.info204.spellington.spell;
 
 import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
-import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
@@ -23,8 +23,8 @@ public class PassiveSpell extends Spell {
     private static int resistance = 5;
     private static int immunity = 999;
 
-    public PassiveSpell(int id, GameEntity.ElementalType element, String name, String shortDescription, Animation animation, int width, int height, int yModifier) {
-        super(id, element, name, shortDescription, 0, animation, width, height);
+    public PassiveSpell(int id, ElementalType element, String name, String desc, Animation animation, int width, int height, int yModifier) {
+        super(id, element, name, desc, 0, animation, width, height);
         PassiveSpellAnimation = new GameAnimation(-200, -200, width, height, animation.copy(), true, yModifier);
 
     }

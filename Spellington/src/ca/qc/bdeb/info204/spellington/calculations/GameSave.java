@@ -1,6 +1,9 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy.EnemyType;
+import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * The game save for the user.
@@ -9,7 +12,6 @@ import java.io.Serializable;
  */
 public class GameSave implements Serializable {
 
-    private String saveName;
     private int sLevel;
     private int sXP;
     private boolean lvl1Complete;
@@ -17,19 +19,53 @@ public class GameSave implements Serializable {
     private boolean lvl3Complete;
     private boolean lvl4Complete;
     private boolean lvl5Complete;
+    private transient ArrayList<Spell> knownSpells;
+    private transient ArrayList<EnemyType> knownEnemies;
 
-    public GameSave(String saveName) {
-        this.saveName = saveName;
+    public GameSave(ArrayList<Spell> noviceSpells) {
         sLevel = 0;
         sXP = 0;
+
+        knownSpells = new ArrayList<>();
+        knownSpells.addAll(noviceSpells);
+        knownEnemies = new ArrayList<>();
+
     }
 
-    public String getSaveName() {
-        return saveName;
+    public void completeLevel(int level) {
+        switch (level) {
+            case 1:
+                lvl1Complete = true;
+                break;
+            case 2:
+                if (lvl1Complete) {
+                    lvl2Complete = true;
+                }
+                break;
+            case 3:
+                if (lvl1Complete && lvl2Complete) {
+                    lvl3Complete = true;
+                }
+                break;
+            case 4:
+                if (lvl1Complete && lvl2Complete && lvl3Complete) {
+                    lvl4Complete = true;
+                }
+                break;
+            case 5:
+                if (lvl1Complete && lvl2Complete && lvl3Complete && lvl4Complete) {
+                    lvl5Complete = true;
+                }
+                break;
+        }
     }
 
-    public void setSaveName(String saveName) {
-        this.saveName = saveName;
+    public void newKnownSpell(Spell newSpell) {
+        knownSpells.add(newSpell);
+    }
+
+    public void newKnownEnnemy(EnemyType enemyType) {
+        knownEnemies.add(enemyType);
     }
 
     public int getsLevel() {
@@ -87,7 +123,9 @@ public class GameSave implements Serializable {
     public void setLvl5Complete(boolean lvl5Complete) {
         this.lvl5Complete = lvl5Complete;
     }
-    
-    
+
+    public ArrayList<Spell> getKnownSpells() {
+        return knownSpells;
+    }
 
 }

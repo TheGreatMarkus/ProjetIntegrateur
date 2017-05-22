@@ -1,7 +1,7 @@
 package ca.qc.bdeb.info204.spellington.spell;
 
 import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
-import ca.qc.bdeb.info204.spellington.gameentities.GameEntity;
+import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
@@ -19,8 +19,8 @@ public class HealingSpell extends Spell {
 
     private int healing;
 
-    public HealingSpell(int id, String name, String shortDescription, int uses, Animation animation, int width, int height, int healing) {
-        super(id, GameEntity.ElementalType.NEUTRAL, name, shortDescription, uses, animation, width, height);
+    public HealingSpell(int id, String name, String desc, int uses, Animation animation, int width, int height, int healing) {
+        super(id, ElementalType.NEUTRAL, name, desc, uses, animation, width, height);
         this.healing = healing;
     }
 

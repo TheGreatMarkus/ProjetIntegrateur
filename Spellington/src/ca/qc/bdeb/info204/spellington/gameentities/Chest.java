@@ -1,9 +1,12 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
+import java.awt.Dimension;
 import java.util.ArrayList;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -13,16 +16,25 @@ import org.newdawn.slick.Graphics;
 public class Chest extends Treasure {
 
     private boolean open;
+    private static final Dimension DIM_CHEST = new Dimension(50, 50);
 
-    public Chest(float x, float y, float width, float height, ArrayList<Spell> droppableSpells) {
-        super(x, y, width, height, droppableSpells);
+    public Chest(float x, float y, ArrayList<Spell> droppableSpells) {
+        super(x, y, DIM_CHEST.width, DIM_CHEST.height, droppableSpells);
         open = false;
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawRect(x, y, width, height);
-        
+        g.setColor(Color.white);
+        g.fillRect(x, y, width, height);
+        if (open) {
+            g.setColor(Color.black);
+            g.drawString("OPEN", x, y);
+        } else {
+            g.setColor(Color.black);
+            g.drawString("CLOSED", x, y);
+        }
+
     }
 
     @Override
@@ -30,9 +42,9 @@ public class Chest extends Treasure {
         if (spellington.getBounds().intersects(this.getBounds())) {
             open = true;
             //Exclude all droppable spells that the player already knows.
-            droppableSpells.removeAll(SpellingSystem.getKnownSpells());
+            droppableSpells.removeAll(GameManager.getGameSave().getKnownSpells());
             if (!droppableSpells.isEmpty()) {
-                SpellingSystem.getKnownSpells().add(droppableSpells.get(GameCore.rand.nextInt(droppableSpells.size())));
+                GameManager.getGameSave().getKnownSpells().add(droppableSpells.get(GameCore.rand.nextInt(droppableSpells.size())));
             }
         }
 
