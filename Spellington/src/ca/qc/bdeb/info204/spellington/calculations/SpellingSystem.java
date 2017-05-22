@@ -43,7 +43,7 @@ public class SpellingSystem {
 
     private static String incantationText = "";
 
-    public static ArrayList<Spell> potionList = new ArrayList<>();
+    private static ArrayList<Spell> potionList = new ArrayList<>();
     private static ArrayList<Spell> allSpells = new ArrayList<>();
     private static ArrayList<Spell> noviceSpells = new ArrayList<>();
     private static ArrayList<Spell> adeptSpells = new ArrayList<>();
@@ -176,14 +176,14 @@ public class SpellingSystem {
         Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 200, 999);
 
         Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Potion d'acide", POTION_ACID_DESC, 1, animAcid, 100, 1, 1, 20);
-        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion Soin", POTION_HEAL_DESC, 1, animHeal, 100, 100, 20);
+        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion de soin", POTION_HEAL_DESC, 1, animHeal, 100, 100, 20);
         Spell PotionTime = new Potion(ID_POTION_TIME, "Potion de ralentissement du temps", POTION_TIME_DESC, 1, animTemps, 100, 100);
-        Spell PotionPast = new Potion(ID_POTION_PAST, "Potion du Passé", POTION_PAST_DESC, 1, animPast, 100, 100);
+        Spell PotionPast = new Potion(ID_POTION_PAST, "Potion du passé", POTION_PAST_DESC, 1, animPast, 100, 100);
 
-        potionList.add(PotionAcid);
         potionList.add(PotionHeal);
-        potionList.add(PotionTime);
+        potionList.add(PotionAcid);
         potionList.add(PotionPast);
+        potionList.add(PotionTime);
 
         allSpells.add(fireBall);
         allSpells.add(iceSpike);
@@ -605,5 +605,11 @@ public class SpellingSystem {
     public static ArrayList<Spell> getAllSpells() {
         return allSpells;
     }
+
+    public static ArrayList<Spell> getPotionList() {
+        return potionList;
+    }
+    
+    
 
 }

@@ -14,7 +14,8 @@ public class MenuItem {
 
     public static enum MenuItemType {
         BUTTON,
-        TEXT
+        TEXT,
+        INFO
     }
 
     private static final float TEXT_GAP = 10f * GameCore.SCALE;
@@ -31,21 +32,30 @@ public class MenuItem {
     public MenuItem(GameContainer gc, MenuItemType menuItemType, String text, boolean centerX, boolean centerY, float x, float y, float width, float height) {
         this.menuItemType = menuItemType;
         this.text = text;
-        if (centerX) {
-            this.x = gc.getWidth() / 2 - width / 2;
-        } else {
+
+        if (this.menuItemType == MenuItemType.INFO) {
             this.x = x;
-        }
-        if (centerY) {
-            this.y = gc.getHeight() / 2 - height / 2;
-        } else {
             this.y = y;
+            this.width = width;
+            this.height = height;
+        } else {
+            if (centerX) {
+                this.x = gc.getWidth() / 2 - width / 2;
+            } else {
+                this.x = x;
+            }
+            if (centerY) {
+                this.y = gc.getHeight() / 2 - height / 2;
+            } else {
+                this.y = y;
+            }
+            this.width = width;
+            this.height = height;
+            this.width += TEXT_GAP * 2f;
+            this.height += TEXT_GAP * 2f;
         }
-        this.width = width;
-        this.height = height;
-        this.width += TEXT_GAP * 2f;
-        this.height += TEXT_GAP * 2f;
-        if (this.menuItemType == MenuItemType.BUTTON) {
+
+        if (this.menuItemType == MenuItemType.BUTTON || this.menuItemType == MenuItemType.INFO) {
             this.clickable = true;
         } else {
             this.clickable = false;
@@ -68,16 +78,24 @@ public class MenuItem {
      * @param g The Graphics component.
      */
     public void render(Graphics g) {
-        if (hoveredOver && this.menuItemType == MenuItemType.BUTTON || !clickable && !(this.menuItemType == MenuItemType.TEXT)) {
-            g.setColor(new Color(1, 1, 1, 0.5f));
+        if (this.menuItemType != MenuItemType.INFO) {
+            if (hoveredOver && this.menuItemType == MenuItemType.BUTTON || !clickable && !(this.menuItemType == MenuItemType.TEXT)) {
+                g.setColor(new Color(1, 1, 1, 0.5f));
+            } else {
+                g.setColor(new Color(1, 1, 1, 1f));
+            }
+            if (this.menuItemType == MenuItemType.BUTTON) {
+                g.drawRoundRect(x, y, width, height, 12);
+            }
+            g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
         } else {
-            g.setColor(new Color(1, 1, 1, 1f));
+            if (hoveredOver) {
+                g.setColor(new Color(128, 128, 128, 0.3f));
+            } else {
+                g.setColor(new Color(128, 128, 128, 0f));
+            }
+            g.fillRect(x, y, width, height);
         }
-        if (this.menuItemType == MenuItemType.BUTTON) {
-            g.drawRoundRect(x, y, width, height, 12);
-        }
-        g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
-        
     }
 
     public boolean getHoveredOver() {
@@ -126,6 +144,14 @@ public class MenuItem {
 
     public void setClickable(boolean clickable) {
         this.clickable = clickable;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
     }
 
 }

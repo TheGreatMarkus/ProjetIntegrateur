@@ -140,7 +140,7 @@ public class GameManager {
         try {
             fos = new FileOutputStream(GAME_SAVE_PATH);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            System.out.println(gameSave);
+
             oos.writeObject(gameSave);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -196,7 +196,7 @@ public class GameManager {
         System.out.println("Dungeon levels loaded : " + DUNGEON_ROOMS.size());
         System.out.println("Plains levels loaded : " + PLAINS_ROOMS.size());
         System.out.println("Castle levels loaded : " + CASTLE_ROOMS.size());
-        System.out.println("Boos levels loaded : " + BOSS_ROOMS.size());
+        System.out.println("Boss levels loaded : " + BOSS_ROOMS.size());
         System.out.println("");
     }
 
@@ -384,7 +384,7 @@ public class GameManager {
                     activeMap = BOSS_ROOMS.get(ROOM_TESTING_INDEX);
                     break;
                 default:
-                    System.out.println("SECRET LEVEL");
+                    System.out.println("Invalid level number");
                     break;
             }
         }
