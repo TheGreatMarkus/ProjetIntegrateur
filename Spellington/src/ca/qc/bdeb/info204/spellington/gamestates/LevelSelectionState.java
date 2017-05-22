@@ -55,12 +55,14 @@ public class LevelSelectionState extends BasicGameState {
         mnuItemLevel5 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL5, false, false, MainMenuState.TEXT_GAP, mnuItemLevel4.getY() + mnuItemLevel4.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL5), fontMenu.getHeight(LS_LEVEL5));
 
     }
-    
+
     public void prepareLevel(GameSave gameSave) {
-        mnuItemLevel2.setClickable(gameSave.isLvl1Complete());
-        mnuItemLevel3.setClickable(gameSave.isLvl2Complete());
-        mnuItemLevel4.setClickable(gameSave.isLvl3Complete());
-        mnuItemLevel5.setClickable(gameSave.isLvl4Complete());
+        if (gameSave != null) {
+            mnuItemLevel2.setClickable(gameSave.isLvl1Complete());
+            mnuItemLevel3.setClickable(gameSave.isLvl2Complete());
+            mnuItemLevel4.setClickable(gameSave.isLvl3Complete());
+            mnuItemLevel5.setClickable(gameSave.isLvl4Complete());
+        }
     }
 
     /**
@@ -107,7 +109,7 @@ public class LevelSelectionState extends BasicGameState {
         boolean triedToClick = gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
 
         if (mnuItemReturn.getHoveredOver() && triedToClick && mnuItemReturn.getClickable()) {
-            GameManager.levelSelected(1);
+            ((MainMenuState) game.getState(GameCore.MAIN_MENU_STATE_ID)).prepareMainMenu(GameManager.getGameSave());
             game.enterState(GameCore.MAIN_MENU_STATE_ID);
         }
 
@@ -143,5 +145,4 @@ public class LevelSelectionState extends BasicGameState {
         return GameCore.LEVEL_SELECTION_STATE_ID;
     }
 
-    
 }

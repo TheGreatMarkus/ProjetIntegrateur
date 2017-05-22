@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
+import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy.EnemyType;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
  */
 public class GameSave implements Serializable {
 
-    private String saveName;
     private int sLevel;
     private int sXP;
     private boolean lvl1Complete;
@@ -19,12 +19,17 @@ public class GameSave implements Serializable {
     private boolean lvl3Complete;
     private boolean lvl4Complete;
     private boolean lvl5Complete;
-    private ArrayList<Spell> knownSpells;
+    private transient ArrayList<Spell> knownSpells;
+    private transient ArrayList<EnemyType> knownEnemies;
 
-    public GameSave(String saveName) {
-        this.saveName = saveName;
+    public GameSave(ArrayList<Spell> noviceSpells) {
         sLevel = 0;
         sXP = 0;
+
+        knownSpells = new ArrayList<>();
+        knownSpells.addAll(noviceSpells);
+        knownEnemies = new ArrayList<>();
+
     }
 
     public void completeLevel(int level) {
@@ -55,12 +60,12 @@ public class GameSave implements Serializable {
         }
     }
 
-    public String getSaveName() {
-        return saveName;
+    public void newKnownSpell(Spell newSpell) {
+        knownSpells.add(newSpell);
     }
 
-    public void setSaveName(String saveName) {
-        this.saveName = saveName;
+    public void newKnownEnnemy(EnemyType enemyType) {
+        knownEnemies.add(enemyType);
     }
 
     public int getsLevel() {
@@ -117,6 +122,10 @@ public class GameSave implements Serializable {
 
     public void setLvl5Complete(boolean lvl5Complete) {
         this.lvl5Complete = lvl5Complete;
+    }
+
+    public ArrayList<Spell> getKnownSpells() {
+        return knownSpells;
     }
 
 }

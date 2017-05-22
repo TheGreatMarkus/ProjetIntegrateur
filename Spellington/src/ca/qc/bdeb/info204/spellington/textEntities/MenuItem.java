@@ -77,7 +77,7 @@ public class MenuItem {
             g.drawRoundRect(x, y, width, height, 12);
         }
         g.drawString(text, x + TEXT_GAP, y + TEXT_GAP);
-
+        
     }
 
     public boolean getHoveredOver() {

@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -89,7 +90,7 @@ public class PauseMenuState extends BasicGameState {
         }
 
         if (mnuItemMainMenu.getHoveredOver() && triedToClick) {
-            ((MainMenuState) game.getState(GameCore.MAIN_MENU_STATE_ID)).prepareMainMenu();
+            ((MainMenuState) game.getState(GameCore.MAIN_MENU_STATE_ID)).prepareMainMenu(GameManager.getGameSave());
             game.enterState(GameCore.MAIN_MENU_STATE_ID);
         }
         GameCore.clearInputRecord(gc);

@@ -44,7 +44,6 @@ public class SpellingSystem {
     private static String incantationText = "";
 
     public static ArrayList<Spell> potionList = new ArrayList<>();
-    public static ArrayList<Spell> knownSpells = new ArrayList<>();
     private static ArrayList<Spell> allSpells = new ArrayList<>();
     private static ArrayList<Spell> noviceSpells = new ArrayList<>();
     private static ArrayList<Spell> adeptSpells = new ArrayList<>();
@@ -238,32 +237,11 @@ public class SpellingSystem {
         masterSpells.add(iceImmunity);
         masterSpells.add(greatHeal);
 
-        knownSpells.add(fireBall);
-        knownSpells.add(iceSpike);
-        knownSpells.add(spark);
-        knownSpells.add(heal);
-        knownSpells.add(ascendingCurrent);
-        knownSpells.add(fireResistance);
-        knownSpells.add(iceResistance);
-        knownSpells.add(lightningResistance);
-
         //-- test, ajout de sorts à la liste knownSpells pour les tester -----
-        knownSpells.add(greatHeal);
-        knownSpells.add(fireBreath);
-        knownSpells.add(fireImmunity);
-        knownSpells.add(iceBreath);
-        knownSpells.add(iceSpikeBall);
-        knownSpells.add(lightningSpear);
-        knownSpells.add(lightningSwarm);
-
         try {
             initSpellsIncantations();
         } catch (IOException ioe) {
         }
-    }
-
-    public static void newKnownSpell(Spell newSpell) {
-        knownSpells.add(newSpell);
     }
 
     public static void update(Input input, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, ArrayList<Enemy> activeEnemy) {
@@ -271,6 +249,7 @@ public class SpellingSystem {
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             clickedLeftMouse = true;
         }
+        ArrayList<Spell> knownSpells = GameManager.getGameSave().getKnownSpells();
 
         if (clickedLeftMouse) {
             boolean newSpell = false;
@@ -615,16 +594,16 @@ public class SpellingSystem {
         return animFireBall;
     }
 
-    public static ArrayList<Spell> getKnownSpells() {
-        return knownSpells;
-    }
-
     public static ArrayList<Spell> getNoviceSpells() {
         return noviceSpells;
     }
 
     public static ArrayList<Spell> getAdeptSpells() {
         return adeptSpells;
+    }
+
+    public static ArrayList<Spell> getAllSpells() {
+        return allSpells;
     }
 
 }

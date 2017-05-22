@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
+import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Dimension;
@@ -41,9 +42,9 @@ public class Chest extends Treasure {
         if (spellington.getBounds().intersects(this.getBounds())) {
             open = true;
             //Exclude all droppable spells that the player already knows.
-            droppableSpells.removeAll(SpellingSystem.getKnownSpells());
+            droppableSpells.removeAll(GameManager.getGameSave().getKnownSpells());
             if (!droppableSpells.isEmpty()) {
-                SpellingSystem.getKnownSpells().add(droppableSpells.get(GameCore.rand.nextInt(droppableSpells.size())));
+                GameManager.getGameSave().getKnownSpells().add(droppableSpells.get(GameCore.rand.nextInt(droppableSpells.size())));
             }
         }
 

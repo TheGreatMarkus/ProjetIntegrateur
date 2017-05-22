@@ -150,7 +150,7 @@ public class Calculations {
      * @return The calculated angle.
      */
     public static float detAngle(float x, float y) {
-        //Calculate the base angle assuming the deltaX and DeltaY are positive
+        //Calculate the base angle (0 < theta < PI/2); 
         float tempAngle = (float) Math.atan(Math.abs(y) / Math.abs(x));
         if (x > 0) {
             if (y < 0) {

@@ -1,7 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
-import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
+import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import ca.qc.bdeb.info204.spellington.textEntities.InfoItem;
 import org.newdawn.slick.GameContainer;
@@ -296,7 +296,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 1:
-                            if (SpellingSystem.knownSpells.size() >= 9) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 9) {
                                 spellKind = 8;
                                 showRightPage = true;
                             } else {
@@ -305,7 +305,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 2:
-                            if (SpellingSystem.knownSpells.size() >= 17) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 17) {
                                 spellKind = 16;
                                 showRightPage = true;
                             } else {
@@ -323,7 +323,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 1:
-                            if (SpellingSystem.knownSpells.size() >= 10) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 10) {
                                 spellKind = 9;
                                 showRightPage = true;
                             } else {
@@ -332,7 +332,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 2:
-                            if (SpellingSystem.knownSpells.size() >= 18) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 18) {
                                 spellKind = 17;
                                 showRightPage = true;
                             } else {
@@ -349,7 +349,7 @@ public class SpellBookState extends BasicGameState {
                             showRightPage = true;
                             break;
                         case 1:
-                            if (SpellingSystem.knownSpells.size() >= 11) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 11) {
                                 spellKind = 10;
                                 showRightPage = true;
                             } else {
@@ -358,7 +358,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 2:
-                            if (SpellingSystem.knownSpells.size() >= 19) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 19) {
                                 spellKind = 18;
                                 showRightPage = true;
                             } else {
@@ -376,7 +376,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 1:
-                            if (SpellingSystem.knownSpells.size() >= 12) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 12) {
                                 spellKind = 11;
                                 showRightPage = true;
                             } else {
@@ -385,7 +385,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 2:
-                            if (SpellingSystem.knownSpells.size() >= 20) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 20) {
                                 spellKind = 19;
                                 showRightPage = true;
                             } else {
@@ -403,7 +403,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 1:
-                            if (SpellingSystem.knownSpells.size() >= 13) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 13) {
                                 spellKind = 12;
                                 showRightPage = true;
                             } else {
@@ -412,7 +412,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 2:
-                            if (SpellingSystem.knownSpells.size() >= 21) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 21) {
                                 spellKind = 20;
                                 showRightPage = true;
                             } else {
@@ -430,7 +430,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 1:
-                            if (SpellingSystem.knownSpells.size() >= 14) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 14) {
                                 spellKind = 13;
                                 showRightPage = true;
                             } else {
@@ -439,7 +439,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 2:
-                            if (SpellingSystem.knownSpells.size() >= 22) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 22) {
                                 spellKind = 21;
                                 showRightPage = true;
                             } else {
@@ -457,7 +457,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 1:
-                            if (SpellingSystem.knownSpells.size() >= 15) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 15) {
                                 spellKind = 14;
                                 showRightPage = true;
                             } else {
@@ -466,7 +466,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 2:
-                            if (SpellingSystem.knownSpells.size() >= 23) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 23) {
                                 spellKind = 22;
                                 showRightPage = true;
                             } else {
@@ -484,7 +484,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 1:
-                            if (SpellingSystem.knownSpells.size() >= 16) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 16) {
                                 spellKind = 15;
                                 showRightPage = true;
                             } else {
@@ -493,7 +493,7 @@ public class SpellBookState extends BasicGameState {
                             break;
 
                         case 2:
-                            if (SpellingSystem.knownSpells.size() >= 24) {
+                            if (GameManager.getGameSave().getKnownSpells().size() >= 24) {
                                 spellKind = 23;
                                 showRightPage = true;
                             } else {
@@ -665,8 +665,8 @@ public class SpellBookState extends BasicGameState {
         switch (spellsSubPageState) { //Spell name title attributed in the information rectangles according to the page where the player stands
             case 0:
                 for (infoBarFill = 0, i = 0; i < 8; infoBarFill++, i++) {
-                    if (infoBarFill < SpellingSystem.knownSpells.size()) {
-                        infoList.set(i, SpellingSystem.knownSpells.get(i).getName());
+                    if (infoBarFill < GameManager.getGameSave().getKnownSpells().size()) {
+                        infoList.set(i, GameManager.getGameSave().getKnownSpells().get(i).getName());
                     } else {
                         infoList.set(i, " ");
                     }
@@ -675,8 +675,8 @@ public class SpellBookState extends BasicGameState {
 
             case 1:
                 for (infoBarFill = 8, i = 0; i < 8; infoBarFill++, i++) {
-                    if (infoBarFill < SpellingSystem.knownSpells.size()) {
-                        infoList.set(i, SpellingSystem.knownSpells.get(infoBarFill).getName());
+                    if (infoBarFill < GameManager.getGameSave().getKnownSpells().size()) {
+                        infoList.set(i, GameManager.getGameSave().getKnownSpells().get(infoBarFill).getName());
                     } else {
                         infoList.set(i, " ");
                     }
@@ -685,8 +685,8 @@ public class SpellBookState extends BasicGameState {
 
             case 2:
                 for (infoBarFill = 16, i = 0; i < 8; infoBarFill++, i++) {
-                    if (infoBarFill < SpellingSystem.knownSpells.size()) {
-                        infoList.set(i, SpellingSystem.knownSpells.get(infoBarFill).getName());
+                    if (infoBarFill < GameManager.getGameSave().getKnownSpells().size()) {
+                        infoList.set(i, GameManager.getGameSave().getKnownSpells().get(infoBarFill).getName());
                     } else {
                         infoList.set(i, " ");
                     }
@@ -763,8 +763,8 @@ public class SpellBookState extends BasicGameState {
         switch (ennemiesSubPageState) { //Spell name title attributed in the information rectangles according to the page where the player stands
             case 0:
                 for (infoBarFill = 0, i = 0; i < 8; infoBarFill++, i++) {
-                    if (infoBarFill < SpellingSystem.knownSpells.size()) {
-                        infoList.set(i, SpellingSystem.knownSpells.get(i).getName());
+                    if (infoBarFill < GameManager.getGameSave().getKnownSpells().size()) {
+                        infoList.set(i, GameManager.getGameSave().getKnownSpells().get(i).getName());
                     } else {
                         infoList.set(i, " ");
                     }
@@ -792,49 +792,49 @@ public class SpellBookState extends BasicGameState {
         if (showRightPage) {
 
             icon.draw(iconX, iconY, iconSize, iconSize);
-            if (SpellingSystem.knownSpells.get(spellKind) instanceof BurstSpell) {
+            if (GameManager.getGameSave().getKnownSpells().get(spellKind) instanceof BurstSpell) {
                 type = "Sort de souffle";
-            } else if (SpellingSystem.knownSpells.get(spellKind) instanceof ExplosionSpell) {
+            } else if (GameManager.getGameSave().getKnownSpells().get(spellKind) instanceof ExplosionSpell) {
                 type = "Explosion";
-            } else if (SpellingSystem.knownSpells.get(spellKind) instanceof ProjectileSpell) {
+            } else if (GameManager.getGameSave().getKnownSpells().get(spellKind) instanceof ProjectileSpell) {
                 type = "Projectile";
-            } else if (SpellingSystem.knownSpells.get(spellKind) instanceof HealingSpell) {
+            } else if (GameManager.getGameSave().getKnownSpells().get(spellKind) instanceof HealingSpell) {
                 type = "Guérison";
-            } else if (SpellingSystem.knownSpells.get(spellKind) instanceof PassiveSpell) {
+            } else if (GameManager.getGameSave().getKnownSpells().get(spellKind) instanceof PassiveSpell) {
                 type = "Passif";
             }
-            name = "Nom: " + SpellingSystem.knownSpells.get(spellKind).getName();
-            incantationText = "Mot déclencheur: " + SpellingSystem.knownSpells.get(spellKind).getIncantation();
-            shortDescription = "Petite description: " + SpellingSystem.knownSpells.get(spellKind).getDesc();
+            name = "Nom: " + GameManager.getGameSave().getKnownSpells().get(spellKind).getName();
+            incantationText = "Mot déclencheur: " + GameManager.getGameSave().getKnownSpells().get(spellKind).getIncantation();
+            shortDescription = "Petite description: " + GameManager.getGameSave().getKnownSpells().get(spellKind).getDesc();
 
             switch (type) {//damage and effects relative to the spell's type
                 case "Sort de souffle":
-                    String damagePoints = Integer.toString(((BurstSpell) SpellingSystem.knownSpells.get(spellKind)).getDamage());
+                    String damagePoints = Integer.toString(((BurstSpell) GameManager.getGameSave().getKnownSpells().get(spellKind)).getDamage());
                     damage = "Dégâts: " + damagePoints;
                     g.drawString(damage, iconX + iconSize + gap, iconY + 4 * gap);
                     break;
 
                 case "Explosion":
-                    damagePoints = Integer.toString(((ExplosionSpell) SpellingSystem.knownSpells.get(spellKind)).getDamage());
+                    damagePoints = Integer.toString(((ExplosionSpell) GameManager.getGameSave().getKnownSpells().get(spellKind)).getDamage());
                     damage = "Dégâts: " + damagePoints;
                     g.drawString(damage, iconX + iconSize + gap, iconY + 4 * gap);
                     break;
 
                 case "Projectile":
-                    damagePoints = Integer.toString(((ProjectileSpell) SpellingSystem.knownSpells.get(spellKind)).getDamage());
+                    damagePoints = Integer.toString(((ProjectileSpell) GameManager.getGameSave().getKnownSpells().get(spellKind)).getDamage());
                     damage = "Dégâts: " + damagePoints;
                     g.drawString(damage, iconX + iconSize + gap, iconY + 4 * gap);
                     break;
 
                 case "Guérison":
-                    String healingPoints = Integer.toString(((HealingSpell) SpellingSystem.knownSpells.get(spellKind)).getHealing());
+                    String healingPoints = Integer.toString(((HealingSpell) GameManager.getGameSave().getKnownSpells().get(spellKind)).getHealing());
                     effect = "Effet: " + healingPoints + " points de santé";
                     g.drawString(effect, iconX + iconSize + gap, iconY + 4 * gap);
                     break;
 
                 case "Passif":
 
-                    switch (SpellingSystem.knownSpells.get(spellKind).getName()) {
+                    switch (GameManager.getGameSave().getKnownSpells().get(spellKind).getName()) {
                         case "Courant ascendant":
                             effect = "Effet: Saut additionnel";
                             break;
@@ -867,7 +867,7 @@ public class SpellBookState extends BasicGameState {
                     break;
             }
 
-            switch (SpellingSystem.knownSpells.get(spellKind).getElement()) {
+            switch (GameManager.getGameSave().getKnownSpells().get(spellKind).getElement()) {
                 case FIRE:
                     element = "Élément: Feu";
                     break;
