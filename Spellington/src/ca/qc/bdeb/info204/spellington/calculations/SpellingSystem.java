@@ -72,8 +72,6 @@ public class SpellingSystem {
     private static Animation animIceImmunity;
     private static Animation animGreatHeal;
     private static Animation animAcid;
-    private static Animation animTemps;
-    private static Animation animPast;
 
     public static final int ID_FIRE_BALL = 1;
     public static final int ID_ICE_SPIKE = 2;
@@ -134,7 +132,7 @@ public class SpellingSystem {
     private static final String DESC_POTION_TIME = "";
     private static final String DESC_POTION_PAST = "";
 
-    static boolean cheatMode = true;
+    static final boolean CHEAT_MODE = false;
 
     /**
      * Initiates the necessary components for the SpellingSystem.
@@ -175,8 +173,8 @@ public class SpellingSystem {
 
         Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Potion d'acide", DESC_POTION_ACID, 1, animAcid, 40, 1, 1, 20);
         Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion de soin", DESC_POTION_HEAL, 1, animHeal, 100, 100, 20);
-        Spell PotionTime = new Potion(ID_POTION_TIME, "Potion de ralentissement du temps", DESC_POTION_TIME, 1, animTemps, 100, 100);
-        Spell PotionPast = new Potion(ID_POTION_PAST, "Potion du passé", DESC_POTION_PAST, 1, animPast, 100, 100);
+        Spell PotionTime = new Potion(ID_POTION_TIME, "Potion de ralentissement du temps", DESC_POTION_TIME, 1, new Animation(), 100, 100);
+        Spell PotionPast = new Potion(ID_POTION_PAST, "Potion du passé", DESC_POTION_PAST, 1, new Animation(), 100, 100);
 
         potionList.add(PotionHeal);
         potionList.add(PotionAcid);
@@ -269,7 +267,7 @@ public class SpellingSystem {
             if (!newSpell && activeSpell != null) {
                 activeSpell.spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
                 //pour tester
-                if (!cheatMode) {
+                if (!CHEAT_MODE) {
                     nbSpellUses--;
                 }
             }
@@ -285,19 +283,19 @@ public class SpellingSystem {
 
         //potions start-----------
         if (input.isKeyPressed(Input.KEY_1)) {
-            if (nbPotionAcid > 0) {
+            if (nbPotionHeal > 0) {
                 potionList.get(0).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
-                if (!cheatMode) {
-                    nbPotionAcid--;
+                if (!CHEAT_MODE) {
+                    nbPotionHeal--;
                 }
             }
         }
 
         if (input.isKeyPressed(Input.KEY_2)) {
-            if (nbPotionHeal > 0) {
+            if (nbPotionAcid > 0) {
                 potionList.get(1).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
-                if (!cheatMode) {
-                    nbPotionHeal--;
+                if (!CHEAT_MODE) {
+                    nbPotionAcid--;
                 }
             }
         }
@@ -305,7 +303,7 @@ public class SpellingSystem {
         if (input.isKeyPressed(Input.KEY_3)) {
             if (nbPotionTime > 0) {
                 potionList.get(2).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
-                if (!cheatMode) {
+                if (!CHEAT_MODE) {
                     nbPotionTime--;
                 }
             }
@@ -314,7 +312,7 @@ public class SpellingSystem {
         if (input.isKeyPressed(Input.KEY_4)) {
             if (nbPotionPast > 0) {
                 potionList.get(3).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
-                if (!cheatMode) {
+                if (!CHEAT_MODE) {
                     nbPotionPast--;
                 }
             }
@@ -474,7 +472,7 @@ public class SpellingSystem {
             animTeleportation = new Animation(tempImgteleportBall, 30);
             Image[] tempImgAcidPotion = new Image[1];
             for (int i = 0; i < tempImgAcidPotion.length; i++) {
-                tempImgAcidPotion[i] = new Image("res/image/HUD/acidPotion2.png");
+                tempImgAcidPotion[i] = new Image("res/image/acidProjectile.png");
             }
             animAcid = new Animation(tempImgAcidPotion, 30);
 

@@ -29,7 +29,6 @@ public class Potion extends Spell {
             PlayState.setSlowDownTime(5000);
         } else if (this.id == SpellingSystem.ID_POTION_PAST) {
             SpellingSystem.pastSpellPotion(spellington, activeAnimations);
-            activeAnimations.add(new GameAnimation(spellington.getX() - 20, spellington.getY() - 10, width, height, SpellingSystem.getAnimFireBall().copy(), false, 0));
         }
 
     }

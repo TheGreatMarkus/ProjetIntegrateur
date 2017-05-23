@@ -32,7 +32,7 @@ public class GameCore extends StateBasedGame {
 
     public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     //public static final Dimension SCREEN_SIZE = new Dimension(1920, 1080);
-    //public static final Dimension SCREEN_SIZE = new Dimension(1600, 900);
+    //public static final Dimension SCREEN_SIZE = new Dimension(1700, 1020);
     public static final Dimension PLAY_RENDER_SIZE = new Dimension(1600, 900);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
     public static float SCALE;

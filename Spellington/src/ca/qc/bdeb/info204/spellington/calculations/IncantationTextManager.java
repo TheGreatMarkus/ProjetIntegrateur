@@ -27,7 +27,6 @@ public class IncantationTextManager implements KeyListener {
     @Override
     public void keyPressed(int key, char c) {
         //See http://www.asciitable.com/ for complete ASCII table IDs
-        System.out.println((int) c);
         if (GameManager.getStateBasedGame() != null
                 && GameManager.getStateBasedGame().getCurrentState().getID() == GameCore.PLAY_STATE_ID
                 && SpellingSystem.getIncantationText().length() < 30) {

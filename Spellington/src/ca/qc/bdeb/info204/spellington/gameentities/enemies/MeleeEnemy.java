@@ -167,29 +167,26 @@ public class MeleeEnemy extends Enemy {
 
     @Override
     public void loadAnimations() {
-        String tempString = "keeper";
-        if (this.enemyType == EnemyType.KEEPER) {
-            tempString = "keeper";
+        String tempString = "";
+        switch (this.enemyType) {
+            case KEEPER:
+            case GUARD:
+                tempString = "keeper";
+                break;
+            case FIRE_SLIME:
+                tempString = "slime/red";
+                break;
+            case ICE_SLIME:
+                tempString = "slime/blue";
+                break;
+            case LIGHTNING_SLIME:
+                tempString = "slime/yellow";
+                break;
+
         }
+
         try {
-            imgStandingRight = new Image("res/image/animation/enemies/" + tempString + "/standingR.png");
-            imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standingL.png");
-
-            Image[] temp = new Image[15];
-            for (int j = 0; j < temp.length; j++) {
-                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackL/(" + (j + 1) + ").png");
-            }
-            animAttackL = new Animation(temp, 30);
-            animAttackL.setLooping(false);
-
-            temp = new Image[15];
-            for (int j = 0; j < temp.length; j++) {
-                temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackR/(" + (j + 1) + ").png");
-            }
-            animAttackR = new Animation(temp, 30);
-            animAttackR.setLooping(false);
-
-            temp = new Image[40];
+            Image[] temp = new Image[40];
             for (int j = 0; j < temp.length; j++) {
                 temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkL/(" + (j + 1) + ").png");
             }
@@ -200,6 +197,30 @@ public class MeleeEnemy extends Enemy {
                 temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkR/(" + (j + 1) + ").png");
             }
             animWalkR = new Animation(temp, 20);
+            if (this.enemyType == EnemyType.KEEPER || this.enemyType == EnemyType.GUARD) {
+                imgStandingRight = new Image("res/image/animation/enemies/" + tempString + "/standingR.png");
+                imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standingL.png");
+
+                temp = new Image[15];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackL/(" + (j + 1) + ").png");
+                }
+                animAttackL = new Animation(temp, 30);
+                animAttackL.setLooping(false);
+
+                temp = new Image[15];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackR/(" + (j + 1) + ").png");
+                }
+                animAttackR = new Animation(temp, 30);
+                animAttackR.setLooping(false);
+
+            } else if (this.enemyType == EnemyType.FIRE_SLIME || this.enemyType == EnemyType.ICE_SLIME || this.enemyType == EnemyType.LIGHTNING_SLIME) {
+                imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standing.png");
+                imgStandingRight = imgStandingLeft;
+                animAttackL = animWalkL;
+                animAttackR = animWalkR;
+            }
         } catch (SlickException ex) {
             Logger.getLogger(MeleeEnemy.class.getName()).log(Level.SEVERE, null, ex);
         }
