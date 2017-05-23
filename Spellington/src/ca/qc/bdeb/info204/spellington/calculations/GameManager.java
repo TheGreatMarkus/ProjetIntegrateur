@@ -17,6 +17,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.enemies.MeleeEnemy;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.RangedEnemy;
 import ca.qc.bdeb.info204.spellington.gamestates.LevelSelectionState;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
+import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Point;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -66,7 +67,7 @@ public class GameManager {
     private static ArrayList<Treasure> activeTreasure = new ArrayList<>();
     //for testing
     private static final boolean ROOM_TESTING = false;
-    private static final int ROOM_TESTING_INDEX = 4;
+    private static final int ROOM_TESTING_INDEX = 5;
 
     /**
      * Initialises the GameManager.
@@ -76,6 +77,9 @@ public class GameManager {
     public static void initGameManager(StateBasedGame stateBasedGame) {
         GameManager.stateBasedGame = stateBasedGame;
         loadMaps();
+        if (!loadGameSave()) {
+            gameSave = new GameSave();
+        }
     }
 
     /**
@@ -84,7 +88,7 @@ public class GameManager {
      * @throws SlickException General Slick Exception.
      */
     public static void newGame() throws SlickException {
-        gameSave = new GameSave(SpellingSystem.getAllSpells());
+        gameSave = new GameSave();
         saveGameSave();
 
         activeLevel = 1;
@@ -116,17 +120,19 @@ public class GameManager {
      * @return The loaded save file.
      */
     public static boolean loadGameSave() {
-        FileInputStream fos = null;
         try {
-            fos = new FileInputStream(GAME_SAVE_PATH);
-            ObjectInputStream oos = new ObjectInputStream(fos);
+            ObjectInputStream oos = new ObjectInputStream(new FileInputStream(GAME_SAVE_PATH));
             gameSave = (GameSave) oos.readObject();
-            fos.close();
             oos.close();
+            System.out.println("Save file correctly loaded");
+            System.out.println(gameSave.getKnownSpellsIDs());
+            System.out.println(gameSave.getKnownEnemies());
             return true;
         } catch (FileNotFoundException ex) {
+            System.out.println("Error loading save file. file not found.");
             return false;
         } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error loading save file. Error loading existing file");
             return false;
         }
     }
@@ -136,22 +142,20 @@ public class GameManager {
      *
      */
     public static void saveGameSave() {
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(GAME_SAVE_PATH);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
+        try {
+            gameSave.setKnownSpellsIDs(new ArrayList<Integer>());
+            for (Spell spell : SpellingSystem.getKnownSpells()) {
+                gameSave.getKnownSpellsIDs().add(spell.getId());
+            }
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(GAME_SAVE_PATH));
             oos.writeObject(gameSave);
+            System.out.println("Save file succesfully saved.");
+            oos.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException ex) {
-                Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
@@ -394,14 +398,6 @@ public class GameManager {
             ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
             stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
         } else {
-            if (activeLevel == 1) {
-                if (gameSave == null) {
-                    gameSave = new GameSave(SpellingSystem.getAllSpells());
-                } else {
-                    saveGameSave();
-                }
-                gameSave.completeLevel(activeLevel);
-            }
             gameSave.completeLevel(activeLevel);
             saveGameSave();
             ((LevelSelectionState) (stateBasedGame.getState(GameCore.LEVEL_SELECTION_STATE_ID))).prepareLevel(gameSave);

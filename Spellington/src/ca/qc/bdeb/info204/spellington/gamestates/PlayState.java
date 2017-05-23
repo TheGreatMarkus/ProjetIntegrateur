@@ -8,6 +8,7 @@ import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.MessageSign;
+import ca.qc.bdeb.info204.spellington.gameentities.PickUp;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
@@ -200,9 +201,17 @@ public class PlayState extends BasicGameState {
             sign.update(spellington);
         }
 
+        ArrayList<Treasure> treasureToBeRemoved = new ArrayList<>();
         for (Treasure treasure : GameManager.getActiveTreasure()) {
-            treasure.update(spellington);
+            treasure.update(spellington, deltaFloat);
+            if (treasure instanceof PickUp) {
+                if (((PickUp) treasure).isPickedUp() && ((PickUp) treasure).getMessageDuration() == 0) {
+                    treasureToBeRemoved.add(treasure);
+                }
+            }
         }
+        GameManager.getActiveTreasure().removeAll(treasureToBeRemoved);
+
         //Update of Spellington
         spellington.update(gc.getInput(), deltaFloat);
         Calculations.checkMapCollision(GameManager.getMapInformation(), spellington);
@@ -226,6 +235,12 @@ public class PlayState extends BasicGameState {
             Calculations.checkMapCollision(GameManager.getMapInformation(), enemy);
             if (enemy.getLifePoint() <= 0) {
                 enemiesToBeRemoved.add(enemy);
+                if (GameCore.rand.nextInt(10) == 0) {
+                    GameManager.getActiveTreasure().add(new PickUp(enemy.getX(), enemy.getMaxY() - 50, SpellingSystem.getAdeptSpells()));
+                }
+                if (!GameManager.getGameSave().getKnownEnemies().contains(enemy.getEnemyType())) {
+                    GameManager.getGameSave().getKnownEnemies().add(enemy.getEnemyType());
+                }
             }
         }
         GameManager.getActiveEnemies().removeAll(enemiesToBeRemoved);

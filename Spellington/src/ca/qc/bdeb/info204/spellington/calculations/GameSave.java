@@ -1,7 +1,6 @@
 package ca.qc.bdeb.info204.spellington.calculations;
 
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy.EnemyType;
-import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -19,15 +18,28 @@ public class GameSave implements Serializable {
     private boolean lvl3Complete;
     private boolean lvl4Complete;
     private boolean lvl5Complete;
-    private transient ArrayList<Spell> knownSpells;
-    private transient ArrayList<EnemyType> knownEnemies;
+    private ArrayList<Integer> knownSpellsIDs;
+    private ArrayList<EnemyType> knownEnemies;
 
-    public GameSave(ArrayList<Spell> noviceSpells) {
+    public GameSave() {
         sLevel = 0;
         sXP = 0;
 
-        knownSpells = new ArrayList<>();
-        knownSpells.addAll(noviceSpells);
+        lvl1Complete = false;
+        lvl2Complete = false;
+        lvl3Complete = false;
+        lvl4Complete = false;
+        lvl5Complete = false;
+
+        knownSpellsIDs = new ArrayList<>();
+        knownSpellsIDs.add(SpellingSystem.ID_FIRE_BALL);
+        knownSpellsIDs.add(SpellingSystem.ID_ICE_SPIKE);
+        knownSpellsIDs.add(SpellingSystem.ID_SPARK);
+        knownSpellsIDs.add(SpellingSystem.ID_HEAL);
+        knownSpellsIDs.add(SpellingSystem.ID_ASCENDING_CURRENT);
+        knownSpellsIDs.add(SpellingSystem.ID_FIRE_RES);
+        knownSpellsIDs.add(SpellingSystem.ID_ICE_RES);
+        knownSpellsIDs.add(SpellingSystem.ID_LIGHTNING_RES);
         knownEnemies = new ArrayList<>();
 
     }
@@ -60,8 +72,8 @@ public class GameSave implements Serializable {
         }
     }
 
-    public void newKnownSpell(Spell newSpell) {
-        knownSpells.add(newSpell);
+    public void newKnownSpell(Integer newSpell) {
+        knownSpellsIDs.add(newSpell);
     }
 
     public void newKnownEnnemy(EnemyType enemyType) {
@@ -124,8 +136,16 @@ public class GameSave implements Serializable {
         this.lvl5Complete = lvl5Complete;
     }
 
-    public ArrayList<Spell> getKnownSpells() {
-        return knownSpells;
+    public ArrayList<Integer> getKnownSpellsIDs() {
+        return knownSpellsIDs;
+    }
+
+    public ArrayList<EnemyType> getKnownEnemies() {
+        return knownEnemies;
+    }
+
+    public void setKnownSpellsIDs(ArrayList<Integer> knownSpellsIDs) {
+        this.knownSpellsIDs = knownSpellsIDs;
     }
 
 }

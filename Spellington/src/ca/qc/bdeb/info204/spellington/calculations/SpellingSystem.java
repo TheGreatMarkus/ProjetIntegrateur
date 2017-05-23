@@ -19,6 +19,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -48,6 +50,8 @@ public class SpellingSystem {
     private static ArrayList<Spell> noviceSpells = new ArrayList<>();
     private static ArrayList<Spell> adeptSpells = new ArrayList<>();
     private static ArrayList<Spell> masterSpells = new ArrayList<>();
+
+    private static ArrayList<Spell> knownSpells = new ArrayList<>();
 
     private static Animation animFireBall;
     private static Animation animIceSpike;
@@ -138,8 +142,9 @@ public class SpellingSystem {
      * Initiates the necessary components for the SpellingSystem.
      *
      * @author Celtis
+     * @param gameSave
      */
-    public static void initSpellingSystem() {
+    public static void initSpellingSystem(GameSave gameSave) {
         initAnimation();
 
         Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", DESC_FIRE_BALL, 5, animFireBall, 30, 1, 1, 5);
@@ -150,12 +155,12 @@ public class SpellingSystem {
         Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, "Résistance feu", DESC_FIRE_RES, animFireResistance, 100, 30, -40);
         Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, "Résistance glace", DESC_ICE_RES, animIceResistance, 100, 30, -40);
         Spell lightningResistance = new PassiveSpell(ID_LIGHTNING_RES, ElementalType.LIGHTNING, "Résistance electrique", DESC_LIGHTNING_RES, animLightningResistance, 100, 30, -40);
+
         Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", DESC_EXPLOSIVE_BALL, 2, animExplosiveBall, 70, 1, 1, 10);
         Spell fireBreath = new BurstSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", DESC_FIRE_BREATH, 3, animFireBall, 30, 1, 1, 10, 0.15f, 5);
         Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", DESC_GIANT_FIRE_BALL, 2, animGiantFireBall, 90, 1, 1, 20);
         Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", DESC_LIGHTNING_SWARM, 1, animLightningSwarm, 3, 100);
         Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", DESC_TELEPORTATION, 1, animTeleportation, 50, 0.5f, 0, 0);
-
         Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BOUNCING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", DESC_LIGHTNING_BOUNCING_BALL, 2, animLightningBouncingBall, 30, 1, 1, 10);
         Spell iceBreath = new BurstSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", DESC_ICE_BREATH, 2, animIceSpike, 10, 1, 0, 1, 0.35f, 15);
         Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", DESC_ICE_SPIKE_BALL, 2, animIceSpikeBall, 50, 1, 1, 10);
@@ -164,10 +169,8 @@ public class SpellingSystem {
         Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", DESC_FIRE_IMMUNITY, animFireImmunity, 100, 100, 0);
         Spell meteorShower = new ExplosionSpell(ID_METEOR_SHOWER, ElementalType.FIRE, "Pluie de meteors", DESC_METEOR_SHOWER, 1, animMeteorShower, 20, 9999);
         Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", DESC_LIGHTNING_IMMUNITY, animLightningImmunity, 100, 100, 0);
-
         Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", DESC_LIGHTNING_SPEAR, 1, animLightningSpear, 50, 1, 0, 60);
         Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", DESC_ICE_STORM, 1, animIceStorm, 20, 9999);
-
         Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", DESC_ICE_IMMUNITY, animIceImmunity, 100, 100, 0);
         Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", DESC_GREAT_HEAL, 1, animGreatHeal, 100, 200, 999);
 
@@ -233,10 +236,13 @@ public class SpellingSystem {
         masterSpells.add(iceImmunity);
         masterSpells.add(greatHeal);
 
-        try {
-            initSpellsIncantations();
-        } catch (IOException ioe) {
+        for (Integer id : GameManager.getGameSave().getKnownSpellsIDs()) {
+            knownSpells.add(allSpells.get(id - 1));
         }
+
+        //knownSpells.addAll(allSpells);
+        initSpellsIncantations();
+
     }
 
     public static void update(Input input, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, ArrayList<Enemy> activeEnemy) {
@@ -244,7 +250,6 @@ public class SpellingSystem {
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             clickedLeftMouse = true;
         }
-        ArrayList<Spell> knownSpells = GameManager.getGameSave().getKnownSpells();
 
         if (clickedLeftMouse) {
             boolean newSpell = false;
@@ -321,7 +326,7 @@ public class SpellingSystem {
         //potions end-----------
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = allSpells.get(ID_TELEPORTATION - 1).getIncantation();
+            incantationText = allSpells.get(ID_FIRE_BALL - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F2)) {
@@ -480,7 +485,7 @@ public class SpellingSystem {
         }
     }
 
-    private static void initSpellsIncantations() throws IOException {
+    private static void initSpellsIncantations() {
         ArrayList<String> tempWord = new ArrayList<>();
 
         BufferedReader readerBuffer;
@@ -494,6 +499,8 @@ public class SpellingSystem {
             readerBuffer.close();
         } catch (FileNotFoundException exc) {
             System.out.println("Erreur d'ouverture");
+        } catch (IOException ex) {
+            Logger.getLogger(SpellingSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         for (int i = 0; i < noviceSpells.size(); i++) {
@@ -517,6 +524,8 @@ public class SpellingSystem {
             readerBuffer2.close();
         } catch (FileNotFoundException exc) {
             System.out.println("Erreur d'ouverture");
+        } catch (IOException ex) {
+            Logger.getLogger(SpellingSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         for (int i = 0; i < adeptSpells.size(); i++) {
@@ -540,6 +549,8 @@ public class SpellingSystem {
             readerBuffer3.close();
         } catch (FileNotFoundException exc) {
             System.out.println("Erreur d'ouverture");
+        } catch (IOException ex) {
+            Logger.getLogger(SpellingSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         for (int i = 0; i < masterSpells.size(); i++) {
@@ -615,6 +626,10 @@ public class SpellingSystem {
 
     public static int getNbSpellUses() {
         return nbSpellUses;
+    }
+
+    public static ArrayList<Spell> getKnownSpells() {
+        return knownSpells;
     }
 
 }

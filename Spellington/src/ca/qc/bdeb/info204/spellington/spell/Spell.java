@@ -5,6 +5,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
+import java.io.Serializable;
 import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
@@ -14,7 +15,7 @@ import org.newdawn.slick.Input;
  *
  * @author Celtis
  */
-public abstract class Spell {
+public abstract class Spell implements Serializable {
 
     protected int id;
     protected ElementalType element;
@@ -54,8 +55,6 @@ public abstract class Spell {
      * @param spellington The playable protagonist.
      * @param activeAnimations The list of active animations in the game.
      */
-
-
     public int getId() {
         return id;
     }
@@ -71,7 +70,6 @@ public abstract class Spell {
     public void setElement(ElementalType element) {
         this.element = element;
     }
-
 
     public String getIncantation() {
         return incantation;
@@ -120,7 +118,5 @@ public abstract class Spell {
     public String getDesc() {
         return desc;
     }
-    
-    
 
 }

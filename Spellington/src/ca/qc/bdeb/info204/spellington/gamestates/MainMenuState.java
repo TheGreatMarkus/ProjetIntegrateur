@@ -77,10 +77,10 @@ public class MainMenuState extends BasicGameState {
 
     public void prepareMainMenu(GameSave gameSave) {
         mnuItemLoadGame.setClickable(false);
-        if (GameManager.getGameSave() != null) {
-            if (GameManager.getGameSave().isLvl1Complete()) {
-                mnuItemLoadGame.setClickable(true);
-            }
+        if (gameSave != null) {
+            System.out.println("Game save found and loaded");
+            mnuItemLoadGame.setClickable(true);
+
         }
     }
 

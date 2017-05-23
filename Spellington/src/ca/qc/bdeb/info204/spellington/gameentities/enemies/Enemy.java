@@ -10,6 +10,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Dimension;
+import java.io.Serializable;
 import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -26,7 +27,7 @@ import org.newdawn.slick.Image;
  */
 public abstract class Enemy extends LivingEntity {
 
-    public static enum EnemyType {
+    public static enum EnemyType implements Serializable {
         KEEPER,
         GUARD,
         ARCHER,
@@ -249,11 +250,15 @@ public abstract class Enemy extends LivingEntity {
     public void renderGeneralInfo(Graphics g) {
         g.setColor(Color.white);
         g.drawString("EnemyType : " + this.enemyType, getX(), getY() - 40);
-        g.drawString("HP = " + this.lifePoint, getX(), getY() - 20);
+        g.setColor(Color.red);
+        g.fillRect(x, y - 10, width, 5);
+        g.setColor(Color.green);
+        g.fillRect(x, y - 10, width * (float) this.lifePoint / (float) this.maxLifePoint, 5);
         if (canSeePlayer) {
             g.setColor(new Color(255, 0, 0, 100));
             g.fillRect(getX(), getY(), getWidth(), getHeight());
         }
+        g.setColor(Color.white);
         g.drawRect(getX(), getY(), getWidth(), getHeight());
         if (invulnTime > 0) {
             g.fillRect(x, y, width, height);
@@ -337,6 +342,10 @@ public abstract class Enemy extends LivingEntity {
 
     public ArrayList<Spell> getDroppableSpells() {
         return droppableSpells;
+    }
+
+    public EnemyType getEnemyType() {
+        return enemyType;
     }
 
 }
