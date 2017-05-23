@@ -65,7 +65,7 @@ public class PlayState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         spellington = new Spellington(0, 0, LivingEntity.AnimState.JUMP_R);
-        fontSpellChant = new UnicodeFont(GameCore.getFontViking(Font.BOLD, 20 * GameCore.SCALE));
+        fontSpellChant = new UnicodeFont(GameCore.getFontMeath(Font.BOLD, 30 * GameCore.SCALE));
         fontSpellChant.addAsciiGlyphs();
         fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
         fontSpellChant.loadGlyphs();
@@ -348,19 +348,20 @@ public class PlayState extends BasicGameState {
 
             g.setFont(fontSpellChant);
             g.setColor(Color.white);
-            g.drawString(incantationText, (GameCore.SCREEN_SIZE.width / 2f) - (fontSpellChant.getWidth(incantationText) / 2f), 20f * GameCore.SCALE);
-            g.drawString("Passive", 1510 * scale, 110 * scale);
+            g.drawString(incantationText, (GameCore.SCREEN_SIZE.width / 2f) - (fontSpellChant.getWidth(incantationText) / 2f), 14f * GameCore.SCALE);
+            g.drawString("Passive", 1495 * scale, 110 * scale);
             if (SpellingSystem.getNbSpellUses() > 0) {
-                g.drawString("Charges : " + SpellingSystem.getNbSpellUses(), 1380 * scale, 110 * scale);
+                g.drawString(SpellingSystem.getNbSpellUses() + "", 1380 * scale, 110 * scale);
             }
             float x = 1105;
+            float increment = 70f;
             float y = 70f * scale;
             g.drawString(SpellingSystem.getNbPotionHeal() + "", x * scale, y);
-            x += 70;
+            x += increment;
             g.drawString(SpellingSystem.getNbPotionAcid() + "", x * scale, y);
-            x += 70;
+            x += increment;
             g.drawString(SpellingSystem.getNbPotionTime() + "", x * scale, y);
-            x += 70;
+            x += increment;
             g.drawString(SpellingSystem.getNbPotionPast() + "", x * scale, y);
             x = 1386 * scale;
             y = 17 * scale;

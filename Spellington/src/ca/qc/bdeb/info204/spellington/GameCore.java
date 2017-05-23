@@ -51,7 +51,7 @@ public class GameCore extends StateBasedGame {
     private static AppGameContainer appGameContainer;
 
     private static Font fontPaladin;
-    private static Font fontViking;
+    private static Font fontMeath;
     public static Random rand = new Random();
 
     /**
@@ -77,7 +77,7 @@ public class GameCore extends StateBasedGame {
 
         try {
             fontPaladin = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Paladin.ttf"));
-            fontViking = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Meath.ttf"));
+            fontMeath = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Meath.ttf"));
         } catch (FontFormatException ex) {
             Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -170,8 +170,8 @@ public class GameCore extends StateBasedGame {
      * @return A Paladin Font
      * @author Cristian Aldea.
      */
-    public static Font getFontViking(int style, float size) {
-        return fontViking.deriveFont(style, size);
+    public static Font getFontMeath(int style, float size) {
+        return fontMeath.deriveFont(style, size);
     }
 
 }
