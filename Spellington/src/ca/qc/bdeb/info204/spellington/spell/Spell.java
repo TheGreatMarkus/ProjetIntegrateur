@@ -54,7 +54,7 @@ public abstract class Spell {
      * @param spellington The playable protagonist.
      * @param activeAnimations The list of active animations in the game.
      */
-    public abstract void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations);
+
 
     public int getId() {
         return id;

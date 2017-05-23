@@ -33,20 +33,20 @@ public abstract class LivingEntity extends DynamicEntity {
     protected int resFire;
 
     protected int invulnTime;
+    protected int maxInvulnTime;
 
     protected float maxXSpeed;
     protected Vector2D xAcc;
     protected Vector2D jumpVector;
 
-    public LivingEntity(float x, float y, float width, float height, AnimState animState, float gravMod, int maxLifePoint) {
+    public LivingEntity(float x, float y, float width, float height, AnimState animState, float gravMod) {
         super(x, y, width, height, gravMod, new Vector2D(0, 0));
         this.animState = animState;
-        collisionTop = false;
-        collisionBottom = false;
-        collisionRight = false;
-        collisionLeft = false;
+        this.collisionTop = false;
+        this.collisionBottom = false;
+        this.collisionRight = false;
+        this.collisionLeft = false;
         this.gravModifier = gravMod;
-        this.maxLifePoint = maxLifePoint;
         this.lifePoint = maxLifePoint;
         this.invulnTime = 0;
     }
@@ -78,11 +78,7 @@ public abstract class LivingEntity extends DynamicEntity {
                 damage = 0;
             }
             if (damage != 0) {
-                if (this instanceof Spellington) {
-                    invulnTime = 750;
-                } else if (this instanceof Enemy) {
-                    invulnTime = 50;
-                }
+                invulnTime = maxInvulnTime;
             }
 
             lifePoint = lifePoint - damage;
@@ -97,13 +93,6 @@ public abstract class LivingEntity extends DynamicEntity {
     /**
      * Resets the collision state for this Entity
      */
-    public void resetCollisionState() {
-        this.collisionTop = false;
-        this.collisionBottom = false;
-        this.collisionRight = false;
-        this.collisionLeft = false;
-    }
-
     public void setLifePoint(int lifePoint) {
         this.lifePoint = lifePoint;
     }
@@ -134,38 +123,6 @@ public abstract class LivingEntity extends DynamicEntity {
 
     public int getResFire() {
         return resFire;
-    }
-
-    public boolean getCollisionTop() {
-        return collisionTop;
-    }
-
-    public void setCollisionTop(boolean collisionTop) {
-        this.collisionTop = collisionTop;
-    }
-
-    public boolean getCollisionBottom() {
-        return collisionBottom;
-    }
-
-    public void setCollisionBottom(boolean collisionBottom) {
-        this.collisionBottom = collisionBottom;
-    }
-
-    public boolean getCollisionRight() {
-        return collisionRight;
-    }
-
-    public void setCollisionRight(boolean collisionRight) {
-        this.collisionRight = collisionRight;
-    }
-
-    public boolean getCollisionLeft() {
-        return collisionLeft;
-    }
-
-    public void setCollisionLeft(boolean collisionLeft) {
-        this.collisionLeft = collisionLeft;
     }
 
     public AnimState getAnimState() {

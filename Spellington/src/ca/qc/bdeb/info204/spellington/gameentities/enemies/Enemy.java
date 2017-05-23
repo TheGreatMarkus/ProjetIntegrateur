@@ -69,11 +69,12 @@ public abstract class Enemy extends LivingEntity {
     protected boolean playerInSight;
 
     public Enemy(float x, float y, EnemyType enemyType) {
-        super(x, y, 0, 0, AnimState.STANDING_L, 1, 0);
+        super(x, y, 0, 0, AnimState.STANDING_L, 1);
         this.enemyType = enemyType;
         this.maxXSpeed = 0f;
         this.xAcc = new Vector2D(0, 0);
         this.jumpVector = new Vector2D(0, 0);
+        this.maxInvulnTime = 0;
 
         //Missing resistances
         switch (this.enemyType) {

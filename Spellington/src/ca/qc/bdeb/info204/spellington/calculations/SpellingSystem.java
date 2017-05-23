@@ -31,7 +31,7 @@ import org.newdawn.slick.SlickException;
  */
 public class SpellingSystem {
 
-    private static Spell passiveSpell;
+    private static PassiveSpell passiveSpell;
     private static Spell activeSpell;
     private static Spell pastSpell;
     private static int nbSpellUses = 0;
@@ -58,16 +58,14 @@ public class SpellingSystem {
     private static Animation animIceResistance;
     private static Animation animLightningResistance;
     private static Animation animExplosiveBall;
-    private static Animation animFireBreath;
     private static Animation animGiantFireBall;
     private static Animation animLightningSwarm;
     private static Animation animTeleportation;
     private static Animation animLightningBouncingBall;
-    private static Animation animIceBreath;
     private static Animation animIceSpikeBall;
-    private static Animation animIceRune;
+    private static Animation animAvalanche;
     private static Animation animFireImmunity;
-    private static Animation animMeteorSwarm;
+    private static Animation animMeteorShower;
     private static Animation animLightningImmunity;
     private static Animation animLightningSpear;
     private static Animation animIceStorm;
@@ -90,12 +88,12 @@ public class SpellingSystem {
     public static final int ID_GIANT_FIRE_BALL = 11;
     public static final int ID_LIGHTNING_SWARM = 12;
     public static final int ID_TELEPORTATION = 13;
-    public static final int ID_LIGHTNING_BALL = 14;
+    public static final int ID_LIGHTNING_BOUNCING_BALL = 14;
     public static final int ID_ICE_BREATH = 15;
     public static final int ID_ICE_SPIKE_BALL = 16;
-    public static final int ID_ICE_RUNE = 17;
+    public static final int ID_AVALANCHE = 17;
     public static final int ID_FIRE_IMMUNITY = 18;
-    public static final int ID_METEOR_SWARM = 19;
+    public static final int ID_METEOR_SHOWER = 19;
     public static final int ID_LIGHTNING_IMMUNITY = 20;
     public static final int ID_LIGHTNING_SPEAR = 21;
     public static final int ID_ICE_STORM = 22;
@@ -107,34 +105,34 @@ public class SpellingSystem {
     public static final int ID_POTION_PAST = 28;
 
     //À changer Tarik
-    private static final String FIRE_BALL_DESC = "Boule en feu traditionnelle " + '\n' + "déployée à l'aide d'une trajectoire parabolique.";
-    private static final String ICE_SPIKE_DESC = "Pic de glace suivant une " + '\n' + "trajectoire majoritairement linéaire.";
-    private static final String SPARK_DESC = "Explosion d'étincelles " + '\n' + "engendrée par le clic de la souris.";
-    private static final String HEAL_DESC = "Guérison de base.";
-    private static final String ASCENDING_CURRENT_DESC = "Accorde un saut " + '\n' + "supplémentaire à Spellington.";
-    private static final String FIRE_RES_DESC = "Réduit les dégats infligés " + '\n' + "par les attaques pyromanes.";
-    private static final String ICE_RES_DESC = "Réduit les dégats infligés " + '\n' + "par les attaques glaciales.";
-    private static final String LIGHTNING_RES_DESC = "Réduit les dégats infligés " + '\n' + "par les attaques électrocutantes.";
-    private static final String EXPLOSIVE_BALL_DESC = "";
-    private static final String FIRE_BREATH_DESC = "";
-    private static final String GIANT_FIRE_BALL_DESC = "";
-    private static final String LIGHTNING_SWARM_DESC = "";
-    private static final String TELEPORTATION_DESC = "";
-    private static final String LIGHTNING_BALL_DESC = "";
-    private static final String ICE_BREATH_DESC = "";
-    private static final String ICE_SPIKE_BALL_DESC = "";
-    private static final String ICE_RUNE_DESC = "";
-    private static final String FIRE_IMMUNITY_DESC = "";
-    private static final String METEOR_SWARM_DESC = "";
-    private static final String LIGHTNING_IMMUNITY_DESC = "";
-    private static final String LIGHTNING_SPEAR_DESC = "";
-    private static final String ICE_STORM_DESC = "";
-    private static final String ICE_IMMUNITY_DESC = "";
-    private static final String GREAT_HEAL_DESC = "";
-    private static final String POTION_ACID_DESC = "";
-    private static final String POTION_HEAL_DESC = "";
-    private static final String POTION_TIME_DESC = "";
-    private static final String POTION_PAST_DESC = "";
+    private static final String DESC_FIRE_BALL = "Boule en feu traditionnelle " + '\n' + "déployée à l'aide d'une trajectoire parabolique.";
+    private static final String DESC_ICE_SPIKE = "Pic de glace suivant une " + '\n' + "trajectoire majoritairement linéaire.";
+    private static final String DESC_SPARK = "Explosion d'étincelles " + '\n' + "engendrée par le clic de la souris.";
+    private static final String DESC_HEAL = "Guérison de base.";
+    private static final String DESC_ASCENDING_CURRENT = "Accorde un saut " + '\n' + "supplémentaire à Spellington.";
+    private static final String DESC_FIRE_RES = "Réduit les dégats infligés " + '\n' + "par les attaques pyromanes.";
+    private static final String DESC_ICE_RES = "Réduit les dégats infligés " + '\n' + "par les attaques glaciales.";
+    private static final String DESC_LIGHTNING_RES = "Réduit les dégats infligés " + '\n' + "par les attaques électrocutantes.";
+    private static final String DESC_EXPLOSIVE_BALL = "";
+    private static final String DESC_FIRE_BREATH = "";
+    private static final String DESC_GIANT_FIRE_BALL = "";
+    private static final String DESC_LIGHTNING_SWARM = "";
+    private static final String DESC_TELEPORTATION = "";
+    private static final String DESC_LIGHTNING_BOUNCING_BALL = "";
+    private static final String DESC_ICE_BREATH = "";
+    private static final String DESC_ICE_SPIKE_BALL = "";
+    private static final String DESC_AVALANCHE = "";
+    private static final String DESC_FIRE_IMMUNITY = "";
+    private static final String DESC_METEOR_SHOWER = "";
+    private static final String DESC_LIGHTNING_IMMUNITY = "";
+    private static final String DESC_LIGHTNING_SPEAR = "";
+    private static final String DESC_ICE_STORM = "";
+    private static final String DESC_ICE_IMMUNITY = "";
+    private static final String DESC_GREAT_HEAL = "";
+    private static final String DESC_POTION_ACID = "";
+    private static final String DESC_POTION_HEAL = "";
+    private static final String DESC_POTION_TIME = "";
+    private static final String DESC_POTION_PAST = "";
 
     static boolean cheatMode = true;
 
@@ -146,44 +144,44 @@ public class SpellingSystem {
     public static void initSpellingSystem() {
         initAnimation();
 
-        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", FIRE_BALL_DESC, 5, animFireBall, 30, 1, 1, 5);
-        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", ICE_SPIKE_DESC, 3, animIceSpike, 20, 1, 0, 5);
-        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", SPARK_DESC, 2, animSpark, 5, 10);
-        Spell heal = new HealingSpell(ID_HEAL, "Soin", HEAL_DESC, 1, animHeal, 100, 100, 10);
-        Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", ASCENDING_CURRENT_DESC, animAscendingCurrent, 100, 100, 0);
-        Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, "Résistance feu", FIRE_RES_DESC, animFireResistance, 100, 30, -40);
-        Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, "Résistance glace", ICE_RES_DESC, animIceResistance, 100, 30, -40);
-        Spell lightningResistance = new PassiveSpell(ID_LIGHTNING_RES, ElementalType.LIGHTNING, "Résistance electrique", LIGHTNING_RES_DESC, animLightningResistance, 100, 30, -40);
-        Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", EXPLOSIVE_BALL_DESC, 2, animExplosiveBall, 100, 1, 1, 10);
-        Spell fireBreath = new BurstSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", FIRE_BREATH_DESC, 3, animFireBreath, 40, 1, 1, 10, 0.15f, 5);
-        Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", GIANT_FIRE_BALL_DESC, 2, animGiantFireBall, 200, 1, 1, 20);
-        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", LIGHTNING_SWARM_DESC, 1, animLightningSwarm, 3, 100);
-        Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", TELEPORTATION_DESC, 1, animTeleportation, 100, 1, 1, 0);
+        Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", DESC_FIRE_BALL, 5, animFireBall, 30, 1, 1, 5);
+        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", DESC_ICE_SPIKE, 3, animIceSpike, 10, 1, 0, 5);
+        Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", DESC_SPARK, 2, animSpark, 5, 10);
+        Spell heal = new HealingSpell(ID_HEAL, "Soin", DESC_HEAL, 1, animHeal, 100, 100, 10);
+        Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", DESC_ASCENDING_CURRENT, animAscendingCurrent, 100, 100, 0);
+        Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, "Résistance feu", DESC_FIRE_RES, animFireResistance, 100, 30, -40);
+        Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, "Résistance glace", DESC_ICE_RES, animIceResistance, 100, 30, -40);
+        Spell lightningResistance = new PassiveSpell(ID_LIGHTNING_RES, ElementalType.LIGHTNING, "Résistance electrique", DESC_LIGHTNING_RES, animLightningResistance, 100, 30, -40);
+        Spell explosiveBall = new ProjectileSpell(ID_EXPLOSIVE_BALL, ElementalType.FIRE, "Boule explosive", DESC_EXPLOSIVE_BALL, 2, animExplosiveBall, 70, 1, 1, 10);
+        Spell fireBreath = new BurstSpell(ID_FIRE_BREATH, ElementalType.FIRE, "Soufle de feu", DESC_FIRE_BREATH, 3, animFireBall, 30, 1, 1, 10, 0.15f, 5);
+        Spell giantFireBall = new ProjectileSpell(ID_GIANT_FIRE_BALL, ElementalType.FIRE, "Grosse boule de feu", DESC_GIANT_FIRE_BALL, 2, animGiantFireBall, 90, 1, 1, 20);
+        Spell lightningSwarm = new ExplosionSpell(ID_LIGHTNING_SWARM, ElementalType.LIGHTNING, "Essain d'eclairs", DESC_LIGHTNING_SWARM, 1, animLightningSwarm, 3, 100);
+        Spell teleportation = new ProjectileSpell(ID_TELEPORTATION, ElementalType.NEUTRAL, "Teleportation", DESC_TELEPORTATION, 1, animTeleportation, 50, 0.5f, 0, 0);
 
-        Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", LIGHTNING_BALL_DESC, 2, animLightningBouncingBall, 30, 1, 1, 10);
-        Spell iceBreath = new BurstSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", ICE_BREATH_DESC, 2, animIceBreath, 100, 1, 0, 1, 0.35f, 15);
-        Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", ICE_SPIKE_BALL_DESC, 2, animIceSpikeBall, 50, 1, 1, 10);
-        Spell iceRune = new ExplosionSpell(ID_ICE_RUNE, ElementalType.ICE, "Rune de glace", ICE_RUNE_DESC, 1, animIceRune, 20, 10);
+        Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BOUNCING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", DESC_LIGHTNING_BOUNCING_BALL, 2, animLightningBouncingBall, 30, 1, 1, 10);
+        Spell iceBreath = new BurstSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", DESC_ICE_BREATH, 2, animIceSpike, 10, 1, 0, 1, 0.35f, 15);
+        Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", DESC_ICE_SPIKE_BALL, 2, animIceSpikeBall, 50, 1, 1, 10);
+        Spell avalance = new ExplosionSpell(ID_AVALANCHE, ElementalType.ICE, "Avanlache de glace", DESC_AVALANCHE, 1, animAvalanche, 20, 10);
 
-        Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", FIRE_IMMUNITY_DESC, animFireImmunity, 100, 100, 0);
-        Spell meteorSwarm = new ExplosionSpell(ID_METEOR_SWARM, ElementalType.FIRE, "Pluie de meteors", METEOR_SWARM_DESC, 1, animMeteorSwarm, 20, 9999);
-        Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", LIGHTNING_IMMUNITY_DESC, animLightningImmunity, 100, 100, 0);
+        Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", DESC_FIRE_IMMUNITY, animFireImmunity, 100, 100, 0);
+        Spell meteorShower = new ExplosionSpell(ID_METEOR_SHOWER, ElementalType.FIRE, "Pluie de meteors", DESC_METEOR_SHOWER, 1, animMeteorShower, 20, 9999);
+        Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", DESC_LIGHTNING_IMMUNITY, animLightningImmunity, 100, 100, 0);
 
-        Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", LIGHTNING_SPEAR_DESC, 1, animLightningSpear, 50, 1, 0, 60);
-        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", ICE_STORM_DESC, 1, animIceStorm, 20, 9999);
+        Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", DESC_LIGHTNING_SPEAR, 1, animLightningSpear, 50, 1, 0, 60);
+        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", DESC_ICE_STORM, 1, animIceStorm, 20, 9999);
 
-        Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", ICE_IMMUNITY_DESC, animIceImmunity, 100, 100, 0);
-        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", GREAT_HEAL_DESC, 1, animGreatHeal, 100, 200, 999);
+        Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", DESC_ICE_IMMUNITY, animIceImmunity, 100, 100, 0);
+        Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", DESC_GREAT_HEAL, 1, animGreatHeal, 100, 200, 999);
 
-        Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Potion d'acide", POTION_ACID_DESC, 1, animAcid, 100, 1, 1, 20);
-        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion de soin", POTION_HEAL_DESC, 1, animHeal, 100, 100, 20);
-        Spell PotionTime = new Potion(ID_POTION_TIME, "Potion de ralentissement du temps", POTION_TIME_DESC, 1, animTemps, 100, 100);
-        Spell PotionPast = new Potion(ID_POTION_PAST, "Potion du passé", POTION_PAST_DESC, 1, animPast, 100, 100);
+        Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Potion d'acide", DESC_POTION_ACID, 1, animAcid, 40, 1, 1, 20);
+        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion de soin", DESC_POTION_HEAL, 1, animHeal, 100, 100, 20);
+        Spell PotionTime = new Potion(ID_POTION_TIME, "Potion de ralentissement du temps", DESC_POTION_TIME, 1, animTemps, 100, 100);
+        Spell PotionPast = new Potion(ID_POTION_PAST, "Potion du passé", DESC_POTION_PAST, 1, animPast, 100, 100);
 
         potionList.add(PotionHeal);
         potionList.add(PotionAcid);
-        potionList.add(PotionPast);
         potionList.add(PotionTime);
+        potionList.add(PotionPast);
 
         allSpells.add(fireBall);
         allSpells.add(iceSpike);
@@ -201,9 +199,9 @@ public class SpellingSystem {
         allSpells.add(lightningBouncingBall);
         allSpells.add(iceBreath);
         allSpells.add(iceSpikeBall);
-        allSpells.add(iceRune);
+        allSpells.add(avalance);
         allSpells.add(fireImmunity);
-        allSpells.add(meteorSwarm);
+        allSpells.add(meteorShower);
         allSpells.add(lightningImmunity);
         allSpells.add(lightningSpear);
         allSpells.add(iceStorm);
@@ -227,17 +225,16 @@ public class SpellingSystem {
         adeptSpells.add(lightningBouncingBall);
         adeptSpells.add(iceBreath);
         adeptSpells.add(iceSpikeBall);
-        adeptSpells.add(iceRune);
+        adeptSpells.add(avalance);
 
         masterSpells.add(fireImmunity);
-        masterSpells.add(meteorSwarm);
+        masterSpells.add(meteorShower);
         masterSpells.add(lightningImmunity);
         masterSpells.add(lightningSpear);
         masterSpells.add(iceStorm);
         masterSpells.add(iceImmunity);
         masterSpells.add(greatHeal);
 
-        //-- test, ajout de sorts à la liste knownSpells pour les tester -----
         try {
             initSpellsIncantations();
         } catch (IOException ioe) {
@@ -259,7 +256,7 @@ public class SpellingSystem {
                         if (passiveSpell != null) {
                             passiveSpell.endOfActivation(spellington, activeAnimations);
                         }
-                        passiveSpell = knownSpells.get(i);
+                        passiveSpell = (PassiveSpell) knownSpells.get(i);
                         passiveSpell.spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
                         newSpell = true;
                     } else {
@@ -278,7 +275,6 @@ public class SpellingSystem {
             }
             if (nbSpellUses <= 0) {
                 if (activeSpell != null) {
-                    activeSpell.endOfActivation(spellington, activeAnimations);
                     pastSpell = activeSpell;
                 }
                 activeSpell = null;
@@ -291,35 +287,43 @@ public class SpellingSystem {
         if (input.isKeyPressed(Input.KEY_1)) {
             if (nbPotionAcid > 0) {
                 potionList.get(0).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
-                nbPotionAcid--;
+                if (!cheatMode) {
+                    nbPotionAcid--;
+                }
             }
         }
 
         if (input.isKeyPressed(Input.KEY_2)) {
             if (nbPotionHeal > 0) {
                 potionList.get(1).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
-                nbPotionHeal--;
+                if (!cheatMode) {
+                    nbPotionHeal--;
+                }
             }
         }
 
         if (input.isKeyPressed(Input.KEY_3)) {
             if (nbPotionTime > 0) {
                 potionList.get(2).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
-                nbPotionTime--;
+                if (!cheatMode) {
+                    nbPotionTime--;
+                }
             }
         }
 
         if (input.isKeyPressed(Input.KEY_4)) {
             if (nbPotionPast > 0) {
                 potionList.get(3).spellActivation(spellington, input, activeAnimations, activeProjectiles, activeEnemy);
-                nbPotionPast--;
+                if (!cheatMode) {
+                    nbPotionPast--;
+                }
             }
         }
 
         //potions end-----------
         //test start........................................................
         if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = allSpells.get(ID_FIRE_BREATH - 1).getIncantation();
+            incantationText = allSpells.get(ID_TELEPORTATION - 1).getIncantation();
         }
 
         if (input.isKeyPressed(Input.KEY_F2)) {
@@ -374,45 +378,28 @@ public class SpellingSystem {
             }
             animIceResistance = new Animation(tempImgIceRes, 30);
 
-            Image[] tempImgeElectricRes = new Image[19];
-            for (int i = 0; i < tempImgeElectricRes.length; i++) {
-                tempImgeElectricRes[i] = new Image("res/image/animation/spells/electricRes/(" + (i + 1) + ").png");
+            Image[] tempImgElectricRes = new Image[19];
+            for (int i = 0; i < tempImgElectricRes.length; i++) {
+                tempImgElectricRes[i] = new Image("res/image/animation/spells/electricRes/(" + (i + 1) + ").png");
             }
-            animLightningResistance = new Animation(tempImgeElectricRes, 30);
+            animLightningResistance = new Animation(tempImgElectricRes, 30);
 
-            Image[] tempImgeElectricBolt = new Image[19];
-            for (int i = 0; i < tempImgeElectricBolt.length; i++) {
-                tempImgeElectricBolt[i] = new Image("res/image/animation/spells/lightningBolt/(" + (i + 1) + ").png");
+            Image[] tempImgElectricBolt = new Image[19];
+            for (int i = 0; i < tempImgElectricBolt.length; i++) {
+                tempImgElectricBolt[i] = new Image("res/image/animation/spells/lightningBolt/(" + (i + 1) + ").png");
             }
-            animLightningBouncingBall = new Animation(tempImgeElectricBolt, 15);
+            animLightningBouncingBall = new Animation(tempImgElectricBolt, 15);
 
-            Image[] tempImgeHealSmall = new Image[19];
-            for (int i = 0; i < tempImgeHealSmall.length; i++) {
-                tempImgeHealSmall[i] = new Image("res/image/animation/spells/healSmall/(" + (i + 1) + ").png");
+            Image[] tempImgHealSmall = new Image[19];
+            for (int i = 0; i < tempImgHealSmall.length; i++) {
+                tempImgHealSmall[i] = new Image("res/image/animation/spells/healSmall/(" + (i + 1) + ").png");
             }
-            animHeal = new Animation(tempImgeHealSmall, 30);
+            animHeal = new Animation(tempImgHealSmall, 30);
 
-            Image[] tempImgeHealBig = new Image[19];
-            for (int i = 0; i < tempImgeHealBig.length; i++) {
-                tempImgeHealBig[i] = new Image("res/image/animation/spells/healBig/(" + (i + 1) + ").png");
+            Image[] tempImgHealBig = new Image[19];
+            for (int i = 0; i < tempImgHealBig.length; i++) {
+                tempImgHealBig[i] = new Image("res/image/animation/spells/healBig/(" + (i + 1) + ").png");
             }
-            animGreatHeal = new Animation(tempImgeHealBig, 30);
-
-            Image[] tempImgeFireBreath = new Image[30];
-            for (int i = 0; i < tempImgeFireBreath.length; i++) {
-
-                tempImgeFireBreath[i] = new Image("res/image/animation/spells/fireBall/(" + (i + 1) + ").png");//animation temporaire
-
-            }
-            animFireBreath = new Animation(tempImgeFireBreath, 30);
-
-            Image[] tempImgeIceBreath = new Image[19];
-            for (int i = 0; i < tempImgeIceBreath.length; i++) {
-
-                tempImgeIceBreath[i] = new Image("res/image/animation/spells/iceSpike/(" + (i + 1) + ").png");
-
-            }
-            animIceBreath = new Animation(tempImgeIceBreath, 30);
 
             Image[] tempImgFireImmu = new Image[19];
             for (int i = 0; i < tempImgFireImmu.length; i++) {
@@ -426,65 +413,70 @@ public class SpellingSystem {
             }
             animIceImmunity = new Animation(tempImgIceImmu, 30);
 
-            Image[] tempImgeElectricImmu = new Image[19];
-            for (int i = 0; i < tempImgeElectricImmu.length; i++) {
-                tempImgeElectricImmu[i] = new Image("res/image/animation/spells/electricImmu/(" + (i + 1) + ").png");
+            Image[] tempImgElectricImmu = new Image[19];
+            for (int i = 0; i < tempImgElectricImmu.length; i++) {
+                tempImgElectricImmu[i] = new Image("res/image/animation/spells/electricImmu/(" + (i + 1) + ").png");
             }
-            animLightningImmunity = new Animation(tempImgeElectricImmu, 30);
+            animLightningImmunity = new Animation(tempImgElectricImmu, 30);
 
-            Image[] tempImgeElectricSpark = new Image[19];
-            for (int i = 0; i < tempImgeElectricSpark.length; i++) {
-                tempImgeElectricSpark[i] = new Image("res/image/animation/spells/lightningSpark/(" + (i + 1) + ").png");
+            Image[] tempImgElectricSpark = new Image[19];
+            for (int i = 0; i < tempImgElectricSpark.length; i++) {
+                tempImgElectricSpark[i] = new Image("res/image/animation/spells/lightningSpark/(" + (i + 1) + ").png");
             }
-            animSpark = new Animation(tempImgeElectricSpark, 30);
+            animSpark = new Animation(tempImgElectricSpark, 30);
 
-            Image[] tempImgeElectricSwarm = new Image[19];
-            for (int i = 0; i < tempImgeElectricSwarm.length; i++) {
-                tempImgeElectricSwarm[i] = new Image("res/image/animation/spells/lightningSwarm/(" + (i + 1) + ").png");
+            Image[] tempImgElectricSwarm = new Image[19];
+            for (int i = 0; i < tempImgElectricSwarm.length; i++) {
+                tempImgElectricSwarm[i] = new Image("res/image/animation/spells/lightningSwarm/(" + (i + 1) + ").png");
             }
-            animLightningSwarm = new Animation(tempImgeElectricSwarm, 30);
+            animLightningSwarm = new Animation(tempImgElectricSwarm, 30);
 
-            Image[] tempImgeElectricSpear = new Image[19];
-            for (int i = 0; i < tempImgeElectricSpear.length; i++) {
-                tempImgeElectricSpear[i] = new Image("res/image/animation/spells/lightningSpear/(" + (i + 1) + ").png");
+            Image[] tempImgElectricSpear = new Image[19];
+            for (int i = 0; i < tempImgElectricSpear.length; i++) {
+                tempImgElectricSpear[i] = new Image("res/image/animation/spells/lightningSpear/(" + (i + 1) + ").png");
             }
-            animLightningSpear = new Animation(tempImgeElectricSpear, 30);
+            animLightningSpear = new Animation(tempImgElectricSpear, 30);
 
-            Image[] tempImgeIceSpikeBall = new Image[19];
-            for (int i = 0; i < tempImgeIceSpikeBall.length; i++) {
-                tempImgeIceSpikeBall[i] = new Image("res/image/animation/spells/iceSpikeBall/(" + (i + 1) + ").png");
+            Image[] tempImgIceSpikeBall = new Image[19];
+            for (int i = 0; i < tempImgIceSpikeBall.length; i++) {
+                tempImgIceSpikeBall[i] = new Image("res/image/animation/spells/iceSpikeBall/(" + (i + 1) + ").png");
             }
-            animIceSpikeBall = new Animation(tempImgeIceSpikeBall, 30);
+            animIceSpikeBall = new Animation(tempImgIceSpikeBall, 30);
 
-            Image[] tempImgeExplosiveBall = new Image[20];
-            for (int i = 0; i < tempImgeExplosiveBall.length; i++) {
-                tempImgeExplosiveBall[i] = new Image("res/image/animation/spells/explosiveBall/(" + (i + 1) + ").png");
+            Image[] tempImgExplosiveBall = new Image[20];
+            for (int i = 0; i < tempImgExplosiveBall.length; i++) {
+                tempImgExplosiveBall[i] = new Image("res/image/animation/spells/explosiveBall/(" + (i + 1) + ").png");
             }
-            animExplosiveBall = new Animation(tempImgeExplosiveBall, 30);
+            animExplosiveBall = new Animation(tempImgExplosiveBall, 30);
 
-            Image[] tempImgeIceSpike = new Image[19];
-            for (int i = 0; i < tempImgeIceSpike.length; i++) {
-                tempImgeIceSpike[i] = new Image("res/image/animation/spells/iceSpike/(" + (i + 1) + ").png");
+            Image[] tempImgIceSpike = new Image[19];
+            for (int i = 0; i < tempImgIceSpike.length; i++) {
+                tempImgIceSpike[i] = new Image("res/image/animation/spells/iceSpike/(" + (i + 1) + ").png");
             }
-            animIceSpike = new Animation(tempImgeIceSpike, 30);
+            animIceSpike = new Animation(tempImgIceSpike, 30);
 
-            Image[] tempImgeIceStorm = new Image[40];
-            for (int i = 0; i < tempImgeIceStorm.length; i++) {
-                tempImgeIceStorm[i] = new Image("res/image/animation/spells/iceStorm/(" + (i + 1) + ").png");
+            Image[] tempImgIceStorm = new Image[40];
+            for (int i = 0; i < tempImgIceStorm.length; i++) {
+                tempImgIceStorm[i] = new Image("res/image/animation/spells/iceStorm/(" + (i + 1) + ").png");
             }
-            animIceStorm = new Animation(tempImgeIceStorm, 30);
+            animIceStorm = new Animation(tempImgIceStorm, 30);
 
-            Image[] tempImgeMeteorSwarm = new Image[38];
-            for (int i = 0; i < tempImgeMeteorSwarm.length; i++) {
-                tempImgeMeteorSwarm[i] = new Image("res/image/animation/spells/meteorSwarm/(" + (i + 1) + ").png");
+            Image[] tempImgMeteorSwarm = new Image[38];
+            for (int i = 0; i < tempImgMeteorSwarm.length; i++) {
+                tempImgMeteorSwarm[i] = new Image("res/image/animation/spells/meteorSwarm/(" + (i + 1) + ").png");
             }
-            animMeteorSwarm = new Animation(tempImgeMeteorSwarm, 30);
+            animMeteorShower = new Animation(tempImgMeteorSwarm, 30);
 
-            Image[] tempImgeteleportBall = new Image[1];
-            for (int i = 0; i < tempImgeteleportBall.length; i++) {
-                tempImgeteleportBall[i] = new Image("res/image/animation/spells/teleportBall.png");
+            Image[] tempImgteleportBall = new Image[1];
+            for (int i = 0; i < tempImgteleportBall.length; i++) {
+                tempImgteleportBall[i] = new Image("res/image/animation/spells/teleportBall.png");
             }
-            animTeleportation = new Animation(tempImgeteleportBall, 30);
+            animTeleportation = new Animation(tempImgteleportBall, 30);
+            Image[] tempImgAcidPotion = new Image[1];
+            for (int i = 0; i < tempImgAcidPotion.length; i++) {
+                tempImgAcidPotion[i] = new Image("res/image/HUD/acidPotion2.png");
+            }
+            animAcid = new Animation(tempImgAcidPotion, 30);
 
         } catch (SlickException ex) {
         }
@@ -565,9 +557,6 @@ public class SpellingSystem {
 
     public static void pastSpellPotion(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
         if (pastSpell != null) {
-            if (activeSpell != null) {
-                activeSpell.endOfActivation(spellington, activeAnimations);
-            }
             activeSpell = pastSpell;
             nbSpellUses = pastSpell.getUses();
 
@@ -609,7 +598,25 @@ public class SpellingSystem {
     public static ArrayList<Spell> getPotionList() {
         return potionList;
     }
-    
-    
+
+    public static int getNbPotionAcid() {
+        return nbPotionAcid;
+    }
+
+    public static int getNbPotionHeal() {
+        return nbPotionHeal;
+    }
+
+    public static int getNbPotionPast() {
+        return nbPotionPast;
+    }
+
+    public static int getNbPotionTime() {
+        return nbPotionTime;
+    }
+
+    public static int getNbSpellUses() {
+        return nbSpellUses;
+    }
 
 }

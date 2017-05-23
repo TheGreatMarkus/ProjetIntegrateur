@@ -9,15 +9,10 @@ import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.MessageSign;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
-import ca.qc.bdeb.info204.spellington.gameentities.Projectile.ProjectileSourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gameentities.Treasure;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
-import ca.qc.bdeb.info204.spellington.spell.BurstSpell;
-import ca.qc.bdeb.info204.spellington.spell.ExplosionSpell;
-import ca.qc.bdeb.info204.spellington.spell.ProjectileSpell;
-import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Font;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
@@ -50,13 +45,14 @@ public class PlayState extends BasicGameState {
     public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
 
     public static final Vector2D GRAV_ACC = new Vector2D(0, 0.0009f);
+    private static float slowDownTime = 0;
 
     //debug variable
     public static boolean debugMode = false;
-    private static boolean displayHUD = true;
+    private boolean displayHUD = true;
 
     //Variables and constants related to the rendering of the HUD
-    private Image statsBarHUD, inputTextHUD, passiveSpellHUD, activeSpellHUD, redPotionHUD, greenPotionHUD, bluePotionHUD, icePotionHUD;
+    private Image statsBarHUD, inputTextHUD, passiveSpellHUD, activeSpellHUD, acidPotionHUD, healthPotionHUD, timePotionHUD, pastPotionHUD;
 
     /**
      * Initialises the BasicGameState
@@ -82,10 +78,10 @@ public class PlayState extends BasicGameState {
         this.inputTextHUD = new Image("src/res/image/HUD/textRectangle.png");
         this.passiveSpellHUD = new Image("src/res/image/HUD/utilitySquare.png");
         this.activeSpellHUD = new Image("src/res/image/HUD/utilitySquare.png");
-        this.redPotionHUD = new Image("src/res/image/HUD/redPotion.png");
-        this.greenPotionHUD = new Image("src/res/image/HUD/greenPotion.png");
-        this.bluePotionHUD = new Image("src/res/image/HUD/bluePotion.png");
-        this.icePotionHUD = new Image("src/res/image/HUD/icePotion.png");
+        this.acidPotionHUD = new Image("src/res/image/HUD/acidPotion.png");
+        this.healthPotionHUD = new Image("src/res/image/HUD/healthPotion.png");
+        this.timePotionHUD = new Image("src/res/image/HUD/timePotion.png");
+        this.pastPotionHUD = new Image("src/res/image/HUD/pastPotion.png");
     }
 
     /**
@@ -99,6 +95,7 @@ public class PlayState extends BasicGameState {
     public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
         activeProjectiles = new ArrayList<>();
         activeAnimations = new ArrayList<>();
+
         spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
         spellington.setX(spellingtonX);
         spellington.setY(spellingtonY);
@@ -193,8 +190,15 @@ public class PlayState extends BasicGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         float deltaFloat = delta;
+        if (slowDownTime > 0) {
+            deltaFloat *= 0.1;
+            slowDownTime -= delta;
+        }
+        if (slowDownTime < 0) {
+            slowDownTime = 0;
+        }
         //System.out.println("time passed = " + deltaFloat);
-        deltaFloat *= 1;
+
         if (deltaFloat > 40) {
             deltaFloat = 40;
         }
@@ -216,7 +220,7 @@ public class PlayState extends BasicGameState {
         ArrayList<Projectile> projectilesToBeRemoved = new ArrayList<>();
         for (int i = 0; i < activeProjectiles.size(); i++) {
             activeProjectiles.get(i).update((float) deltaFloat);
-            if (Calculations.checkProjectileCollision(activeProjectiles.get(i), GameManager.getMapInformation(), GameManager.getActiveEnemies(), spellington) != -1) {
+            if (Calculations.checkProjectileCollision(activeProjectiles.get(i), GameManager.getMapInformation(), GameManager.getActiveEnemies(), activeAnimations, spellington) != -1) {
                 projectilesToBeRemoved.add(activeProjectiles.get(i));
             }
         }
@@ -344,34 +348,36 @@ public class PlayState extends BasicGameState {
             float inputTextHeight = (float) inputTextHUD.getHeight() * GameCore.SCALE;
             float spellWidth = (float) activeSpellHUD.getWidth() * GameCore.SCALE;
             float spellHeight = (float) activeSpellHUD.getHeight() * GameCore.SCALE;
-            float potionWidth = (float) redPotionHUD.getWidth() * GameCore.SCALE;
-            float potionHeight = (float) redPotionHUD.getHeight() * GameCore.SCALE;
+            float potionWidth = (float) acidPotionHUD.getWidth() * GameCore.SCALE;
+            float potionHeight = (float) acidPotionHUD.getHeight() * GameCore.SCALE;
 
             float passiveX = GameCore.SCREEN_SIZE.width - xGap - spellWidth;
             float activeX = passiveX - xGap - spellWidth;
-            float icePotionX = activeX - xGap - potionWidth;
-            float bluePotionX = icePotionX - xGap - potionWidth;
-            float greenPotionX = bluePotionX - xGap - potionWidth;
-            float redPotionX = greenPotionX - xGap - potionWidth;
+            float pastPotionX = activeX - xGap - potionWidth;
+            float timePotionX = pastPotionX - xGap - potionWidth;
+            float healthPotionX = timePotionX - xGap - potionWidth;
+            float acidPotionX = healthPotionX - xGap - potionWidth;
 
             this.statsBarHUD.draw(xGap, barsY, statsBarWidth, statsBarHeight);
             this.inputTextHUD.draw(((float) GameCore.SCREEN_SIZE.width / 2 - inputTextWidth / 2), barsY, inputTextWidth, inputTextHeight);
             this.passiveSpellHUD.draw(passiveX, barsY, spellWidth, spellHeight);
             this.activeSpellHUD.draw(activeX, barsY, spellWidth, spellHeight);
-            this.redPotionHUD.draw(redPotionX, barsY, potionWidth, potionHeight);
-            this.greenPotionHUD.draw(greenPotionX, barsY, potionWidth, potionHeight);
-            this.bluePotionHUD.draw(bluePotionX, barsY, potionWidth, potionHeight);
-            this.icePotionHUD.draw(icePotionX, barsY, potionWidth, potionHeight);
+            this.acidPotionHUD.draw(acidPotionX, barsY, potionWidth, potionHeight);
+            this.healthPotionHUD.draw(healthPotionX, barsY, potionWidth, potionHeight);
+            this.timePotionHUD.draw(timePotionX, barsY, potionWidth, potionHeight);
+            this.pastPotionHUD.draw(pastPotionX, barsY, potionWidth, potionHeight);
 
             g.setFont(fontSpellChant);
             g.setColor(textColor);
             g.drawString(incantationText, (GameCore.SCREEN_SIZE.width / 2) - (fontSpellChant.getWidth(incantationText) / 2), barsY + 8f * GameCore.SCALE);
             g.drawString("Passive", activeX, barsY + spellHeight);
-            g.drawString("Active", passiveX, barsY + spellHeight);
-            g.drawString("1", redPotionX + 3, barsY + potionHeight);
-            g.drawString("2", greenPotionX + 3, barsY + potionHeight);
-            g.drawString("3", bluePotionX + 3, barsY + potionHeight);
-            g.drawString("4", icePotionX + 3, barsY + potionHeight);
+            if (SpellingSystem.getNbSpellUses() > 0) {
+                g.drawString("Charges : " + SpellingSystem.getNbSpellUses(), passiveX, barsY + spellHeight);
+            }
+            g.drawString(SpellingSystem.getNbPotionAcid() + "", acidPotionX + 3, barsY + potionHeight);
+            g.drawString(SpellingSystem.getNbPotionHeal() + "", healthPotionX + 3, barsY + potionHeight);
+            g.drawString(SpellingSystem.getNbPotionTime() + "", timePotionX + 3, barsY + potionHeight);
+            g.drawString(SpellingSystem.getNbPotionPast() + "", pastPotionX + 3, barsY + potionHeight);
             if (SpellingSystem.getActiveSpell() != null) {
                 if (SpellingSystem.getActiveSpell().getAnimation() != null) {
                     SpellingSystem.getActiveSpell().getAnimation().draw(GameCore.SCREEN_SIZE.width - 100, 15, 80, 80);
@@ -396,6 +402,14 @@ public class PlayState extends BasicGameState {
     @Override
     public int getID() {
         return GameCore.PLAY_STATE_ID;
+    }
+
+    public static float getSlowDownTime() {
+        return slowDownTime;
+    }
+
+    public static void setSlowDownTime(float slowDownTime) {
+        PlayState.slowDownTime = slowDownTime;
     }
 
 }

@@ -2,7 +2,6 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.GameManager;
-import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Dimension;
 import java.util.ArrayList;

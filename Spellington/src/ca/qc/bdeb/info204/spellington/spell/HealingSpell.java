@@ -30,10 +30,6 @@ public class HealingSpell extends Spell {
         activeAnimations.add(new GameAnimation(spellington.getX() - 20, spellington.getY() - 10, width, height, animation.copy(), false, 0));
     }
 
-    @Override
-    public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
-
-    }
 
     public int getHealing() {
         return healing;

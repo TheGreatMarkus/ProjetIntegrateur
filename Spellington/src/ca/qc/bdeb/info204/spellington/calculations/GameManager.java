@@ -210,6 +210,7 @@ public class GameManager {
         mapInformation = new Tile[DIM_MAP.height][DIM_MAP.width];
         activeEnemies = new ArrayList<>();
         activeMessageSigns = new ArrayList<>();
+        activeTreasure = new ArrayList<>();
         for (int i = 0; i < activeMap.getHeight(); i++) {
             for (int j = 0; j < activeMap.getWidth(); j++) {
                 TileState tempState = TileState.PASSABLE;
@@ -220,7 +221,7 @@ public class GameManager {
                 } else if (activeMap.getTileId(j, i, 1) == activeMap.getTileSet(1).firstGID + 3) {
                     tempState = TileState.IMPASSABLE;
                 } else if (activeMap.getTileId(j, i, 1) == activeMap.getTileSet(1).firstGID) {
-                    tempState = TileState.LAVA;
+                    tempState = TileState.DAMAGE;
                 } else if (activeMap.getTileId(j, i, 1) == activeMap.getTileSet(1).firstGID + 6) {
                     tempState = TileState.SLIPPERY;
                 }

@@ -34,7 +34,7 @@ public class Spellington extends LivingEntity {
     private static final float MAX_X_SPEED = 0.5f;
     private static final Vector2D X_ACC = new Vector2D(0.003f, 0);
     private static final Vector2D JUMP_VECTOR = new Vector2D(0, -0.45f);
-    private static final float WJ_POWER = -0.7f;
+    private static final float WJ_POWER = -0.9f;
     private static final float WJ_ANGLE = (float) Math.toRadians(65);
     private static final Vector2D LEFT_WJ_VECTOR = new Vector2D(WJ_POWER * (float) Math.cos(WJ_ANGLE), WJ_POWER * (float) Math.sin(WJ_ANGLE));
     private static final Vector2D RIGHT_WJ_VECTOR = new Vector2D(-WJ_POWER * (float) Math.cos(WJ_ANGLE), WJ_POWER * (float) Math.sin(WJ_ANGLE));
@@ -47,10 +47,11 @@ public class Spellington extends LivingEntity {
     private static final int MAX_JUMP_TIME = 100;
 
     public Spellington(float x, float y, AnimState mouvementState) throws SlickException {
-        super(x, y, PLAYER_SIZE.width, PLAYER_SIZE.height, mouvementState, GRAV_MOD, 0);
+        super(x, y, PLAYER_SIZE.width, PLAYER_SIZE.height, mouvementState, GRAV_MOD);
         initAnimation();
 
         maxLifePoint = 100;
+        maxInvulnTime = 1000;
         lifePoint = maxLifePoint;
         maxXSpeed = MAX_X_SPEED;
         xAcc = X_ACC;

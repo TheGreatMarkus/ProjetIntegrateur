@@ -33,10 +33,10 @@ public class ExplosionSpell extends Spell {
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         float renderMouseX = input.getMouseX() / GameCore.SCALE;
         float renderMouseY = input.getMouseY() / GameCore.SCALE;
-        if (this.id == SpellingSystem.ID_SPARK || this.id == SpellingSystem.ID_LIGHTNING_SWARM || this.id == SpellingSystem.ID_ICE_RUNE) {
+        if (this.id == SpellingSystem.ID_SPARK || this.id == SpellingSystem.ID_LIGHTNING_SWARM || this.id == SpellingSystem.ID_AVALANCHE) {
             exposionSpellOnMouse(input, activeEnemy);
 
-        } else if (this.id == SpellingSystem.ID_METEOR_SWARM && this.id == SpellingSystem.ID_ICE_STORM) {
+        } else if (this.id == SpellingSystem.ID_METEOR_SHOWER && this.id == SpellingSystem.ID_ICE_STORM) {
             explosionSpellGeneral(activeEnemy);
         }
 
@@ -73,9 +73,6 @@ public class ExplosionSpell extends Spell {
         }
     }
 
-    @Override
-    public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
-    }
 
     public int getDamage() {
         return damage;

@@ -51,7 +51,7 @@ public class PassiveSpell extends Spell {
 
     }
 
-    @Override
+
     public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
         if (this.id == SpellingSystem.ID_ASCENDING_CURRENT) {
             spellington.setMaxAirJumps(spellington.getAirJumps() - airJumps);

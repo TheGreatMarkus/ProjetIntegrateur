@@ -5,7 +5,6 @@ import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
-import ca.qc.bdeb.info204.spellington.gameentities.Projectile.ProjectileSourceType;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 import java.util.ArrayList;
@@ -32,13 +31,9 @@ public class BurstSpell extends ProjectileSpell {
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         for (int j = 0; j < projectileNumber; j++) {
-            Projectile tempProjectile = this.createSpellProjectile(spellington, input, ProjectileSourceType.PLAYER);
+            Projectile tempProjectile = this.createSpellProjectile(spellington, input, this.id);
             activeProjectiles.add(tempProjectile);
         }
-    }
-
-    @Override
-    public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
     }
 
     @Override

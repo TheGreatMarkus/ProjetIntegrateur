@@ -6,6 +6,7 @@ import ca.qc.bdeb.info204.spellington.gameentities.GameEntity.ElementalType;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
+import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
 import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
@@ -24,14 +25,15 @@ public class Potion extends Spell {
 
     @Override
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
-        if (this.id == SpellingSystem.ID_POTION_PAST) {
+        if (this.id == SpellingSystem.ID_POTION_TIME) {
+            PlayState.setSlowDownTime(5000);
+        } else if (this.id == SpellingSystem.ID_POTION_PAST) {
             SpellingSystem.pastSpellPotion(spellington, activeAnimations);
-            activeAnimations.add(new GameAnimation(spellington.getX() - 20, spellington.getY() - 10, width, height, animation.copy(), false, 0));
+            activeAnimations.add(new GameAnimation(spellington.getX() - 20, spellington.getY() - 10, width, height, SpellingSystem.getAnimFireBall().copy(), false, 0));
         }
 
     }
 
-    @Override
     public void endOfActivation(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
 
     }

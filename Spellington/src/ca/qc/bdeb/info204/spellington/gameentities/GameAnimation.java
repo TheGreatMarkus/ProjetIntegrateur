@@ -12,20 +12,19 @@ public class GameAnimation extends GameEntity {
 
     private Animation animation;
     private int yModifier;
-    private boolean looping;
+    private boolean onPlayer;
 
-    public GameAnimation(float x, float y, float width, float height, Animation animation, boolean looping, int yModifier) {
+    public GameAnimation(float x, float y, float width, float height, Animation animation, boolean onPlayer, int onPlayerYMod) {
         super(x, y, width, height);
-        this.looping = looping;
+        this.onPlayer = onPlayer;
         this.animation = animation;
-        this.animation.setLooping(looping);
-        this.yModifier = yModifier;
-        this.animation.restart();
+        this.animation.setLooping(this.onPlayer);
+        this.yModifier = onPlayerYMod;
 
     }
 
     public void render(Graphics g, Spellington spellington) {
-        if (looping) {
+        if (onPlayer) {
             this.animation.draw(spellington.getX() - 20, spellington.getY() - (10 + yModifier), getWidth(), getHeight());
         } else {
             this.animation.draw(x, y, getWidth(), getHeight());
