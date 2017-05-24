@@ -53,6 +53,10 @@ public class PlayState extends BasicGameState {
     public static boolean debugMode = false;
     private boolean displayHUD = true;
 
+    private Image backgroundTuto;
+    private Image backgroundDungeon;
+    private Image backgroundIce;
+    private Image backgroundCastle;
     private Image hud;
 
     /**
@@ -74,6 +78,10 @@ public class PlayState extends BasicGameState {
         IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
         //Loading test map information.
 
+        backgroundTuto = new Image("src/res/image/background/tuto.png");
+        backgroundDungeon = new Image("src/res/image/background/dungeon.png");
+        backgroundIce = new Image("src/res/image/background/ice.png");
+        backgroundCastle = new Image("src/res/image/background/castle.png");
         //Loading HUD image
         this.hud = new Image("src/res/image/HUD/hud.png");
     }
@@ -109,6 +117,15 @@ public class PlayState extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
         //Must be the first in the PlayState renger method.
+        //background
+        switch(GameManager.getActiveLevel()){
+            case 1:backgroundTuto.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
+            case 2:backgroundDungeon.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
+            case 3:backgroundIce.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
+            case 4:backgroundCastle.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
+        
+        }
+        
         g.scale(GameCore.SCALE, GameCore.SCALE);
 
         g.setColor(Color.white);
