@@ -272,7 +272,7 @@ public class PlayState extends BasicGameState {
         //Update of enemies
         ArrayList<Enemy> enemiesToBeRemoved = new ArrayList<>();
         for (Enemy enemy : GameManager.getActiveEnemies()) {
-            enemy.update(deltaFloat, spellington, activeProjectiles, GameManager.getMapInformation());
+            enemy.update(deltaFloat, spellington, activeProjectiles, activeAnimations, GameManager.getMapInformation());
             Calculations.checkMapCollision(GameManager.getMapInformation(), enemy);
             if (enemy.getLifePoint() <= 0) {
                 enemiesToBeRemoved.add(enemy);

@@ -17,7 +17,6 @@ public class GameSave implements Serializable {
     private boolean lvl2Complete;
     private boolean lvl3Complete;
     private boolean lvl4Complete;
-    private boolean lvl5Complete;
     private ArrayList<Integer> knownSpellsIDs;
     private ArrayList<EnemyType> knownEnemies;
 
@@ -25,21 +24,12 @@ public class GameSave implements Serializable {
         sLevel = 0;
         sXP = 0;
 
-        lvl1Complete = true;
-        lvl2Complete = true;
+        lvl1Complete = false;
+        lvl2Complete = false;
         lvl3Complete = false;
         lvl4Complete = false;
-        lvl5Complete = false;
 
         knownSpellsIDs = new ArrayList<>();
-        knownSpellsIDs.add(SpellingSystem.ID_FIRE_BALL);
-        knownSpellsIDs.add(SpellingSystem.ID_ICE_SPIKE);
-        knownSpellsIDs.add(SpellingSystem.ID_SPARK);
-        knownSpellsIDs.add(SpellingSystem.ID_HEAL);
-        knownSpellsIDs.add(SpellingSystem.ID_ASCENDING_CURRENT);
-        knownSpellsIDs.add(SpellingSystem.ID_FIRE_RES);
-        knownSpellsIDs.add(SpellingSystem.ID_ICE_RES);
-        knownSpellsIDs.add(SpellingSystem.ID_LIGHTNING_RES);
         knownEnemies = new ArrayList<>();
 
     }
@@ -64,11 +54,7 @@ public class GameSave implements Serializable {
                     lvl4Complete = true;
                 }
                 break;
-            case 5:
-                if (lvl1Complete && lvl2Complete && lvl3Complete && lvl4Complete) {
-                    lvl5Complete = true;
-                }
-                break;
+
         }
     }
 
@@ -126,14 +112,6 @@ public class GameSave implements Serializable {
 
     public void setLvl4Complete(boolean lvl4Complete) {
         this.lvl4Complete = lvl4Complete;
-    }
-
-    public boolean isLvl5Complete() {
-        return lvl5Complete;
-    }
-
-    public void setLvl5Complete(boolean lvl5Complete) {
-        this.lvl5Complete = lvl5Complete;
     }
 
     public ArrayList<Integer> getKnownSpellsIDs() {

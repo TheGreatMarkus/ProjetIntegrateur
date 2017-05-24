@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
+import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
@@ -24,11 +25,11 @@ public class BossEnemy extends Enemy {
     }
 
     @Override
-    public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, Tile[][] mapinfo) {
     }
 
     @Override
-    public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
     }
 
     @Override

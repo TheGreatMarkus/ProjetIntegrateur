@@ -184,7 +184,6 @@ public class GameManager {
     /**
      * Loads a savefile of the game if one exists.
      *
-     * @return The loaded save file.
      */
     public static void loadGameSave() {
         try {
@@ -203,6 +202,7 @@ public class GameManager {
         for (Integer id : gameSave.getKnownSpellsIDs()) {
             SpellingSystem.getKnownSpells().add(SpellingSystem.getAllSpells().get(id - 1));
         }
+        //SpellingSystem.getKnownSpells().addAll(SpellingSystem.getAllSpells());
 
     }
 
@@ -211,7 +211,6 @@ public class GameManager {
      *
      */
     public static void saveGameSave() {
-
         try {
             gameSave.setKnownSpellsIDs(new ArrayList<Integer>());
             for (Spell spell : SpellingSystem.getKnownSpells()) {
@@ -306,7 +305,7 @@ public class GameManager {
                 int rangedEnemyID = activeMap.getTileSet(1).firstGID + 4;
                 int tresureID = activeMap.getTileSet(1).firstGID + 7;
                 int mageSpawnID = activeMap.getTileSet(1).firstGID + 10;
-                int whatIsThis = activeMap.getTileSet(1).firstGID + 2;
+                int masterTreasureID = activeMap.getTileSet(1).firstGID + 2;
                 int message1ID = activeMap.getTileSet(1).firstGID + 5;
                 int message2ID = activeMap.getTileSet(1).firstGID + 8;
                 int message3ID = activeMap.getTileSet(1).firstGID + 11;
@@ -392,8 +391,9 @@ public class GameManager {
                             break;
                     }
                     activeEnemies.add(new MageEnemy((DIM_TILE.width * j), (DIM_TILE.height * i), tempType));
-                } else if (activeMap.getTileId(j, i, 2) == whatIsThis) {
+                } else if (activeMap.getTileId(j, i, 2) == masterTreasureID) {
                     tempEvent = TileEvent.WHAT_IS_THIS;
+
                 } else if (activeMap.getTileId(j, i, 2) == message1ID) {
                     tempEvent = TileEvent.MESSAGE_1;
                     if (activeMapIndex == 1) {

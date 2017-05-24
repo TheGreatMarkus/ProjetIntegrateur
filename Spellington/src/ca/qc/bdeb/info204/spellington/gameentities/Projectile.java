@@ -35,7 +35,7 @@ public class Projectile extends DynamicEntity {
         sourceID = id;
         this.bounces = 0;
         if (sourceID == SpellingSystem.ID_LIGHTNING_BOUNCING_BALL) {
-            this.bounces = 10000;
+            this.bounces = 15;
         }
         if (sourceID == SpellingSystem.ID_EXPLOSIVE_BALL) {
             this.bounces = 1;

@@ -691,4 +691,12 @@ public class SpellingSystem {
         SpellingSystem.knownSpells = knownSpells;
     }
 
+    public static Animation getAnimIceSpike() {
+        return animIceSpike;
+    }
+
+    public static Animation getAnimLightningBouncingBall() {
+        return animLightningBouncingBall;
+    }
+
 }
