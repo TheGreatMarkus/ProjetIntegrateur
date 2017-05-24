@@ -93,7 +93,6 @@ public class PlayState extends BasicGameState {
         spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
         spellington.setX(spellingtonX);
         spellington.setY(spellingtonY);
-        spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
         spellington.setSpeedVector(new Vector2D(0, 0));
         map = currentMap;
     }
@@ -108,6 +107,7 @@ public class PlayState extends BasicGameState {
      */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+        
         //Must be the first in the PlayState renger method.
         g.scale(GameCore.SCALE, GameCore.SCALE);
 
