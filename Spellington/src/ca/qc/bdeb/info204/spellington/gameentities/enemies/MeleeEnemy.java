@@ -58,19 +58,19 @@ public class MeleeEnemy extends Enemy {
         switch (this.animState) {
             case STANDING_L:
                 imgStandingLeft.draw(tempX, tempY, tempWidth, tempHeight);
-                g.drawRect(getCenterX() - attackRange, y + 20, attackRange, 30);
+                //g.drawRect(getCenterX() - attackRange, y + 20, attackRange, 30);
                 break;
             case STANDING_R:
                 imgStandingRight.draw(tempX, tempY, tempWidth, tempHeight);
-                g.drawRect(getCenterX(), y + 20, attackRange, 30);
+                //g.drawRect(getCenterX(), y + 20, attackRange, 30);
                 break;
             case WALKING_L:
                 animWalkL.draw(tempX, tempY, tempWidth, tempHeight);
-                g.drawRect(getCenterX() - attackRange, y + 20, attackRange, 30);
+                //g.drawRect(getCenterX() - attackRange, y + 20, attackRange, 30);
                 break;
             case WALKING_R:
                 animWalkR.draw(tempX, tempY, tempWidth, tempHeight);
-                g.drawRect(getCenterX(), y + 20, attackRange, 30);
+                //g.drawRect(getCenterX(), y + 20, attackRange, 30);
                 break;
             case ATTACK_L:
                 animAttackL.draw(tempX, tempY, tempWidth, tempHeight);
