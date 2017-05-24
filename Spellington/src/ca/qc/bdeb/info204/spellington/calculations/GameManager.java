@@ -339,22 +339,22 @@ public class GameManager {
                     activeEnemies.add(new RangedEnemy((DIM_TILE.width * j), (DIM_TILE.height * i) + 2 * Tile.DIM_TILE.height - Enemy.RANGED_SIZE.height, tempType));
                 } else if (activeMap.getTileId(j, i, 2) == tresureID) {
                     tempEvent = TileEvent.TREASURE_SPAWN;
-                    //for now, all chest can give any adept spell.
-                    activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getAdeptSpells()));
-//                    switch (activeLevel) {
-//                        case 1:
-//                            activeTreasure.add(new Chest(j, j, i, i, new ArrayList<>()));
-//                            break;
-//                        case 2:
-//                            break;
-//                        case 3:
-//                            break;
-//                        case 4:
-//
-//                            break;
-//                        case 5:
-//                            break;
-//                    }
+//                    for now, all chest can give any adept spell.
+//                    activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getAdeptSpells()));
+                    switch (activeLevel) {
+                        case 1:
+                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getFireSpells()));
+                            break;
+                        case 2:
+                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getFireSpells()));
+                            break;
+                        case 3:
+                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getIceSpells()));
+                            break;
+                        case 4:
+                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getLightningSpells()));
+                            break;
+                    }
                 } else if (activeMap.getTileId(j, i, 2) == mageSpawnID) {
                     tempEvent = TileEvent.MAGE_ENEMY_SPAWN;
                     Enemy.EnemyType tempType = null;

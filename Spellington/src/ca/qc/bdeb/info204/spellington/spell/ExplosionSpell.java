@@ -36,7 +36,7 @@ public class ExplosionSpell extends Spell {
         if (this.id == SpellingSystem.ID_SPARK || this.id == SpellingSystem.ID_LIGHTNING_SWARM || this.id == SpellingSystem.ID_RUNE) {
             exposionSpellOnMouse(input, activeEnemy);
 
-        } else if (this.id == SpellingSystem.ID_METEOR_SHOWER && this.id == SpellingSystem.ID_ICE_STORM) {
+        } else if (this.id == SpellingSystem.ID_METEOR_SHOWER || this.id == SpellingSystem.ID_ICE_STORM) {
             explosionSpellGeneral(activeEnemy);
         }
 

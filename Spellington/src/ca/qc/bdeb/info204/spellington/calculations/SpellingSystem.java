@@ -50,6 +50,9 @@ public class SpellingSystem {
     private static ArrayList<Spell> noviceSpells = new ArrayList<>();
     private static ArrayList<Spell> adeptSpells = new ArrayList<>();
     private static ArrayList<Spell> masterSpells = new ArrayList<>();
+    private static ArrayList<Spell> fireSpells = new ArrayList<>();
+    private static ArrayList<Spell> iceSpells = new ArrayList<>();
+    private static ArrayList<Spell> lightningSpells = new ArrayList<>();
 
     private static ArrayList<Spell> knownSpells = new ArrayList<>();
 
@@ -167,10 +170,10 @@ public class SpellingSystem {
         Spell iceRune = new ExplosionSpell(ID_RUNE, ElementalType.ICE, "Rune de glace", DESC_RUNE, 1, animRune, 20, 100);
 
         Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", DESC_FIRE_IMMUNITY, animFireImmunity, 100, 100, 0);
-        Spell meteorShower = new ExplosionSpell(ID_METEOR_SHOWER, ElementalType.FIRE, "Pluie de meteors", DESC_METEOR_SHOWER, 1, animMeteorShower, 20, 500);
+        Spell meteorShower = new ExplosionSpell(ID_METEOR_SHOWER, ElementalType.FIRE, "Pluie de meteors", DESC_METEOR_SHOWER, 1, animMeteorShower, 30, 500);
         Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", DESC_LIGHTNING_IMMUNITY, animLightningImmunity, 100, 100, 0);
         Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", DESC_LIGHTNING_SPEAR, 1, animLightningSpear, 50, 1, 0, 60);
-        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", DESC_ICE_STORM, 1, animIceStorm, 20, 500);
+        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", DESC_ICE_STORM, 1, animIceStorm, 30, 500);
         Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", DESC_ICE_IMMUNITY, animIceImmunity, 100, 100, 0);
         Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", DESC_GREAT_HEAL, 1, animGreatHeal, 100, 200, 999);
 
@@ -235,6 +238,25 @@ public class SpellingSystem {
         masterSpells.add(iceStorm);
         masterSpells.add(iceImmunity);
         masterSpells.add(greatHeal);
+        
+        fireSpells.add(explosiveBall);
+        fireSpells.add(fireBreath);
+        fireSpells.add(giantFireBall);
+        fireSpells.add(fireImmunity);
+        fireSpells.add(meteorShower);
+        
+        iceSpells.add(iceStorm);
+        iceSpells.add(iceImmunity);
+        iceSpells.add(iceBreath);
+        iceSpells.add(iceSpikeBall);
+        iceSpells.add(iceRune);
+        
+        lightningSpells.add(lightningSwarm);
+        lightningSpells.add(teleportation);
+        lightningSpells.add(lightningBouncingBall);
+        lightningSpells.add(lightningImmunity);
+        lightningSpells.add(lightningSpear);
+        lightningSpells.add(greatHeal);        
 
         for (Integer id : GameManager.getGameSave().getKnownSpellsIDs()) {
             knownSpells.add(allSpells.get(id - 1));
@@ -324,35 +346,7 @@ public class SpellingSystem {
         }
 
         //potions end-----------
-        //test start........................................................
-        if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = allSpells.get(ID_FIRE_BALL - 1).getIncantation();
-        }
 
-        if (input.isKeyPressed(Input.KEY_F2)) {
-            incantationText = allSpells.get(ID_HEAL - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F9)) {
-            incantationText = allSpells.get(ID_ASCENDING_CURRENT - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F8)) {
-            incantationText = allSpells.get(ID_FIRE_RES - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F7)) {
-            incantationText = allSpells.get(ID_LIGHTNING_SWARM - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F6)) {
-            incantationText = allSpells.get(ID_FIRE_IMMUNITY - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F1)) {
-            spellington.subLifePoint(30, ElementalType.FIRE);
-        }
-        //test fin..........................................................
     }
 
     private static void initAnimation() {
@@ -645,6 +639,18 @@ public class SpellingSystem {
 
     public static ArrayList<Spell> getKnownSpells() {
         return knownSpells;
+    }
+
+    public static ArrayList<Spell> getFireSpells() {
+        return fireSpells;
+    }
+
+    public static ArrayList<Spell> getIceSpells() {
+        return iceSpells;
+    }
+
+    public static ArrayList<Spell> getLightningSpells() {
+        return lightningSpells;
     }
 
 }
