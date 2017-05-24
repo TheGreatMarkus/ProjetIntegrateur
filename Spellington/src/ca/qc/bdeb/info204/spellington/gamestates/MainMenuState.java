@@ -59,7 +59,7 @@ public class MainMenuState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         IMG_MENU_CURSOR = new Image("res/image/cursor/small_cursor.png");
         //Initialisation du font pour le menu.
-        backGround = new Image("res/image/menu/mm_background.png");
+        backGround = new Image("res/image/background/backgroundMenu.png");
 
         fontMenu = new UnicodeFont(GameCore.getFontPaladin(Font.BOLD, 80.0f * GameCore.SCALE));
         fontMenu.addAsciiGlyphs();
