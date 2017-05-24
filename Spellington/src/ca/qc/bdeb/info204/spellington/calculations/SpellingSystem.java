@@ -50,6 +50,9 @@ public class SpellingSystem {
     private static ArrayList<Spell> noviceSpells = new ArrayList<>();
     private static ArrayList<Spell> adeptSpells = new ArrayList<>();
     private static ArrayList<Spell> masterSpells = new ArrayList<>();
+    private static ArrayList<Spell> fireSpells = new ArrayList<>();
+    private static ArrayList<Spell> iceSpells = new ArrayList<>();
+    private static ArrayList<Spell> lightningSpells = new ArrayList<>();
 
     private static ArrayList<Spell> knownSpells = new ArrayList<>();
 
@@ -67,7 +70,7 @@ public class SpellingSystem {
     private static Animation animTeleportation;
     private static Animation animLightningBouncingBall;
     private static Animation animIceSpikeBall;
-    private static Animation animAvalanche;
+    private static Animation animRune;
     private static Animation animFireImmunity;
     private static Animation animMeteorShower;
     private static Animation animLightningImmunity;
@@ -93,7 +96,7 @@ public class SpellingSystem {
     public static final int ID_LIGHTNING_BOUNCING_BALL = 14;
     public static final int ID_ICE_BREATH = 15;
     public static final int ID_ICE_SPIKE_BALL = 16;
-    public static final int ID_AVALANCHE = 17;
+    public static final int ID_RUNE = 17;
     public static final int ID_FIRE_IMMUNITY = 18;
     public static final int ID_METEOR_SHOWER = 19;
     public static final int ID_LIGHTNING_IMMUNITY = 20;
@@ -123,7 +126,7 @@ public class SpellingSystem {
     private static final String DESC_LIGHTNING_BOUNCING_BALL = "";
     private static final String DESC_ICE_BREATH = "";
     private static final String DESC_ICE_SPIKE_BALL = "";
-    private static final String DESC_AVALANCHE = "";
+    private static final String DESC_RUNE = "";
     private static final String DESC_FIRE_IMMUNITY = "";
     private static final String DESC_METEOR_SHOWER = "";
     private static final String DESC_LIGHTNING_IMMUNITY = "";
@@ -164,13 +167,13 @@ public class SpellingSystem {
         Spell lightningBouncingBall = new ProjectileSpell(ID_LIGHTNING_BOUNCING_BALL, ElementalType.LIGHTNING, "Boule electrique rebondissante", DESC_LIGHTNING_BOUNCING_BALL, 2, animLightningBouncingBall, 30, 1, 1, 10);
         Spell iceBreath = new BurstSpell(ID_ICE_BREATH, ElementalType.ICE, "Souffle de glace", DESC_ICE_BREATH, 2, animIceSpike, 10, 1, 0, 1, 0.35f, 15);
         Spell iceSpikeBall = new ProjectileSpell(ID_ICE_SPIKE_BALL, ElementalType.ICE, "Boule a pointes de glace", DESC_ICE_SPIKE_BALL, 2, animIceSpikeBall, 50, 1, 1, 10);
-        Spell avalance = new ExplosionSpell(ID_AVALANCHE, ElementalType.ICE, "Avanlache de glace", DESC_AVALANCHE, 1, animAvalanche, 20, 10);
+        Spell iceRune = new ExplosionSpell(ID_RUNE, ElementalType.ICE, "Rune de glace", DESC_RUNE, 1, animRune, 20, 100);
 
         Spell fireImmunity = new PassiveSpell(ID_FIRE_IMMUNITY, ElementalType.FIRE, "Immunite feu", DESC_FIRE_IMMUNITY, animFireImmunity, 100, 100, 0);
-        Spell meteorShower = new ExplosionSpell(ID_METEOR_SHOWER, ElementalType.FIRE, "Pluie de meteors", DESC_METEOR_SHOWER, 1, animMeteorShower, 20, 9999);
+        Spell meteorShower = new ExplosionSpell(ID_METEOR_SHOWER, ElementalType.FIRE, "Pluie de meteors", DESC_METEOR_SHOWER, 1, animMeteorShower, 30, 500);
         Spell lightningImmunity = new PassiveSpell(ID_LIGHTNING_IMMUNITY, ElementalType.LIGHTNING, "Immunite électrique", DESC_LIGHTNING_IMMUNITY, animLightningImmunity, 100, 100, 0);
         Spell lightningSpear = new ProjectileSpell(ID_LIGHTNING_SPEAR, ElementalType.LIGHTNING, "Lance de foudre", DESC_LIGHTNING_SPEAR, 1, animLightningSpear, 50, 1, 0, 60);
-        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", DESC_ICE_STORM, 1, animIceStorm, 20, 9999);
+        Spell iceStorm = new ExplosionSpell(ID_ICE_STORM, ElementalType.ICE, "Tempete de glace", DESC_ICE_STORM, 1, animIceStorm, 30, 500);
         Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", DESC_ICE_IMMUNITY, animIceImmunity, 100, 100, 0);
         Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", DESC_GREAT_HEAL, 1, animGreatHeal, 100, 200, 999);
 
@@ -200,7 +203,7 @@ public class SpellingSystem {
         allSpells.add(lightningBouncingBall);
         allSpells.add(iceBreath);
         allSpells.add(iceSpikeBall);
-        allSpells.add(avalance);
+        allSpells.add(iceRune);
         allSpells.add(fireImmunity);
         allSpells.add(meteorShower);
         allSpells.add(lightningImmunity);
@@ -226,7 +229,7 @@ public class SpellingSystem {
         adeptSpells.add(lightningBouncingBall);
         adeptSpells.add(iceBreath);
         adeptSpells.add(iceSpikeBall);
-        adeptSpells.add(avalance);
+        adeptSpells.add(iceRune);
 
         masterSpells.add(fireImmunity);
         masterSpells.add(meteorShower);
@@ -235,12 +238,31 @@ public class SpellingSystem {
         masterSpells.add(iceStorm);
         masterSpells.add(iceImmunity);
         masterSpells.add(greatHeal);
+        
+        fireSpells.add(explosiveBall);
+        fireSpells.add(fireBreath);
+        fireSpells.add(giantFireBall);
+        fireSpells.add(fireImmunity);
+        fireSpells.add(meteorShower);
+        
+        iceSpells.add(iceStorm);
+        iceSpells.add(iceImmunity);
+        iceSpells.add(iceBreath);
+        iceSpells.add(iceSpikeBall);
+        iceSpells.add(iceRune);
+        
+        lightningSpells.add(lightningSwarm);
+        lightningSpells.add(teleportation);
+        lightningSpells.add(lightningBouncingBall);
+        lightningSpells.add(lightningImmunity);
+        lightningSpells.add(lightningSpear);
+        lightningSpells.add(greatHeal);        
 
         for (Integer id : GameManager.getGameSave().getKnownSpellsIDs()) {
             knownSpells.add(allSpells.get(id - 1));
         }
 
-        //knownSpells.addAll(allSpells);
+        //knownSpells.addAll(adeptSpells);// test <<----------
         initSpellsIncantations();
 
     }
@@ -324,35 +346,7 @@ public class SpellingSystem {
         }
 
         //potions end-----------
-        //test start........................................................
-        if (input.isKeyPressed(Input.KEY_EQUALS)) {
-            incantationText = allSpells.get(ID_FIRE_BALL - 1).getIncantation();
-        }
 
-        if (input.isKeyPressed(Input.KEY_F2)) {
-            incantationText = allSpells.get(ID_HEAL - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F9)) {
-            incantationText = allSpells.get(ID_ASCENDING_CURRENT - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F8)) {
-            incantationText = allSpells.get(ID_FIRE_RES - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F7)) {
-            incantationText = allSpells.get(ID_LIGHTNING_SWARM - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F6)) {
-            incantationText = allSpells.get(ID_FIRE_IMMUNITY - 1).getIncantation();
-        }
-
-        if (input.isKeyPressed(Input.KEY_F1)) {
-            spellington.subLifePoint(30, ElementalType.FIRE);
-        }
-        //test fin..........................................................
     }
 
     private static void initAnimation() {
@@ -403,7 +397,8 @@ public class SpellingSystem {
             for (int i = 0; i < tempImgHealBig.length; i++) {
                 tempImgHealBig[i] = new Image("res/image/animation/spells/healBig/(" + (i + 1) + ").png");
             }
-
+            animGreatHeal = new Animation(tempImgHealBig, 30);
+            
             Image[] tempImgFireImmu = new Image[19];
             for (int i = 0; i < tempImgFireImmu.length; i++) {
                 tempImgFireImmu[i] = new Image("res/image/animation/spells/fireImmu/(" + (i + 1) + ").png");
@@ -475,6 +470,20 @@ public class SpellingSystem {
                 tempImgteleportBall[i] = new Image("res/image/animation/spells/teleportBall.png");
             }
             animTeleportation = new Animation(tempImgteleportBall, 30);
+            
+            Image[] tempImgFireBallGiant = new Image[31];
+            for (int i = 0; i < tempImgFireBallGiant.length; i++) {
+                tempImgFireBallGiant[i] = new Image("res/image/animation/spells/fireBall/(" + (i + 1) + ").png");
+            }
+            animGiantFireBall = new Animation(tempImgFireBallGiant, 30);
+            
+            Image[] tempImgIceRune = new Image[20];
+            for (int i = 0; i < tempImgIceRune.length; i++) {
+                tempImgIceRune[i] = new Image("res/image/animation/spells/iceRune/ (" + (i + 1) + ").png");
+            }
+            animRune = new Animation(tempImgIceRune, 30);
+            
+            //potion animation
             Image[] tempImgAcidPotion = new Image[1];
             for (int i = 0; i < tempImgAcidPotion.length; i++) {
                 tempImgAcidPotion[i] = new Image("res/image/acidProjectile.png");
@@ -630,6 +639,18 @@ public class SpellingSystem {
 
     public static ArrayList<Spell> getKnownSpells() {
         return knownSpells;
+    }
+
+    public static ArrayList<Spell> getFireSpells() {
+        return fireSpells;
+    }
+
+    public static ArrayList<Spell> getIceSpells() {
+        return iceSpells;
+    }
+
+    public static ArrayList<Spell> getLightningSpells() {
+        return lightningSpells;
     }
 
 }
