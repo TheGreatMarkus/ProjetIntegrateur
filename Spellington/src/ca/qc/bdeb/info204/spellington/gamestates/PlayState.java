@@ -374,6 +374,7 @@ public class PlayState extends BasicGameState {
     private void displayHUD(Graphics g) throws SlickException {
         if (displayHUD) {
             g.scale(1f / GameCore.SCALE, 1f / GameCore.SCALE);
+            g.setColor(Color.white);
             g.drawString("ESC : Menu de pause / F4 : Montrer ou cacher le HUD", 10, GameCore.SCREEN_SIZE.height - 40);
             float scale = GameCore.SCALE;
             String incantationText = SpellingSystem.getIncantationText();

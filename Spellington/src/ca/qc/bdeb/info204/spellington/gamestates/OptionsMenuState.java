@@ -10,6 +10,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.Input;
 import static ca.qc.bdeb.info204.spellington.gamestates.MainMenuState.fontMenu;
+import org.newdawn.slick.Image;
 
 /**
  * A BasicGameState that will let the user to change options such as controls
@@ -25,6 +26,8 @@ public class OptionsMenuState extends BasicGameState {
 
     private MenuItem mnuItemTitle;
     private MenuItem mnuItemBack;
+    
+    private Image backgroundMenu2;
 
     /**
      * Initialises the BasicGameState
@@ -38,6 +41,8 @@ public class OptionsMenuState extends BasicGameState {
 
         mnuItemTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, OM_TITLE, true, false, 0, MainMenuState.TEXT_GAP, fontMenu.getWidth(OM_TITLE), fontMenu.getHeight(OM_TITLE));
         mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, OM_BACK, false, false, MainMenuState.TEXT_GAP, MainMenuState.TEXT_GAP, fontMenu.getWidth(OM_BACK), fontMenu.getHeight(OM_BACK));
+    
+        backgroundMenu2 = new Image("src/res/image/background/backgroundMenu2.png");
     }
 
     /**
@@ -50,6 +55,8 @@ public class OptionsMenuState extends BasicGameState {
      */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+        backgroundMenu2.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);
+        
         g.setFont(fontMenu);
         mnuItemTitle.render(g);
         mnuItemBack.render(g);

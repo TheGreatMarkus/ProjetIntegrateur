@@ -92,15 +92,21 @@ public abstract class Enemy extends LivingEntity {
                         this.maxXSpeed = 0.2f;
                         this.xAcc = new Vector2D(0.003f, 0);
                         this.jumpVector = new Vector2D(0, -0.45f);
+                        this.resFire = 10;
+                        this.resIce = 0;
+                        this.resElectricity = 5;
                         break;
                     case GUARD:
                         this.maxLifePoint = 50;
                         this.xpOnKill = 0;
                         this.damageType = ElementalType.LIGHTNING;
-                        this.damage = 12;
+                        this.damage = 18;
                         this.maxXSpeed = 0.1f;
                         this.xAcc = new Vector2D(0.002f, 0);
                         this.jumpVector = new Vector2D(0, -0.45f);
+                        this.resFire = 20;
+                        this.resIce = 0;
+                        this.resElectricity = -10;
                         break;
                 }
                 break;
@@ -118,12 +124,21 @@ public abstract class Enemy extends LivingEntity {
                 switch (this.enemyType) {
                     case FIRE_SLIME:
                         this.damageType = ElementalType.FIRE;
+                        this.resFire = 999;
+                        this.resIce = 0;
+                        this.resElectricity = 0;
                         break;
                     case ICE_SLIME:
                         this.damageType = ElementalType.ICE;
+                        this.resFire = 0;
+                        this.resIce = 999;
+                        this.resElectricity = 0;
                         break;
                     case LIGHTNING_SLIME:
                         this.damageType = ElementalType.LIGHTNING;
+                        this.resFire = 0;
+                        this.resIce = 0;
+                        this.resElectricity = 999;
                         break;
                 }
                 break;
@@ -145,12 +160,21 @@ public abstract class Enemy extends LivingEntity {
                 switch (this.enemyType) {
                     case PYROMANCER:
                         this.damageType = ElementalType.FIRE;
+                        this.resFire = 999;
+                        this.resIce = 0;
+                        this.resElectricity = 0;
                         break;
                     case CRYOMANCER:
                         this.damageType = ElementalType.ICE;
+                        this.resFire = 0;
+                        this.resIce = 999;
+                        this.resElectricity = 0;
                         break;
                     case ELECTROMANCER:
                         this.damageType = ElementalType.LIGHTNING;
+                        this.resFire = 0;
+                        this.resIce = 0;
+                        this.resElectricity = 999;
                         break;
                 }
                 break;
@@ -164,12 +188,18 @@ public abstract class Enemy extends LivingEntity {
                         this.xpOnKill = 0;
                         this.damage = 5;
                         this.aggroRange = 9999;
+                        this.resFire = -10;
+                        this.resIce = 10;
+                        this.resElectricity = 0;
                         break;
                     case CROSSBOWMAN:
                         this.maxLifePoint = 20;
                         this.xpOnKill = 0;
                         this.damage = 10;
                         this.aggroRange = 1000;
+                        this.resFire = 5;
+                        this.resIce = 0;
+                        this.resElectricity = 10;
                         break;
                 }
                 break;
@@ -180,6 +210,9 @@ public abstract class Enemy extends LivingEntity {
                 this.xpOnKill = 0;
                 this.damageType = ElementalType.LIGHTNING;
                 this.damage = 50;
+                this.resFire = 0;
+                this.resIce = 0;
+                this.resElectricity = 0;
                 break;
         }
 
