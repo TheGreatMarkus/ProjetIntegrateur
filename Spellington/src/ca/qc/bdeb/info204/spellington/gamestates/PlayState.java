@@ -37,6 +37,7 @@ import org.newdawn.slick.tiled.TiledMap;
 public class PlayState extends BasicGameState {
 
     private UnicodeFont fontSpellChant;
+    private UnicodeFont fontGeneral;
 
     private Image IMG_GAME_CROSSHAIR;
 
@@ -69,6 +70,12 @@ public class PlayState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         spellington = new Spellington(0, 0, LivingEntity.AnimState.JUMP_R);
+
+        fontGeneral = new UnicodeFont(GameCore.getFontMeath(Font.BOLD, 20 * GameCore.SCALE));
+        fontGeneral.addAsciiGlyphs();
+        fontGeneral.getEffects().add(new ColorEffect(java.awt.Color.white));
+        fontGeneral.loadGlyphs();
+
         fontSpellChant = new UnicodeFont(GameCore.getFontMeath(Font.BOLD, 30 * GameCore.SCALE));
         fontSpellChant.addAsciiGlyphs();
         fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
@@ -115,17 +122,25 @@ public class PlayState extends BasicGameState {
      */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        
+        g.setFont(fontSpellChant);
         //Must be the first in the PlayState renger method.
         //background
-        switch(GameManager.getActiveLevel()){
-            case 1:backgroundTuto.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
-            case 2:backgroundDungeon.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
-            case 3:backgroundIce.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
-            case 4:backgroundCastle.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
-        
+        switch (GameManager.getActiveLevel()) {
+            case 1:
+                backgroundTuto.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
+                break;
+            case 2:
+                backgroundDungeon.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
+                break;
+            case 3:
+                backgroundIce.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
+                break;
+            case 4:
+                backgroundCastle.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
+                break;
+
         }
-        
+
         g.scale(GameCore.SCALE, GameCore.SCALE);
 
         g.setColor(Color.white);
@@ -138,15 +153,7 @@ public class PlayState extends BasicGameState {
                 }
             }
         }
-//        g.setColor(Color.white);
-//        for (Tile[] tile1 : GameManager.getMapInformation()) {
-//            for (Tile tile : tile1) {
-//                if (tile.getTileState() == Tile.TileState.PASSABLE) {
-//                    g.drawString(tile.getTileEvent().toString(), tile.getX(), tile.getY());
-//                }
-//            }
-//        }
-
+        g.setFont(fontGeneral);
         for (Treasure treasure : GameManager.getActiveTreasure()) {
             treasure.render(g);
         }

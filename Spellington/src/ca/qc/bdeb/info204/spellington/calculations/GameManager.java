@@ -68,7 +68,7 @@ public class GameManager {
     //for testing
     private static final boolean ROOM_TESTING = false;
     private static final int ROOM_TESTING_INDEX = 5;
-    
+
     private static String message11;
     private static String message12;
     private static String message13;
@@ -86,47 +86,46 @@ public class GameManager {
         if (!loadGameSave()) {
             gameSave = new GameSave();
         }
-        
+
         //define the message for the tutorial
-        message11 = "Bienvenue, Spellington mage des temps anciens. \n"
-                + "Ta vengeance contre le roi va enfin pouvoir s’accomplir après \n"
-                + "tant d’ années d’emprisonnement. Tu peux te déplacer avec les \n"
-                + "touches fléchées du clavier, la flèche du haut est utilisé pour \n"
-                + "sauter. Naturellement, avec l’ aide de ta magie tu peux sauter \n"
-                + "une deuxième fois en l’ air et sauter de mur en mur sans difficulté. \n"
-                + "Suis les autres pancartes pour continuer le jeu...";
-        
+        message11 = "Bienvenue Spellington, mage des temps anciens. \n"
+                + "Ta vengeance contre le roi va enfin pouvoir s'accomplir \n"
+                + "après tant d'années d’emprisonnement. Tu peux te déplacer \n"
+                + "avec les touches fléchées du clavier, la flèche du haut est \n"
+                + "utilisé pour sauter. Naturellement, avec l'aide de ta magie \n"
+                + "tu peux sauter une deuxième fois en l'air et sauter de mur en \n"
+                + "mur sans difficulté. Suis les autres pancartes pour continuer \n"
+                + "le tutoriel...";
+
         message12 = "Il existe deux types de sorts: les actifs et les passifs. \n"
-                + "Les sorts actifs s’utilisent avec le clic gauche de la souris et \n"
-                + "qui ont un nombre limité d’utilisation avant de devoir les relancer. \n"
-                + "Les sorts passifs eux sont constamment activés, mais tu ne peux en \n"
-                + "avoir qu’un seul à la fois...";
-        
+                + "Les sorts actifs s’utilisent avec le clic gauche de la souris \n"
+                + "et ont un nombre limité d’utilisations avant de devoir les \n"
+                + "recharger.Les sorts passifs eux sont constamment activés, \n"
+                + "mais tu ne peux en avoir qu’un seul à la fois...";
+
         message13 = "Tu peux toujours accéder au menu via la touche escape. Tu \n"
-                + "remarquera facilement le grimoire qui va beaucoup te servir dans\n"
-                + " ta quête, il contient toutes les informations que tu connais, \n"
-                + "mais vu ton age il ne serait pas étonnant que tu ai presque tout \n"
-                + "oublié. Heureusement au fur et à mesure de tes expériences il \n"
-                + "va se remplir...";
-        
+                + "remarquera facilement le grimoire qui va beaucoup te servir \n"
+                + "dans ta quête, il contient toutes les informations que tu \n"
+                + "connais, mais vu ton age il ne serait pas étonnant que tu ai \n"
+                + "presque tout oublié. Heureusement au fur et à mesure de tes \n"
+                + "expériences il va se remplir...";
+
         message21 = "Pour pouvoir lancer un sort et donc te débarrasser de ces \n"
                 + "épouvantails tu dois écrire l’incantation du sort directement \n"
                 + "sur ton clavier. Tu peux confirmer l’incantation avec le clic \n"
                 + "gauche pour activer le sort si elle correspond à un sort \n"
-                + "connu de ton grimoir. Tu peux aussi effacer les lettres \n"
-                + "indésirables avec retour arrière et évidement tu peux bouger \n"
-                + "en incantant... ";
-        
-        message22 = "Le chemin vers la vengeance est long et tu va passer par plusieurs\n"
-                + " environnements hostiles, tu dois toujours éliminer les ennemis \n"
-                + "pour activer le portail, mais n’oubli pas les coffres sur ton \n"
-                + "chemin ils contiennent des sorts utile pour la victoire finale! \n"
-                + "Tu peux toujours revenir sur tes pas pour refaire un environnement, \n"
-                + "car ils sont si grand que tu est sur de pouvoir trouver de nouveaux \n"
-                + "sortilèges à chaque passage. Finalement fais attention les ennemis \n"
-                + "ont des résistances aux éléments suivant leur couleur et ne seront \n"
-                + "sensibles qu’aux sorts des bons éléments...";
-        
+                + "connu de ton grimoire. Tu peux aussi effacer les lettres \n"
+                + "indésirables avec la touche de retour arrière et évidemment \n"
+                + "tu peux bouger en incantant... ";
+
+        message22 = "Tu dois tuer tous les ennemis pour activer le portail. \n"
+                + "De plus, tu trouveras plusieurs trésors sur ton chemin qui \n"
+                + "contiennent des sorts qui te seront utiles durant ton voyage.\n"
+                + "Tu peux toujours revenir rejouer un niveau pour tenter de \n"
+                + "trouver de nouveau sortilèges. Finalement, fais attention, \n"
+                + "les ennemis ont des résistances aux éléments selon leur \n"
+                + "couleur et ne seront affectés qu’aux bons éléments...";
+
     }
 
     /**
@@ -374,17 +373,17 @@ public class GameManager {
                     tempEvent = TileEvent.WHAT_IS_THIS;
                 } else if (activeMap.getTileId(j, i, 2) == message1ID) {
                     tempEvent = TileEvent.MESSAGE_1;
-                    if(activeMapIndex == 1) {
-                    activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message11));
+                    if (activeMapIndex == 1) {
+                        activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message11));
                     } else {
-                    activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message21));
+                        activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message21));
                     }
                 } else if (activeMap.getTileId(j, i, 2) == message2ID) {
                     tempEvent = TileEvent.MESSAGE_2;
-                    if(activeMapIndex == 1) {
-                    activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message12));
+                    if (activeMapIndex == 1) {
+                        activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message12));
                     } else {
-                    activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message22));
+                        activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message22));
                     }
                 } else if (activeMap.getTileId(j, i, 2) == message3ID) {
                     tempEvent = TileEvent.MESSAGE_3;
