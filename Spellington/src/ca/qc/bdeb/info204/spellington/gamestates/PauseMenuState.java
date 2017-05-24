@@ -82,16 +82,16 @@ public class PauseMenuState extends BasicGameState {
         boolean triedToClick = gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
 
         if (mnuItemResume.getHoveredOver() && triedToClick) {
-            game.enterState(GameCore.PLAY_STATE_ID);
+            game.enterState(GameCore.ID_PLAY_STATE);
         }
 
         if (mnuSpellingBook.getHoveredOver() && triedToClick) {
-            game.enterState(GameCore.SPELLBOOK_STATE_ID);
+            game.enterState(GameCore.ID_SPELLBOOK_STATE);
         }
 
         if (mnuItemMainMenu.getHoveredOver() && triedToClick) {
-            ((MainMenuState) game.getState(GameCore.MAIN_MENU_STATE_ID)).prepareMainMenu(GameManager.getGameSave());
-            game.enterState(GameCore.MAIN_MENU_STATE_ID);
+            game.enterState(GameCore.ID_MAIN_MENU_STATE);
+            GameManager.loadGameSave();
         }
         GameCore.clearInputRecord(gc);
     }
@@ -101,7 +101,7 @@ public class PauseMenuState extends BasicGameState {
      */
     @Override
     public int getID() {
-        return GameCore.PAUSE_MENU_STATE_ID;
+        return GameCore.ID_PAUSE_MENU_STATE;
     }
 
 }

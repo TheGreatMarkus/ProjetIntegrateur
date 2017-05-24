@@ -83,9 +83,7 @@ public class GameManager {
     public static void initGameManager(StateBasedGame stateBasedGame) {
         GameManager.stateBasedGame = stateBasedGame;
         loadMaps();
-        if (!loadGameSave()) {
-            gameSave = new GameSave();
-        }
+        loadGameSave();
 
         //define the message for the tutorial
         message11 = "Bienvenue Spellington, mage des temps anciens. \n"
@@ -137,13 +135,24 @@ public class GameManager {
         gameSave = new GameSave();
         saveGameSave();
 
+        SpellingSystem.setActiveSpell(null);
+        SpellingSystem.setPassiveSpell(null);
+        SpellingSystem.setSpellsIncantations();
+        SpellingSystem.setNbPotionAcid(5);
+        SpellingSystem.setNbPotionHeal(5);
+        SpellingSystem.setNbPotionPast(5);
+        SpellingSystem.setNbPotionTime(5);
+        SpellingSystem.setNbSpellUses(0);
+        PlayState.getSpellington().setLifePoint(PlayState.getSpellington().getMaxLifePoint());
+        PlayState.getSpellington().setInvulnTime(0);
+
         activeLevel = 1;
         activeMapIndex = 0;
         currentRooms = generateRooms(activeLevel);
         loadNextMap();
         extractMapInfo();
-        ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
-        stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
+        ((PlayState) (stateBasedGame.getState(GameCore.ID_PLAY_STATE))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
+        stateBasedGame.enterState(GameCore.ID_PLAY_STATE);
 
     }
 
@@ -155,6 +164,18 @@ public class GameManager {
      */
     public static void levelSelected(int level) throws SlickException {
         activeLevel = level;
+
+        SpellingSystem.setActiveSpell(null);
+        SpellingSystem.setPassiveSpell(null);
+        SpellingSystem.setSpellsIncantations();
+        SpellingSystem.setNbPotionAcid(5);
+        SpellingSystem.setNbPotionHeal(5);
+        SpellingSystem.setNbPotionPast(5);
+        SpellingSystem.setNbPotionTime(5);
+        SpellingSystem.setNbSpellUses(0);
+        PlayState.getSpellington().setLifePoint(PlayState.getSpellington().getMaxLifePoint());
+        PlayState.getSpellington().setInvulnTime(0);
+
         activeMapIndex = 0;
         currentRooms = generateRooms(activeLevel);
         loadNextMap();
@@ -165,22 +186,24 @@ public class GameManager {
      *
      * @return The loaded save file.
      */
-    public static boolean loadGameSave() {
+    public static void loadGameSave() {
         try {
             ObjectInputStream oos = new ObjectInputStream(new FileInputStream(GAME_SAVE_PATH));
             gameSave = (GameSave) oos.readObject();
             oos.close();
             System.out.println("Save file correctly loaded");
-            System.out.println(gameSave.getKnownSpellsIDs());
-            System.out.println(gameSave.getKnownEnemies());
-            return true;
         } catch (FileNotFoundException ex) {
             System.out.println("Error loading save file. file not found.");
-            return false;
+            gameSave = new GameSave();
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Error loading save file. Error loading existing file");
-            return false;
+            gameSave = new GameSave();
         }
+        SpellingSystem.setKnownSpells(new ArrayList<>());
+        for (Integer id : gameSave.getKnownSpellsIDs()) {
+            SpellingSystem.getKnownSpells().add(SpellingSystem.getAllSpells().get(id - 1));
+        }
+
     }
 
     /**
@@ -446,13 +469,13 @@ public class GameManager {
         }
         if (!endOfLevel) {
             extractMapInfo();
-            ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
-            stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
+            ((PlayState) (stateBasedGame.getState(GameCore.ID_PLAY_STATE))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
+            stateBasedGame.enterState(GameCore.ID_PLAY_STATE);
         } else {
             gameSave.completeLevel(activeLevel);
             saveGameSave();
-            ((LevelSelectionState) (stateBasedGame.getState(GameCore.LEVEL_SELECTION_STATE_ID))).prepareLevel(gameSave);
-            stateBasedGame.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
+            ((LevelSelectionState) (stateBasedGame.getState(GameCore.ID_LEVEL_SELECTION_STATE))).prepareLevel(gameSave);
+            stateBasedGame.enterState(GameCore.ID_LEVEL_SELECTION_STATE);
         }
     }
 

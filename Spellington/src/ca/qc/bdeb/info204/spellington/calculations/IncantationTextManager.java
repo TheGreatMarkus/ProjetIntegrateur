@@ -27,7 +27,7 @@ public class IncantationTextManager implements KeyListener {
     @Override
     public void keyPressed(int key, char c) {
         //See http://www.asciitable.com/ for complete ASCII table IDs
-        if (GameManager.getStateBasedGame() != null && GameManager.getStateBasedGame().getCurrentState().getID() == GameCore.PLAY_STATE_ID) {
+        if (GameManager.getStateBasedGame() != null && GameManager.getStateBasedGame().getCurrentState().getID() == GameCore.ID_PLAY_STATE) {
             if (c == 8 && !SpellingSystem.getIncantationText().isEmpty()) {//Backspace char ID
                 SpellingSystem.setIncantationText(SpellingSystem.getIncantationText().substring(0, SpellingSystem.getIncantationText().length() - 1));
             } else if (c < 65) {

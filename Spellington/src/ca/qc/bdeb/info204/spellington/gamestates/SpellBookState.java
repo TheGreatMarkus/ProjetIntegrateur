@@ -223,6 +223,9 @@ public class SpellBookState extends BasicGameState {
      */
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+        if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+            game.enterState(GameCore.ID_PAUSE_MENU_STATE);
+        }
         int mouseX = gc.getInput().getMouseX();
         int mouseY = gc.getInput().getMouseY();
         boolean triedToClick = gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
@@ -250,7 +253,7 @@ public class SpellBookState extends BasicGameState {
                 }
 
                 if (mnuItemRetour.getHoveredOver() && triedToClick) {
-                    game.enterState(GameCore.PAUSE_MENU_STATE_ID);
+                    game.enterState(GameCore.ID_PAUSE_MENU_STATE);
                     pageState = 0;
                 }
                 break;
@@ -898,8 +901,14 @@ public class SpellBookState extends BasicGameState {
                     element = "Élément: Neutre";
                     break;
             }
-
-            SpellingSystem.getKnownSpells().get(spellKind).getAnimation().draw(iconX + 10, iconY + 10, iconSize - (20 * GameCore.SCALE), iconSize - (20 * GameCore.SCALE));
+            float x = 870f * GameCore.SCALE;
+            float y = 175f * GameCore.SCALE;
+            Animation temp = SpellingSystem.getKnownSpells().get(spellKind).getAnimation().copy();
+            float scale = GameCore.SCALE;
+            float ratio = (float) temp.getWidth() / (float) temp.getHeight();
+            float size = 180f * GameCore.SCALE;
+            float height = size / ratio;
+            SpellingSystem.getKnownSpells().get(spellKind).getAnimation().draw(x, y + (45f * scale) - (height / 2), size, height);
             g.drawString(name, iconX + iconSize + gap, iconY);
             g.drawString("Type: " + type, iconX + iconSize + gap, iconY + 2 * gap);
             g.drawString(element, iconX + iconSize + gap, iconY + 6 * gap);
@@ -957,7 +966,7 @@ public class SpellBookState extends BasicGameState {
 
     @Override
     public int getID() {
-        return GameCore.SPELLBOOK_STATE_ID;
+        return GameCore.ID_SPELLBOOK_STATE;
     }
 
 }

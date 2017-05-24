@@ -36,13 +36,13 @@ public class GameCore extends StateBasedGame {
     public static final Dimension PLAY_RENDER_SIZE = new Dimension(1600, 900);
     public static final Dimension DIM_MAP = new Dimension(32, 18);
     public static float SCALE;
-    public static final int MAIN_MENU_STATE_ID = 0;
-    public static final int PLAY_STATE_ID = 1;
-    public static final int OPTIONS_MENU_STATE_ID = 2;
-    public static final int PAUSE_MENU_STATE_ID = 3;
-    public static final int SPELLBOOK_STATE_ID = 4;
-    public static final int LEVEL_SELECTION_STATE_ID = 5;
-    public static final int SAVE_SCREEN_STATE_ID = 6;
+    public static final int ID_MAIN_MENU_STATE = 0;
+    public static final int ID_PLAY_STATE = 1;
+    public static final int ID_OPTIONS_MENU_STATE = 2;
+    public static final int ID_PAUSE_MENU_STATE = 3;
+    public static final int ID_SPELLBOOK_STATE = 4;
+    public static final int ID_LEVEL_SELECTION_STATE = 5;
+    public static final int ID_SAVE_SCREEN_STATE = 6;
 
     private static final String GAME_TITLE = "Réveil de Spellington";
 
@@ -112,8 +112,8 @@ public class GameCore extends StateBasedGame {
     public void initStatesList(GameContainer gc) throws SlickException {
         double initTime = System.nanoTime();
 
-        GameManager.initGameManager(this);
         SpellingSystem.initSpellingSystem(GameManager.getGameSave());
+        GameManager.initGameManager(this);
 
         gc.getInput().addKeyListener(new IncantationTextManager());
         //It is important to keep the state addition order.
@@ -125,17 +125,17 @@ public class GameCore extends StateBasedGame {
         this.addState(new LevelSelectionState());
 
         //Initialise game states.
-        this.getState(MAIN_MENU_STATE_ID).init(gc, this);
-        this.getState(PLAY_STATE_ID).init(gc, this);
-        this.getState(SPELLBOOK_STATE_ID).init(gc, this);
-        this.getState(OPTIONS_MENU_STATE_ID).init(gc, this);
-        this.getState(PAUSE_MENU_STATE_ID).init(gc, this);
+        this.getState(ID_MAIN_MENU_STATE).init(gc, this);
+        this.getState(ID_PLAY_STATE).init(gc, this);
+        this.getState(ID_SPELLBOOK_STATE).init(gc, this);
+        this.getState(ID_OPTIONS_MENU_STATE).init(gc, this);
+        this.getState(ID_PAUSE_MENU_STATE).init(gc, this);
 
         double finalTime = System.nanoTime();
         System.out.println("Time spent loading game :" + (finalTime - initTime) / 1000000000.0 + " seconds");
         System.out.println("");
         //The game will being in the menu.
-        this.enterState(MAIN_MENU_STATE_ID);
+        this.enterState(ID_MAIN_MENU_STATE);
 
     }
 

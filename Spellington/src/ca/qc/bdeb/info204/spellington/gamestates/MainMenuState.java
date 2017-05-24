@@ -63,8 +63,7 @@ public class MainMenuState extends BasicGameState {
 
         fontMenu = new UnicodeFont(GameCore.getFontPaladin(Font.BOLD, 80.0f * GameCore.SCALE));
         fontMenu.addAsciiGlyphs();
-        fontMenu.getEffects().add(new ColorEffect(java.awt.Color.black));
-        fontMenu.getEffects().add(new OutlineEffect(1, java.awt.Color.white));
+        fontMenu.getEffects().add(new ColorEffect(java.awt.Color.LIGHT_GRAY));
         fontMenu.loadGlyphs();
 
         mnuItemTitle = new MenuItem(gc, MenuItemType.TEXT, MM_TITLE, true, false, 0, TEXT_GAP, fontMenu.getWidth(MM_TITLE), fontMenu.getHeight(MM_TITLE));
@@ -72,16 +71,7 @@ public class MainMenuState extends BasicGameState {
         mnuItemLoadGame = new MenuItem(gc, MenuItemType.BUTTON, MM_LOAD_GAME, true, false, 0, mnuItemNewGame.getY() + mnuItemNewGame.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_LOAD_GAME), fontMenu.getHeight(MM_LOAD_GAME));
         mnuItemOptions = new MenuItem(gc, MenuItemType.BUTTON, MM_OPTIONS, true, false, 0, mnuItemLoadGame.getY() + mnuItemLoadGame.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_OPTIONS), fontMenu.getHeight(MM_OPTIONS));
         mnuItemExit = new MenuItem(gc, MenuItemType.BUTTON, MM_EXIT, true, false, 0, mnuItemOptions.getY() + mnuItemOptions.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_EXIT), fontMenu.getHeight(MM_EXIT));
-        prepareMainMenu(GameManager.getGameSave());
-    }
 
-    public void prepareMainMenu(GameSave gameSave) {
-        mnuItemLoadGame.setClickable(false);
-        if (gameSave != null) {
-            System.out.println("Game save found and loaded");
-            mnuItemLoadGame.setClickable(true);
-
-        }
     }
 
     /**
@@ -131,12 +121,11 @@ public class MainMenuState extends BasicGameState {
             GameManager.newGame();
         }
         if (mnuItemLoadGame.getHoveredOver() && triedToClick && mnuItemLoadGame.getClickable()) {
-            ((LevelSelectionState) (game.getState(GameCore.LEVEL_SELECTION_STATE_ID))).prepareLevel(GameManager.getGameSave());
-            game.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
+            ((LevelSelectionState) (game.getState(GameCore.ID_LEVEL_SELECTION_STATE))).prepareLevel(GameManager.getGameSave());
+            game.enterState(GameCore.ID_LEVEL_SELECTION_STATE);
         }
-
         if (mnuItemOptions.getHoveredOver() && triedToClick) {
-            game.enterState(GameCore.OPTIONS_MENU_STATE_ID);
+            game.enterState(GameCore.ID_OPTIONS_MENU_STATE);
         }
         if (mnuItemExit.getHoveredOver() && triedToClick) {
             GameManager.saveGameSave();
@@ -152,7 +141,7 @@ public class MainMenuState extends BasicGameState {
      */
     @Override
     public int getID() {
-        return GameCore.MAIN_MENU_STATE_ID;
+        return GameCore.ID_MAIN_MENU_STATE;
     }
 
     /**

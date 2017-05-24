@@ -79,11 +79,15 @@ public class MenuItem {
      */
     public void render(Graphics g) {
         if (this.menuItemType != MenuItemType.INFO) {
+            float alpha;
             if (hoveredOver && this.menuItemType == MenuItemType.BUTTON || !clickable && !(this.menuItemType == MenuItemType.TEXT)) {
-                g.setColor(new Color(1, 1, 1, 0.5f));
+                alpha = 0.5f;
             } else {
-                g.setColor(new Color(1, 1, 1, 1f));
+                alpha = 1f;
             }
+            g.setColor(new Color(0, 0, 0, alpha));
+            g.fillRoundRect(x, y, width, height, 12);
+            g.setColor(new Color(1, 1, 1, alpha));
             if (this.menuItemType == MenuItemType.BUTTON) {
                 g.drawRoundRect(x, y, width, height, 12);
             }

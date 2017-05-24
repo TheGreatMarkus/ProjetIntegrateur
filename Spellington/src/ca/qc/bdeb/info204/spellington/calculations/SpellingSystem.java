@@ -15,9 +15,10 @@ import ca.qc.bdeb.info204.spellington.spell.PassiveSpell;
 import ca.qc.bdeb.info204.spellington.spell.Potion;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,6 +80,7 @@ public class SpellingSystem {
     private static Animation animIceImmunity;
     private static Animation animGreatHeal;
     private static Animation animAcid;
+    private static Animation animExplosion;
 
     public static final int ID_FIRE_BALL = 1;
     public static final int ID_ICE_SPIKE = 2;
@@ -238,32 +240,27 @@ public class SpellingSystem {
         masterSpells.add(iceStorm);
         masterSpells.add(iceImmunity);
         masterSpells.add(greatHeal);
-        
+
         fireSpells.add(explosiveBall);
         fireSpells.add(fireBreath);
         fireSpells.add(giantFireBall);
         fireSpells.add(fireImmunity);
         fireSpells.add(meteorShower);
-        
+
         iceSpells.add(iceStorm);
         iceSpells.add(iceImmunity);
         iceSpells.add(iceBreath);
         iceSpells.add(iceSpikeBall);
         iceSpells.add(iceRune);
-        
+
         lightningSpells.add(lightningSwarm);
         lightningSpells.add(teleportation);
         lightningSpells.add(lightningBouncingBall);
         lightningSpells.add(lightningImmunity);
         lightningSpells.add(lightningSpear);
-        lightningSpells.add(greatHeal);        
+        lightningSpells.add(greatHeal);
 
-        for (Integer id : GameManager.getGameSave().getKnownSpellsIDs()) {
-            knownSpells.add(allSpells.get(id - 1));
-        }
-
-        //knownSpells.addAll(adeptSpells);// test <<----------
-        initSpellsIncantations();
+        setSpellsIncantations();
 
     }
 
@@ -346,7 +343,6 @@ public class SpellingSystem {
         }
 
         //potions end-----------
-
     }
 
     private static void initAnimation() {
@@ -398,7 +394,7 @@ public class SpellingSystem {
                 tempImgHealBig[i] = new Image("res/image/animation/spells/healBig/(" + (i + 1) + ").png");
             }
             animGreatHeal = new Animation(tempImgHealBig, 30);
-            
+
             Image[] tempImgFireImmu = new Image[19];
             for (int i = 0; i < tempImgFireImmu.length; i++) {
                 tempImgFireImmu[i] = new Image("res/image/animation/spells/fireImmu/(" + (i + 1) + ").png");
@@ -470,19 +466,19 @@ public class SpellingSystem {
                 tempImgteleportBall[i] = new Image("res/image/animation/spells/teleportBall.png");
             }
             animTeleportation = new Animation(tempImgteleportBall, 30);
-            
+
             Image[] tempImgFireBallGiant = new Image[31];
             for (int i = 0; i < tempImgFireBallGiant.length; i++) {
                 tempImgFireBallGiant[i] = new Image("res/image/animation/spells/fireBall/(" + (i + 1) + ").png");
             }
             animGiantFireBall = new Animation(tempImgFireBallGiant, 30);
-            
+
             Image[] tempImgIceRune = new Image[20];
             for (int i = 0; i < tempImgIceRune.length; i++) {
                 tempImgIceRune[i] = new Image("res/image/animation/spells/iceRune/ (" + (i + 1) + ").png");
             }
             animRune = new Animation(tempImgIceRune, 30);
-            
+
             //potion animation
             Image[] tempImgAcidPotion = new Image[1];
             for (int i = 0; i < tempImgAcidPotion.length; i++) {
@@ -490,18 +486,24 @@ public class SpellingSystem {
             }
             animAcid = new Animation(tempImgAcidPotion, 30);
 
+            Image[] tempImgExplosion = new Image[21];
+            for (int i = 0; i < tempImgExplosion.length; i++) {
+                tempImgExplosion[i] = new Image("res/image/animation/spells/explosion/ (" + (i + 1) + ").png");
+            }
+            animExplosion = new Animation(tempImgExplosion, 30);
+
         } catch (SlickException ex) {
         }
     }
 
-    private static void initSpellsIncantations() {
+    public static void setSpellsIncantations() {
         ArrayList<String> tempWord = new ArrayList<>();
 
         BufferedReader readerBuffer;
         String line;
         String filePath = new File("").getAbsolutePath();
         try {
-            readerBuffer = new BufferedReader(new FileReader(filePath + "\\src\\res\\wordbank\\noviceWord.txt"));
+            readerBuffer = new BufferedReader(new InputStreamReader(new FileInputStream(filePath + "\\src\\res\\wordbank\\noviceWord.txt"), "ISO-8859-1"));
             while ((line = readerBuffer.readLine()) != null) {
                 tempWord.add(line);
             }
@@ -526,7 +528,7 @@ public class SpellingSystem {
         String line2 = null;
         String filePath2 = new File("").getAbsolutePath();
         try {
-            readerBuffer2 = new BufferedReader(new FileReader(filePath2 + "\\src\\res\\wordbank\\adepteWord.txt"));
+            readerBuffer2 = new BufferedReader(new InputStreamReader(new FileInputStream(filePath2 + "\\src\\res\\wordbank\\adepteWord.txt"), "ISO-8859-1"));
             while ((line2 = readerBuffer2.readLine()) != null) {
                 tempWord.add(line2);
             }
@@ -551,7 +553,7 @@ public class SpellingSystem {
         String line3 = null;
         String filePath3 = new File("").getAbsolutePath();
         try {
-            readerBuffer3 = new BufferedReader(new FileReader(filePath3 + "\\src\\res\\wordbank\\masterWord.txt"));
+            readerBuffer3 = new BufferedReader(new InputStreamReader(new FileInputStream(filePath3 + "\\src\\res\\wordbank\\masterWord.txt"), "ISO-8859-1"));
             while ((line3 = readerBuffer3.readLine()) != null) {
                 tempWord.add(line3);
             }
@@ -651,6 +653,42 @@ public class SpellingSystem {
 
     public static ArrayList<Spell> getLightningSpells() {
         return lightningSpells;
+    }
+
+    public static Animation getAnimExplosion() {
+        return animExplosion;
+    }
+
+    public static void setActiveSpell(Spell activeSpell) {
+        SpellingSystem.activeSpell = activeSpell;
+    }
+
+    public static void setPassiveSpell(PassiveSpell passiveSpell) {
+        SpellingSystem.passiveSpell = passiveSpell;
+    }
+
+    public static void setNbPotionAcid(int nbPotionAcid) {
+        SpellingSystem.nbPotionAcid = nbPotionAcid;
+    }
+
+    public static void setNbPotionHeal(int nbPotionHeal) {
+        SpellingSystem.nbPotionHeal = nbPotionHeal;
+    }
+
+    public static void setNbPotionPast(int nbPotionPast) {
+        SpellingSystem.nbPotionPast = nbPotionPast;
+    }
+
+    public static void setNbPotionTime(int nbPotionTime) {
+        SpellingSystem.nbPotionTime = nbPotionTime;
+    }
+
+    public static void setNbSpellUses(int nbSpellUses) {
+        SpellingSystem.nbSpellUses = nbSpellUses;
+    }
+
+    public static void setKnownSpells(ArrayList<Spell> knownSpells) {
+        SpellingSystem.knownSpells = knownSpells;
     }
 
 }

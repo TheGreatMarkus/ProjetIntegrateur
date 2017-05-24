@@ -109,29 +109,28 @@ public class LevelSelectionState extends BasicGameState {
         boolean triedToClick = gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
 
         if (mnuItemReturn.getHoveredOver() && triedToClick && mnuItemReturn.getClickable()) {
-            ((MainMenuState) game.getState(GameCore.MAIN_MENU_STATE_ID)).prepareMainMenu(GameManager.getGameSave());
-            game.enterState(GameCore.MAIN_MENU_STATE_ID);
+            game.enterState(GameCore.ID_MAIN_MENU_STATE);
         }
 
         if (mnuItemLevel1.getHoveredOver() && triedToClick && mnuItemLevel1.getClickable()) {
             GameManager.levelSelected(1);
-            game.enterState(GameCore.PLAY_STATE_ID);
+            game.enterState(GameCore.ID_PLAY_STATE);
         }
         if (mnuItemLevel2.getHoveredOver() && triedToClick && mnuItemLevel2.getClickable()) {
             GameManager.levelSelected(2);
-            game.enterState(GameCore.PLAY_STATE_ID);
+            game.enterState(GameCore.ID_PLAY_STATE);
         }
         if (mnuItemLevel3.getHoveredOver() && triedToClick && mnuItemLevel3.getClickable()) {
             GameManager.levelSelected(3);
-            game.enterState(GameCore.PLAY_STATE_ID);
+            game.enterState(GameCore.ID_PLAY_STATE);
         }
         if (mnuItemLevel4.getHoveredOver() && triedToClick && mnuItemLevel4.getClickable()) {
             GameManager.levelSelected(4);
-            game.enterState(GameCore.PLAY_STATE_ID);
+            game.enterState(GameCore.ID_PLAY_STATE);
         }
         if (mnuItemLevel5.getHoveredOver() && triedToClick && mnuItemLevel5.getClickable()) {
             GameManager.levelSelected(5);
-            game.enterState(GameCore.PLAY_STATE_ID);
+            game.enterState(GameCore.ID_PLAY_STATE);
         }
 
         GameCore.clearInputRecord(gc);
@@ -142,7 +141,7 @@ public class LevelSelectionState extends BasicGameState {
      */
     @Override
     public int getID() {
-        return GameCore.LEVEL_SELECTION_STATE_ID;
+        return GameCore.ID_LEVEL_SELECTION_STATE;
     }
 
 }
