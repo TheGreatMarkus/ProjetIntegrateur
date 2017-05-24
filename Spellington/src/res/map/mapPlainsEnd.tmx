@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
+ <tileset firstgid="1" name="frozenPlainsTile" tilewidth="50" tileheight="50" tilecount="50" columns="10">
+  <image source="tiles/iceTile.png" width="500" height="251"/>
+  <terraintypes>
+   <terrain name="Roche neigeuse" tile="-1"/>
+   <terrain name="Roche" tile="-1"/>
+   <terrain name="Glace" tile="-1"/>
+   <terrain name="Glace verte" tile="-1"/>
+   <terrain name="Glace mauve" tile="-1"/>
+   <terrain name="Piques" tile="-1"/>
+   <terrain name="Cristaux" tile="-1"/>
+  </terraintypes>
+  <tile id="0" terrain="0,0,0,0"/>
+  <tile id="1" terrain="0,0,0,0"/>
+  <tile id="2" terrain="0,0,0,0"/>
+  <tile id="3" terrain="0,0,0,0"/>
+  <tile id="4" terrain="0,0,0,0"/>
+  <tile id="5" terrain="0,0,0,0"/>
+  <tile id="6" terrain="0,0,0,0"/>
+  <tile id="7" terrain="3,3,3,3"/>
+  <tile id="8" terrain="3,3,3,3"/>
+  <tile id="9" terrain="3,3,3,3"/>
+  <tile id="10" terrain="3,3,3,3"/>
+  <tile id="11" terrain="3,3,3,3"/>
+  <tile id="12" terrain="3,3,3,3"/>
+  <tile id="13" terrain="3,3,3,3"/>
+  <tile id="14" terrain="4,4,4,4"/>
+  <tile id="15" terrain="4,4,4,4"/>
+  <tile id="16" terrain="4,4,4,4"/>
+  <tile id="17" terrain="4,4,4,4"/>
+  <tile id="18" terrain="3,3,3,3"/>
+  <tile id="19" terrain="3,3,3,3"/>
+  <tile id="20" terrain="3,3,3,3"/>
+  <tile id="21" terrain="3,3,3,3"/>
+  <tile id="22" terrain="4,4,4,4"/>
+  <tile id="23" terrain="4,4,4,4"/>
+  <tile id="24" terrain="4,4,4,4"/>
+  <tile id="25" terrain="4,4,4,4"/>
+  <tile id="26" terrain="3,3,3,3"/>
+  <tile id="27" terrain="3,3,3,3"/>
+  <tile id="28" terrain="3,3,3,3"/>
+  <tile id="29" terrain="3,3,3,3"/>
+  <tile id="30" terrain="5,5,5,5"/>
+  <tile id="31" terrain="5,5,5,5"/>
+  <tile id="32" terrain="5,5,5,5"/>
+  <tile id="33" terrain="5,5,5,5"/>
+  <tile id="34" terrain="6,6,6,6"/>
+  <tile id="35" terrain="6,6,6,6"/>
+  <tile id="36" terrain="6,6,6,6"/>
+  <tile id="37" terrain="6,6,6,6"/>
+  <tile id="40" terrain="1,1,1,1"/>
+  <tile id="41" terrain="1,1,1,1"/>
+  <tile id="42" terrain="1,1,1,1"/>
+  <tile id="43" terrain="1,1,1,1"/>
+  <tile id="44" terrain="1,1,1,1"/>
+  <tile id="45" terrain="1,1,1,1"/>
+  <tile id="46" terrain="2,2,2,2"/>
+  <tile id="47" terrain="2,2,2,2"/>
+ </tileset>
+ <tileset firstgid="51" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
+  <image source="tiles/collisionTile.png" width="150" height="200"/>
+ </tileset>
+ <layer name="terrain" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC8VWSQ6DMAx0utCHhCJBFvr/1zWWZoRPLSEHWxrZBuNxNpwkIqlhbSjQW0OGXgH6FXYy7xhvc1TYG2IT/GpyMJ+XsG5Pfs/xcw08+YsjP/ejl2Tx3X96Jr3H733+R/g/g/xX519594Y39D7A37v/lDtCz+COF2uoqOGsKAf7TQR0Dgry9NZQ5fz/LyB2ASc17Rnv7x387Jf/ZEIcx5nAGcFre27qqIFz+UuCHP2a94AFnBF+hM97gdqPk/wa+2y4GQQ8m+S4P/Cs2rsF68gmhj7Xgrm1nhdyE/rNF0hXEEYACQAA
+  </data>
+ </layer>
+ <layer name="collision" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACzNjYGAwG2BsN0B41P5R+0ftH7WfXP2WA2S/JRSbIbHpZb8lA/YynBw3kGo/LrvJdQMp9tOiPiNWPa3qVGLU0rJeH+h2BwgDAPCrVhAACQAA
+  </data>
+ </layer>
+ <layer name="event" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMgqEHTAfaAaNgFIyCIQ0AY1t8RAAJAAA=
+  </data>
+ </layer>
+</map>
