@@ -248,21 +248,21 @@ public abstract class Enemy extends LivingEntity {
      * @param g The Graphics component.
      */
     public void renderGeneralInfo(Graphics g) {
-        g.setColor(Color.white);
-        g.drawString("EnemyType : " + this.enemyType, getX(), getY() - 40);
+//        g.setColor(Color.white);
+//        g.drawString("EnemyType : " + this.enemyType, getX(), getY() - 40);
         g.setColor(Color.red);
         g.fillRect(x, y - 10, width, 5);
         g.setColor(Color.green);
         g.fillRect(x, y - 10, width * (float) this.lifePoint / (float) this.maxLifePoint, 5);
-        if (canSeePlayer) {
-            g.setColor(new Color(255, 0, 0, 100));
-            g.fillRect(getX(), getY(), getWidth(), getHeight());
-        }
-        g.setColor(Color.white);
-        g.drawRect(getX(), getY(), getWidth(), getHeight());
-        if (invulnTime > 0) {
-            g.fillRect(x, y, width, height);
-        }
+//        if (canSeePlayer) {
+//            g.setColor(new Color(255, 0, 0, 100));
+//            g.fillRect(getX(), getY(), getWidth(), getHeight());
+//        }
+//        g.setColor(Color.white);
+//        g.drawRect(getX(), getY(), getWidth(), getHeight());
+//        if (invulnTime > 0) {
+//            g.fillRect(x, y, width, height);
+//        }
 
     }
 
