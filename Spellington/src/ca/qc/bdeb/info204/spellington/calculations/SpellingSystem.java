@@ -244,11 +244,7 @@ public class SpellingSystem {
         fireSpells.add(explosiveBall);
         fireSpells.add(fireBreath);
         fireSpells.add(giantFireBall);
-        fireSpells.add(fireImmunity);
-        fireSpells.add(meteorShower);
 
-        iceSpells.add(iceStorm);
-        iceSpells.add(iceImmunity);
         iceSpells.add(iceBreath);
         iceSpells.add(iceSpikeBall);
         iceSpells.add(iceRune);
@@ -256,9 +252,6 @@ public class SpellingSystem {
         lightningSpells.add(lightningSwarm);
         lightningSpells.add(teleportation);
         lightningSpells.add(lightningBouncingBall);
-        lightningSpells.add(lightningImmunity);
-        lightningSpells.add(lightningSpear);
-        lightningSpells.add(greatHeal);
 
         setSpellsIncantations();
 

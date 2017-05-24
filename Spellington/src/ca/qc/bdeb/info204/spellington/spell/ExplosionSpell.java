@@ -33,12 +33,7 @@ public class ExplosionSpell extends Spell {
     public void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy) {
         float renderMouseX = input.getMouseX() / GameCore.SCALE;
         float renderMouseY = input.getMouseY() / GameCore.SCALE;
-        if (this.id == SpellingSystem.ID_SPARK || this.id == SpellingSystem.ID_LIGHTNING_SWARM || this.id == SpellingSystem.ID_RUNE) {
-            exposionSpellOnMouse(input, activeEnemy);
-
-        } else if (this.id == SpellingSystem.ID_METEOR_SHOWER || this.id == SpellingSystem.ID_ICE_STORM) {
-            explosionSpellGeneral(activeEnemy);
-        }
+        exposionSpellOnMouse(input, activeEnemy);
 
         activeAnimations.add(new GameAnimation(renderMouseX - (width / 2), renderMouseY - (height / 2), width, height, animation.copy(), false, 0));
     }
@@ -61,18 +56,6 @@ public class ExplosionSpell extends Spell {
             }
         }
     }
-
-    /**
-     * Damages all enemies in the game.
-     *
-     * @param activeEnemy The list of active enemies.
-     */
-    private void explosionSpellGeneral(ArrayList<Enemy> activeEnemy) {
-        for (int i = 0; i < activeEnemy.size(); i++) {
-            activeEnemy.get(i).subLifePoint(this.damage, this.element);
-        }
-    }
-
 
     public int getDamage() {
         return damage;

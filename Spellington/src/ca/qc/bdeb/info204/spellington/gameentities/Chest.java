@@ -19,6 +19,7 @@ import org.newdawn.slick.SlickException;
 public class Chest extends Treasure {
 
     private boolean open;
+    private boolean isMasterChest;
     private static final Dimension DIM_CHEST = new Dimension(50, 50);
     private Image imgChestClosed;
     private Image imgChestOpen;
@@ -28,8 +29,13 @@ public class Chest extends Treasure {
         open = false;
         this.droppableSpells = droppableSpells;
         try {
-            imgChestClosed = new Image("res/image/chest/closed.png");
-            imgChestOpen = new Image("res/image/chest/open.png");
+            if (isMasterChest) {
+                imgChestClosed = new Image("res/image/chest/masterClosed.png");
+                imgChestOpen = new Image("res/image/chest/masterOpen.png");
+            } else {
+                imgChestClosed = new Image("res/image/chest/closed.png");
+                imgChestOpen = new Image("res/image/chest/open.png");
+            }
         } catch (SlickException ex) {
             Logger.getLogger(Chest.class.getName()).log(Level.SEVERE, null, ex);
         }

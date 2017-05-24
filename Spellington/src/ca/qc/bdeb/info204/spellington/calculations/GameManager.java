@@ -199,10 +199,10 @@ public class GameManager {
             gameSave = new GameSave();
         }
         SpellingSystem.setKnownSpells(new ArrayList<>());
-        for (Integer id : gameSave.getKnownSpellsIDs()) {
-            SpellingSystem.getKnownSpells().add(SpellingSystem.getAllSpells().get(id - 1));
-        }
-        //SpellingSystem.getKnownSpells().addAll(SpellingSystem.getAllSpells());
+//        for (Integer id : gameSave.getKnownSpellsIDs()) {
+//            SpellingSystem.getKnownSpells().add(SpellingSystem.getAllSpells().get(id - 1));
+//        }
+        SpellingSystem.getKnownSpells().addAll(SpellingSystem.getAllSpells());
 
     }
 
