@@ -291,12 +291,12 @@ public class Calculations {
 
                 if (test1Result == 1) {
                     activeProjectiles.add(new Projectile(-1, x, y, enemy.getProjectileSize(), new Vector2D(v, angle1, true),
-                            1, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE));
+                            1, enemy.getAnimProjectile(), enemy.getDamage(), enemy.getDamageType()));
 
                 } else if (test2Result == 1) {
                     //A changer
                     activeProjectiles.add(new Projectile(-1, x, y, enemy.getProjectileSize(), new Vector2D(v, angle2, true),
-                            1, enemy.getAnimProjectile(), 5, GameEntity.ElementalType.FIRE));
+                            1, enemy.getAnimProjectile(), enemy.getDamage(), enemy.getDamageType()));
                 }
                 enemy.setAttackCooldown(enemy.getTotalAttackCooldown());
                 if (enemy.getAnimState() == LivingEntity.AnimState.STANDING_L) {
