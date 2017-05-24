@@ -19,7 +19,6 @@ import org.newdawn.slick.SlickException;
 public class Chest extends Treasure {
 
     private boolean open;
-    private boolean isMasterChest;
     private static final Dimension DIM_CHEST = new Dimension(50, 50);
     private Image imgChestClosed;
     private Image imgChestOpen;
@@ -27,7 +26,6 @@ public class Chest extends Treasure {
     public Chest(float x, float y, ArrayList<Spell> droppableSpells, boolean isMasterChest) {
         super(x, y, DIM_CHEST.width, DIM_CHEST.height, droppableSpells);
         open = false;
-        this.isMasterChest = isMasterChest;
         this.droppableSpells = droppableSpells;
         try {
             if (isMasterChest) {
