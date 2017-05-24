@@ -6,6 +6,7 @@ import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gameentities.Chest;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.MessageSign;
 import ca.qc.bdeb.info204.spellington.gameentities.PickUp;
@@ -154,6 +155,10 @@ public class PlayState extends BasicGameState {
 
         g.scale(GameCore.SCALE, GameCore.SCALE);
 
+        g.setFont(fontGeneral);
+        for (Treasure treasure : GameManager.getActiveTreasure()) {
+            treasure.render(g);
+        }
         g.setColor(Color.white);
         map.render(0, 0, 0);
         g.setColor(new Color(10, 10, 10, 80));
@@ -166,7 +171,11 @@ public class PlayState extends BasicGameState {
         }
         g.setFont(fontGeneral);
         for (Treasure treasure : GameManager.getActiveTreasure()) {
-            treasure.render(g);
+            if (treasure instanceof Chest) {
+                if (((Chest) treasure).isOpen()) {
+                    treasure.render(g);
+                }
+            }
         }
 
         for (MessageSign sign : GameManager.getActiveMessageSigns()) {
@@ -297,10 +306,10 @@ public class PlayState extends BasicGameState {
             displayHUD = !displayHUD;
         }
 
-        if (spellington.getLifePoint() == 0) {
-            GameManager.loadGameSave();
-            game.enterState(GameCore.ID_LEVEL_SELECTION_STATE);
-        }
+//        if (spellington.getLifePoint() == 0) {
+//            GameManager.loadGameSave();
+//            game.enterState(GameCore.ID_LEVEL_SELECTION_STATE);
+//        }
         GameCore.clearInputRecord(gc);
     }
 

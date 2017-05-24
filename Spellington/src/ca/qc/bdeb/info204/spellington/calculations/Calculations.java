@@ -85,7 +85,7 @@ public class Calculations {
                         ((LivingEntity) entity).subLifePoint(5, ElementalType.ICE);
                         break;
                     case 4:
-                        //((LivingEntity) entity).subLifePoint(5, ElementalType.LIGHTNING);
+                        ((LivingEntity) entity).subLifePoint(5, ElementalType.LIGHTNING);
                         break;
                 }
             }

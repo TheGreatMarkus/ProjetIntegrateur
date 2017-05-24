@@ -24,10 +24,10 @@ public class GameSave implements Serializable {
         sLevel = 0;
         sXP = 0;
 
-        lvl1Complete = false;
-        lvl2Complete = false;
-        lvl3Complete = false;
-        lvl4Complete = false;
+        lvl1Complete = true;
+        lvl2Complete = true;
+        lvl3Complete = true;
+        lvl4Complete = true;
 
         knownSpellsIDs = new ArrayList<>();
         knownEnemies = new ArrayList<>();

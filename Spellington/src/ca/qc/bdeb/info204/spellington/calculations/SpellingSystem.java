@@ -692,4 +692,10 @@ public class SpellingSystem {
         return animLightningBouncingBall;
     }
 
+    public static ArrayList<Spell> getMasterSpells() {
+        return masterSpells;
+    }
+    
+    
+
 }

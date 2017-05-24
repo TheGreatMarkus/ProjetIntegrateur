@@ -24,9 +24,10 @@ public class Chest extends Treasure {
     private Image imgChestClosed;
     private Image imgChestOpen;
 
-    public Chest(float x, float y, ArrayList<Spell> droppableSpells) {
+    public Chest(float x, float y, ArrayList<Spell> droppableSpells, boolean isMasterChest) {
         super(x, y, DIM_CHEST.width, DIM_CHEST.height, droppableSpells);
         open = false;
+        this.isMasterChest = isMasterChest;
         this.droppableSpells = droppableSpells;
         try {
             if (isMasterChest) {
@@ -82,5 +83,11 @@ public class Chest extends Treasure {
         }
 
     }
+
+    public boolean isOpen() {
+        return open;
+    }
+    
+    
 
 }

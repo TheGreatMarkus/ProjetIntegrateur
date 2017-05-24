@@ -66,8 +66,8 @@ public class GameManager {
     private static ArrayList<MessageSign> activeMessageSigns = new ArrayList<>();
     private static ArrayList<Treasure> activeTreasure = new ArrayList<>();
     //for testing
-    private static final boolean ROOM_TESTING = false;
-    private static final int ROOM_TESTING_INDEX = 5;
+    private static final boolean ROOM_TESTING = true;
+    private static final int ROOM_TESTING_INDEX = 1;
 
     private static String message11;
     private static String message12;
@@ -148,7 +148,9 @@ public class GameManager {
 
         activeLevel = 1;
         activeMapIndex = 0;
-        currentRooms = generateRooms(activeLevel);
+        if (!ROOM_TESTING) {
+            currentRooms = generateRooms(activeLevel);
+        }
         loadNextMap();
         extractMapInfo();
         ((PlayState) (stateBasedGame.getState(GameCore.ID_PLAY_STATE))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
@@ -176,8 +178,10 @@ public class GameManager {
         PlayState.getSpellington().setLifePoint(PlayState.getSpellington().getMaxLifePoint());
         PlayState.getSpellington().setInvulnTime(0);
 
-        activeMapIndex = 0;
-        currentRooms = generateRooms(activeLevel);
+        activeMapIndex = 18;
+        if (!ROOM_TESTING) {
+            currentRooms = generateRooms(activeLevel);
+        }
         loadNextMap();
     }
 
@@ -364,16 +368,16 @@ public class GameManager {
 //                    activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getAdeptSpells()));
                     switch (activeLevel) {
                         case 1:
-                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getFireSpells()));
+                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getFireSpells(), false));
                             break;
                         case 2:
-                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getFireSpells()));
+                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getFireSpells(), false));
                             break;
                         case 3:
-                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getIceSpells()));
+                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getIceSpells(), false));
                             break;
                         case 4:
-                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getLightningSpells()));
+                            activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getLightningSpells(), false));
                             break;
                     }
                 } else if (activeMap.getTileId(j, i, 2) == mageSpawnID) {
@@ -393,7 +397,7 @@ public class GameManager {
                     activeEnemies.add(new MageEnemy((DIM_TILE.width * j), (DIM_TILE.height * i), tempType));
                 } else if (activeMap.getTileId(j, i, 2) == masterTreasureID) {
                     tempEvent = TileEvent.WHAT_IS_THIS;
-
+                    activeTreasure.add(new Chest((DIM_TILE.width * j), (DIM_TILE.height * i), SpellingSystem.getMasterSpells(), true));
                 } else if (activeMap.getTileId(j, i, 2) == message1ID) {
                     tempEvent = TileEvent.MESSAGE_1;
                     if (activeMapIndex == 1) {
@@ -515,7 +519,25 @@ public class GameManager {
                 }
             }
         }
+        try {
+            switch (activeLevel) {
+                case 2:
+                    generatedRooms.add(new TiledMap("res/map/mapDungeonEnd.tmx"));
 
+                    break;
+                case 3:
+                    generatedRooms.add(new TiledMap("res/map/mapPlainsEnd.tmx"));
+                    break;
+                case 4:
+                    generatedRooms.add(new TiledMap("res/map/mapCastleEnd.tmx"));
+                    break;
+                default:
+                    System.out.println("Invalid level number");
+                    break;
+            }
+        } catch (SlickException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return generatedRooms;
     }
 
