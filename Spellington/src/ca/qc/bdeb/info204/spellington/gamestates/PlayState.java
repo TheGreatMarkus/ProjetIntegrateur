@@ -57,6 +57,8 @@ public class PlayState extends BasicGameState {
     private Image backgroundDungeon;
     private Image backgroundIce;
     private Image backgroundCastle;
+    private Image portalOFF;
+    private Animation portalON;
     private Image hud;
 
     /**
@@ -82,6 +84,16 @@ public class PlayState extends BasicGameState {
         backgroundDungeon = new Image("src/res/image/background/dungeon.png");
         backgroundIce = new Image("src/res/image/background/ice.png");
         backgroundCastle = new Image("src/res/image/background/castle.png");
+        
+        portalOFF = new Image("src/res/image/portal/portalOFF.png");
+        
+        Image[] tempImgPortal = new Image[30];
+            for (int i = 0; i < tempImgPortal.length; i++) {
+                tempImgPortal[i] = new Image("res/image/portal/portalON/ (" + (i + 1) + ").png");
+            }
+            portalON = new Animation(tempImgPortal, 30);
+            
+            
         //Loading HUD image
         this.hud = new Image("src/res/image/HUD/hud.png");
     }
@@ -154,6 +166,13 @@ public class PlayState extends BasicGameState {
         for (MessageSign sign : GameManager.getActiveMessageSigns()) {
             sign.render(g);
         }
+        
+        if(GameManager.getActiveEnemies().isEmpty()){
+        portalON.draw((float)GameManager.getExitPoint().getX(), (float)GameManager.getExitPoint().getY()+50, 50, 50);
+        } else {
+        portalOFF.draw((float)GameManager.getExitPoint().getX(), (float)GameManager.getExitPoint().getY()+50, 50, 50);
+        }
+        
 
         spellington.render(g);
 
