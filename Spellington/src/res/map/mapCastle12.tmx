@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="32" height="18" tilewidth="50" tileheight="50" nextobjectid="3">
+ <tileset firstgid="1" name="castleTile" tilewidth="50" tileheight="50" tilecount="36" columns="6">
+  <image source="tiles/castleTile.png" width="300" height="300"/>
+ </tileset>
+ <tileset firstgid="37" name="collisionTile" tilewidth="50" tileheight="50" tilecount="12" columns="3">
+  <image source="tiles/collisionTile.png" width="150" height="200"/>
+ </tileset>
+ <layer name="terrain" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2SSwrAIAxEs7ClX9r7n6ZHawoKMkxi6aK6cGAQJckzIaOInJU8q3epp6PzO7/zm+EP6hDPAe74nt5YfIA8jLP4QnI93hodhHNYDa9/nIHVR7Kyr8eMb/2nxM9nwGp6/2Jzyk+UxS/tgSVvL7B3j4+1vort3Fv+H2qBP6m3Sl7UN/rtEr4ACQAA
+  </data>
+ </layer>
+ <layer name="collision" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC9NgYGBQHSCsAaUNBgirjto/av+o/YPGfg06YXz+p5fdg9V+WrqB2PRHqjnk6sOX/omxjxAmZMZgy38DYT+sDTBQ7Q8A6Z2hCQAJAAA=
+  </data>
+ </layer>
+ <layer name="event" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBQMBqBBhh49NL4aGl8Tia0PxKpk2DEKRsEoGAXDEQAAtGo2kwAJAAA=
+  </data>
+ </layer>
+</map>
