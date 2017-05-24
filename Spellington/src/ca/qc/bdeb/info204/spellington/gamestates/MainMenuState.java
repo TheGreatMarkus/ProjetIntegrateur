@@ -101,6 +101,7 @@ public class MainMenuState extends BasicGameState {
 
         renderMouseCursor(gc);
         g.setFont(fontCredit);
+        g.setColor(Color.white);
         String credit = "Par Cristian Aldea, Celtis de Chardon et Tarik Benakezouh";
         g.drawString(credit, GameCore.SCREEN_SIZE.width / 2 - fontCredit.getWidth(credit) / 2, GameCore.SCREEN_SIZE.height - 30);
 

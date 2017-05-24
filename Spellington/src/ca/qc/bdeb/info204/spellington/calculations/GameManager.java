@@ -66,7 +66,7 @@ public class GameManager {
     private static ArrayList<MessageSign> activeMessageSigns = new ArrayList<>();
     private static ArrayList<Treasure> activeTreasure = new ArrayList<>();
     //for testing
-    private static final boolean ROOM_TESTING = true;
+    private static final boolean ROOM_TESTING = false;
     private static final int ROOM_TESTING_INDEX = 1;
 
     private static String message11;
@@ -178,7 +178,7 @@ public class GameManager {
         PlayState.getSpellington().setLifePoint(PlayState.getSpellington().getMaxLifePoint());
         PlayState.getSpellington().setInvulnTime(0);
 
-        activeMapIndex = 18;
+        activeMapIndex = 0;
         if (!ROOM_TESTING) {
             currentRooms = generateRooms(activeLevel);
         }
@@ -203,10 +203,10 @@ public class GameManager {
             gameSave = new GameSave();
         }
         SpellingSystem.setKnownSpells(new ArrayList<>());
-//        for (Integer id : gameSave.getKnownSpellsIDs()) {
-//            SpellingSystem.getKnownSpells().add(SpellingSystem.getAllSpells().get(id - 1));
-//        }
-        SpellingSystem.getKnownSpells().addAll(SpellingSystem.getAllSpells());
+        for (Integer id : gameSave.getKnownSpellsIDs()) {
+            SpellingSystem.getKnownSpells().add(SpellingSystem.getAllSpells().get(id - 1));
+        }
+//        SpellingSystem.getKnownSpells().addAll(SpellingSystem.getAllSpells());
 
     }
 
@@ -430,7 +430,7 @@ public class GameManager {
      * @throws SlickException General Slick Exception.
      */
     public static void checkEndOfLevel(Spellington spellington) throws SlickException {
-        if (/*activeEnemies.isEmpty() && */spellington.getBounds().intersects(new Rectangle(exitPoint.x, exitPoint.y, Tile.DIM_TILE.width, Tile.DIM_TILE.height))) {
+        if (activeEnemies.isEmpty() && spellington.getBounds().intersects(new Rectangle(exitPoint.x, exitPoint.y, Tile.DIM_TILE.width, Tile.DIM_TILE.height))) {
             loadNextMap();
         }
     }

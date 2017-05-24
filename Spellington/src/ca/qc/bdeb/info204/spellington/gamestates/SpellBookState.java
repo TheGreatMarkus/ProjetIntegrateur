@@ -901,12 +901,12 @@ public class SpellBookState extends BasicGameState {
                     element = "Élément: Neutre";
                     break;
             }
-            float x = 870f * GameCore.SCALE;
+            float x = 874f * GameCore.SCALE;
             float y = 175f * GameCore.SCALE;
             Animation temp = SpellingSystem.getKnownSpells().get(spellKind).getAnimation().copy();
             float scale = GameCore.SCALE;
             float ratio = (float) temp.getWidth() / (float) temp.getHeight();
-            float size = 180f * GameCore.SCALE;
+            float size = 178f * GameCore.SCALE;
             float height = size / ratio;
             SpellingSystem.getKnownSpells().get(spellKind).getAnimation().draw(x, y + (45f * scale) - (height / 2), size, height);
             g.drawString(name, iconX + iconSize + gap, iconY);

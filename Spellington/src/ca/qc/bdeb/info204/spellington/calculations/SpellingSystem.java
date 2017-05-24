@@ -153,7 +153,7 @@ public class SpellingSystem {
         initAnimation();
 
         Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", DESC_FIRE_BALL, 5, animFireBall, 30, 1, 1, 5);
-        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", DESC_ICE_SPIKE, 3, animIceSpike, 10, 1, 0, 5);
+        Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", DESC_ICE_SPIKE, 5, animIceSpike, 10, 1, 0, 5);
         Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", DESC_SPARK, 2, animSpark, 5, 10);
         Spell heal = new HealingSpell(ID_HEAL, "Soin", DESC_HEAL, 1, animHeal, 100, 100, 10);
         Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", DESC_ASCENDING_CURRENT, animAscendingCurrent, 100, 100, 0);
@@ -442,15 +442,15 @@ public class SpellingSystem {
             }
             animIceSpike = new Animation(tempImgIceSpike, 30);
 
-            Image[] tempImgIceStorm = new Image[40];
+            Image[] tempImgIceStorm = new Image[42];
             for (int i = 0; i < tempImgIceStorm.length; i++) {
-                tempImgIceStorm[i] = new Image("res/image/animation/spells/iceStorm/(" + (i + 1) + ").png");
+                tempImgIceStorm[i] = new Image("res/image/animation/spells/iceStorm/ (" + (i + 1) + ").png");
             }
             animIceStorm = new Animation(tempImgIceStorm, 30);
 
-            Image[] tempImgMeteorSwarm = new Image[38];
+            Image[] tempImgMeteorSwarm = new Image[21];
             for (int i = 0; i < tempImgMeteorSwarm.length; i++) {
-                tempImgMeteorSwarm[i] = new Image("res/image/animation/spells/meteorSwarm/(" + (i + 1) + ").png");
+                tempImgMeteorSwarm[i] = new Image("res/image/animation/spells/meteorSwarm/ (" + (i + 1) + ").png");
             }
             animMeteorShower = new Animation(tempImgMeteorSwarm, 30);
 

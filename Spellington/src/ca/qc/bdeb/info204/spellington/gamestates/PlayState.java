@@ -284,7 +284,7 @@ public class PlayState extends BasicGameState {
             Calculations.checkMapCollision(GameManager.getMapInformation(), enemy);
             if (enemy.getLifePoint() <= 0) {
                 enemiesToBeRemoved.add(enemy);
-                if (GameCore.rand.nextInt(1) == 0 && enemy.getEnemyType() != Enemy.EnemyType.DUMMY) {
+                if (GameCore.rand.nextInt(20) == 0 && enemy.getEnemyType() != Enemy.EnemyType.DUMMY) {
                     GameManager.getActiveTreasure().add(new PickUp(enemy.getX(), enemy.getMaxY() - 50, SpellingSystem.getAdeptSpells()));
                 }
                 if (!GameManager.getGameSave().getKnownEnemies().contains(enemy.getEnemyType())) {
@@ -306,10 +306,10 @@ public class PlayState extends BasicGameState {
             displayHUD = !displayHUD;
         }
 
-//        if (spellington.getLifePoint() == 0) {
-//            GameManager.loadGameSave();
-//            game.enterState(GameCore.ID_LEVEL_SELECTION_STATE);
-//        }
+        if (spellington.getLifePoint() == 0) {
+            GameManager.loadGameSave();
+            game.enterState(GameCore.ID_LEVEL_SELECTION_STATE);
+        }
         GameCore.clearInputRecord(gc);
     }
 
