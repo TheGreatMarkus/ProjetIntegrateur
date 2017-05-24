@@ -75,7 +75,7 @@ public class Calculations {
     public static void checkTileAndEntityCollision(Tile tile, DynamicEntity entity) {
         //If a collision is found and the tile is impassable
         if (entity.getBounds().intersects(tile.getBounds()) && tile.getTileState() != Tile.TileState.PASSABLE) {
-            if (tile.getTileState() == Tile.TileState.DAMAGE && entity instanceof LivingEntity) {
+            if (tile.getTileState() == Tile.TileState.DAMAGE && entity instanceof Spellington) {
                 switch (GameManager.getActiveLevel()) {
                     case 1:
                     case 2:

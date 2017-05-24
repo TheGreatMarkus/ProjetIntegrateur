@@ -426,4 +426,10 @@ public class Spellington extends LivingEntity {
         this.airJumps = airJumps;
     }
 
+    public void setInvulnTime(int invulnTime) {
+        this.invulnTime = invulnTime;
+    }
+    
+    
+
 }

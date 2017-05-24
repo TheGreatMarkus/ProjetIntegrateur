@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
+import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
@@ -33,13 +34,13 @@ public class RangedEnemy extends Enemy {
                 projectileSize = 20;
                 break;
             case PYROMANCER:
-                projectileSize = 20;
+                projectileSize = 40;
                 break;
             case CRYOMANCER:
                 projectileSize = 20;
                 break;
             case ELECTROMANCER:
-                projectileSize = 20;
+                projectileSize = 40;
                 break;
             default:
                 break;
@@ -81,7 +82,7 @@ public class RangedEnemy extends Enemy {
     }
 
     @Override
-    public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, Tile[][] mapinfo) {
         if (canSeePlayer) {
             if (this.animState != AnimState.ATTACK_R && this.animState != AnimState.ATTACK_L) {
                 if (spellington.getCenterX() <= this.getCenterX()) {
@@ -95,13 +96,13 @@ public class RangedEnemy extends Enemy {
     }
 
     @Override
-    public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
         if (spellingtonInRange) {
             if (attackCooldown == 0) {
                 if (this.enemyType == EnemyType.ARCHER) {
-                    Calculations.enemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, mapinfo);
+                    Calculations.enemyTryToShootCurvedProjectile(this, spellington, activeProjectiles, map);
                 } else if (this.enemyType == EnemyType.CROSSBOWMAN) {
-                    Calculations.enemyTryToShootStraightProjectile(this, spellington, activeProjectiles, mapinfo);
+                    Calculations.enemyTryToShootStraightProjectile(this, spellington, activeProjectiles, map);
                 }
             }
         }

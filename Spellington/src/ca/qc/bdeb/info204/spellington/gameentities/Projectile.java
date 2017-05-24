@@ -35,7 +35,7 @@ public class Projectile extends DynamicEntity {
         sourceID = id;
         this.bounces = 0;
         if (sourceID == SpellingSystem.ID_LIGHTNING_BOUNCING_BALL) {
-            this.bounces = 10000;
+            this.bounces = 15;
         }
         if (sourceID == SpellingSystem.ID_EXPLOSIVE_BALL) {
             this.bounces = 1;
@@ -122,7 +122,8 @@ public class Projectile extends DynamicEntity {
                         enemy.subLifePoint(damage, damageType);
                     }
                 }
-                activeAnimations.add(new GameAnimation(this.getCenterX() - 200, this.getCenterY() - 200, 400, 400, animation.copy(), false, 0));
+
+                activeAnimations.add(new GameAnimation(this.getCenterX() - 200, this.getCenterY() - 200, 400, 400, SpellingSystem.getAnimExplosion().copy(), false, 0));
                 break;
             case 2:
 

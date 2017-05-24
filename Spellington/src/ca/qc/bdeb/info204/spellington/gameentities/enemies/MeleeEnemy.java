@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 
+import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
@@ -58,19 +59,19 @@ public class MeleeEnemy extends Enemy {
         switch (this.animState) {
             case STANDING_L:
                 imgStandingLeft.draw(tempX, tempY, tempWidth, tempHeight);
-                g.drawRect(getCenterX() - attackRange, y + 20, attackRange, 30);
+                //g.drawRect(getCenterX() - attackRange, y + 20, attackRange, 30);
                 break;
             case STANDING_R:
                 imgStandingRight.draw(tempX, tempY, tempWidth, tempHeight);
-                g.drawRect(getCenterX(), y + 20, attackRange, 30);
+                //g.drawRect(getCenterX(), y + 20, attackRange, 30);
                 break;
             case WALKING_L:
                 animWalkL.draw(tempX, tempY, tempWidth, tempHeight);
-                g.drawRect(getCenterX() - attackRange, y + 20, attackRange, 30);
+                //g.drawRect(getCenterX() - attackRange, y + 20, attackRange, 30);
                 break;
             case WALKING_R:
                 animWalkR.draw(tempX, tempY, tempWidth, tempHeight);
-                g.drawRect(getCenterX(), y + 20, attackRange, 30);
+                //g.drawRect(getCenterX(), y + 20, attackRange, 30);
                 break;
             case ATTACK_L:
                 animAttackL.draw(tempX, tempY, tempWidth, tempHeight);
@@ -91,7 +92,7 @@ public class MeleeEnemy extends Enemy {
     }
 
     @Override
-    public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    public void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, Tile[][] mapinfo) {
         if (canSeePlayer && !(this.animState == AnimState.ATTACK_L || this.animState == AnimState.ATTACK_R)) {
             if (deltaXPlayer < 0) {
                 this.animState = AnimState.STANDING_L;
@@ -111,7 +112,7 @@ public class MeleeEnemy extends Enemy {
     }
 
     @Override
-    public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    public void attack(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map) {
         if (attackCooldown == 0) {
             if (this.enemyType == EnemyType.FIRE_SLIME || this.enemyType == EnemyType.ICE_SLIME || this.enemyType == EnemyType.LIGHTNING_SLIME) {
                 if (this.getBounds().intersects(spellington.getBounds())) {

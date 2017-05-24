@@ -2,7 +2,6 @@ package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.GameManager;
-import ca.qc.bdeb.info204.spellington.calculations.GameSave;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem.MenuItemType;
 import java.awt.Font;
@@ -14,7 +13,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.OutlineEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -31,6 +29,7 @@ public class MainMenuState extends BasicGameState {
 
     //Default menu font.
     protected static UnicodeFont fontMenu;
+    protected static UnicodeFont fontCredit;
     private Image backGround;
 
     //Text for the main menu.
@@ -59,29 +58,25 @@ public class MainMenuState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         IMG_MENU_CURSOR = new Image("res/image/cursor/small_cursor.png");
         //Initialisation du font pour le menu.
+
         backGround = new Image("res/image/background/backgroundMenu.png");
 
         fontMenu = new UnicodeFont(GameCore.getFontPaladin(Font.BOLD, 80.0f * GameCore.SCALE));
         fontMenu.addAsciiGlyphs();
-        fontMenu.getEffects().add(new ColorEffect(java.awt.Color.black));
-        fontMenu.getEffects().add(new OutlineEffect(1, java.awt.Color.white));
+        fontMenu.getEffects().add(new ColorEffect(java.awt.Color.LIGHT_GRAY));
         fontMenu.loadGlyphs();
+
+        fontCredit = new UnicodeFont(GameCore.getFontPaladin(Font.BOLD, 20.0f * GameCore.SCALE));
+        fontCredit.addAsciiGlyphs();
+        fontCredit.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
+        fontCredit.loadGlyphs();
 
         mnuItemTitle = new MenuItem(gc, MenuItemType.TEXT, MM_TITLE, true, false, 0, TEXT_GAP, fontMenu.getWidth(MM_TITLE), fontMenu.getHeight(MM_TITLE));
         mnuItemNewGame = new MenuItem(gc, MenuItemType.BUTTON, MM_NEW_GAME, true, true, 0, 0, fontMenu.getWidth(MM_NEW_GAME), fontMenu.getHeight(MM_NEW_GAME));
         mnuItemLoadGame = new MenuItem(gc, MenuItemType.BUTTON, MM_LOAD_GAME, true, false, 0, mnuItemNewGame.getY() + mnuItemNewGame.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_LOAD_GAME), fontMenu.getHeight(MM_LOAD_GAME));
         mnuItemOptions = new MenuItem(gc, MenuItemType.BUTTON, MM_OPTIONS, true, false, 0, mnuItemLoadGame.getY() + mnuItemLoadGame.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_OPTIONS), fontMenu.getHeight(MM_OPTIONS));
         mnuItemExit = new MenuItem(gc, MenuItemType.BUTTON, MM_EXIT, true, false, 0, mnuItemOptions.getY() + mnuItemOptions.getHeight() + TEXT_GAP, fontMenu.getWidth(MM_EXIT), fontMenu.getHeight(MM_EXIT));
-        prepareMainMenu(GameManager.getGameSave());
-    }
 
-    public void prepareMainMenu(GameSave gameSave) {
-        mnuItemLoadGame.setClickable(false);
-        if (gameSave != null) {
-            System.out.println("Game save found and loaded");
-            mnuItemLoadGame.setClickable(true);
-
-        }
     }
 
     /**
@@ -105,6 +100,9 @@ public class MainMenuState extends BasicGameState {
         mnuItemExit.render(g);
 
         renderMouseCursor(gc);
+        g.setFont(fontCredit);
+        String credit = "Par Cristian Aldea, Celtis de Chardon et Tarik Benakezouh";
+        g.drawString(credit, GameCore.SCREEN_SIZE.width / 2 - fontCredit.getWidth(credit) / 2, GameCore.SCREEN_SIZE.height - 30);
 
     }
 
@@ -131,12 +129,11 @@ public class MainMenuState extends BasicGameState {
             GameManager.newGame();
         }
         if (mnuItemLoadGame.getHoveredOver() && triedToClick && mnuItemLoadGame.getClickable()) {
-            ((LevelSelectionState) (game.getState(GameCore.LEVEL_SELECTION_STATE_ID))).prepareLevel(GameManager.getGameSave());
-            game.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
+            ((LevelSelectionState) (game.getState(GameCore.ID_LEVEL_SELECTION_STATE))).prepareLevel(GameManager.getGameSave());
+            game.enterState(GameCore.ID_LEVEL_SELECTION_STATE);
         }
-
         if (mnuItemOptions.getHoveredOver() && triedToClick) {
-            game.enterState(GameCore.OPTIONS_MENU_STATE_ID);
+            game.enterState(GameCore.ID_OPTIONS_MENU_STATE);
         }
         if (mnuItemExit.getHoveredOver() && triedToClick) {
             GameManager.saveGameSave();
@@ -152,7 +149,7 @@ public class MainMenuState extends BasicGameState {
      */
     @Override
     public int getID() {
-        return GameCore.MAIN_MENU_STATE_ID;
+        return GameCore.ID_MAIN_MENU_STATE;
     }
 
     /**

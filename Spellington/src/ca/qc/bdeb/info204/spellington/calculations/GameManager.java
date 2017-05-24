@@ -68,7 +68,7 @@ public class GameManager {
     //for testing
     private static final boolean ROOM_TESTING = false;
     private static final int ROOM_TESTING_INDEX = 5;
-    
+
     private static String message11;
     private static String message12;
     private static String message13;
@@ -83,50 +83,47 @@ public class GameManager {
     public static void initGameManager(StateBasedGame stateBasedGame) {
         GameManager.stateBasedGame = stateBasedGame;
         loadMaps();
-        if (!loadGameSave()) {
-            gameSave = new GameSave();
-        }
-        
+        loadGameSave();
+
         //define the message for the tutorial
-        message11 = "Bienvenue, Spellington mage des temps anciens. \n"
-                + "Ta vengeance contre le roi va enfin pouvoir s’accomplir après \n"
-                + "tant d’ années d’emprisonnement. Tu peux te déplacer avec les \n"
-                + "touches fléchées du clavier, la flèche du haut est utilisé pour \n"
-                + "sauter. Naturellement, avec l’ aide de ta magie tu peux sauter \n"
-                + "une deuxième fois en l’ air et sauter de mur en mur sans difficulté. \n"
-                + "Suis les autres pancartes pour continuer le jeu...";
-        
+        message11 = "Bienvenue Spellington, mage des temps anciens. \n"
+                + "Ta vengeance contre le roi va enfin pouvoir s'accomplir \n"
+                + "après tant d'années d’emprisonnement. Tu peux te déplacer \n"
+                + "avec les touches fléchées du clavier, la flèche du haut est \n"
+                + "utilisé pour sauter. Naturellement, avec l'aide de ta magie \n"
+                + "tu peux sauter une deuxième fois en l'air et sauter de mur en \n"
+                + "mur sans difficulté. Suis les autres pancartes pour continuer \n"
+                + "le tutoriel...";
+
         message12 = "Il existe deux types de sorts: les actifs et les passifs. \n"
-                + "Les sorts actifs s’utilisent avec le clic gauche de la souris et \n"
-                + "qui ont un nombre limité d’utilisation avant de devoir les relancer. \n"
-                + "Les sorts passifs eux sont constamment activés, mais tu ne peux en \n"
-                + "avoir qu’un seul à la fois...";
-        
+                + "Les sorts actifs s’utilisent avec le clic gauche de la souris \n"
+                + "et ont un nombre limité d’utilisations avant de devoir les \n"
+                + "recharger.Les sorts passifs eux sont constamment activés, \n"
+                + "mais tu ne peux en avoir qu’un seul à la fois...";
+
         message13 = "Tu peux toujours accéder au menu via la touche escape. Tu \n"
-                + "remarquera facilement le grimoire qui va beaucoup te servir dans\n"
-                + " ta quête, il contient toutes les informations que tu connais, \n"
-                + "mais vu ton age il ne serait pas étonnant que tu ai presque tout \n"
-                + "oublié. Heureusement au fur et à mesure de tes expériences il \n"
-                + "va se remplir...";
-        
+                + "remarquera facilement le grimoire qui va beaucoup te servir \n"
+                + "dans ta quête, il contient toutes les informations que tu \n"
+                + "connais, mais vu ton age il ne serait pas étonnant que tu ai \n"
+                + "presque tout oublié. Heureusement au fur et à mesure de tes \n"
+                + "expériences il va se remplir...";
+
         message21 = "Pour pouvoir lancer un sort et donc te débarrasser de ces \n"
                 + "épouvantails tu dois écrire l’incantation du sort directement \n"
                 + "sur ton clavier. Tu peux confirmer l’incantation avec le clic \n"
                 + "gauche pour activer le sort si elle correspond à un sort \n"
-                + "connu de ton grimoir. Tu peux aussi effacer les lettres \n"
-                + "indésirables avec retour arrière et évidement tu peux bouger \n"
-                + "en incantant... ";
-        
-        message22 = "Le chemin vers la vengeance est long et tu va passer par plusieurs\n"
-                + " environnements hostiles, tu dois toujours éliminer les ennemis \n"
-                + "pour activer le portail, mais n’oubli pas les coffres sur ton \n"
-                + "chemin ils contiennent des sorts utile pour la victoire finale! \n"
-                + "Tu peux toujours revenir sur tes pas pour refaire un environnement, \n"
-                + "car ils sont si grand que tu est sur de pouvoir trouver de nouveaux \n"
-                + "sortilèges à chaque passage. Finalement fais attention les ennemis \n"
-                + "ont des résistances aux éléments suivant leur couleur et ne seront \n"
-                + "sensibles qu’aux sorts des bons éléments...";
-        
+                + "connu de ton grimoire. Tu peux aussi effacer les lettres \n"
+                + "indésirables avec la touche de retour arrière et évidemment \n"
+                + "tu peux bouger en incantant... ";
+
+        message22 = "Tu dois tuer tous les ennemis pour activer le portail. \n"
+                + "De plus, tu trouveras plusieurs trésors sur ton chemin qui \n"
+                + "contiennent des sorts qui te seront utiles durant ton voyage.\n"
+                + "Tu peux toujours revenir rejouer un niveau pour tenter de \n"
+                + "trouver de nouveau sortilèges. Finalement, fais attention, \n"
+                + "les ennemis ont des résistances aux éléments selon leur \n"
+                + "couleur et ne seront affectés qu’aux bons éléments...";
+
     }
 
     /**
@@ -138,13 +135,24 @@ public class GameManager {
         gameSave = new GameSave();
         saveGameSave();
 
+        SpellingSystem.setActiveSpell(null);
+        SpellingSystem.setPassiveSpell(null);
+        SpellingSystem.setSpellsIncantations();
+        SpellingSystem.setNbPotionAcid(5);
+        SpellingSystem.setNbPotionHeal(5);
+        SpellingSystem.setNbPotionPast(5);
+        SpellingSystem.setNbPotionTime(5);
+        SpellingSystem.setNbSpellUses(0);
+        PlayState.getSpellington().setLifePoint(PlayState.getSpellington().getMaxLifePoint());
+        PlayState.getSpellington().setInvulnTime(0);
+
         activeLevel = 1;
         activeMapIndex = 0;
         currentRooms = generateRooms(activeLevel);
         loadNextMap();
         extractMapInfo();
-        ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
-        stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
+        ((PlayState) (stateBasedGame.getState(GameCore.ID_PLAY_STATE))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
+        stateBasedGame.enterState(GameCore.ID_PLAY_STATE);
 
     }
 
@@ -156,6 +164,18 @@ public class GameManager {
      */
     public static void levelSelected(int level) throws SlickException {
         activeLevel = level;
+
+        SpellingSystem.setActiveSpell(null);
+        SpellingSystem.setPassiveSpell(null);
+        SpellingSystem.setSpellsIncantations();
+        SpellingSystem.setNbPotionAcid(5);
+        SpellingSystem.setNbPotionHeal(5);
+        SpellingSystem.setNbPotionPast(5);
+        SpellingSystem.setNbPotionTime(5);
+        SpellingSystem.setNbSpellUses(0);
+        PlayState.getSpellington().setLifePoint(PlayState.getSpellington().getMaxLifePoint());
+        PlayState.getSpellington().setInvulnTime(0);
+
         activeMapIndex = 0;
         currentRooms = generateRooms(activeLevel);
         loadNextMap();
@@ -164,24 +184,26 @@ public class GameManager {
     /**
      * Loads a savefile of the game if one exists.
      *
-     * @return The loaded save file.
      */
-    public static boolean loadGameSave() {
+    public static void loadGameSave() {
         try {
             ObjectInputStream oos = new ObjectInputStream(new FileInputStream(GAME_SAVE_PATH));
             gameSave = (GameSave) oos.readObject();
             oos.close();
             System.out.println("Save file correctly loaded");
-            System.out.println(gameSave.getKnownSpellsIDs());
-            System.out.println(gameSave.getKnownEnemies());
-            return true;
         } catch (FileNotFoundException ex) {
             System.out.println("Error loading save file. file not found.");
-            return false;
+            gameSave = new GameSave();
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Error loading save file. Error loading existing file");
-            return false;
+            gameSave = new GameSave();
         }
+        SpellingSystem.setKnownSpells(new ArrayList<>());
+        for (Integer id : gameSave.getKnownSpellsIDs()) {
+            SpellingSystem.getKnownSpells().add(SpellingSystem.getAllSpells().get(id - 1));
+        }
+        //SpellingSystem.getKnownSpells().addAll(SpellingSystem.getAllSpells());
+
     }
 
     /**
@@ -189,7 +211,6 @@ public class GameManager {
      *
      */
     public static void saveGameSave() {
-
         try {
             gameSave.setKnownSpellsIDs(new ArrayList<Integer>());
             for (Spell spell : SpellingSystem.getKnownSpells()) {
@@ -284,7 +305,7 @@ public class GameManager {
                 int rangedEnemyID = activeMap.getTileSet(1).firstGID + 4;
                 int tresureID = activeMap.getTileSet(1).firstGID + 7;
                 int mageSpawnID = activeMap.getTileSet(1).firstGID + 10;
-                int whatIsThis = activeMap.getTileSet(1).firstGID + 2;
+                int masterTreasureID = activeMap.getTileSet(1).firstGID + 2;
                 int message1ID = activeMap.getTileSet(1).firstGID + 5;
                 int message2ID = activeMap.getTileSet(1).firstGID + 8;
                 int message3ID = activeMap.getTileSet(1).firstGID + 11;
@@ -370,21 +391,22 @@ public class GameManager {
                             break;
                     }
                     activeEnemies.add(new MageEnemy((DIM_TILE.width * j), (DIM_TILE.height * i), tempType));
-                } else if (activeMap.getTileId(j, i, 2) == whatIsThis) {
+                } else if (activeMap.getTileId(j, i, 2) == masterTreasureID) {
                     tempEvent = TileEvent.WHAT_IS_THIS;
+
                 } else if (activeMap.getTileId(j, i, 2) == message1ID) {
                     tempEvent = TileEvent.MESSAGE_1;
-                    if(activeMapIndex == 1) {
-                    activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message11));
+                    if (activeMapIndex == 1) {
+                        activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message11));
                     } else {
-                    activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message21));
+                        activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message21));
                     }
                 } else if (activeMap.getTileId(j, i, 2) == message2ID) {
                     tempEvent = TileEvent.MESSAGE_2;
-                    if(activeMapIndex == 1) {
-                    activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message12));
+                    if (activeMapIndex == 1) {
+                        activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message12));
                     } else {
-                    activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message22));
+                        activeMessageSigns.add(new MessageSign((DIM_TILE.width * j), (DIM_TILE.height * i), DIM_TILE.width, DIM_TILE.height, message22));
                     }
                 } else if (activeMap.getTileId(j, i, 2) == message3ID) {
                     tempEvent = TileEvent.MESSAGE_3;
@@ -447,13 +469,13 @@ public class GameManager {
         }
         if (!endOfLevel) {
             extractMapInfo();
-            ((PlayState) (stateBasedGame.getState(GameCore.PLAY_STATE_ID))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
-            stateBasedGame.enterState(GameCore.PLAY_STATE_ID);
+            ((PlayState) (stateBasedGame.getState(GameCore.ID_PLAY_STATE))).prepareLevel(activeMap, entryPoint.x, entryPoint.y);
+            stateBasedGame.enterState(GameCore.ID_PLAY_STATE);
         } else {
             gameSave.completeLevel(activeLevel);
             saveGameSave();
-            ((LevelSelectionState) (stateBasedGame.getState(GameCore.LEVEL_SELECTION_STATE_ID))).prepareLevel(gameSave);
-            stateBasedGame.enterState(GameCore.LEVEL_SELECTION_STATE_ID);
+            ((LevelSelectionState) (stateBasedGame.getState(GameCore.ID_LEVEL_SELECTION_STATE))).prepareLevel(gameSave);
+            stateBasedGame.enterState(GameCore.ID_LEVEL_SELECTION_STATE);
         }
     }
 

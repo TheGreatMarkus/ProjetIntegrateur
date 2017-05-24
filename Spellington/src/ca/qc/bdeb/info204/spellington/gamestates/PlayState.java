@@ -37,11 +37,12 @@ import org.newdawn.slick.tiled.TiledMap;
 public class PlayState extends BasicGameState {
 
     private UnicodeFont fontSpellChant;
+    private UnicodeFont fontGeneral;
 
     private Image IMG_GAME_CROSSHAIR;
 
     private TiledMap map;
-    private Spellington spellington;
+    private static Spellington spellington;
 
     public ArrayList<Projectile> activeProjectiles = new ArrayList<>();
     public ArrayList<GameAnimation> activeAnimations = new ArrayList<>();
@@ -71,6 +72,12 @@ public class PlayState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         spellington = new Spellington(0, 0, LivingEntity.AnimState.JUMP_R);
+
+        fontGeneral = new UnicodeFont(GameCore.getFontMeath(Font.BOLD, 20 * GameCore.SCALE));
+        fontGeneral.addAsciiGlyphs();
+        fontGeneral.getEffects().add(new ColorEffect(java.awt.Color.white));
+        fontGeneral.loadGlyphs();
+
         fontSpellChant = new UnicodeFont(GameCore.getFontMeath(Font.BOLD, 30 * GameCore.SCALE));
         fontSpellChant.addAsciiGlyphs();
         fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.white));
@@ -84,16 +91,15 @@ public class PlayState extends BasicGameState {
         backgroundDungeon = new Image("src/res/image/background/dungeon.png");
         backgroundIce = new Image("src/res/image/background/ice.png");
         backgroundCastle = new Image("src/res/image/background/castle.png");
-        
+
         portalOFF = new Image("src/res/image/portal/portalOFF.png");
-        
+
         Image[] tempImgPortal = new Image[30];
-            for (int i = 0; i < tempImgPortal.length; i++) {
-                tempImgPortal[i] = new Image("res/image/portal/portalON/ (" + (i + 1) + ").png");
-            }
-            portalON = new Animation(tempImgPortal, 30);
-            
-            
+        for (int i = 0; i < tempImgPortal.length; i++) {
+            tempImgPortal[i] = new Image("res/image/portal/portalON/ (" + (i + 1) + ").png");
+        }
+        portalON = new Animation(tempImgPortal, 30);
+
         //Loading HUD image
         this.hud = new Image("src/res/image/HUD/hud.png");
     }
@@ -127,17 +133,25 @@ public class PlayState extends BasicGameState {
      */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        
+        g.setFont(fontSpellChant);
         //Must be the first in the PlayState renger method.
         //background
-        switch(GameManager.getActiveLevel()){
-            case 1:backgroundTuto.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
-            case 2:backgroundDungeon.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
-            case 3:backgroundIce.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
-            case 4:backgroundCastle.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);break;
-        
+        switch (GameManager.getActiveLevel()) {
+            case 1:
+                backgroundTuto.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
+                break;
+            case 2:
+                backgroundDungeon.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
+                break;
+            case 3:
+                backgroundIce.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
+                break;
+            case 4:
+                backgroundCastle.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
+                break;
+
         }
-        
+
         g.scale(GameCore.SCALE, GameCore.SCALE);
 
         g.setColor(Color.white);
@@ -150,15 +164,7 @@ public class PlayState extends BasicGameState {
                 }
             }
         }
-//        g.setColor(Color.white);
-//        for (Tile[] tile1 : GameManager.getMapInformation()) {
-//            for (Tile tile : tile1) {
-//                if (tile.getTileState() == Tile.TileState.PASSABLE) {
-//                    g.drawString(tile.getTileEvent().toString(), tile.getX(), tile.getY());
-//                }
-//            }
-//        }
-
+        g.setFont(fontGeneral);
         for (Treasure treasure : GameManager.getActiveTreasure()) {
             treasure.render(g);
         }
@@ -166,13 +172,12 @@ public class PlayState extends BasicGameState {
         for (MessageSign sign : GameManager.getActiveMessageSigns()) {
             sign.render(g);
         }
-        
-        if(GameManager.getActiveEnemies().isEmpty()){
-        portalON.draw((float)GameManager.getExitPoint().getX(), (float)GameManager.getExitPoint().getY()+50, 50, 50);
+
+        if (GameManager.getActiveEnemies().isEmpty()) {
+            portalON.draw((float) GameManager.getExitPoint().getX(), (float) GameManager.getExitPoint().getY() + 50, 50, 50);
         } else {
-        portalOFF.draw((float)GameManager.getExitPoint().getX(), (float)GameManager.getExitPoint().getY()+50, 50, 50);
+            portalOFF.draw((float) GameManager.getExitPoint().getX(), (float) GameManager.getExitPoint().getY() + 50, 50, 50);
         }
-        
 
         spellington.render(g);
 
@@ -266,11 +271,11 @@ public class PlayState extends BasicGameState {
         //Update of enemies
         ArrayList<Enemy> enemiesToBeRemoved = new ArrayList<>();
         for (Enemy enemy : GameManager.getActiveEnemies()) {
-            enemy.update(deltaFloat, spellington, activeProjectiles, GameManager.getMapInformation());
+            enemy.update(deltaFloat, spellington, activeProjectiles, activeAnimations, GameManager.getMapInformation());
             Calculations.checkMapCollision(GameManager.getMapInformation(), enemy);
             if (enemy.getLifePoint() <= 0) {
                 enemiesToBeRemoved.add(enemy);
-                if (GameCore.rand.nextInt(10) == 0) {
+                if (GameCore.rand.nextInt(1) == 0 && enemy.getEnemyType() != Enemy.EnemyType.DUMMY) {
                     GameManager.getActiveTreasure().add(new PickUp(enemy.getX(), enemy.getMaxY() - 50, SpellingSystem.getAdeptSpells()));
                 }
                 if (!GameManager.getGameSave().getKnownEnemies().contains(enemy.getEnemyType())) {
@@ -283,13 +288,18 @@ public class PlayState extends BasicGameState {
         GameManager.checkEndOfLevel(spellington);
 
         if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
-            game.enterState(GameCore.PAUSE_MENU_STATE_ID);
+            game.enterState(GameCore.ID_PAUSE_MENU_STATE);
         }
         if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
             debugMode = !debugMode;
         }
         if (gc.getInput().isKeyPressed(Input.KEY_F4)) {
             displayHUD = !displayHUD;
+        }
+
+        if (spellington.getLifePoint() == 0) {
+            GameManager.loadGameSave();
+            game.enterState(GameCore.ID_LEVEL_SELECTION_STATE);
         }
         GameCore.clearInputRecord(gc);
     }
@@ -434,7 +444,7 @@ public class PlayState extends BasicGameState {
      */
     @Override
     public int getID() {
-        return GameCore.PLAY_STATE_ID;
+        return GameCore.ID_PLAY_STATE;
     }
 
     public static float getSlowDownTime() {
@@ -443,6 +453,10 @@ public class PlayState extends BasicGameState {
 
     public static void setSlowDownTime(float slowDownTime) {
         PlayState.slowDownTime = slowDownTime;
+    }
+
+    public static Spellington getSpellington() {
+        return spellington;
     }
 
 }

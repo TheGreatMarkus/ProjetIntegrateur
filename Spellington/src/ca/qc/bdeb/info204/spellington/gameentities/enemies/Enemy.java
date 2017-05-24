@@ -3,6 +3,7 @@ package ca.qc.bdeb.info204.spellington.gameentities.enemies;
 import ca.qc.bdeb.info204.spellington.GameCore;
 import ca.qc.bdeb.info204.spellington.calculations.Calculations;
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
+import ca.qc.bdeb.info204.spellington.gameentities.GameAnimation;
 import ca.qc.bdeb.info204.spellington.gameentities.LivingEntity;
 import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
@@ -236,9 +237,10 @@ public abstract class Enemy extends LivingEntity {
      * @param time The delta of the frame
      * @param spellington
      * @param activeProjectiles
-     * @param mapinfo
+     * @param activeAnimations
+     * @param map
      */
-    public void update(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] mapinfo) {
+    public void update(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, Tile[][] map) {
         if (this.collisionBottom || this.collisionTop) {
             this.speedVector.setY(0);
         }
@@ -251,7 +253,7 @@ public abstract class Enemy extends LivingEntity {
                 invulnTime = 0;
             }
         }
-        playerInSight = Calculations.detEnemyCanSeeSpellington(this, spellington, mapinfo);
+        playerInSight = Calculations.detEnemyCanSeeSpellington(this, spellington, map);
         deltaXPlayer = spellington.getCenterX() - this.getCenterX();
         deltaYPlayer = spellington.getCenterY() - this.getCenterY();
         playerDistance = (float) Math.sqrt(deltaXPlayer * deltaXPlayer + deltaYPlayer * deltaYPlayer);
@@ -259,8 +261,8 @@ public abstract class Enemy extends LivingEntity {
 
         canSeePlayer = spellingtonInRange && playerInSight;
 
-        move(time, spellington, activeProjectiles, mapinfo);
-        attack(time, spellington, activeProjectiles, mapinfo);
+        move(time, spellington, activeProjectiles, activeAnimations, map);
+        attack(time, spellington, activeProjectiles, map);
 
         if (attackCooldown > 0) {
             attackCooldown -= time;
@@ -312,9 +314,10 @@ public abstract class Enemy extends LivingEntity {
      * @param time The delta of the frame.
      * @param spellington The playable protagonist.
      * @param activeProjectiles The list of active projectile in the game.
+     * @param activeAnimations
      * @param map The collision and event information for the current map.
      */
-    public abstract void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, Tile[][] map);
+    public abstract void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, Tile[][] map);
 
     /**
      * Determines when and if the enemy should be attacking.
