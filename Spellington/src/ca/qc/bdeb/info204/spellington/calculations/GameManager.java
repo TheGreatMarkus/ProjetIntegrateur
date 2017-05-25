@@ -86,7 +86,7 @@ public class GameManager {
         loadGameSave();
 
         //define the message for the tutorial
-        message11 = "Bienvenue Spellington, mage des temps anciens. \n"
+        message11 = "Bienvenu Spellington, mage des temps anciens. \n"
                 + "Ta vengeance contre le roi va enfin pouvoir s'accomplir \n"
                 + "après tant d'années d’emprisonnement. Tu peux te déplacer \n"
                 + "avec les touches fléchées du clavier, la flèche du haut est \n"
@@ -96,27 +96,27 @@ public class GameManager {
                 + "le tutoriel...";
 
         message12 = "Il existe deux types de sorts: les actifs et les passifs. \n"
-                + "Les sorts actifs s’utilisent avec le clic gauche de la souris \n"
+                + "Les sorts actifs s’utilisent avec le bouton gauche de la souris \n"
                 + "et ont un nombre limité d’utilisations avant de devoir les \n"
-                + "recharger. Les sorts passifs eux sont constamment activés, \n"
+                + "recharger. Les sorts passifs, eux, sont constamment activés, \n"
                 + "mais tu ne peux en avoir qu’un seul à la fois...";
 
         message13 = "Tu peux toujours accéder au menu via la touche escape. Tu \n"
-                + "remarquera facilement le grimoire qui va beaucoup te servir \n"
+                + "remarqueras facilement le grimoire qui va beaucoup te servir \n"
                 + "dans ta quête, il contient toutes les informations que tu \n"
-                + "connais, mais vu ton age il ne serait pas étonnant que tu ai \n"
-                + "presque tout oublié. Heureusement au fur et à mesure de tes \n"
-                + "expériences il va se remplir. Aussi, note que les mots \n"
+                + "connais, mais vu ton age, il ne serait pas étonnant que tu ais \n"
+                + "presque tout oublié. Heureusement, au fur et à mesure de tes \n"
+                + "expériences, il va se remplir. Aussi, tu verras que les mots \n"
                 + "d'incantations des sorts changent à chaque fois que tu\n "
-                + "commence un nouveau niveau.";
+                + "commences un nouveau niveau.";
 
         message21 = "Pour pouvoir lancer un sort et donc te débarrasser de ces \n"
                 + "épouvantails tu dois écrire l’incantation du sort directement \n"
-                + "sur ton clavier. Tu peux confirmer l’incantation avec le clic \n"
-                + "gauche pour activer le sort si elle correspond à un sort \n"
-                + "connu de ton grimoire. Tu peux aussi effacer les lettres \n"
-                + "indésirables avec la touche de retour arrière et évidemment \n"
-                + "tu peux bouger en incantant... ";
+                + "sur ton clavier. Tu peux confirmer l’incantation avec le bouton \n"
+                + "gauche de la souris pour activer le sort si elle correspond à \n"
+                + "un sort connu de ton grimoire. Tu peux aussi effacer les \n"
+                + "lettres indésirables avec la touche de retour arrière et \n"
+                + "évidemment tu peux bouger en incantant... ";
 
         message22 = "Tu dois tuer tous les ennemis pour activer le portail. \n"
                 + "De plus, tu trouveras plusieurs trésors sur ton chemin qui \n"
@@ -124,7 +124,7 @@ public class GameManager {
                 + "Tu peux toujours revenir rejouer un niveau pour tenter de \n"
                 + "trouver de nouveau sortilèges. Finalement, fais attention, \n"
                 + "les ennemis ont des résistances aux éléments selon leur \n"
-                + "couleur et ne seront affectés qu’aux bons éléments...";
+                + "couleur et ne seront affectés que par les bons éléments...";
 
     }
 
