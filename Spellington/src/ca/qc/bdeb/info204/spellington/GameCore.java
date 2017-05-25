@@ -85,7 +85,7 @@ public class GameCore extends StateBasedGame {
         }
 
         appGameContainer = new AppGameContainer(new GameCore(), SCREEN_SIZE.width, SCREEN_SIZE.height, true);
-        appGameContainer.setMouseGrabbed(false);
+        appGameContainer.setMouseGrabbed(true);
         appGameContainer.setTargetFrameRate(TARGER_FPS);
         appGameContainer.setVSync(true);
         appGameContainer.setIcon("res/image/icon.png");

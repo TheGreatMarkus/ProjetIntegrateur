@@ -26,7 +26,7 @@ public class OptionsMenuState extends BasicGameState {
 
     private static final String OM_TITLE = "Options";
     private static final String OM_BACK = "Revenir";
-    private static final String OM_DEL_SAVE_DATA = "Tout remettre le progrès à 0";
+    private static final String OM_DEL_SAVE_DATA = "Remettre le progrès à 0";
 
     private MenuItem mnuItemTitle;
     private MenuItem mnuItemBack;
