@@ -98,7 +98,7 @@ public class GameManager {
         message12 = "Il existe deux types de sorts: les actifs et les passifs. \n"
                 + "Les sorts actifs s’utilisent avec le clic gauche de la souris \n"
                 + "et ont un nombre limité d’utilisations avant de devoir les \n"
-                + "recharger.Les sorts passifs eux sont constamment activés, \n"
+                + "recharger. Les sorts passifs eux sont constamment activés, \n"
                 + "mais tu ne peux en avoir qu’un seul à la fois...";
 
         message13 = "Tu peux toujours accéder au menu via la touche escape. Tu \n"
@@ -106,7 +106,9 @@ public class GameManager {
                 + "dans ta quête, il contient toutes les informations que tu \n"
                 + "connais, mais vu ton age il ne serait pas étonnant que tu ai \n"
                 + "presque tout oublié. Heureusement au fur et à mesure de tes \n"
-                + "expériences il va se remplir...";
+                + "expériences il va se remplir. Aussi, note que les mots \n"
+                + "d'incantations des sorts changent à chaque fois que tu\n "
+                + "commence un nouveau niveau.";
 
         message21 = "Pour pouvoir lancer un sort et donc te débarrasser de ces \n"
                 + "épouvantails tu dois écrire l’incantation du sort directement \n"

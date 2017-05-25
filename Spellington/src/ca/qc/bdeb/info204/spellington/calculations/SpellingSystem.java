@@ -468,7 +468,7 @@ public class SpellingSystem {
 
             Image[] tempImgIceRune = new Image[20];
             for (int i = 0; i < tempImgIceRune.length; i++) {
-                tempImgIceRune[i] = new Image("res/image/animation/spells/iceRune/ (" + (i + 1) + ").png");
+                tempImgIceRune[i] = new Image("res/image/animation/spells/iceRune/(" + (i + 1) + ").png");
             }
             animRune = new Animation(tempImgIceRune, 30);
 
