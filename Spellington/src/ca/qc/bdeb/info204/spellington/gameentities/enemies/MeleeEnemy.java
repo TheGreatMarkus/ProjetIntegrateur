@@ -175,12 +175,15 @@ public class MeleeEnemy extends Enemy {
     @Override
     public void loadAnimations() {
         String tempString = "";
+        int attackFrames = 0;
         switch (this.enemyType) {
             case KEEPER:
                 tempString = "keeper";
+                attackFrames = 15;
                 break;
             case GUARD:
                 tempString = "guard";
+                attackFrames = 21;
                 break;
             case FIRE_SLIME:
                 tempString = "slime/red";
@@ -195,83 +198,54 @@ public class MeleeEnemy extends Enemy {
         }
 
         try {
-            switch (this.enemyType) {
-                case KEEPER: {
-                    Image[] temp = new Image[40];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkL/(" + (j + 1) + ").png");
-                    }
-                    animWalkL = new Animation(temp, 20);
-                    temp = new Image[40];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkR/(" + (j + 1) + ").png");
-                    }
-                    animWalkR = new Animation(temp, 20);
-                    imgStandingRight = new Image("res/image/animation/enemies/" + tempString + "/standingR.png");
-                    imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standingL.png");
-                    temp = new Image[15];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackL/(" + (j + 1) + ").png");
-                    }
-                    animAttackL = new Animation(temp, 30);
-                    animAttackL.setLooping(false);
-                    temp = new Image[15];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackR/(" + (j + 1) + ").png");
-                    }
-                    animAttackR = new Animation(temp, 30);
-                    animAttackR.setLooping(false);
-                    break;
+            if (this.enemyType == EnemyType.GUARD || this.enemyType == EnemyType.KEEPER) {
+                Image[] temp = new Image[40];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkL/(" + (j + 1) + ").png");
                 }
-                case GUARD: {
-                    Image[] temp = new Image[41];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkL/ (" + (j + 1) + ").png");
-                    }
-                    animWalkL = new Animation(temp, 20);
-                    temp = new Image[41];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkR/ (" + (j + 1) + ").png");
-                    }
-                    animWalkR = new Animation(temp, 20);
-                    imgStandingRight = new Image("res/image/animation/enemies/" + tempString + "/standingR.png");
-                    imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standingL.png");
-                    temp = new Image[21];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackL/ (" + (j + 1) + ").png");
-                    }
-                    animAttackL = new Animation(temp, 30);
-                    animAttackL.setLooping(false);
-                    temp = new Image[21];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackR/ (" + (j + 1) + ").png");
-                    }
-                    animAttackR = new Animation(temp, 30);
-                    animAttackR.setLooping(false);
-                    break;
+                animWalkL = new Animation(temp, 20);
+
+                temp = new Image[40];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkR/(" + (j + 1) + ").png");
                 }
-                case FIRE_SLIME:
-                case ICE_SLIME:
-                case LIGHTNING_SLIME: {
-                    Image[] temp = new Image[20];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkL/ (" + (j + 1) + ").png");
-                    }
-                    animWalkL = new Animation(temp, 20);
-                    temp = new Image[20];
-                    for (int j = 0; j < temp.length; j++) {
-                        temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkR/ (" + (j + 1) + ").png");
-                    }
-                    animWalkR = new Animation(temp, 20);
-                    imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standing.png");
-                    imgStandingRight = imgStandingLeft;
-                    animAttackL = animWalkL;
-                    animAttackR = animWalkR;
-                    break;
+                animWalkR = new Animation(temp, 20);
+
+                temp = new Image[attackFrames];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackL/(" + (j + 1) + ").png");
                 }
-                default:
-                    break;
+                animAttackL = new Animation(temp, 30);
+                animAttackL.setLooping(false);
+
+                temp = new Image[attackFrames];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/" + tempString + "/attackR/(" + (j + 1) + ").png");
+                }
+                animAttackR = new Animation(temp, 30);
+                animAttackR.setLooping(false);
+
+                imgStandingRight = new Image("res/image/animation/enemies/" + tempString + "/standingR.png");
+                imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standingL.png");
+            } else if (this.enemyType == EnemyType.FIRE_SLIME || this.enemyType == EnemyType.ICE_SLIME || this.enemyType == EnemyType.LIGHTNING_SLIME) {
+                Image[] temp = new Image[20];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkL/(" + (j + 1) + ").png");
+                }
+                animWalkL = new Animation(temp, 20);
+                
+                temp = new Image[20];
+                for (int j = 0; j < temp.length; j++) {
+                    temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkR/(" + (j + 1) + ").png");
+                }
+                animWalkR = new Animation(temp, 20);
+                
+                imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standing.png");
+                imgStandingRight = imgStandingLeft;
+                animAttackL = animWalkL;
+                animAttackR = animWalkR;
             }
+
         } catch (SlickException ex) {
             Logger.getLogger(MeleeEnemy.class.getName()).log(Level.SEVERE, null, ex);
         }

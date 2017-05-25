@@ -97,7 +97,7 @@ public class PlayState extends BasicGameState {
 
         Image[] tempImgPortal = new Image[30];
         for (int i = 0; i < tempImgPortal.length; i++) {
-            tempImgPortal[i] = new Image("res/image/portal/portalON/ (" + (i + 1) + ").png");
+            tempImgPortal[i] = new Image("res/image/portal/portalON/(" + (i + 1) + ").png");
         }
         portalON = new Animation(tempImgPortal, 30);
 

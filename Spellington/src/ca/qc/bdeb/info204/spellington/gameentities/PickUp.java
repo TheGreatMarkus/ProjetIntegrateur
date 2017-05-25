@@ -36,8 +36,8 @@ public class PickUp extends Treasure {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.white);
-        g.drawRect(x, y, width, height);
+//        g.setColor(Color.white);
+//        g.drawRect(x, y, width, height);
         imgPickUp.draw(x, y, width, height);
         if (pickedUp) {
             if (sortDonné != null) {

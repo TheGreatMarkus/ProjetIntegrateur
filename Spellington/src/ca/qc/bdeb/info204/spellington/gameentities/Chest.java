@@ -42,8 +42,8 @@ public class Chest extends Treasure {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.white);
-        g.drawRect(x, y, width, height);
+//        g.setColor(Color.white);
+//        g.drawRect(x, y, width, height);
         if (open) {
             imgChestOpen.draw(x, y - 15, width, height + 15);
         } else {

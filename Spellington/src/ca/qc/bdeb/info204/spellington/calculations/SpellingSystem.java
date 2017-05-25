@@ -141,7 +141,7 @@ public class SpellingSystem {
     private static final String DESC_POTION_TIME = "";
     private static final String DESC_POTION_PAST = "";
 
-    static final boolean CHEAT_MODE = false;
+    static final boolean CHEAT_MODE = true;
 
     /**
      * Initiates the necessary components for the SpellingSystem.
@@ -444,13 +444,13 @@ public class SpellingSystem {
 
             Image[] tempImgIceStorm = new Image[42];
             for (int i = 0; i < tempImgIceStorm.length; i++) {
-                tempImgIceStorm[i] = new Image("res/image/animation/spells/iceStorm/ (" + (i + 1) + ").png");
+                tempImgIceStorm[i] = new Image("res/image/animation/spells/iceStorm/(" + (i + 1) + ").png");
             }
             animIceStorm = new Animation(tempImgIceStorm, 30);
 
             Image[] tempImgMeteorSwarm = new Image[21];
             for (int i = 0; i < tempImgMeteorSwarm.length; i++) {
-                tempImgMeteorSwarm[i] = new Image("res/image/animation/spells/meteorSwarm/ (" + (i + 1) + ").png");
+                tempImgMeteorSwarm[i] = new Image("res/image/animation/spells/meteorSwarm/(" + (i + 1) + ").png");
             }
             animMeteorShower = new Animation(tempImgMeteorSwarm, 30);
 
@@ -474,18 +474,18 @@ public class SpellingSystem {
 
             //potion animation
             Image[] tempImgAcidPotion = new Image[1];
-            for (int i = 0; i < tempImgAcidPotion.length; i++) {
-                tempImgAcidPotion[i] = new Image("res/image/acidProjectile.png");
-            }
+            tempImgAcidPotion[0] = new Image("res/image/acidProjectile.png");
+
             animAcid = new Animation(tempImgAcidPotion, 30);
 
             Image[] tempImgExplosion = new Image[21];
             for (int i = 0; i < tempImgExplosion.length; i++) {
-                tempImgExplosion[i] = new Image("res/image/animation/spells/explosion/ (" + (i + 1) + ").png");
+                tempImgExplosion[i] = new Image("res/image/animation/spells/explosion/(" + (i + 1) + ").png");
             }
             animExplosion = new Animation(tempImgExplosion, 30);
 
         } catch (SlickException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -695,7 +695,5 @@ public class SpellingSystem {
     public static ArrayList<Spell> getMasterSpells() {
         return masterSpells;
     }
-    
-    
 
 }
