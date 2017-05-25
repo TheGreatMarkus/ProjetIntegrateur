@@ -642,6 +642,13 @@ public class SpellBookState extends BasicGameState {
         GameCore.clearInputRecord(gc);
     }
 
+    /**
+     * Displays the main menu.
+     *
+     * @param g The Graphics component
+     * @param gc The GameComponent
+     * @throws SlickException A General Slick exception
+     */
     private void displayMenu(Graphics g, GameContainer gc) throws SlickException {
         mnuItemMainTitle.render(g);
         mnuItemSpells.render(g);
@@ -650,6 +657,13 @@ public class SpellBookState extends BasicGameState {
         mnuItemRetour.render(g);
     }
 
+    /**
+     * Displays the left page of the Spells
+     *
+     * @param g The Garphics component
+     * @param gc The GameComponent
+     * @throws SlickException A General Slick exception
+     */
     private void displaySpellsLeftPage(Graphics g, GameContainer gc) throws SlickException {
         mnuItemSpellTitle.render(g);
         mnuItemBack.render(g);
@@ -715,6 +729,13 @@ public class SpellBookState extends BasicGameState {
         displaySpellsRightPage(g, iconX, iconY, iconSize, gap);
     }
 
+    /**
+     * Displays the left page of the Spells
+     *
+     * @param g The Garphics component
+     * @param gc The GameComponent
+     * @throws SlickException A General Slick exception
+     */
     private void displayPotionsLeftPage(Graphics g, GameContainer gc) throws SlickException {
         mnuItemPotionsTitle.render(g);
         mnuItemBack.render(g);
@@ -799,6 +820,15 @@ public class SpellBookState extends BasicGameState {
 //
 //        displayEnnemiesRightPage(g, iconX, iconY, iconSize, gap);
 //    }
+    /**
+     * Displays the right page for the Spells
+     *
+     * @param g The Graphics Component
+     * @param iconX The x point for the icon
+     * @param iconY The y point for the icon
+     * @param iconSize The size for the icon
+     * @param gap A gap for formatting.
+     */
     private void displaySpellsRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
         g.setFont(fontDetails);
 
@@ -924,6 +954,15 @@ public class SpellBookState extends BasicGameState {
         }
     }
 
+    /**
+     * Displays the right page for the Potions
+     *
+     * @param g The Graphics Component
+     * @param iconX The x point for the icon
+     * @param iconY The y point for the icon
+     * @param iconSize The size for the icon
+     * @param gap A gap for formatting.
+     */
     private void displayPotionsRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
         g.setFont(fontDetails);
 
