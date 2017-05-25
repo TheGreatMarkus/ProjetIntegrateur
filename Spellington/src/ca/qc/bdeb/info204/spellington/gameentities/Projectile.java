@@ -61,7 +61,7 @@ public class Projectile extends DynamicEntity {
      * Updates the position of this projectile every frame.
      *
      * @param time the time passed this frame.
-     * @
+     *
      */
     public void update(float time) {
         this.speedVector.add(PlayState.GRAV_ACC.getMultScalar(time * gravModifier));

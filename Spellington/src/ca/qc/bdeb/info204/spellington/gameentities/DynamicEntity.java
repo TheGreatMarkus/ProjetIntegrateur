@@ -28,19 +28,22 @@ public abstract class DynamicEntity extends GameEntity {
         this.gravModifier = gravMod;
     }
 
+    /**
+     * Resets the collision state for this Entity
+     */
+    public void resetCollisionState() {
+        this.collisionTop = false;
+        this.collisionBottom = false;
+        this.collisionRight = false;
+        this.collisionLeft = false;
+    }
+
     public Vector2D getSpeedVector() {
         return speedVector;
     }
 
     public void setSpeedVector(Vector2D speedVector) {
         this.speedVector = speedVector;
-    }
-
-    public void resetCollisionState() {
-        this.collisionTop = false;
-        this.collisionBottom = false;
-        this.collisionRight = false;
-        this.collisionLeft = false;
     }
 
     public boolean getCollisionTop() {

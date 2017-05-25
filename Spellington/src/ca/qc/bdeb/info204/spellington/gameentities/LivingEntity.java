@@ -55,7 +55,7 @@ public abstract class LivingEntity extends DynamicEntity {
      *
      * @param damage The numerical value for the damage.
      * @param element the ElementalType for the damage.
-     * @
+     * 
      */
     public void subLifePoint(int damage, ElementalType element) {
         if (invulnTime == 0) {
@@ -89,9 +89,7 @@ public abstract class LivingEntity extends DynamicEntity {
         }
     }
 
-    /**
-     * Resets the collision state for this Entity
-     */
+
     public void setLifePoint(int lifePoint) {
         this.lifePoint = lifePoint;
     }

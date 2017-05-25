@@ -78,7 +78,7 @@ public class GameManager {
     /**
      * Initialises the GameManager.
      *
-     * @param stateBasedGame
+     * @param stateBasedGame The StateBasedGame
      */
     public static void initGameManager(StateBasedGame stateBasedGame) {
         GameManager.stateBasedGame = stateBasedGame;

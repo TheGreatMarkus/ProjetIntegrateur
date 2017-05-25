@@ -23,7 +23,7 @@ public class MessageSign extends StaticEntity {
         this.message = message;
 
         try {
-            imgSign = new Image("src/res/image/messageSign.png");
+            imgSign = new Image("res/image/messageSign.png");
         } catch (SlickException se) {
             System.out.println("Erreur, image de pancarte introuvable.");
         }

@@ -224,10 +224,10 @@ public abstract class Enemy extends LivingEntity {
      * decisions.
      *
      * @param time The delta of the frame
-     * @param spellington
-     * @param activeProjectiles
-     * @param activeAnimations
-     * @param map
+     * @param spellington The player object
+     * @param activeProjectiles The list of active projectiles
+     * @param activeAnimations The list of active Animations
+     * @param map The map
      */
     public void update(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, Tile[][] map) {
         if (this.collisionBottom || this.collisionTop) {
@@ -303,7 +303,7 @@ public abstract class Enemy extends LivingEntity {
      * @param time The delta of the frame.
      * @param spellington The playable protagonist.
      * @param activeProjectiles The list of active projectile in the game.
-     * @param activeAnimations
+     * @param activeAnimations the list of active animations
      * @param map The collision and event information for the current map.
      */
     public abstract void move(float time, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, Tile[][] map);

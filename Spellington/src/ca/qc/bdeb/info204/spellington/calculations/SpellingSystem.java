@@ -510,7 +510,7 @@ public class SpellingSystem {
         String line;
         String filePath = new File("").getAbsolutePath();
         try {
-            readerBuffer = new BufferedReader(new InputStreamReader(new FileInputStream(filePath + "\\src\\res\\wordbank\\noviceWord.txt"), "ISO-8859-1"));
+            readerBuffer = new BufferedReader(new InputStreamReader(new FileInputStream("wordbank/noviceWord.txt"), "ISO-8859-1"));
             while ((line = readerBuffer.readLine()) != null) {
                 tempWord.add(line);
             }
@@ -535,7 +535,7 @@ public class SpellingSystem {
         String line2 = null;
         String filePath2 = new File("").getAbsolutePath();
         try {
-            readerBuffer2 = new BufferedReader(new InputStreamReader(new FileInputStream(filePath2 + "\\src\\res\\wordbank\\adepteWord.txt"), "ISO-8859-1"));
+            readerBuffer2 = new BufferedReader(new InputStreamReader(new FileInputStream("wordbank/adepteWord.txt"), "ISO-8859-1"));
             while ((line2 = readerBuffer2.readLine()) != null) {
                 tempWord.add(line2);
             }
@@ -560,7 +560,7 @@ public class SpellingSystem {
         String line3 = null;
         String filePath3 = new File("").getAbsolutePath();
         try {
-            readerBuffer3 = new BufferedReader(new InputStreamReader(new FileInputStream(filePath3 + "\\src\\res\\wordbank\\masterWord.txt"), "ISO-8859-1"));
+            readerBuffer3 = new BufferedReader(new InputStreamReader(new FileInputStream("wordbank/masterWord.txt"), "ISO-8859-1"));
             while ((line3 = readerBuffer3.readLine()) != null) {
                 tempWord.add(line3);
             }

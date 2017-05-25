@@ -156,7 +156,7 @@ public class MainMenuState extends BasicGameState {
     /**
      * Renders the mouse in a menu state.
      *
-     * @param gc
+     * @param gc The GameContainer
      */
     public static void renderMouseCursor(GameContainer gc) {
         float renderMouseX = gc.getInput().getMouseX();

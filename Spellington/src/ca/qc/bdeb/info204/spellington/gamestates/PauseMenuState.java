@@ -28,7 +28,7 @@ public class PauseMenuState extends BasicGameState {
     private MenuItem mnuItemResume;
     private MenuItem mnuSpellingBook;
     private MenuItem mnuItemMainMenu;
-    
+
     private Image backgroundMenu2;
 
     /**
@@ -45,8 +45,8 @@ public class PauseMenuState extends BasicGameState {
         mnuItemResume = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_RESUME, true, true, 0, 0, fontMenu.getWidth(PM_RESUME), fontMenu.getHeight(PM_RESUME));
         mnuSpellingBook = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_SPELLINGBOOK, true, false, 0, mnuItemResume.getY() + mnuItemResume.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(PM_SPELLINGBOOK), fontMenu.getHeight(PM_SPELLINGBOOK));
         mnuItemMainMenu = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, PM_MAIN_MENU, true, false, 0, mnuSpellingBook.getY() + mnuSpellingBook.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(PM_MAIN_MENU), fontMenu.getHeight(PM_MAIN_MENU));
-    
-    backgroundMenu2 = new Image("src/res/image/background/backgroundMenu2.png");
+
+        backgroundMenu2 = new Image("res/image/background/backgroundMenu2.png");
     }
 
     /**
@@ -59,8 +59,8 @@ public class PauseMenuState extends BasicGameState {
      */
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        backgroundMenu2.draw(0,0, GameCore.SCREEN_SIZE.width,GameCore.SCREEN_SIZE.height);
-        
+        backgroundMenu2.draw(0, 0, GameCore.SCREEN_SIZE.width, GameCore.SCREEN_SIZE.height);
+
         g.setFont(fontMenu);
         mnuItemTitle.render(g);
         mnuItemResume.render(g);

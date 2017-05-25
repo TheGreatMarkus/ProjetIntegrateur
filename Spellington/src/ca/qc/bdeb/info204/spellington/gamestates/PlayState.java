@@ -88,12 +88,12 @@ public class PlayState extends BasicGameState {
         IMG_GAME_CROSSHAIR = new Image("res/image/cursor/small_crosshair.png");
         //Loading test map information.
 
-        backgroundTuto = new Image("src/res/image/background/tuto.png");
-        backgroundDungeon = new Image("src/res/image/background/dungeon.png");
-        backgroundIce = new Image("src/res/image/background/ice.png");
-        backgroundCastle = new Image("src/res/image/background/castle.png");
+        backgroundTuto = new Image("res/image/background/tuto.png");
+        backgroundDungeon = new Image("res/image/background/dungeon.png");
+        backgroundIce = new Image("res/image/background/ice.png");
+        backgroundCastle = new Image("res/image/background/castle.png");
 
-        portalOFF = new Image("src/res/image/portal/portalOFF.png");
+        portalOFF = new Image("res/image/portal/portalOFF.png");
 
         Image[] tempImgPortal = new Image[30];
         for (int i = 0; i < tempImgPortal.length; i++) {
@@ -102,7 +102,7 @@ public class PlayState extends BasicGameState {
         portalON = new Animation(tempImgPortal, 30);
 
         //Loading HUD image
-        this.hud = new Image("src/res/image/HUD/hud.png");
+        this.hud = new Image("res/image/HUD/hud.png");
     }
 
     /**

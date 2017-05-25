@@ -55,7 +55,7 @@ public class LevelSelectionState extends BasicGameState {
         mnuItemLevel4 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL4, false, false, MainMenuState.TEXT_GAP, mnuItemLevel3.getY() + mnuItemLevel3.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL4), fontMenu.getHeight(LS_LEVEL4));
         //mnuItemLevel5 = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, LS_LEVEL5, false, false, MainMenuState.TEXT_GAP, mnuItemLevel4.getY() + mnuItemLevel4.getHeight() + MainMenuState.TEXT_GAP, fontMenu.getWidth(LS_LEVEL5), fontMenu.getHeight(LS_LEVEL5));
 
-        backgroundMenu2 = new Image("src/res/image/background/backgroundMenu2.png");
+        backgroundMenu2 = new Image("res/image/background/backgroundMenu2.png");
     }
 
     public void prepareLevel(GameSave gameSave) {
