@@ -111,34 +111,34 @@ public class SpellingSystem {
     public static final int ID_POTION_TIME = 27;
     public static final int ID_POTION_PAST = 28;
 
-    private static final String DESC_FIRE_BALL = "Boule en feu traditionnelle " + '\n' + "déployée à l'aide d'une trajectoire parabolique.";
-    private static final String DESC_ICE_SPIKE = "Pic de glace suivant une " + '\n' + "trajectoire majoritairement linéaire.";
-    private static final String DESC_SPARK = "Explosion d'étincelles " + '\n' + "engendrée par le clic de la souris.";
-    private static final String DESC_HEAL = "Guérison de base.";
-    private static final String DESC_ASCENDING_CURRENT = "Accorde des sauts " + '\n' + "supplémentaire à Spellington.";
-    private static final String DESC_FIRE_RES = "Réduit les dégats infligés " + '\n' + "par les attaques de feu.";
-    private static final String DESC_ICE_RES = "Réduit les dégats infligés " + '\n' + "par les attaques glaciales.";
-    private static final String DESC_LIGHTNING_RES = "Réduit les dégats infligés " + '\n' + "par les attaques électriques.";
-    private static final String DESC_EXPLOSIVE_BALL = "Boule de feu qui rebondie" + '\n' + " une fois avant d'exploser.";
-    private static final String DESC_FIRE_BREATH = "Multiples boules de feu en " + '\n' + "arc de cercle.";
-    private static final String DESC_GIANT_FIRE_BALL = "Boule de feu plus grande" + '\n' + "et plus dangereuse que les autres.";
-    private static final String DESC_LIGHTNING_SWARM = "Grande explosion d'éclairs" + '\n' + " centrée sur la souris.";
-    private static final String DESC_TELEPORTATION = "Sphère qui téléporte " + '\n' + "Spellington lors de la collision.";
-    private static final String DESC_LIGHTNING_BOUNCING_BALL = "Sphère électrique" + '\n' + " qui rebondie à de nombreuses reprises.";
-    private static final String DESC_ICE_BREATH = "Multiple pics de glace en arc" + '\n' + " de cercle.";
-    private static final String DESC_ICE_SPIKE_BALL = "Boule de glace avec" + '\n' + " des pointes.";
-    private static final String DESC_RUNE = "Rune de glace centrée sur la souris.";
-    private static final String DESC_FIRE_IMMUNITY = "Immunité contre toute les " + '\n' + "attaques de feu.";
-    private static final String DESC_METEOR_SHOWER = "Pluie de météorites qui " + '\n' + "touche tous les ennemis de l'écran.";
-    private static final String DESC_LIGHTNING_IMMUNITY = "Immunité contre les " + '\n' + "attaques électriques.";
-    private static final String DESC_LIGHTNING_SPEAR = "Lance de foudre qui " + '\n' + "fonce en ligne droite.";
-    private static final String DESC_ICE_STORM = "Pluie de morceaux de glace " + '\n' + "qui touche tous les ennemis de l'écran.";
-    private static final String DESC_ICE_IMMUNITY = "Immunité contre les attaques de glace.";
-    private static final String DESC_GREAT_HEAL = "Sort de soin majeur qui guéris" + '\n' + " de toutes les blessures.";
-    private static final String DESC_POTION_ACID = "Potion qui blesse l'ennemis" + '\n' + " touché.";
-    private static final String DESC_POTION_HEAL = "Potion qui soigne immédiatement spellington.";
-    private static final String DESC_POTION_TIME = "Potion qui ralentit le temps" + '\n' + "pour plus de temps de réflexion.";
-    private static final String DESC_POTION_PAST = "Potion qui permet de réutiliser" + '\n' + " le dernier sort sans incantation.";
+    private static final String DESC_FIRE_BALL =                "Boule en feu traditionnelle " + '\n' + "déployée à l'aide d'une trajectoire parabolique.";
+    private static final String DESC_ICE_SPIKE =                "Pic de glace suivant une " + '\n' + "trajectoire majoritairement linéaire.";
+    private static final String DESC_SPARK =                    "Explosion d'étincelles " + '\n' + "engendrée par le clic de la souris.";
+    private static final String DESC_HEAL =                     "Guérison de base.";
+    private static final String DESC_ASCENDING_CURRENT =        "Accorde des sauts " + '\n' + "supplémentaire à Spellington.";
+    private static final String DESC_FIRE_RES =                 "Réduit les dégats infligés " + '\n' + "par les attaques de feu.";
+    private static final String DESC_ICE_RES =                  "Réduit les dégats infligés " + '\n' + "par les attaques glaciales.";
+    private static final String DESC_LIGHTNING_RES =            "Réduit les dégats infligés " + '\n' + "par les attaques électriques.";
+    private static final String DESC_EXPLOSIVE_BALL =           "Boule de feu qui rebondie" + '\n' + " une fois avant d'exploser.";
+    private static final String DESC_FIRE_BREATH =              "Multiples boules de feu en " + '\n' + "arc de cercle.";
+    private static final String DESC_GIANT_FIRE_BALL =          "Boule de feu plus grande" + '\n' + "et plus dangereuse que les autres.";
+    private static final String DESC_LIGHTNING_SWARM =          "Grande explosion d'éclairs" + '\n' + " centrée sur la souris.";
+    private static final String DESC_TELEPORTATION =            "Sphère qui téléporte " + '\n' + "Spellington lors de la collision.";
+    private static final String DESC_LIGHTNING_BOUNCING_BALL =  "Sphère électrique" + '\n' + " qui rebondie à de nombreuses reprises.";
+    private static final String DESC_ICE_BREATH =               "Multiple pics de glace en arc" + '\n' + " de cercle.";
+    private static final String DESC_ICE_SPIKE_BALL =           "Boule de glace avec" + '\n' + " des pointes.";
+    private static final String DESC_RUNE =                     "Rune de glace centrée sur la souris.";
+    private static final String DESC_FIRE_IMMUNITY =            "Immunité contre toute les " + '\n' + "attaques de feu.";
+    private static final String DESC_METEOR_SHOWER =            "Pluie de météorites qui " + '\n' + "touche tous les ennemis de l'écran.";
+    private static final String DESC_LIGHTNING_IMMUNITY =       "Immunité contre les " + '\n' + "attaques électriques.";
+    private static final String DESC_LIGHTNING_SPEAR =          "Lance de foudre qui " + '\n' + "fonce en ligne droite.";
+    private static final String DESC_ICE_STORM =                "Pluie de morceaux de glace " + '\n' + "qui touche tous les ennemis de l'écran.";
+    private static final String DESC_ICE_IMMUNITY =             "Immunité contre les attaques de glace.";
+    private static final String DESC_GREAT_HEAL =               "Sort de soin majeur qui guéris" + '\n' + " de toutes les blessures.";
+    private static final String DESC_POTION_ACID =              "Potion qui blesse l'ennemis" + '\n' + " touché.";
+    private static final String DESC_POTION_HEAL =              "Potion qui soigne immédiatement" + '\n' + "Spellington.";
+    private static final String DESC_POTION_TIME =              "Potion qui ralentit le temps" + '\n' + "pour plus de temps de réflexion.";
+    private static final String DESC_POTION_PAST =              "Potion qui permet de réutiliser" + '\n' + " le dernier sort sans incantation.";
 
     static final boolean CHEAT_MODE = false;
 
@@ -178,10 +178,10 @@ public class SpellingSystem {
         Spell iceImmunity = new PassiveSpell(ID_ICE_IMMUNITY, ElementalType.ICE, "Immunite glace", DESC_ICE_IMMUNITY, animIceImmunity, 100, 100, 0);
         Spell greatHeal = new HealingSpell(ID_GREAT_HEAL, "Soin majeur", DESC_GREAT_HEAL, 1, animGreatHeal, 100, 200, 999);
 
-        Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Potion d'acide", DESC_POTION_ACID, 1, animAcid, 40, 1, 1, 20);
-        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Potion de soin", DESC_POTION_HEAL, 1, animHeal, 100, 100, 20);
-        Spell PotionTime = new Potion(ID_POTION_TIME, "Potion de ralentissement du temps", DESC_POTION_TIME, 1, new Animation(), 100, 100);
-        Spell PotionPast = new Potion(ID_POTION_PAST, "Potion du passé", DESC_POTION_PAST, 1, new Animation(), 100, 100);
+        Spell PotionAcid = new ProjectileSpell(ID_POTION_ACID, ElementalType.NEUTRAL, "Acide", DESC_POTION_ACID, 1, animAcid, 40, 1, 1, 20);
+        Spell PotionHeal = new HealingSpell(ID_POTION_HEAL, "Soin", DESC_POTION_HEAL, 1, animHeal, 100, 100, 20);
+        Spell PotionTime = new Potion(ID_POTION_TIME, "Ralentissement du temps", DESC_POTION_TIME, 1, new Animation(), 100, 100);
+        Spell PotionPast = new Potion(ID_POTION_PAST, "Passé", DESC_POTION_PAST, 1, new Animation(), 100, 100);
 
         potionList.add(PotionHeal);
         potionList.add(PotionAcid);
