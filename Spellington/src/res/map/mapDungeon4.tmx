@@ -8,17 +8,17 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8WVMa+DMAyEs1Sw0HShsNCywAhbGcn//1XNiS9qVFGhJ73Wlk5gxzmT+EJ6Z2drxGJYf+QbrOzCN/iIyaC+6jYR9UHeENGS975fpdt6uNfH206seeOtIs4RpwMo9/5hbP4Qv+7Eqqx+wFcPetY4Mq9gbXp2buvVg/XP7MXA+8yYJ7/C7/ALal3hT7bCa2WLs9W/tFAY1teZO9L+N03rD5kvLeRalS8N+iwmXWnPkrYneCb8Dqz46rE0N+AH+Ery8vPQwXN3L60G+C9w9UDjSfd6tnD2zBnh8/Cl81Mz/oC3/dOO/a9Z91/1Le8/9X7vH/3L+tKG9iG47R5IkL5W4kkzS/Yu3egceFDD1biX3pRXwlMzP9epYk/XvHXAAAkAAA==
+   H4sIAAAAAAAAC8WWMW+DMBCFvVSwULNAWAgsMOItjPj//6reUz+rTkRaRYrqk57Mne132PeMmZ1zkyEYdkNNezNc6FsMg6EzHIZo2AyzoTU0Bo8/Gnriel6ZszBP8SvtQa5Slt6tlLW8QylTzVRj1TX8Mu6x/rklvZzV8XoSuzzwSjufho8/oLHTk77wJN6fxJosf8RXDWbWuDKvYm1qpWPV6sb6A3ux8Bzo84xv8Ef8ily9u6/3AW8p211Z/UsLVcH8+oZ1BfNr/THzpYVcq/KlQZ/FpCvtWdL2Bs+GP4IDXzWW5hb8CF/NuPw8jPBM7kerEf4WrhmoP+le7QDnzJwVPg9fOj8d/el+GV7asfda6forf8n7T7U/+0b/Z35pQ/sQ3fc9kCB9pX+NpJk9e5ZudA486OBK/ywt42p4OubnOlXsC/xjLEAACQAA
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3NhYGDwGSDsAsUj3f6BcgexduNzJz4zCIkh63UkgPGpI0Ucl/30xIMt/Y3aPzjsR0+v2PIHuhglfFzpcaDyw0CH/6j9A2P/QGIATsJT4QAJAAA=
+   H4sIAAAAAAAAC3NhYGBwGWDsM0B41H7i4gGfOnz6CYkh63UkgPGpI0Ucl/0Dkd4HS/yP2j847EdPr9jyB7oYJXxc6XG0/B+1n572DyQGABg/BJsACQAA
   </data>
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGBzAZaAdMApGwSgYUOBKZXWjYBSMNOCExHbFwQYBRzq4ZSgAAEUbD+gACQAA
+   H4sIAAAAAAAAC2NgGAUg4DLQDhgFo2CEA9eBdsAoGAVDHDjhEEfOW470cMgQAQB8EpIAAAkAAA==
   </data>
  </layer>
 </map>

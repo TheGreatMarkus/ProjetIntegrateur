@@ -8,17 +8,17 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8VWUQ7CIAztDfTP6M/GvoTCzrSjeVQh63OPxSUmZtDkpUBLHlAoTSISMpJhNpQxnxGtH62v1lbzgT2RDtZW0sE0+6mhl3hbRy/BmfeSsv/Qkb93/HF/e4k3FHk25AUX9o93/k0uGY+M24H9nnE9sB3N4fySpP07RE5CXsJaWglyocp2B8qaBpHX2dyTyALeKNve/Wqr+M94G6PxMzf+E/fj/v+JVT7jhe88/jSVNufvjB9/Kv+ZY6P489vDXUAN4NZ1fPS002gXDDTurM/z4ecIUer6YZa65kBMkBdgi+TD9cRM/vvaQ2k8Sh1v1CFvhEflogAJAAA=
+   H4sIAAAAAAAAC8VWwQ7DIAjlD7bbsl22epqi/v/nDRNe+tq0h2UZkryggEWqAk1EiqE5umPIsqH6vPpcfaxuA30jXnysxItztlPHLMq+j1mEfz6LRvxlov/Z54/7O4uyY9A70C98IX688yO6GB6G24n+brie6M7WcH5pEv8OkZOQl7CXKEIuVFnvQA/0D79V1tiP4v/X20AN4RrzTR749az4zqOmReYhrqlcM6OI3x7uwpAlw2J4EU87jvHAk+SLz3l9om8yuH/osu05cCbIC9BVsuF+opP9vvdQklfZnjf6kA8G+/VaAAkAAA==
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACzNjYGAwG2BsN0B41P5R+0ftx+8OSySMTx6XHDH20jscBqv9xnSw25gE+2kRJqTYjy/8BtL+gfY/reyHuYGWeKDbGugYAINp1NAACQAA
+   H4sIAAAAAAAACzNjYGAwG2BsN0B41P5R+0ftx+8OSySMTx6XHDH20jscRu0nzn5auYlS/1PqrqES/vS235hOeKDbG8gYAI/GX0cACQAA
   </data>
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjYGQDMwLyJmSaa45H3JhMM0fBKBgFo2AUUAcAAAow1QIACQAA
+   H4sIAAAAAAAAC2NgGAWjYGQDMwLyJmSaa45D3BiP3CgYBaNgFIwC+gAA6TmqdQAJAAA=
   </data>
  </layer>
 </map>

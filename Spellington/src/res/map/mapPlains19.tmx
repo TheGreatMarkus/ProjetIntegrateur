@@ -16,7 +16,7 @@
    H4sIAAAAAAAACzNjYGAwG8WjeBTjxHZ0tAcZ4xIn1z2kmE8sJtZOWtmPzw341FLTfmq6G5saetqPLd3j00+KPeSmYWMcmFD8oZtjiYbpkXfphWnpt+GMAbC1aw4ACQAA
   </data>
  </layer>
- <layer name="event" width="32" height="18" visible="0">
+ <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC2NgGAWjYBSMJGAy0A7AAswG2gFkAPOBdgABgCuejenqilEwCgYvAACO/W0KAAkAAA==
   </data>

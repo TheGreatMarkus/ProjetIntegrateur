@@ -8,17 +8,17 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8VWvdKCMBC8r0BoIjQqDUKDpXZYkvd/qi877I03R0Ct3JkdktxvLpfoQ0T6xC7xltgmnhMviSPnMbFOnBIrfmfKoXek/ZNj+AuJTWLJua6PtC3pC+u/wiDL/n4F1Pvh1rSOqOsgS83wralb8nuSpXbI/8pxoO0faQF/BRnIK2nh7WxeKt9jw3wtMI+Mpb2je8vFz+Vfb+SVQ0XCx5k5tYzdkQ3jVzvxbQ7TF/Hh+/SBXiGvu9eSvcsD53rnPkrKLtRDjJl2s8v1k3oVxqcid6bA6Px7G3uPg7z6NDDfXD7B+VVfOdh7GjPyzoy3ah/cfJB1/52ph5qXjFub+BhXlCv0jbM+cujcfJL1+6P5+DrYc3p3tranbV8cnB7eCn2PNQ/d19796zJyi3ZjXDg9vH9RlvuieUYT3/YUeujB9Zn5RK6DV8ov9KeIZuzf2knWvz/we6cP2xu+dz6FPQtfM5yH74ktNO9Vsph3ZIcv/N7cfOudsHJgr26If+cXHGQ5o5F2+mbjTPR/BvaDmqGXInUL2o9mXnEMnz33+eRc48HPP9hjPLgACQAA
+   H4sIAAAAAAAAC8VWMdOCMAzNNyAsFRaVBWHBUTcc6f//VV/f8XLmQkGdfHfvaJo0SdO0+hCRPrFLvCW2iefES+JIOSbWiVNixe9MPeyOXP/kGP5CYpNYUtb5kWtL+sL8rzDIsr9fAfV+uDmtI+o6yFIzfGvalvyeZKkd8r9yHLj2j7SAv4IM5JW08OtsXqrfY8N8LSBHxtLe0b3l4ufyrzfyyqEi4ePMnFrG7siG8aud+DaH6Yv48H36wK6Q191ryd7lgXO9cx8ldRfaIcbMdbPL9ZN6FcanInemwOj8+zX2Hgd59Wlgvrl8gvOrvnKw9zRm9J0Zb9U+OHmQdf+daYeal4xbm/gYV9Qr9I2zPnLonDzJ+v3RfHwd7Dm9O1vf04qDk/FW6Huseei+9u5fl9FbtBvjwtnh/Yuy3Bft32ji255CDz04PzOfyHnwSv2F/hTRjP1bO8n69wd+7/Rhe8P3zqewZ+FrhvPwPbGF5r1JFvOO7vCF35uTt94Jqwf26ob4d37BQZYzGrlO32ycif7PwH5QM/RSpG3B9aORK47hs+c+n5Q1Hvz8A1GMXKsACQAA
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3NhYGBwGWDsM0B4MNpPq/AEiTtCMTnhT4o6Uv1ETfvR3UCt9Eeu/fgwtrggFHb4/ESu/aT6H5sebPYTCmdyw58Y+4mJQ1LTKro8LnMotZ8c/xOj1pGAXweb/bjCmJQ8jc/dxOY3YvxMTFigY3Lz33CzH1e9hA87orHR+YT0wtQAAMUK1tQACQAA
+   H4sIAAAAAAAAC3NhYGBwGWDsM0B4MNpPq/AEiTtCMTnhT4o6Uv1ETfvR3UCt9Eeu/fgwtrggFHb4/ESu/aT6H5sebPYTCmdyw58Y+4mJQ1LTKro8LnMotZ8c/xNjhiMBv9LCfhcK7McVxqTkaXzuJja/EeNnUuMCFh60KH+Gmv246iV82BGNjc4npBemBgAKyiixAAkAAA==
   </data>
  </layer>
  <layer name="event" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGFzAiU72uNLJnlFAOUCPK3qlkVFAHHAZaAdQCEbLAlTgCMSMA+2IUTAK6AAAy/1pgQAJAAA=
+   H4sIAAAAAAAAC2NgGFzAiU72uNLJnlEwCoY7cBloB1AIRssCVOAIxIwD7YhRMAroAAD4yBBUAAkAAA==
   </data>
  </layer>
 </map>
