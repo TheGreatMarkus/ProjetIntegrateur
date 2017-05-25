@@ -305,9 +305,9 @@ public class PlayState extends BasicGameState {
         if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
             game.enterState(GameCore.ID_PAUSE_MENU_STATE);
         }
-        if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
-            debugMode = !debugMode;
-        }
+//        if (gc.getInput().isKeyPressed(Input.KEY_F3)) {
+//            debugMode = !debugMode;
+//        }
         if (gc.getInput().isKeyPressed(Input.KEY_F4)) {
             displayHUD = !displayHUD;
         }
