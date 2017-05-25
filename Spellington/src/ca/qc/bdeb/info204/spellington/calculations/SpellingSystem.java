@@ -141,7 +141,7 @@ public class SpellingSystem {
     private static final String DESC_POTION_TIME = "Potion qui ralentit le temps" + '\n' + "pour plus de temps de réflexion.";
     private static final String DESC_POTION_PAST = "Potion qui permet de réutiliser" + '\n' + " le dernier sort sans incantation.";
 
-    static final boolean CHEAT_MODE = true;
+    static final boolean CHEAT_MODE = false;
 
     /**
      * Initiates the necessary components for the SpellingSystem.
