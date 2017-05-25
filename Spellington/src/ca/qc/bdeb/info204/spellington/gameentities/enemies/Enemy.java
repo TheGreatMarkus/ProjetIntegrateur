@@ -149,7 +149,7 @@ public abstract class Enemy extends LivingEntity {
                 this.setDim(HUMANOID_SIZE);
                 this.aggroRange = 1000;
                 this.maxLifePoint = 30;
-                this.damage = 30;
+                this.damage = 20;
                 switch (this.enemyType) {
                     case PYROMANCER:
                         this.damageType = ElementalType.FIRE;

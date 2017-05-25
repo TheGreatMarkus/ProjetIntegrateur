@@ -155,7 +155,7 @@ public class SpellingSystem {
         Spell fireBall = new ProjectileSpell(ID_FIRE_BALL, ElementalType.FIRE, "Boule de feu", DESC_FIRE_BALL, 5, animFireBall, 30, 1, 1, 5);
         Spell iceSpike = new ProjectileSpell(ID_ICE_SPIKE, ElementalType.ICE, "Pic de glace", DESC_ICE_SPIKE, 5, animIceSpike, 10, 1, 0, 5);
         Spell spark = new ExplosionSpell(ID_SPARK, ElementalType.LIGHTNING, "Etincelle", DESC_SPARK, 2, animSpark, 5, 10);
-        Spell heal = new HealingSpell(ID_HEAL, "Soin", DESC_HEAL, 1, animHeal, 100, 100, 10);
+        Spell heal = new HealingSpell(ID_HEAL, "Soin", DESC_HEAL, 3, animHeal, 100, 100, 10);
         Spell ascendingCurrent = new PassiveSpell(ID_ASCENDING_CURRENT, ElementalType.NEUTRAL, "Courant ascendant", DESC_ASCENDING_CURRENT, animAscendingCurrent, 100, 100, 0);
         Spell fireResistance = new PassiveSpell(ID_FIRE_RES, ElementalType.FIRE, "Résistance feu", DESC_FIRE_RES, animFireResistance, 100, 30, -40);
         Spell iceResistance = new PassiveSpell(ID_ICE_RES, ElementalType.ICE, "Résistance glace", DESC_ICE_RES, animIceResistance, 100, 30, -40);
