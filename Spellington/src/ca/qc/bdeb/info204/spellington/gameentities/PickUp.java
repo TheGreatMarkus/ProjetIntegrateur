@@ -36,14 +36,15 @@ public class PickUp extends Treasure {
 
     @Override
     public void render(Graphics g) {
-//        g.setColor(Color.white);
+        g.setColor(Color.white);
+        g.scale(1f / GameCore.SCALE, 1f / GameCore.SCALE);
 //        g.drawRect(x, y, width, height);
         imgPickUp.draw(x, y, width, height);
         if (pickedUp) {
             if (sortDonné != null) {
-                g.drawString("Nouveau Sort! = " + sortDonné.getName(), x, y - 20);
+                g.drawString("Nouveau Sort! = " + sortDonné.getName(), x * GameCore.SCALE, y * GameCore.SCALE - 20);
             } else {
-                g.drawString("Tous les sorts sont déja connus.", x, y - 20);
+                g.drawString("Tous les sorts sont déja connus.", x * GameCore.SCALE, y * GameCore.SCALE - 20);
             }
         }
 

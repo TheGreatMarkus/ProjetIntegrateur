@@ -36,4 +36,8 @@ public class GameAnimation extends GameEntity {
         return animation;
     }
 
+    public boolean isOnPlayer() {
+        return onPlayer;
+    }
+
 }

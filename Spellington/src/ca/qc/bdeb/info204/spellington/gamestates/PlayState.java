@@ -115,7 +115,13 @@ public class PlayState extends BasicGameState {
      */
     public void prepareLevel(TiledMap currentMap, int spellingtonX, int spellingtonY) throws SlickException {
         activeProjectiles = new ArrayList<>();
-        activeAnimations = new ArrayList<>();
+        ArrayList<GameAnimation> animationsToBeRemoved = new ArrayList<>();
+        for (GameAnimation anim : activeAnimations) {
+            if (!anim.isOnPlayer()) {
+                animationsToBeRemoved.add(anim);
+            }
+        }
+        activeAnimations.removeAll(animationsToBeRemoved);
 
         spellington.setAnimState(LivingEntity.AnimState.STANDING_R);
         spellington.setX(spellingtonX);
@@ -183,9 +189,9 @@ public class PlayState extends BasicGameState {
         }
 
         if (GameManager.getActiveEnemies().isEmpty()) {
-            portalON.draw((float) GameManager.getExitPoint().getX(), (float) GameManager.getExitPoint().getY() + 50, 50, 50);
+            portalON.draw((float) GameManager.getExitPoint().getX() - 25, (float) GameManager.getExitPoint().getY(), 100, 100);
         } else {
-            portalOFF.draw((float) GameManager.getExitPoint().getX(), (float) GameManager.getExitPoint().getY() + 50, 50, 50);
+            portalOFF.draw((float) GameManager.getExitPoint().getX() - 25, (float) GameManager.getExitPoint().getY(), 50, 50);
         }
 
         spellington.render(g);

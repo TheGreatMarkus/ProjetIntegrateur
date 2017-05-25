@@ -79,13 +79,13 @@ public class Calculations {
                 switch (GameManager.getActiveLevel()) {
                     case 1:
                     case 2:
-                        ((LivingEntity) entity).subLifePoint(5, ElementalType.FIRE);
+                        ((LivingEntity) entity).subLifePoint(8, ElementalType.FIRE);
                         break;
                     case 3:
-                        ((LivingEntity) entity).subLifePoint(5, ElementalType.ICE);
+                        ((LivingEntity) entity).subLifePoint(8, ElementalType.ICE);
                         break;
                     case 4:
-                        ((LivingEntity) entity).subLifePoint(5, ElementalType.LIGHTNING);
+                        ((LivingEntity) entity).subLifePoint(8, ElementalType.LIGHTNING);
                         break;
                 }
             }
