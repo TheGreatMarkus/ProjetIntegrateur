@@ -30,7 +30,7 @@ public class GameSave implements Serializable {
         lvl4Complete = false;
 
         knownSpellsIDs = new ArrayList<>();
-        
+
         knownSpellsIDs.add(1);
         knownSpellsIDs.add(2);
         knownSpellsIDs.add(3);

@@ -233,13 +233,13 @@ public class MeleeEnemy extends Enemy {
                     temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkL/(" + (j + 1) + ").png");
                 }
                 animWalkL = new Animation(temp, 20);
-                
+
                 temp = new Image[20];
                 for (int j = 0; j < temp.length; j++) {
                     temp[j] = new Image("res/image/animation/enemies/" + tempString + "/walkR/(" + (j + 1) + ").png");
                 }
                 animWalkR = new Animation(temp, 20);
-                
+
                 imgStandingLeft = new Image("res/image/animation/enemies/" + tempString + "/standing.png");
                 imgStandingRight = imgStandingLeft;
                 animAttackL = animWalkL;

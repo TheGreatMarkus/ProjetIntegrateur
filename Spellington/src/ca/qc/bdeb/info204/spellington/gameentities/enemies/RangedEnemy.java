@@ -14,6 +14,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
+ * An Enemy that can damage the player from afar.
  *
  * @author Cristian Aldea
  * @see Enemy

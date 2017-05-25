@@ -49,12 +49,6 @@ public abstract class Spell implements Serializable {
      */
     public abstract void spellActivation(Spellington spellington, Input input, ArrayList<GameAnimation> activeAnimations, ArrayList<Projectile> activeProjectiles, ArrayList<Enemy> activeEnemy);
 
-    /**
-     * End the effect of the current spell.
-     *
-     * @param spellington The playable protagonist.
-     * @param activeAnimations The list of active animations in the game.
-     */
     public int getId() {
         return id;
     }

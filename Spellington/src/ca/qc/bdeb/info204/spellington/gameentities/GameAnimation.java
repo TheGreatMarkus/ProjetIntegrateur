@@ -4,7 +4,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
 /**
- * An animations that can be displayed independently from other Entities
+ * An animation that can be displayed independently from other Entities
  *
  * @author Celtis
  */
@@ -23,6 +23,12 @@ public class GameAnimation extends GameEntity {
 
     }
 
+    /**
+     * Renders the Gameanimation of the screen
+     *
+     * @param g The Graphics component
+     * @param spellington The player object.
+     */
     public void render(Graphics g, Spellington spellington) {
         if (onPlayer) {
             this.animation.draw(spellington.getX() - 20, spellington.getY() - (10 + yModifier), getWidth(), getHeight());

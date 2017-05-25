@@ -127,7 +127,7 @@ public class Calculations {
      * @param map The collision and event information for the current map.
      * @param activeEnemies The enemies that will be checked for collision.
      * @param spellington Spellington that will be checked for collision.
-     * @param activeAnimations
+     * @param activeAnimations The list of active animations.
      * @param projectile The projectile that will be checked for collision.
      * @return If the projectile should be removed from the activeProjectile
      * list.

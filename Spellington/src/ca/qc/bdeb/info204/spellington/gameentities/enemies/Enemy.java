@@ -75,7 +75,7 @@ public abstract class Enemy extends LivingEntity {
         this.jumpVector = new Vector2D(0, 0);
         this.maxInvulnTime = 0;
 
-        //Missing resistances
+        //Initialises the enemy according to his type.
         switch (this.enemyType) {
             case KEEPER:
             case GUARD:

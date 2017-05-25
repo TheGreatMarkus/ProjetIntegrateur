@@ -3,7 +3,6 @@ package ca.qc.bdeb.info204.spellington.gameentities;
 import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Rectangle;
 
 /**
  * A StaticEntity from which the player will get a beneficial item.
@@ -24,14 +23,20 @@ public abstract class Treasure extends StaticEntity {
         sortDonné = null;
     }
 
+    /**
+     * Renders the tresure on the screen.
+     *
+     * @param g The Graphics component
+     */
     public abstract void render(Graphics g);
 
+    /**
+     * Updates the treasure.
+     *
+     * @param spellington The player object.
+     * @param time The duration of the frame.
+     */
     public abstract void update(Spellington spellington, float time);
-
-    @Override
-    public Rectangle getBounds() {
-        return super.getBounds(); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public int getMessageDuration() {
         return messageDuration;

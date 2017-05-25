@@ -86,7 +86,6 @@ public class ProjectileSpell extends Spell {
         activeProjectiles.add(this.createSpellProjectile(spellington, input, this.id));
     }
 
-
     public float getInitSpeed() {
         return initSpeed;
     }
@@ -102,8 +101,6 @@ public class ProjectileSpell extends Spell {
     public void setGravModifier(float gravModifier) {
         this.gravModifier = gravModifier;
     }
-
-    
 
     public int getDamage() {
         return damage;

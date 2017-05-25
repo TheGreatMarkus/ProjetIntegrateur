@@ -70,8 +70,8 @@ public abstract class GameEntity {
     public void setY(float y) {
         this.y = y;
     }
-    
-    public void setDim(Dimension dim){
+
+    public void setDim(Dimension dim) {
         this.height = dim.height;
         this.width = dim.width;
     }

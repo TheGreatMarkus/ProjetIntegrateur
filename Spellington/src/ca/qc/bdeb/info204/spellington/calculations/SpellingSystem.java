@@ -111,7 +111,6 @@ public class SpellingSystem {
     public static final int ID_POTION_TIME = 27;
     public static final int ID_POTION_PAST = 28;
 
-    //À changer Tarik
     private static final String DESC_FIRE_BALL = "Boule en feu traditionnelle " + '\n' + "déployée à l'aide d'une trajectoire parabolique.";
     private static final String DESC_ICE_SPIKE = "Pic de glace suivant une " + '\n' + "trajectoire majoritairement linéaire.";
     private static final String DESC_SPARK = "Explosion d'étincelles " + '\n' + "engendrée par le clic de la souris.";
@@ -147,7 +146,7 @@ public class SpellingSystem {
      * Initiates the necessary components for the SpellingSystem.
      *
      * @author Celtis
-     * @param gameSave
+     * @param gameSave The gameSave
      */
     public static void initSpellingSystem(GameSave gameSave) {
         initAnimation();
@@ -257,6 +256,15 @@ public class SpellingSystem {
 
     }
 
+    /**
+     * The update method for the SpellingSystem
+     *
+     * @param input The Input classé
+     * @param spellington The player object.
+     * @param activeProjectiles The list of active projectiles
+     * @param activeAnimations The list of active animations.
+     * @param activeEnemy The list of active enemies.
+     */
     public static void update(Input input, Spellington spellington, ArrayList<Projectile> activeProjectiles, ArrayList<GameAnimation> activeAnimations, ArrayList<Enemy> activeEnemy) {
         boolean clickedLeftMouse = false;
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
@@ -338,6 +346,9 @@ public class SpellingSystem {
         //potions end-----------
     }
 
+    /**
+     * Initialises the animations for all the spells in the game.
+     */
     private static void initAnimation() {
         try {
             Image[] tempImgFireBall = new Image[31];
@@ -489,6 +500,9 @@ public class SpellingSystem {
         }
     }
 
+    /**
+     * Sets the incantation key-words for all the spells
+     */
     public static void setSpellsIncantations() {
         ArrayList<String> tempWord = new ArrayList<>();
 
@@ -568,11 +582,15 @@ public class SpellingSystem {
         tempWord.clear();
     }
 
-    public static void pastSpellPotion(Spellington spellington, ArrayList<GameAnimation> activeAnimations) {
+    /**
+     * Activates the last spell used.
+     *
+     * @param spellington The player objet
+     */
+    public static void pastSpellPotion(Spellington spellington) {
         if (pastSpell != null) {
             activeSpell = pastSpell;
             nbSpellUses = pastSpell.getUses();
-
         }
     }
 

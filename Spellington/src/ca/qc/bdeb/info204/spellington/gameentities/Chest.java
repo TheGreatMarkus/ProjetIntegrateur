@@ -13,8 +13,10 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
+ * A Treasure that will be found in the levels.
  *
- * @author Fallen Angel
+ * @author Cristian Aldea
+ * @see Treasure
  */
 public class Chest extends Treasure {
 
@@ -84,7 +86,5 @@ public class Chest extends Treasure {
     public boolean isOpen() {
         return open;
     }
-    
-    
 
 }

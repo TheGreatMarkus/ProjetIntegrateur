@@ -13,7 +13,7 @@ import org.newdawn.slick.geom.Circle;
 /**
  * A DynamicEntity that can be fired by other entities in the game.
  *
- * @author Celtis
+ * @author Cristian Aldea
  * @see DynamicEntity
  */
 public class Projectile extends DynamicEntity {

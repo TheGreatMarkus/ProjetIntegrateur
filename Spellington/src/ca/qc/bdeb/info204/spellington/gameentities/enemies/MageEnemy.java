@@ -33,7 +33,7 @@ public class MageEnemy extends RangedEnemy {
     public MageEnemy(float x, float y, EnemyType enemyType) {
         super(x, y, enemyType);
         teleportTime = MAX_TELEPORT_TIME;
-        
+
     }
 
     @Override

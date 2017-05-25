@@ -44,7 +44,6 @@ public class Vector2D {
         return new Vector2D(x * scalar, y * scalar);
     }
 
-
     public void add(Vector2D v) {
         x += v.x;
         y += v.y;

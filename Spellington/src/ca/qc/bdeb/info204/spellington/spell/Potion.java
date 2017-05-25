@@ -28,7 +28,7 @@ public class Potion extends Spell {
         if (this.id == SpellingSystem.ID_POTION_TIME) {
             PlayState.setSlowDownTime(5000);
         } else if (this.id == SpellingSystem.ID_POTION_PAST) {
-            SpellingSystem.pastSpellPotion(spellington, activeAnimations);
+            SpellingSystem.pastSpellPotion(spellington);
         }
 
     }

@@ -1,7 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gameentities;
 
 import ca.qc.bdeb.info204.spellington.calculations.Vector2D;
-import ca.qc.bdeb.info204.spellington.gameentities.enemies.Enemy;
 
 /**
  * A DynamicEntity that can be affected by damage and has different animations

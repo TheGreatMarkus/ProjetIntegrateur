@@ -7,10 +7,10 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
- * Classe qui gère les pancartes du tutoriel
+ * A StaticEntity that will act as a message giver to the player.
  *
- * @author Fallen Angel
- *
+ * @author Cristian Aldea
+ * @see StaticEntity
  */
 public class MessageSign extends StaticEntity {
 

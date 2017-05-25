@@ -13,8 +13,10 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
+ * A Treasure that will drop from enemies
  *
  * @author Cristian Aldea
+ * @see Treasure
  */
 public class PickUp extends Treasure {
 

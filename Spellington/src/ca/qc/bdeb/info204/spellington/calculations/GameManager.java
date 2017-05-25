@@ -189,7 +189,6 @@ public class GameManager {
 
     /**
      * Loads a savefile of the game if one exists.
-     *
      */
     public static void loadGameSave() {
         try {
@@ -214,7 +213,6 @@ public class GameManager {
 
     /**
      * Saves the current savefile.
-     *
      */
     public static void saveGameSave() {
         try {
@@ -440,7 +438,7 @@ public class GameManager {
     /**
      * Determines the next map to be played depending on the current map.
      *
-     * @throws SlickException
+     * @throws SlickException A general Slick exception.
      */
     private static void loadNextMap() throws SlickException {
         boolean endOfLevel = false;
@@ -485,6 +483,12 @@ public class GameManager {
         }
     }
 
+    /**
+     * Gererates a set of rooms according to the active level.
+     *
+     * @param activeLevel the active level.
+     * @return The list of generated rooms.
+     */
     private static ArrayList<TiledMap> generateRooms(int activeLevel) {
         if (activeLevel == 1) {
             return TUTORIAL_ROOMS;
