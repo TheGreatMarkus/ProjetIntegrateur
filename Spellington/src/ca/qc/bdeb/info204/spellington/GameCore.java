@@ -76,8 +76,8 @@ public class GameCore extends StateBasedGame {
         }
 
         try {
-            fontPaladin = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Paladin.ttf"));
-            fontMeath = Font.createFont(Font.TRUETYPE_FONT, GameCore.class.getResourceAsStream("/res/font/Meath.ttf"));
+            fontPaladin = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/Paladin.ttf"));
+            fontMeath = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/Meath.ttf"));
         } catch (FontFormatException ex) {
             Logger.getLogger(GameCore.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
