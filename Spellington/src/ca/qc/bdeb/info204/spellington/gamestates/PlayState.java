@@ -191,7 +191,7 @@ public class PlayState extends BasicGameState {
         if (GameManager.getActiveEnemies().isEmpty()) {
             portalON.draw((float) GameManager.getExitPoint().getX() - 25, (float) GameManager.getExitPoint().getY(), 100, 100);
         } else {
-            portalOFF.draw((float) GameManager.getExitPoint().getX() - 25, (float) GameManager.getExitPoint().getY(), 50, 50);
+            portalOFF.draw((float) GameManager.getExitPoint().getX() - 25, (float) GameManager.getExitPoint().getY(), 100, 100);
         }
 
         spellington.render(g);

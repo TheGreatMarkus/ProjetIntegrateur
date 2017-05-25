@@ -56,7 +56,6 @@ public class Chest extends Treasure {
                 g.drawString("Tous les sorts sont déja connus.", x, y - 50);
             }
         }
-
     }
 
     @Override
