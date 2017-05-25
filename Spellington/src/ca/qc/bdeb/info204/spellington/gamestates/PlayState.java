@@ -181,6 +181,8 @@ public class PlayState extends BasicGameState {
                 if (((Chest) treasure).isOpen()) {
                     treasure.render(g);
                 }
+            } else {
+                treasure.render(g);
             }
         }
 

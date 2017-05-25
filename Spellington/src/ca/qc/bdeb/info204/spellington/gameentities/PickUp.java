@@ -41,13 +41,15 @@ public class PickUp extends Treasure {
         g.setColor(Color.white);
 //        g.drawRect(x, y, width, height);
         imgPickUp.draw(x, y, width, height);
+        g.scale(1f / GameCore.SCALE, 1f / GameCore.SCALE);
         if (pickedUp) {
             if (sortDonné != null) {
-                g.drawString("Nouveau Sort! = " + sortDonné.getName(), x, y - 25);
+                g.drawString("Nouveau Sort! = " + sortDonné.getName(), GameCore.SCREEN_SIZE.width / 2, GameCore.SCREEN_SIZE.height - 40);
             } else {
-                g.drawString("Tous les sorts sont déja connus.", x, y - 25);
+                g.drawString("Tous les sorts sont déja connus.", GameCore.SCREEN_SIZE.width / 2, GameCore.SCREEN_SIZE.height - 40);
             }
         }
+        g.scale(GameCore.SCALE, GameCore.SCALE);
 
     }
 
