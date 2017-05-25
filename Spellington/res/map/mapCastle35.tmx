@@ -13,7 +13,7 @@
  </layer>
  <layer name="collision" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC9NgYGBQHSCsAaUNqIxhZhOjbtR+2tmPjmHyGmTaT6x6QmkLn/24wg3ZT6pY9JKTtsmxnxr+Jyf+h7v9hPILNe3Hlv4G2n5qhj+xeCTZjy1+KbWfmDKekP3Yymd6hj+y/YTaCsSoI7X9AQAIuldlAAkAAA==
+   H4sIAAAAAAAAC9NgYGBQHSCsAaUNqIxhZhOjbtR+2tmPjmHyGmTaT6x6QmkLn/24wg3ZT6pY9KKna2LSNjn2U8P/5MT/cLefUH6hpv3Y0t9A20/N8CcWjyT7scUvpfYTU8YTsh9b+UzP8Ee2n1BbgRh1pLY/AFh3BjQACQAA
   </data>
  </layer>
  <layer name="event" width="32" height="18">

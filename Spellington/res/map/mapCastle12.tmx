@@ -8,7 +8,7 @@
  </tileset>
  <layer name="terrain" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2SSwrAIAxEs7ClX9r7n6ZHawoKMkxi6aK6cGAQJckzIaOInJU8q3epp6PzO7/zm+EP6hDPAe74nt5YfIA8jLP4QnI93hodhHNYDa9/nIHVR7Kyr8eMb/2nxM9nwGp6/2Jzyk+UxS/tgSVvL7B3j4+1vort3Fv+H2qBP6m3Sl7UN/rtEr4ACQAA
+   H4sIAAAAAAAAC+2SUQuAIAyE96BRWdT//7XtQUGO24we0gcPDlG2fW5sEZG7kzf1Kf10Tf7kT/4w/KgO+Yxwx/fyxuID5GGcxReS6/FSdhDOYTW8/nEGVh/FHt/6T4tfz4DV9P7F5lSfKIvf2gNL3l5g7x4fa30V27m3/D80An9VH528qx+r8yb7AAkAAA==
   </data>
  </layer>
  <layer name="collision" width="32" height="18">
