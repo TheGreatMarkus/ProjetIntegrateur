@@ -9,7 +9,6 @@ import ca.qc.bdeb.info204.spellington.gameentities.Projectile;
 import ca.qc.bdeb.info204.spellington.gameentities.Spellington;
 import ca.qc.bdeb.info204.spellington.gameentities.Tile;
 import ca.qc.bdeb.info204.spellington.gamestates.PlayState;
-import ca.qc.bdeb.info204.spellington.spell.Spell;
 import java.awt.Dimension;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,8 +52,6 @@ public abstract class Enemy extends LivingEntity {
     public static Dimension SLIME_SIZE = new Dimension(50, 50);
     public static Dimension BOSS_SIZE = new Dimension(50, 50);
 
-    protected ArrayList<Spell> droppableSpells = new ArrayList<>();
-    protected int xpOnKill;
     protected ElementalType damageType;
     protected EnemyType enemyType;
     protected int damage;
@@ -87,7 +84,6 @@ public abstract class Enemy extends LivingEntity {
                 switch (this.enemyType) {
                     case KEEPER:
                         this.maxLifePoint = 20;
-                        this.xpOnKill = 0;
                         this.damageType = ElementalType.NEUTRAL;
                         this.damage = 12;
                         this.maxXSpeed = 0.2f;
@@ -99,7 +95,6 @@ public abstract class Enemy extends LivingEntity {
                         break;
                     case GUARD:
                         this.maxLifePoint = 50;
-                        this.xpOnKill = 0;
                         this.damageType = ElementalType.LIGHTNING;
                         this.damage = 18;
                         this.maxXSpeed = 0.1f;
@@ -117,7 +112,6 @@ public abstract class Enemy extends LivingEntity {
                 this.setDim(SLIME_SIZE);
                 this.aggroRange = 400;
                 this.maxLifePoint = 60;
-                this.xpOnKill = 0;
                 this.damage = 10;
                 this.maxXSpeed = 0.1f;
                 this.xAcc = new Vector2D(0.002f, 0);
@@ -146,7 +140,6 @@ public abstract class Enemy extends LivingEntity {
             case DUMMY:
                 this.setDim(HUMANOID_SIZE);
                 this.maxLifePoint = 25;
-                this.xpOnKill = 0;
                 this.damageType = ElementalType.NEUTRAL;
                 this.damage = 0;
                 break;
@@ -156,7 +149,6 @@ public abstract class Enemy extends LivingEntity {
                 this.setDim(HUMANOID_SIZE);
                 this.aggroRange = 1000;
                 this.maxLifePoint = 30;
-                this.xpOnKill = 0;
                 this.damage = 30;
                 switch (this.enemyType) {
                     case PYROMANCER:
@@ -186,7 +178,6 @@ public abstract class Enemy extends LivingEntity {
                 switch (this.enemyType) {
                     case ARCHER:
                         this.maxLifePoint = 10;
-                        this.xpOnKill = 0;
                         this.damage = 5;
                         this.aggroRange = 9999;
                         this.resFire = -10;
@@ -195,7 +186,6 @@ public abstract class Enemy extends LivingEntity {
                         break;
                     case CROSSBOWMAN:
                         this.maxLifePoint = 20;
-                        this.xpOnKill = 0;
                         this.damage = 10;
                         this.aggroRange = 1000;
                         this.resFire = 5;
@@ -208,7 +198,6 @@ public abstract class Enemy extends LivingEntity {
                 this.setDim(BOSS_SIZE);
                 this.aggroRange = 9999;
                 this.maxLifePoint = 9999;
-                this.xpOnKill = 0;
                 this.damageType = ElementalType.LIGHTNING;
                 this.damage = 50;
                 this.resFire = 0;
@@ -344,12 +333,36 @@ public abstract class Enemy extends LivingEntity {
 
     }
 
-    public float getDeltaXPlayer() {
-        return deltaXPlayer;
+    public Image getImgStandingLeft() {
+        return imgStandingLeft;
     }
 
-    public float getDeltaYPlayer() {
-        return deltaYPlayer;
+    public void setImgStandingLeft(Image imgStandingLeft) {
+        this.imgStandingLeft = imgStandingLeft;
+    }
+
+    public ElementalType getDamageType() {
+        return damageType;
+    }
+
+    public void setDamageType(ElementalType damageType) {
+        this.damageType = damageType;
+    }
+
+    public EnemyType getEnemyType() {
+        return enemyType;
+    }
+
+    public void setEnemyType(EnemyType enemyType) {
+        this.enemyType = enemyType;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public int getAttackCooldown() {
@@ -364,24 +377,28 @@ public abstract class Enemy extends LivingEntity {
         return totalAttackCooldown;
     }
 
+    public void setTotalAttackCooldown(int totalAttackCooldown) {
+        this.totalAttackCooldown = totalAttackCooldown;
+    }
+
+    public float getAggroRange() {
+        return aggroRange;
+    }
+
+    public void setAggroRange(float aggroRange) {
+        this.aggroRange = aggroRange;
+    }
+
+    public float getDeltaXPlayer() {
+        return deltaXPlayer;
+    }
+
+    public float getDeltaYPlayer() {
+        return deltaYPlayer;
+    }
+
     public float getPlayerDistance() {
         return playerDistance;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public ElementalType getDamageType() {
-        return damageType;
-    }
-
-    public ArrayList<Spell> getDroppableSpells() {
-        return droppableSpells;
-    }
-
-    public EnemyType getEnemyType() {
-        return enemyType;
     }
 
 }

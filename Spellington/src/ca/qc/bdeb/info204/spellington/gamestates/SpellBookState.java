@@ -1,7 +1,6 @@
 package ca.qc.bdeb.info204.spellington.gamestates;
 
 import ca.qc.bdeb.info204.spellington.GameCore;
-import ca.qc.bdeb.info204.spellington.calculations.GameManager;
 import ca.qc.bdeb.info204.spellington.calculations.SpellingSystem;
 import ca.qc.bdeb.info204.spellington.textEntities.MenuItem;
 import org.newdawn.slick.GameContainer;
@@ -901,14 +900,20 @@ public class SpellBookState extends BasicGameState {
                     element = "Élément: Neutre";
                     break;
             }
-            float x = 874f * GameCore.SCALE;
-            float y = 175f * GameCore.SCALE;
-            Animation temp = SpellingSystem.getKnownSpells().get(spellKind).getAnimation().copy();
-            float scale = GameCore.SCALE;
-            float ratio = (float) temp.getWidth() / (float) temp.getHeight();
-            float size = 178f * GameCore.SCALE;
-            float height = size / ratio;
-            SpellingSystem.getKnownSpells().get(spellKind).getAnimation().draw(x, y + (45f * scale) - (height / 2), size, height);
+            float x = 864f * GameCore.SCALE;
+            float y = 119f * GameCore.SCALE;
+            Animation temp = SpellingSystem.getKnownSpells().get(spellKind).getAnimation();
+            float width = temp.getWidth();
+            float height = temp.getHeight();
+            float ratio = width / height;
+            if (width < height) {
+                height = 178f * GameCore.SCALE;
+                width = height * ratio;
+            } else {
+                width = 178f * GameCore.SCALE;
+                height = width / ratio;
+            }
+            temp.draw(x + (100f * GameCore.SCALE) - (width / 2), y + (100f * GameCore.SCALE) - (height / 2), width, height);
             g.drawString(name, iconX + iconSize + gap, iconY);
             g.drawString("Type: " + type, iconX + iconSize + gap, iconY + 2 * gap);
             g.drawString(element, iconX + iconSize + gap, iconY + 6 * gap);

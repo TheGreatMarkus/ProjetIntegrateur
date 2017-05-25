@@ -404,7 +404,7 @@ public class PlayState extends BasicGameState {
 
             g.setFont(fontSpellChant);
             g.setColor(Color.white);
-            g.drawString(incantationText, (GameCore.SCREEN_SIZE.width / 2f) - (fontSpellChant.getWidth(incantationText) / 2f), 14f * GameCore.SCALE);
+            g.drawString(incantationText, (GameCore.SCREEN_SIZE.width / 2f) - (fontSpellChant.getWidth(incantationText) / 2f), 14f * scale);
             g.drawString("Passive", 1495 * scale, 110 * scale);
             if (SpellingSystem.getNbSpellUses() > 0) {
                 g.drawString(SpellingSystem.getNbSpellUses() + "", 1380 * scale, 110 * scale);
@@ -425,10 +425,17 @@ public class PlayState extends BasicGameState {
             if (SpellingSystem.getActiveSpell() != null) {
                 if (SpellingSystem.getActiveSpell().getAnimation() != null) {
                     Animation temp = SpellingSystem.getActiveSpell().getAnimation();
-                    float ratio = (float) temp.getWidth() / (float) temp.getHeight();
-                    float size = 90f * GameCore.SCALE;
-                    float height = size / ratio;
-                    temp.draw(x, y + (45f * scale) - (height / 2), size, height);
+                    float width = temp.getWidth();
+                    float height = temp.getHeight();
+                    float ratio = width / height;
+                    if (width < height) {
+                        height = 88f * scale;
+                        width = height * ratio;
+                    } else {
+                        width = 88f * scale;
+                        height = width / ratio;
+                    }
+                    temp.draw(x + (44f * scale) - (width / 2), y + (44f * scale) - (height / 2), width, height);
                 }
             }
             x = 1496 * scale;
@@ -436,10 +443,17 @@ public class PlayState extends BasicGameState {
             if (SpellingSystem.getPassiveSpell() != null) {
                 if (SpellingSystem.getPassiveSpell().getAnimation() != null) {
                     Animation temp = SpellingSystem.getPassiveSpell().getAnimation();
-                    float ratio = (float) temp.getWidth() / (float) temp.getHeight();
-                    float size = 90f * GameCore.SCALE;
-                    float height = size / ratio;
-                    temp.draw(x, y + (45f * scale) - (height / 2), size, height);
+                    float width = temp.getWidth();
+                    float height = temp.getHeight();
+                    float ratio = width / height;
+                    if (width < height) {
+                        height = 88f * scale;
+                        width = height * ratio;
+                    } else {
+                        width = 88f * scale;
+                        height = width / ratio;
+                    }
+                    temp.draw(x + (44f * scale) - (width / 2), y + (44f * scale) - (height / 2), width, height);
                 }
             }
             g.setColor(new Color(1, 0, 0, 0.7f));
