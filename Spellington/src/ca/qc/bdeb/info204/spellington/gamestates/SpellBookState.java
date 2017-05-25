@@ -76,7 +76,7 @@ public class SpellBookState extends BasicGameState {
     private float topTitleY;
     private float bottomButtonY;
 
-    private int pageState = 0; 
+    private int pageState = 0;
     private int spellsSubPageState = 0;
     private int potionsSubPageState = 0;
     private int ennemiesSubPageState = 0;
@@ -111,28 +111,28 @@ public class SpellBookState extends BasicGameState {
         background = new Image("res/image/spellbook/Grimoire.jpg");
 
         textGap = 10.0f * GameCore.SCALE;
-        
+
         fontSpellChant = new UnicodeFont(GameCore.getFontMeath(Font.PLAIN, 50.0f * GameCore.SCALE));
         fontSpellChant.addAsciiGlyphs();
         fontSpellChant.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
         fontSpellChant.loadGlyphs();
-        
+
         fontDetails = new UnicodeFont(GameCore.getFontMeath(Font.PLAIN, 30.0f * GameCore.SCALE));
         fontDetails.addAsciiGlyphs();
-        fontDetails.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
+        fontDetails.getEffects().add(new ColorEffect(java.awt.Color.BLACK));
         fontDetails.loadGlyphs();
 
-        mnuItemMainTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_MAINTITLE, false, false, 0, (2*textGap) + topTitleY, fontMenu.getWidth(SB_MAINTITLE), fontMenu.getHeight(SB_MAINTITLE));
-        mnuItemSpells = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_SPELLS, false, false, 0, mnuItemMainTitle.getY() + (mnuItemMainTitle.getHeight() * 2) + (8*textGap), fontMenu.getWidth(SB_SPELLS), fontMenu.getHeight(SB_SPELLS));
+        mnuItemMainTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_MAINTITLE, false, false, 0, (2 * textGap) + topTitleY, fontMenu.getWidth(SB_MAINTITLE), fontMenu.getHeight(SB_MAINTITLE));
+        mnuItemSpells = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_SPELLS, false, false, 0, mnuItemMainTitle.getY() + (mnuItemMainTitle.getHeight() * 2) + (8 * textGap), fontMenu.getWidth(SB_SPELLS), fontMenu.getHeight(SB_SPELLS));
         mnuItemPotions = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_POTIONS, false, false, 0, mnuItemSpells.getY() + mnuItemSpells.getHeight() + textGap, fontMenu.getWidth(SB_POTIONS), fontMenu.getHeight(SB_POTIONS));
         mnuItemEnnemies = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_ENNEMIES, false, false, 0, mnuItemPotions.getY() + mnuItemPotions.getHeight() + textGap, fontMenu.getWidth(SB_ENNEMIES), fontMenu.getHeight(SB_ENNEMIES));
-        mnuItemRetour = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_RETOUR, false, false, 0, mnuItemEnnemies.getY() + mnuItemEnnemies.getHeight() + (8*textGap), fontMenu.getWidth(SB_RETOUR), fontMenu.getHeight(SB_RETOUR));
+        mnuItemRetour = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_RETOUR, false, false, 0, mnuItemEnnemies.getY() + mnuItemEnnemies.getHeight() + (8 * textGap), fontMenu.getWidth(SB_RETOUR), fontMenu.getHeight(SB_RETOUR));
         mnuItemSpellTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_SPELLTITLE, false, false, 0, textGap + topTitleY, fontSpellChant.getWidth(SB_SPELLTITLE), fontSpellChant.getHeight(SB_SPELLTITLE));
         mnuItemPotionsTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_POTIONSTITLE, false, false, 0, textGap + topTitleY, fontSpellChant.getWidth(SB_POTIONSTITLE), fontSpellChant.getHeight(SB_POTIONSTITLE));
         mnuItemEnnemiesTitle = new MenuItem(gc, MenuItem.MenuItemType.TEXT, SB_ENNEMIESTITLE, false, false, 0, textGap + topTitleY, fontSpellChant.getWidth(SB_ENNEMIESTITLE), fontSpellChant.getHeight(SB_ENNEMIESTITLE));
         mnuItemBack = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_BACK, false, false, 0, bottomButtonY, fontSpellChant.getWidth(SB_BACK), fontSpellChant.getHeight(SB_BACK));
         mnuItemNext = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_NEXT, false, false, 0, bottomButtonY, fontSpellChant.getWidth(SB_NEXT), fontSpellChant.getHeight(SB_NEXT));
-        mnuItemChangeType = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_BACK, false, false, 0, (4*textGap), fontSpellChant.getWidth(SB_BACK), fontSpellChant.getHeight(SB_BACK));
+        mnuItemChangeType = new MenuItem(gc, MenuItem.MenuItemType.BUTTON, SB_BACK, false, false, 0, (4 * textGap), fontSpellChant.getWidth(SB_BACK), fontSpellChant.getHeight(SB_BACK));
 
         mnuItemBar = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + textGap, infoBarWidth, infoBarHeight);
         mnuItemBar2 = new MenuItem(gc, MenuItem.MenuItemType.INFO, "", false, false, centerXInfoBar, topInfoBarY + (infoBarHeight * 1) + textGap, infoBarWidth, infoBarHeight);
@@ -179,7 +179,7 @@ public class SpellBookState extends BasicGameState {
 
         this.icon = new Image("res/image/spellbook/icon.png");
         this.iconImage = iconImage;
-        
+
     }
 
     /**
@@ -254,7 +254,6 @@ public class SpellBookState extends BasicGameState {
 //                    pageState = 3;
 //                    ennemiesSubPageState = 0;
 //                }
-
                 if (mnuItemRetour.getHoveredOver() && triedToClick) {
                     game.enterState(GameCore.ID_PAUSE_MENU_STATE);
                     pageState = 0;
@@ -703,7 +702,7 @@ public class SpellBookState extends BasicGameState {
                 break;
         }
 
-        g.setColor(new Color(1, 1, 1, 1f));
+        g.setColor(Color.black);
         g.drawString(infoList.get(0), mnuItemBar.getX() + (gap / 3), mnuItemBar.getY() + (infoBarHeight / 12));
         g.drawString(infoList.get(1), mnuItemBar.getX() + (gap / 3), mnuItemBar2.getY() + (infoBarHeight / 12));
         g.drawString(infoList.get(2), mnuItemBar.getX() + (gap / 3), mnuItemBar3.getY() + (infoBarHeight / 12));
@@ -738,7 +737,7 @@ public class SpellBookState extends BasicGameState {
                 infoList.set(i, " ");
             }
         }
-        g.setColor(new Color(1, 1, 1, 1f));
+        g.setColor(Color.black);
         g.drawString(infoList.get(0), mnuItemBar.getX() + (gap / 3), mnuItemBar.getY() + (infoBarHeight / 12));
         g.drawString(infoList.get(1), mnuItemBar.getX() + (gap / 3), mnuItemBar2.getY() + (infoBarHeight / 12));
         g.drawString(infoList.get(2), mnuItemBar.getX() + (gap / 3), mnuItemBar3.getY() + (infoBarHeight / 12));
@@ -789,7 +788,6 @@ public class SpellBookState extends BasicGameState {
 //                break;
 //        }
 //
-//        g.setColor(new Color(1, 1, 1, 1f));
 //        g.drawString(infoList.get(0), mnuItemBar.getX() + (gap / 3), mnuItemBar.getY() + (infoBarHeight / 12) + textGap);
 //        g.drawString(infoList.get(1), mnuItemBar.getX() + (gap / 3), mnuItemBar2.getY() + (infoBarHeight / 12) + textGap);
 //        g.drawString(infoList.get(2), mnuItemBar.getX() + (gap / 3), mnuItemBar3.getY() + (infoBarHeight / 12) + textGap);
@@ -801,17 +799,16 @@ public class SpellBookState extends BasicGameState {
 //
 //        displayEnnemiesRightPage(g, iconX, iconY, iconSize, gap);
 //    }
-
     private void displaySpellsRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
-        g.setFont(fontDetails);        
-        
+        g.setFont(fontDetails);
+
         page = Integer.toString(pageNumber);
         g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3) / 4) + 30 * GameCore.SCALE, GameCore.SCREEN_SIZE.height - (gap * 3));
-        
+
         if (showRightPage) {
 
             icon.draw(iconX, iconY, iconSize, iconSize);
-            
+
             if (SpellingSystem.getKnownSpells().get(spellKind) instanceof BurstSpell) {
                 type = "Sort de souffle";
             } else if (SpellingSystem.getKnownSpells().get(spellKind) instanceof ExplosionSpell) {
@@ -929,7 +926,7 @@ public class SpellBookState extends BasicGameState {
 
     private void displayPotionsRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
         g.setFont(fontDetails);
-        
+
         page = Integer.toString(pageNumber);
         g.drawString(page, ((GameCore.SCREEN_SIZE.width * 3) / 4) + 30 * GameCore.SCALE, GameCore.SCREEN_SIZE.height - (gap * 3));
         if (showRightPage) {
@@ -964,7 +961,7 @@ public class SpellBookState extends BasicGameState {
                     break;
             }
             SpellingSystem.getPotionList().get(potionKind).getAnimation().draw(iconX + 10, iconY + 10, iconSize - (20 * GameCore.SCALE), iconSize - (20 * GameCore.SCALE));
-            
+
             g.drawString(name, iconX + iconSize + gap, iconY);
             g.drawString(element, iconX + iconSize + gap, iconY + 4 * gap);
             g.drawString(activationButton, iconX + iconSize + gap, iconY + 6 * gap);
@@ -975,7 +972,6 @@ public class SpellBookState extends BasicGameState {
 //    private void displayEnnemiesRightPage(Graphics g, float iconX, float iconY, float iconSize, float gap) {
 //
 //    }
-
     @Override
     public int getID() {
         return GameCore.ID_SPELLBOOK_STATE;
