@@ -8,10 +8,10 @@ Projet intégrateur fait dans le cadre du cours :
 avec un système d'écriture qui permet au joueur de jeter des sorts
 en écrivant des mots pour charger les sorts en question.
 
-Contributeurs
--Cristian Aldea
--Celtis de Chardon
--Tarik Benakezouh
+Contributeurs  
+- Cristian Aldea  
+- Celtis de Chardon  
+- Tarik Benakezouh  
 
 **English: Spellington's Awakening**
 
@@ -21,7 +21,7 @@ Final project made for the course :
 at Bois-de-Boulogne. This project is a simple 2D platformer with a writing mechanic 
 where the user has to write words in order to use various spells.
 
-Contributors
--Cristian Aldea
--Celtis de Chardon
--Tarik Benakezouh
+Contributors  
+- Cristian Aldea  
+- Celtis de Chardon  
+- Tarik Benakezouh  
